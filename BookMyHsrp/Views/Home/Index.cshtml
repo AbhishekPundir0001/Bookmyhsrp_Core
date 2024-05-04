@@ -1,0 +1,334 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+    <title>Dreams Rent | Template</title>
+
+    <!-- Place favicon.ico in the root directory -->
+    <link rel="shortcut icon" type="image/x-icon" href="Images/favicon.html">
+    <link rel="apple-touch-icon" href="apple-touch-icon.html">
+
+    <!-- All css files are included here. -->
+    <link rel="stylesheet" href="~/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/css/style.css">
+
+</head>
+
+<body>
+
+    <!-- Body main wrapper start -->
+
+    <div class="wrapper">
+        <!-- Start Header Style -->
+       
+        <!-- End Header Style -->
+        <!-- Start Mobile Header -->
+        <div class="mobile-header d-block d-lg-none">
+            <div class="container">
+                <div class="row align-items-center justify-content-between">
+                </div>
+            </div>
+        </div>
+        <!-- End Mobile Header -->
+        <!--  Start Offcanvas Mobile Menu Section  -->
+        <div class="offcanvas offcanvas-start" tabindex="-1" id="toggleMenu">
+            <div class="offcanvas-header">
+
+                <!-- Start Header Logo -->
+                <a href="index-3.html" class="header-logo">
+                    <img src="assets/Images/logo/logo.png" alt="">
+                </a>
+                <!-- End Header Logo -->
+
+                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+                <!-- Start Offcanvas Mobile Menu Wrapper -->
+                <div class="offcanvas-mobile-menu-wrapper">
+                    <!-- Start Mobile Menu  -->
+                    <div class="mobile-menu-bottom">
+                        <!-- Start Mobile Menu Nav -->
+                        <div class="offcanvas-menu">
+                            <ul>
+                                <li><a href="TrackOrder.html">Track Your Order</a></li>
+                                <li><a href="ReAppointment.html">Reschedule Appointment</a></li>
+                                <li><a href="OrderCancel.html">Cancel Order</a></li>
+
+                                <li><a href="PinForHomeDelivery.html">Check For Home Installation</a></li>
+                                <li><a href="ReceiptValidity.html"><b>Receipt Validity</b></a></li>
+                                <li><a href="BookMyHSRP_ContactUs.html"><b>Contact Us</b></a></li>
+                            </ul>
+                        </div>
+                        <!-- End Mobile Menu Nav -->
+                    </div>
+                    <!-- End Mobile Menu -->
+                    <!-- End Mobile contact Info -->
+
+                </div>
+                <!-- Start Mobile contact Info -->
+                <!--
+                    <div class="mobile-contact-info text-center">
+                        <ul class="social-link">
+                            <li><a href="https://example.com/"><i class="fa fa-facebook"></i></a>
+                            </li>
+                            <li><a href="https://example.com/"><i class="fa fa-twitter"></i></a>
+                            </li>
+                            <li><a href="https://example.com/"><i class="fa fa-skype"></i></a></li>
+                        </ul>
+                    </div>-->
+                <!-- End Offcanvas Mobile Menu Wrapper -->
+            </div>
+        </div>
+        <!--  End Offcanvas Mobile Menu Section -->
+        <!-- main start -->
+        <main class="main-body">
+            <div class="container-fluid">
+                <div class="row pt-3">
+                    <div class="col-12">
+                        <div class="a-banner">
+
+
+                            <img src="assets/Images/advertisement_Test.jpg" alt="">
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row pt-30">
+                    <div class="col-lg-3">
+                        <div class="banner-inner banner-inner-1" style="">
+                            <!--                            <img src="Images/banner-img/banner-1.jpg" alt="">-->
+                            <div class="banner-content">
+                                <h3 class="banner-title">
+                                    <span>
+                                        <span class="blink" style="color: #10b839 !important; text-shadow: none !important; font-weight: 700"></span>
+                                        <br>
+                                        High Security Registration Plate<br>
+                                        with Colour Sticker
+                                    </span>
+                                </h3>
+                                <a href="@(Url.Action("VahanBookingDetails", "HsrpWithColorSticker"))" id="HSRP" class="btn btn-outline-white-3 banner-link BookinTypeClick">
+                                    <div class="img style1" style="display: none;">
+                                        <img src="assets/img/home11.png">
+                                    </div>
+                                    <div class="img style2 hidetemp" style="display: none;">
+                                        <img src="assets/img/car.svg">
+                                    </div>
+                                    Book <i class="fas fa-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3">
+                        <div class="row">
+                            <div class="col-lg-12 mb-4">
+                                <div class="banner-inner banner-inner-2" style="">
+                                    <div class="banner-content">
+                                        <h3 class="banner-title text-white"><span href="Plate/ReplacementBooking.aspx" id="BMHSRPBook_Replacementindex" data-bookingtype="Replacement"><span class="blink" style="color: #fcd127 !important; font-weight: 700 !important; text-shadow: none !important">&nbsp;</span></span>Replacement/Retain/Transfer</h3>
+                                        <a href="#" id="Replacement" class="btn btn-outline-white-3 banner-link BookinTypeClick">
+                                            <div class="img style1" style="display: none;">
+                                                <img src="assets/img/home11.png">
+                                            </div>
+                                            <div class="img style2 hidetemp" style="display: none;">
+                                                <img src="assets/img/car.svg">
+                                            </div>
+                                            Book <i class="fas fa-arrow-right"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-12 mb-4">
+                                <div class="banner-inner banner-inner-3" style="">
+                                    <div class="banner-content">
+                                        <h3 class="banner-title text-white"><span href="sticker/VahanBookingDetail.html" id="BMHSRPBook_Stickerindex" data-bookingtype="Replacement">Only Colour Sticker <span class="blink" style="color: #007bff !important; font-weight: 700 !important; text-shadow: none !important"></span></span></h3>
+                                        <a href="#" id="Sticker" class="btn btn-outline-white-3 banner-link BookinTypeClick">
+                                            <div class="img style1" style="display: none;">
+                                                <img src="assets/img/home12.png">
+                                            </div>
+                                            <div class="img style2 hidetemp" style="display: none;">
+                                                <img src="assets/img/truck-big.svg">
+                                            </div>
+                                            Book <i class="fas fa-arrow-right"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3">
+                        <div class="row">
+                            <div class="col-lg-12 mb-4">
+                                <div class="banner-inner banner-inner-4" style="">
+                                    <div class="banner-content" style="left: 60% !important">
+                                        <h3 class="banner-title"><span href="#"><span class="blink" style="color: #324B96 !important; text-shadow: none !important; font-weight: 700 !important"></span>Electric&nbsp;Vehicle</span></h3>
+                                        <a href="#" id="ElectricVehicle" class="btn btn-outline-white-3 banner-link BookinTypeClick">
+                                            <div class="img style1" style="display: none;">
+                                                <img src="assets/img/home11.png">
+                                            </div>
+                                            <div class="img style2 hidetemp" style="display: none;">
+                                                <img src="assets/img/car.svg">
+                                            </div>
+                                            Book <i class="fas fa-arrow-right"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-12 mb-4">
+                                <div class="banner-inner banner-inner-5 banner-inner-4" style="">
+                                    <div class="banner-content" style="left: 60% !important">
+
+                                        <h3 class="banner-title"><span href="#"><span class="blink" style="color: #F04E37 !important; text-shadow: none !important; font-weight: 700">&nbsp;</span></span><span>Tractor & Trailer</span></h3>
+                                        <a href="#" id="Trailer" class="btn btn-outline-white-3 banner-link BookinTypeClick">
+                                            <div class="img style1" style="display: none;">
+                                                <img src="assets/img/home11.png">
+                                            </div>
+                                            <div class="img style2 hidetemp" style="display: none;">
+                                                <img src="assets/img/car.svg">
+                                            </div>
+                                            Book <i class="fas fa-arrow-right"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3">
+                        <div class="row">
+                            <div class="col-lg-12 mb-4">
+                                <div class="banner-inner banner-inner-5 banner-inner-4" style="">
+                                    <div class="banner-content" style="left: 60% !important">
+                                        <h3 class="banner-title"><span href="TrackOrder.html"><span class="blink" style="color: #324B96 !important; text-shadow: none !important; font-weight: 700 !important"></span>Track&nbsp;Your Order</span></h3>
+                                        <a href="TrackOrder.html" class="btn btn-outline-white-3 banner-link">Track <i class="fas fa-arrow-right"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="banner-inner banner-inner-4" style="">
+                                    <div class="banner-content">
+                                        <h3 class="banner-title text-white"><span href="GrievanceSelectState.aspx"><span class="blink" style="color: #F04E37 !important; text-shadow: none !important; font-weight: 700">&nbsp;</span></span><span>Grievance Redressal</span></h3>
+                                        <a href="GrievanceSelectState.aspx" class="btn btn-outline-white-3 banner-link">Enquiry <i class="fas fa-arrow-right"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </main>
+        <!-- main end -->
+        <!-- footer area start -->
+        <footer class="footer">
+            <!--    <section class="marquee-box" style="visibility:hidden;">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-12">
+                                    <marquee style=" behavior="scroll" direction="left" scrollamount="10" style="font-weight: 600; color: #F04E37 !important; font-size: 15px;" onmouseover="this.stop()" onmouseout="this.start()"><a style="color: #F04E37 !important" href="https://aprtacitizen.epragathi.org/#!/Hsrpbookingslot" target="_blank">Now HSRP (Number Plate) is available for Old Vehicle Registered Prior to 01-Apr-2019 in Andhra Pradesh. Please visit at https://aprtacitizen.epragathi.org/#!/Hsrpbookingslot for Online Order Booking.</a> </marquee>
+                                </div>
+                            </div>
+                        </div>
+                    </section>  -->
+
+            <section class="marquee-box" style="display:none;">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12">
+
+                            <marquee behavior="scroll" direction="left" scrollamount="10" style="font-weight: 600; color: #F04E37 !important; font-size: 15px;" onmouseover="this.stop()" onmouseout="this.start()">Booking Available for state of <span style="font-size:22px;"><b>Karnataka, Madhya Pradesh, Andhra Pradesh, Assam</b></span>, Bihar, Gujarat, Himachal Pradesh, Odisha, Uttar Pradesh, West Bengal and NCT of Delhi. </marquee>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+
+            <!-- Start Header Top Area -->
+            <div class="htc__header__top">
+                <div class="container-fluid">
+                    <div class="row justify-content-center">
+                        <div class="img-class d-flex">
+
+
+                            <a href="https://rosmertatech.com/" target="_blank" style="scale:1.8;margin-top:-5px;">
+                                <div class="logo">
+                                    <img src="assets/Images/logo/Rosmerta_IndexLogo.png" alt="logo">
+                                </div>
+                            </a>
+                            <a href="https://sensorise.net/" target="_blank">
+                                <div class="logo">
+                                    <img src="assets/Images/logo/Sensorise-Logo.png" alt="logo">
+                                </div>
+                            </a>
+                            <a href="https://myraasta.in/" target="_blank">
+                                <div class="logo">
+                                    <img src="assets/Images/logo/RB-6.png" alt="">
+                                </div>
+                            </a>
+                            <a href="https://rosmertadigital.com/Login.aspx" target="_blank">
+                                <div class="logo">
+                                    <img src="assets/Images/logo/rosmerta-digital.png" alt="logo">
+                                </div>
+                            </a>
+                            <a href="https://addblue.rosmertaroadsafety.com/" target="_blank">
+                                <div class="logo">
+                                    <img src="assets/Images/logo/Rosblu%20logo.png" alt="logo">
+                                </div>
+                            </a>
+                            <a href="#" target="_blank">
+                                <div class="logo">
+                                    <img src="assets/Images/logo/ROSMERTA%20RECYCLING%20LOGO.png" alt="logo">
+                                </div>
+                            </a>
+
+                            <!--
+                                    <a href="#"><img src="Images/logo/logo.png" alt="logo"></a>
+                                    <a href="#"><img src="Images/logo/logo.png" alt="logo"></a>
+                                    <a href="#"><img src="Images/logo/logo.png" alt="logo"></a>
+                                    -->
+
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End Header Top Area -->
+
+            <div class="footer-bottom">
+                <div class="container-fluid">
+                    <ul class="d-flex justify-content-between">
+                        <li><a href="BookMyHSRP_HSRPFAQ.html">FAQ</a></li>
+
+                        <li><a href="BookMyHSRP_privacypolicy.aspx">Privacy Policy</a></li>
+                        <li><a href="assets/pdf/Refund_cancellationNew.pdf" target="_blank">Refund &amp; Cancellation Policy</a></li>
+                        <li><a href="BookMyHSRP_safe-secure-transaction.aspx">Safe &amp; Secure Transaction</a></li>
+                        <li><a href="BookMyHSRP_termsofuse.aspx">Terms &amp; Conditions</a></li>
+
+                        <li><a href="GovNotification.aspx">Government Notifications</a></li>
+                        <li><a href="assets/pdf/HSRP_features.pdf" target="_blank">About HSRP</a></li>
+
+                        <li><a href="GrievanceSelectState.aspx">Grievance Redressal</a></li>
+                        <li><a href="DownloadReceipt.aspx">Reprint Receipt</a></li>
+
+                    </ul>
+                </div>
+            </div>
+        </footer>
+        <!-- footer area end -->
+
+    </div>
+    <!-- Body main wrapper end -->
+    <!-- Body main Script start -->
+    <script src="assets/js/jquery.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="assets/js/all.min.js"></script>
+    <!-- Body main Script end -->
+</body>
+
+</html>

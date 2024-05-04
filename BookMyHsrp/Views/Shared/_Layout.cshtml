@@ -1,0 +1,169 @@
+﻿
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>BookMyHsrp</title>
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome Free 5.15.4 -->
+    <link rel="stylesheet" href="~/plugins/fontawesome-free/css/all.min.css">
+    <!-- overlayScrollbars Version: 1.13.0 -->
+    <link rel="stylesheet" href="~/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+    <!-- Theme style AdminLTE v3.2.0 -->
+    <link rel="stylesheet" href="~/lib/adminlte/dist/css/adminlte.min.css">
+
+    <!-- Theme style Bootstrap v5 -->
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/cutom-forms.css">
+    <link rel="stylesheet" href="~/lib/nprogress/dist/css/nprogress.css">
+    <link href="https://cdn.datatables.net/v/bs5/dt-1.13.7/b-2.4.2/b-colvis-2.4.2/fc-4.3.0/fh-3.4.0/datatables.min.css" rel="stylesheet">
+   
+
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.8.0/dist/sweetalert2.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" />
+
+</head>
+
+<body>
+    <header class="htc__header">
+
+        <div class="htc__header__top">
+            <div class="container-fluid">
+                <div class="logo d-flex" style="height: auto !important;padding: 5px 0px !important;align-items: center;">
+                    <a href="Index-2.html">
+                        <div class="logo font4" style="height: auto !important; width: 176px;border: 3px solid !important">BOOK-MY-HSRP<i></i><i></i><i></i><i></i></div>
+                    </a>
+
+                    <a href="#" target="_blank" style="margin-left: auto">
+                        <div class="logo p-0">
+                            <img src="~/Images/logo/logo.png" alt="logo">
+                        </div>
+                    </a>
+
+                    <button class="offcanvas-menu-btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#toggleMenu">
+                        <i class="fa fa-bars" aria-hidden="true"></i>
+                    </button>
+
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Start Mainmenu Area -->
+        <div id="sticky-header-with-topbar" class="mainmenu__wrap sticky__header d-none d-lg-block">
+            <div class="container-fluid">
+
+
+                <div class="row justify-content-between">
+
+                    <div class="col-auto">
+                        <ul class="main__menu">
+                            <li class="drop">
+                                <a href="Gov_Pdf_file/Corporate%20Profile.pdf" target="_blank">
+                                    <span class="main-img-user">
+                                        <img alt="avatar" src="~/Images/logo/logo-icon.png">
+                                    </span> <span>Corporate Profile</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-auto" style="margin:0; padding:0;position:relative">
+                        <nav class="main__menu__nav ">
+                            <ul class="main__menu">
+                                <li class="drop"><a href="TrackOrder.html">Track Your Order</a></li>
+                                <li class="drop"><a href="ReAppointment.html">Reschedule Appointment</a></li>
+                                <li class="drop"><a href="OrderCancel.html">Cancel Order</a></li>
+                                <li class="drop"><a href="PinForHomeDelivery.html">Check For Home Installation</a></li>
+                                <li class="drop">
+                                    <a href="ReceiptValidity.html">
+                                        Receipt Validity
+                                    </a>
+                                </li>
+                                <li class="drop">
+                                    <a href="BookMyHSRP_ContactUs.html">
+                                        Contact Us
+                                    </a>
+                                </li>
+                                <li class="drop" style="display:none;"><a href="AffixationReceipt.aspx"><b>Affixation Receipt</b></a></li>
+
+                            </ul>
+                        </nav>
+                    </div>
+
+                    <div class="col-auto" style="align-self: center;">
+                        <ul class="main__menu">
+                            <li class="drop">
+                                <a href="#">
+                                    <span class="main-img-user">
+                                        <img alt="avatar" src="~/Images/logo/login.jpg" style="scale: 1.6;margin-right:16px;">
+                                    </span>
+                                </a>
+                                <ul class="dropdown">
+                                    <li><a href="https://information.rosmertahsrp.com/">Transport Department Login</a></li>
+                                    <li><a href="https://information.rosmertahsrp.com/">SIAM Login</a></li>
+                                    <li><a href="https://information.rosmertahsrp.com/">OEM Login</a></li>
+
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Mainmenu Area -->
+    </header>
+        <main role="main" class="pb-3">
+            @RenderBody()
+            </main>
+    <footer class="footer">
+        <div class="footer-bottom footer-bottom2">
+            <div class="container-fluid">
+                <ul class="d-flex justify-content-between">
+                    <li><a href="BookMyHSRP_HSRPFAQ.html">FAQ</a></li>
+
+                    <li><a href="BookMyHSRP_privacypolicy.aspx">Privacy Policy</a></li>
+                    <li><a href="assets/pdf/Refund_cancellationNew.pdf" target="_blank">Refund &amp; Cancellation Policy</a></li>
+                    <li><a href="BookMyHSRP_safe-secure-transaction.aspx">Safe &amp; Secure Transaction</a></li>
+                    <li><a href="BookMyHSRP_termsofuse.aspx">Terms &amp; Conditions</a></li>
+
+                    <li><a href="GovNotification.aspx">Government Notifications</a></li>
+                    <li><a href="assets/pdf/HSRP_features.pdf" target="_blank">About HSRP</a></li>
+
+                    <li><a href="GrievanceSelectState.aspx">Grievance Redressal</a></li>
+                    <li><a href="DownloadReceipt.aspx">Reprint Receipt</a></li>
+
+                </ul>
+            </div>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap 5 -->
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- overlayScrollbars Version: 1.13.0 -->
+    <script src="~/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+    <!-- AdminLTE v3.2.0 (https://adminlte.io) -->
+    <script src="~/lib/adminlte/dist/js/adminlte.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+
+    <script src="
+https://cdn.jsdelivr.net/npm/sweetalert2@11.8.0/dist/sweetalert2.all.min.js
+"></script>
+    @* <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script> *@
+    @* *@
+    @* <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script> *@
+    @* *@
+    @* <script src="https://cdn.datatables.net/fixedcolumns/4.3.0/js/dataTables.fixedColumns.min.js"></script> *@
+    @* *@
+    @* <script src="https://cdn.datatables.net/fixedheader/3.4.0/js/dataTables.fixedHeader.min.js"></script> *@
+    <script src="https://cdn.datatables.net/v/bs5/dt-1.13.7/b-2.4.2/b-colvis-2.4.2/fc-4.3.0/fh-3.4.0/datatables.min.js"></script>
+    <script src="~/lib/nprogress/dist/js/nprogress.js"></script>
+    <script src="~/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.full.min.js"></script>
+    <script src="~/js/site.js"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
