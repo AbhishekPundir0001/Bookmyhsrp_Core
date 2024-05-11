@@ -1,23 +1,32 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static BookMyHsrp.Libraries.OemMaster.Models.OemMasterModel;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace BookMyHsrp.Libraries.HsrpWithColorSticker.Models
 {
     public class HsrpColorStickerModel
     {
-        public class VahanDetails
+        public class VahanDetailsDto
         {
-
+            [Required(ErrorMessage = "Registration No is required.")]
+            //[StringLength(5 , ErrorMessage = "Registration No is  Not Valid")]
             public string RegistrationNo { get; set; }
+            [Required(ErrorMessage = "Chassis No is required.")]
+            //[StringLength(5, ErrorMessage = "Chassis No is Not Valid")]
             public string ChassisNo { get; set; }
+            [Required(ErrorMessage = "EngineNo No is required.")]
+           // [StringLength(5, ErrorMessage = "EngineNo No is Not Valid")]
             public string EngineNo { get; set; }
+            [Required(ErrorMessage = "State is required.")]
             public string StateId { get; set; }
-
+            public string StateName { get; set; }
+            public bool isReplacement { get; set; } = false;
 
 
 
@@ -35,18 +44,16 @@ namespace BookMyHsrp.Libraries.HsrpWithColorSticker.Models
             public string hsrpRearLaserCode { set; get; }
             public string stateCd { set; get; }
             public string offCd { set; get; }
+            public VehicleValidation data;
         }
 
+        
         public class ResponseDto
         {
-            public dynamic ResponseData { get; set; }
-            public string Status { get; set; }
-            public string Message { get; set; }
-            public string NonHomo { get; set; }
-
-
-
-
+            public string Message;
+            public string status;
+            public string message;
+            public VehicleValidation data;
         }
 
         public class GetSessionBookingDetails
@@ -69,7 +76,39 @@ namespace BookMyHsrp.Libraries.HsrpWithColorSticker.Models
             public string StateId { get; set; } = "";
             public string StateName { get; set; } = "";
             public string OemVehicleType { get; set; } = "";
+        }
+        public class VehicleValidation
+        {
+            public string fuel { get; set; }
+            public string maker { get; set; }
+            public string non_homo { get; set; } = "N";
+            public string upload_flag { get; set; } = "N";
+            public string norms { get; set; }
+            public string oem_img_path { get; set; }
+            public string oemid { get; set; }
+            public string stateid { get; set; }
+            public string statename { get; set; }
+            public string stateshortname { get; set; }
+            public string veh_reg_date { get; set; }
+            public string vehicle_category { get; set; }
+            public string vehicle_class { get; set; }
+            public string engineno { get; set; }
+            public string chassisno { get; set; }
+            public string vehicleregno { get; set; }
+            public string message { get; set; }
+            public string vchType { get; set; }
+            public string vchCatg { get; set; }
+            public string regnDate { get; set; }
+            public string hsrpFrontLaserCode { set; get; }
+            public string hsrpRearLaserCode { set; get; }
+            public string stateCd { set; get; }
+            public string offCd { set; get; }
+
+            public bool show_damage_both { get; set; } = true;
+            public List<OemVehicleTypeList> oemvehicletypelist { get; set; }
 
         }
+      
+
     }
 }

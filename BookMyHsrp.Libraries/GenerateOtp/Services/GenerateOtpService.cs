@@ -32,14 +32,13 @@ namespace BookMyHsrp.Libraries.GenerateOtp.Services
             _fetchDataAndCache = fetchDataAndCache;
         }
 
-        public async Task<dynamic> GenerateOtp()
+        public async Task<dynamic> GenerateOtp(string mobile)
         {
            
             await _fetchDataAndCache.SetStringInCache("OTPno", "");
-            var mobileNo = _fetchDataAndCache.GetStringFromCache("MobileNo");
             try
             {
-                if (mobileNo == null)
+                if (mobile == null)
                 {
                     throw new ArgumentException("Vehicle Details didn't match");
 
