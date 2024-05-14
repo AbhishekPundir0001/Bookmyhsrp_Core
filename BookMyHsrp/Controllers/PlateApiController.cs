@@ -5,6 +5,7 @@ using BookMyHsrp.Libraries.ResponseWrapper.Models;
 using BookMyHsrp.ReportsLogics.HsrpWithColorSticker;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Globalization;
@@ -17,10 +18,10 @@ namespace BookMyHsrp.Controllers
 
     public class PlateApiController : Controller
     {
-        private readonly ILogger<ApiHsrpWithColorStickerController> _logger;
+        private readonly ILogger<PlateApiController> _logger;
 
         private readonly HsrpWithColorStickerConnector _hsrpWithColorStickerConnector;
-        public PlateApiController(ILogger<ApiHsrpWithColorStickerController> logger,
+        public PlateApiController(ILogger<PlateApiController> logger,
             HsrpWithColorStickerConnector hsrpWithColorStickerConnector)
         {
             _hsrpWithColorStickerConnector =
@@ -112,45 +113,56 @@ namespace BookMyHsrp.Controllers
             }
             
         }
+        
         [HttpPost]
-        [Route("report/SetSessionBookingDetail")]
-
-        public async Task<IActionResult> SetSessionBookingDetail(HsrpColorStickerModel requestDto)
+        [Route("plate/customerInfo")]
+        public async Task<IActionResult> CustomerInfo([FromBody]CustomerInfoModel info)
         {
-                var jsonSerializer = System.Text.Json.JsonSerializer.Serialize(requestDto);
-                HttpContext.Session.SetString("SessionDetail", jsonSerializer);
-                var result = await _hsrpWithColorStickerConnector.SessionBookingDetails(requestDto);
-                if (result.Message == "Vehicle Details didn't match")
+            var jsonSerializer = "";
+            var resultGot = new CustomerInformationResponse();
+            var detailsSession = HttpContext.Session.GetString("UserSession");
+            if (HttpContext.Session.GetString("UserSession") != null)
+            {
+                resultGot = await _hsrpWithColorStickerConnector.CustomerInfo(info, detailsSession);
+                if (resultGot.Message == "Success")
                 {
-                    return BadRequest(new { Error = true, result.Message });
+                    var getSession = new RootDto();
+                    getSession.CustomerBillingAddress = info.BillingAddress.Replace("'", "");
+                    getSession.BhartStage = info.BharatStage;
+                    getSession.CustomerName = info.OwnerName;
+                    getSession.CustomerEmail = info.EmailId;
+                    getSession.CustomerMobile = info.MobileNo;
+                    getSession.VehicleType = resultGot.data.VehicleType;
+                    getSession.VehicleCat = resultGot.data.VehicleCat;
+                    getSession.VehicleTypeId = resultGot.data.VehicleTypeId;
+                    getSession.VehicleCategoryId = resultGot.data.Vehiclecategoryid;
+                    getSession.FuelType = info.FuelTypeVahan;
+                    getSession.Fuel = info.FuelTypeVahan;
+                    getSession.Message = resultGot.Message;
+                    var GetRootObjectSession = HttpContext.Session.GetString("UserSession");
+                    jsonSerializer = System.Text.Json.JsonSerializer.Serialize(getSession);
+                    HttpContext.Session.SetString("UserDetail" ,jsonSerializer);
+                  
+
                 }
-                return Ok(
-                      new Response<dynamic>(result, false,
-                          "Data Received."));
-
+               
             }
-        //    public async Task<JsonResult> CustomerInfo(CustomerInfoModel info)
-        //{
+            if (jsonSerializer != "")
+            {
+                return Json(jsonSerializer);
+            }
+            else
+            {
 
-        //    var resultGot = new CustomerInformationResponse();
-        //    if (HttpContext.Session.GetString("UserDetail") != null)
-        //    {
-        //        resultGot = await await _hsrpWithColorStickerConnector.CustomerInfo(vahanDetailsDto)
-        //    //    var jsonSerializer = System.Text.Json.JsonSerializer.Serialize(requestDto);
-        //    //HttpContext.Session.SetString("SessionDetail", jsonSerializer);
-        //    //var result = await _hsrpWithColorStickerConnector.SessionBookingDetails(requestDto);
-        //    //if (result.Message == "Vehicle Details didn't match")
-        //    //{
-        //    //    return BadRequest(new { Error = true, result.Message });
-        //    //}
-        //    //return Ok(
-        //    //      new Response<dynamic>(result, false,
-        //    //          "Data Received."));
+                return BadRequest(new { Error = true, Message = resultGot.Message });
+            }
 
-        //}
+
+
+        }
 
 
 
 
-    }
+        }
 }

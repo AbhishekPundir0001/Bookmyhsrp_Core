@@ -24,6 +24,7 @@ using BookMyHsrp.Libraries.GenerateOtp.Services;
 using System.ComponentModel.DataAnnotations;
 using BookMyHsrp.Controllers.CommonController;
 using BookMyHsrp.ReportsLogics.Common;
+using BookMyHsrp.Libraries.HomeDelivery.Services;
 namespace BookMyHsrp
 {
     public class Startup
@@ -133,6 +134,7 @@ namespace BookMyHsrp
             services.AddScoped<FileUploadConnector>();
             services.AddScoped<HsrpWithColorStickerService>();
             services.AddScoped<FetchDataAndCache, FetchDataAndCache>();
+            services.AddScoped<HomeDeliveryService>();
             
             // services.AddSingleton<HSRP.Redis.ConnectionHelper>();
             

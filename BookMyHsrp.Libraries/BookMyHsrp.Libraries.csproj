@@ -17,7 +17,6 @@
 
   <ItemGroup>
     <Folder Include="Common\Services\" />
-    <Folder Include="GenerateOtp\Models\" />
     <Folder Include="RequestResponseLoggingMiddleware\Service\" />
   </ItemGroup>
 

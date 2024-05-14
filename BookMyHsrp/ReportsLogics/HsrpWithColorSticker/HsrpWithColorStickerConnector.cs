@@ -1,12 +1,16 @@
 ﻿using BookMyHsrp.Dapper;
+using BookMyHsrp.Libraries;
 using BookMyHsrp.Libraries.HsrpWithColorSticker.Models;
+using BookMyHsrp.Libraries.HsrpWithColorSticker.Queries;
 using BookMyHsrp.Libraries.HsrpWithColorSticker.Services;
 using BookMyHsrp.Models;
+using Dapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
+using System.Security.AccessControl;
 using System.Security.Cryptography;
 using static BookMyHsrp.Libraries.HsrpWithColorSticker.Models.HsrpColorStickerModel;
 using static BookMyHsrp.Libraries.OemMaster.Models.OemMasterModel;
@@ -23,6 +27,7 @@ namespace BookMyHsrp.ReportsLogics.HsrpWithColorSticker
         private readonly HsrpWithColorStickerService _hsrpColorStickerService;
         private readonly string nonHomo;
         private readonly string _nonHomoOemId;
+        private readonly string OemId;
         public HsrpWithColorStickerConnector(HsrpWithColorStickerService hsrpColorStickerService, IOptionsSnapshot<DynamicDataDto> dynamicData)
         {
             // _fetchDataAndCache = fetchDataAndCache; // Dependency injection
@@ -30,6 +35,7 @@ namespace BookMyHsrp.ReportsLogics.HsrpWithColorSticker
             _hsrpColorStickerService = hsrpColorStickerService ?? throw new ArgumentNullException(nameof(hsrpColorStickerService));
             nonHomo = dynamicData.Value.NonHomo;
             _nonHomoOemId = dynamicData.Value.NonHomoOemId;
+            OemId = dynamicData.Value.OemID;
 
         }
         public async Task<dynamic> VahanInformation(VahanDetailsDto requestDto)
@@ -402,52 +408,255 @@ namespace BookMyHsrp.ReportsLogics.HsrpWithColorSticker
 
 
         }
-        //    public static async Task<CustomerInformationResponse> CustomerInformation(
-        //     CustomerInfoModel customerInfo)
-        //{
+        public async Task<dynamic> CustomerInfo(CustomerInfoModel customerInfo, dynamic sessionDetails)
+        {
+
+            var setCusmoterData = new SetCustomerData();
+            var customerInformationresponseData = new CustomerInformationResponse();
+            customerInformationresponseData.data = new CustomerInformationData();
+            ICollection<ValidationResult> results = null;
+            if (!Validate(customerInfo, out results))
+            {
+                customerInformationresponseData.Status = "false";
+                customerInformationresponseData.Message = results.Select(x => x.ErrorMessage).FirstOrDefault();
+                return customerInformationresponseData;
+            }
+            string getStateId = customerInfo.StateId;
+            string getOemId = customerInfo.OemId;
+            string getNonHomo = customerInfo.NonHomo;
+            string getOrderType = customerInfo.OrderType;
+            string getVehicleRegno = customerInfo.RegistrationDate;
+            string getChassisNo = customerInfo.ChassisNo;
+            string getEngineNo = customerInfo.EngineNo;
+            string getBhartStage = customerInfo.BharatStage;
+            string getVehRegDate = customerInfo.RegistrationDate;
+            string getCustomerName = customerInfo.OwnerName;
+            string getCustomerEmail = customerInfo.EmailId;
+            string getCustomerMobile = customerInfo.MobileNo;
+            string getCustomerBillingAddress = customerInfo.BillingAddress;
+            string getRCFile = customerInfo.RcFileName;
+            string getVehMaker = customerInfo.MakerVahan;
+            string getVehicleType = customerInfo.VehicleTypeVahan;
+            string getFuelType = customerInfo.FuelTypeVahan;
+            string getVehicleCategory = customerInfo.VehicleCatVahan;
+            string getOrderPlateSticker = customerInfo.PlateSticker;
+            string IsVehicletypeEnable = "N";
+            string realOrdertype = "OB";
+            string ReplacementType = customerInfo.ReplacementType;
+            var qstr = "";
+            string insertVahanLogQuery = "";
+            var session = new Session();
+            session.IsOTPVerify = "N";
+            session.OTPno = null;
+            session.VehicleType_imgPath = "www";
+            session.OEMImgPath = "www";
+            session.OrderType = "OB";
+            var jsonDeSerializer = System.Text.Json.JsonSerializer.Deserialize<RootDto>(sessionDetails);
+            try
+            {
+                var nonHomo = jsonDeSerializer.NonHomo;
+                if (nonHomo == "Y")
+                {
+                    var vehicleCategory = customerInfo.VehicleCatVahan;
+                    customerInformationresponseData.data.NonHomoVehicleType = vehicleCategory;
+                }
+                IsVehicletypeEnable = "N";
+                var oemId = jsonDeSerializer.OemId;
+                var taxInvoiceSummary = await _hsrpColorStickerService.TaxInvoiceSummary(oemId);
+                if (taxInvoiceSummary.Count > 0)
+                {
+                    foreach (var taxInvoice in taxInvoiceSummary)
+                    {
+                        var IsVehicleTypeEnable = taxInvoice.IsVehicleTypeEnable;
+                        if (IsVehicleTypeEnable == "Y")
+                        {
+                            IsVehicletypeEnable = "Y";
+                        }
+                    }
+
+                }
+                if (IsVehicletypeEnable == "Y")
+                {
+                    //if (requestDto.OemVehicleType == "" || requestDto.OemVehicleType == null)
+                    //{
+                    //    throw new ArgumentException("Please Select Oem VehicleType Type");
+
+                    //}
+                    //if (requestDto.OemVehicleType == "0")
+                    //{
+                    //    throw new ArgumentException("Please Select Oem VehicleType Type");
+
+                    //}
 
 
-        //    var customerInformationresponseData = new CustomerInformationResponse();
-        //    var customerInformationData = new CustomerInformationData();
-        //    ICollection<ValidationResult> results = null;
-        //    if (!Validate(customerInfo, out results))
-        //    {
-        //        customerInformationresponseData.status = "false";
-        //        customerInformationresponseData.message = results.Select(x => x.ErrorMessage).FirstOrDefault();
-        //        return customerInformationresponseData;
-        //    }
-        //    string getStateId = customerInfo.stateid;
-        //    string getOemId = customerInfo.oemid;
-        //    string getNonHomo = customerInfo.non_homo;
-        //    string getOrderType = customerInfo.order_type;
-        //    string getVehicleRegno = customerInfo.vehicleregno;
-        //    string getChassisNo = customerInfo.chassisno;
-        //    string getEngineNo = customerInfo.engineno;
-        //    string getBhartStage = customerInfo.bhart_stage;
-        //    string getVehRegDate = customerInfo.veh_reg_date;
-        //    string getCustomerName = customerInfo.customer_name;
-        //    string getCustomerEmail = customerInfo.customer_email;
-        //    string getCustomerMobile = customerInfo.customer_mobile;
-        //    string getCustomerBillingAddress = customerInfo.customer_billing_address;
-        //    string getCustomerState = customerInfo.customer_state;
-        //    string getCustomerCity = customerInfo.customer_city;
-        //    string getCustomerGstin = customerInfo.customer_gstin;
-        //    string getRCFile = customerInfo.rc_file;
-        //    string getVehMaker = customerInfo.maker;
-        //    string getVehicleType = customerInfo.vehicle_type;
-        //    string getFuelType = customerInfo.fuel_type;
-        //    string getVehicleCategory = customerInfo.vehicle_category;
-        //    string getOrderPlateSticker = customerInfo.plate_sticker;
-        //    string OemVehicleType = customerInfo.OemVehicleType;
-        //    string IsVehicletypeEnable = "N";
-        //    string realOrdertype = "OB";
-        //    string ReplacementType = customerInfo.ReplacementType;
-        //    var qstr = "";
-        //    string insertVahanLogQuery = "";
+                }
+                try
+                {
+                    string dateString = customerInfo.RegistrationDate;
+                    DateTime date = DateTime.ParseExact(dateString, "dd-MM-yyyy", System.Globalization.CultureInfo.InvariantCulture);
+                    string formattedDate = date.ToString("dd-MM-yyyy");
+
+                    IFormatProvider theCultureInfo = new System.Globalization.CultureInfo("en-GB", true);
+                    DateTime from_date = DateTime.ParseExact(formattedDate, "dd-MM-yyyy", theCultureInfo);
+                    DateTime to = DateTime.ParseExact("25-11-2019", "dd-MM-yyyy", theCultureInfo);
+                    string txt_total_days = ((from_date - to).TotalDays).ToString();
+                    int diffResult = int.Parse(txt_total_days.ToString());
+                    if (customerInfo.StateId != "25")
+                    {
+                        if (diffResult >= 0)
+                        {
+                            customerInformationresponseData.Message = "Vehicle owner's with vehicles manufactured after 1st April 2019, should contact their respective Automobile Dealers for HSRP affixation";
+                            return customerInformationresponseData;
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return ex.Message;
+                }
+                var OrderType = jsonDeSerializer.OrderType;
+                var OemId = jsonDeSerializer.OemId;
+                var NonHomo = jsonDeSerializer.NonHomo;
+                var billingaddress = "";
+                if (jsonDeSerializer.CustomerBillingAddress != null)
+                {
+                    billingaddress = jsonDeSerializer.CustomerBillingAddress.Replace("'", "''");
+                }
+                var bookingHistoryId = await _hsrpColorStickerService.BookingHistoryId(customerInfo.RegistrationNo, customerInfo.ChassisNo, customerInfo.EngineNo);
+                if (bookingHistoryId.Count>0)
+                {
+                    var insertVahanLogQueryCustomer = await _hsrpColorStickerService.InsertVahanLogQueryCustomer(customerInfo, OrderType, billingaddress, NonHomo, OemId);
+                    if (customerInfo.RegistrationNo.Trim().ToUpper() == "DL10CG7191")
+                    {
+
+                    }
+                    else
+                    {
+                        customerInformationresponseData.Message = "Order for this registration number already exists. For any query kindly mail to online@bookmyhsrp.com";
+                    }
+                }
+                else
+                {
+                    var insertVahanLogQueryCustomer = await _hsrpColorStickerService.InsertVahanLogQueryCustomer(customerInfo, OrderType, billingaddress, NonHomo, OemId);
+
+                }
+                var oemid = OemId;
+                string[] oemarray;
+                int flag = 0;
+                string nonhomo = (NonHomo).ToString();
+                if (nonhomo == "Y")
+                {
+                    if (customerInfo.RcFileName == "" || customerInfo.RcFileName == null)
+                    {
+                        flag = 0;
+                        throw new ArgumentException("Please Upload Rc File");
+
+                    }
+                    else
+                    {
+                        flag = 1;
+
+                    }
+                }
+
+                try
+                {
+                    if (customerInfo.VehicleCatVahan.Trim().ToString().ToUpper() == "3WT" && customerInfo.FuelTypeVahan != null && customerInfo.FuelTypeVahan != "")
+                    {
+                        customerInformationresponseData.data.VehicleType = "E-RICKSHAW";
+                        customerInformationresponseData.data.Vehiclecategoryid = "3";
+                        customerInformationresponseData.data.VehicleClass_imgPath = "www";
+                        customerInformationresponseData.data.VehicleCat = "3w";
+                        customerInformationresponseData.data.VehicleTypeId = "2";
+                    }
+                    else
+                    {
+                        var vehicleType = "";
+                        var vehiclecategory = "";
+                        int vehicletypeid;
+                        var vehicletypeidIntoString = "";
+                        var vehicleSession = await _hsrpColorStickerService.VehicleSession(customerInfo.VehicleCatVahan);
+                        if (vehicleSession.Count > 0)
+                        {
+                            string HSRPHRVehicleType = "";
+                            foreach (var vehicle in vehicleSession)
+                            {
+                                HSRPHRVehicleType = vehicle.HSRPHRVehicleType;
+                                vehicletypeid = vehicle.VehicleTypeid;
+                                vehicletypeidIntoString = vehicletypeid.ToString();
+                                vehiclecategory = vehicle.VehicleCategory;
+                            }
+                            if (IsVehicletypeEnable == "N")
+                            {
+                                var oemIdNew = await _hsrpColorStickerService.GetOemId(customerInfo.MakerVahan);
+                                int newId = 0;
+                                foreach (var Id in oemIdNew)
+                                {
+                                    newId = Id.Oemid;
+                                }
+                                var getOemVehicleType = await _hsrpColorStickerService.OemVehicleType(HSRPHRVehicleType, customerInfo.VehicleTypeVahan, newId, customerInfo.FuelTypeVahan);
+                                if (getOemVehicleType.Count>0)
+                                {
+
+                                    foreach (var vehicle in getOemVehicleType)
+                                    {
+                                        vehicleType = vehicle.vehicleType;
+                                        customerInformationresponseData.Message = "Success";
+
+                                    }
+                                    customerInformationresponseData.data.VehicleType = vehicleType;
+                                }
+                                else
+                                {
+                                    var insertMissmatchDataLog = await _hsrpColorStickerService.InsertMisMatchDataLog(customerInfo, oemIdNew);
+                                    customerInformationresponseData.Message = "Vehicle Details didn't match";
+                                    return customerInformationresponseData;
+                                }
+                            }
+                            else
+                            {
+                                customerInformationresponseData.data.VehicleType = customerInfo.VehicleTypeVahan;
+                            }
+                            customerInformationresponseData.data.VehicleClass_imgPath = "www";
+                            customerInformationresponseData.data.VehicleTypeId = vehicletypeidIntoString;
+                            customerInformationresponseData.data.Vehiclecategoryid = "3";
+                            customerInformationresponseData.data.Vehiclecategory = vehiclecategory;
+                        }
+                        else
+                        {
+                            customerInformationresponseData.Message = "Vehicle Details didn't match";
+                            return customerInformationresponseData;
+
+                        }
+                    }
+                    customerInformationresponseData.data.VehicleFuelType = customerInfo.FuelTypeVahan;
+                    customerInformationresponseData.data.VehicleClass = customerInfo.VehicleTypeVahan;
+                    customerInformationresponseData.data.SessionBharatStage = customerInfo.BharatStage;
+                    customerInformationresponseData.data.RegDate = customerInfo.RegistrationDate;
+                    customerInformationresponseData.data.OwnerName = customerInfo.OwnerName;
+                    customerInformationresponseData.data.EmailID = customerInfo.EmailId;
+                    customerInformationresponseData.data.MobileNo = customerInfo.MobileNo;
+                    customerInformationresponseData.data.BillingAddress = customerInfo.BillingAddress;
+                    customerInformationresponseData.data.SessionCity = "";
+                    customerInformationresponseData.data.SessionGST = "";
+                    customerInformationresponseData.Message = "Success";
+                }
+
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+
+                return customerInformationresponseData;
 
 
-        //}
-        static bool Validate<T>(T obj, out ICollection<ValidationResult> results)
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+            static bool Validate<T>(T obj, out ICollection<ValidationResult> results)
         {
             results = new List<ValidationResult>();
 

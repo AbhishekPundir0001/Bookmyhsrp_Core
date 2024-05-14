@@ -497,7 +497,18 @@
 
             $('#btn-validate').click(async function () {
                 const validateBtn = document.querySelector('.otp-btn');
+                $(this).prop('disabled', true);
+                var originalButtonText = $(this).html();
 
+                const errorFunc = (title) => {
+                    Toast.fire({
+                        icon: 'error',
+                        title: title
+                    })
+                    $(this).prop('disabled', false);
+                    $(this).html(originalButtonText);
+
+                }
                 // Add click event listener to the "Validate" button
                 // validateBtn.addEventListener('click', function (event) {
                 //     event.preventDefault(); // Prevent form submission
@@ -516,14 +527,17 @@
 
                     // Concatenate the OTP values into a single string
                     const otp = firstValue + secondValue + thirdValue + fourthValue;
-                if (otp != "") { 
+                if (otp != "") {
                     let url = "/api/v1/otp/otpConfirmation/" + otp;
                     const result = await fetchData(url);
-                    if (result.Message == "Data Received.")
-                    {
-                      await otpSuccess()
-                        
-                       
+                    if (result.Message == "Data Received.") {
+                        await otpSuccess()
+
+
+                    }
+                    else {
+                        errorFunc("Wrong Otp");
+                        return;
                     }
               
                 }
@@ -871,7 +885,7 @@
 
 
         $('#btn-next').click(async function () {
-                handleButtonClick.call(this, '/api/v1/hsrpWithColorSticker/report/SetSessionBookingDetail', postData, (result) => {
+                handleButtonClick.call(this, '/plate/customerInfo', postData, (result) => {
                 // bindHtmlHsrpView(result.Data);
                 // $('#div-bind-report').show();
                 // console.log('Data posted successfully, where the server response data is', result);
@@ -883,7 +897,6 @@
                 $(this).prop('disabled', true);
                 var originalButtonText = $(this).html();
 
-                $(this).html('<span class="spinner-border spinner-border-sm"></span> Processing...');
                 const errorFunc = (title) => {
                     Toast.fire({
                         icon: 'error',
@@ -946,123 +959,21 @@
                         customer_state: customerState,
                         OemVehicleType: vchCatgVahan,
                     }
-                    // let allObject = Object.assign(newObject, userData);
-                    // allObject["fuel_type"] = $('#fueltype option:selected').val();
-
-                    // allObject["fuel"] = $("#fueltype option:selected").val();
-                    // var stringify = JSON.stringify(allObject);
-                    // console.log(stringify);
-
-
-                    //  var regexbilling = /^[a-zA-Z0-9\\// !,\$%\^\*\)\(+=._-]+$/g
-                    //  var regex = /^[0-9]{10}$/;
                    
-                    //  var bstype = $('#norms').val();
                       var regDate = $('#regDate').val();
-                    //  var regNo = $('#registrationNumber').val();
-                    //  var RegNo = regNo.trim();
-                    //  var chno = $('#chassisNo').val();
+                 
                       var vehicleTypeVahan = $('#vcltype').val();
                     var fuleTypeVahan = $('#fueltype').val();
                     var oemvehicletype = "";
                     var vehiclecatvahan = $('#vhlcategory').val();
-                    //  var validBillingAdd = regexbilling.test(billingAddress);
-
-                    //      if (vehicleCatVahan == '2WN' || vehicleCatVahan == '2WIC' || vehicleCatVahan == '2WT') {
-                    //          vehicleCatVahan = $('#vhlcategoryVahan').val();
-                    //          if (vehicleCatVahan == '') {
-                    //              //alert('Please select Vehicle Category');
-                    //              errorFunc("Select Vehicle Category ");
-                    //              return false;
-                    //          }
-                    //          else if (vehicleCatVahan == 'Select Vehicle Category') {
-                    //              //alert('Please select Vehicle Category');
-                    //              errorFunc("Select Vehicle Category");
-                    //              return 
-
-                    //          }
-                    //      }
-                    //  var ChassisNo = chno.trim();
-                    //  var EngNo = $('#engineNo').val();
-                    //  var EngineNo = EngNo.trim();
-                    //  var Stateid = $('#select-state option:selected').val();
+                   
                     var StateName = $('#select-state option:selected').text();
-                    //  var ownerName = $('#ownerName').val();
-                    //  var emailId = $('#emailId').val();
-                    //      if (ownerName === '') {
-                    //          errorFunc("Please Enter Owner Name");
-                    //          return;
-                    //      }
-                    //  if (emailId==='')
-                    //  {
-                    //      if (Stateid === '31') {
-                    //          emailId = 'bmhreceipt@rosmertahsrp.com';
-                    //      }
-                    //      else
-                    //      {
-                    //              errorFunc("Please enter Email Id");
-                    //          return
-                    //      }
-                    //  }
-                    //      if (!emailregex.test(emailId)) {
-                    //      errorFunc('Please Enter Valid Email')
-                    //      return;
-                    //  }
-                    //  var mobileNo = $('#mobNo').val();
+                    
                      var filepath = '';
                     //  var billingAddress = $('#billingAddress').val().replace("\n", "");
                     // // var GST = $('#gstNo').val();
                     var maker = $('#maker').val();
 
-
-                    //  if (bstype === '') {
-                    //      //alert('Please select Bharat Stage value');
-                    //          errorFunc("Please select Bharat Stage value");
-                    //      return;
-                    //  }
-                    //  if (bstype === 'Select Bharat Stage') {
-                    //      //alert('Please select Bharat Stage value');
-                    //          errorFunc("Please select Bharat Stage value");
-                    //      return;
-
-                    //  }
-                    //      if (mobileNo === '') {
-                    //          errorFunc("Please Enter Mobile Number");
-                    //          return;
-                    //      }
-                    //  if (!regex.test(mobileNo)) {
-                    //      errorFunc('Please Enter Valid Mobile Number')
-                    //      return;
-                    //  }   
-                    //  if (Stateid === '' || Stateid === '0' || Stateid === 'Select State') {
-                    //          errorFunc("Please Select State");
-                    //      return;
-                    //  }
-                    //  if (Stateid === '31') {
-                    //      $('#email').hide();
-                    //  }else{
-                    //      $('#email').hide();
-                    //  }
-                    //  if (regDate === '') {
-                    //          errorFunc("Please Fill Registration Date");
-                    //      return;
-                    //  }
-                    //  if (RegNo === '') {
-                    //          errorFunc("Please Fill Registration Number");
-                    //      return;
-                    //  }
-                    //  if (maker === '') {
-                    //          errorFunc("Please provide maker");
-                    //      return;
-                    //  }
-                    //  if (ChassisNo === '') {
-                    //          errorFunc("Please Fill Chassis Number");
-                    //      return;
-                    //  }
-                    //  if (EngineNo === '') {
-                    //          errorFunc("Please Fill Engine Number");
-                    //      return;
-                    //  }
                      if (vehicleTypeVahan === '') {
                              errorFunc("Please provide Vehicle Type");
                          return;
@@ -1071,65 +982,14 @@
                          errorFunc("Please provide Vehicle Type");
                          return;
                      }
-                    //  if (fuleTypeVahan === 'Select Vehicle Type') {
-                    //          errorFunc("Please provide Fuel Type");
-                    //      return;
-                    //  }
-                    //  if (fuleTypeVahan === 'Select Fuel Type') {
-                    //      errorFunc("Please provide Fuel Type");
-                    //      return;
-                    //  }
-                    //  if (vehicleCatVahan === '') {
-                    //          errorFunc("Please provide Vehicle Category");
-                    //      return;
-                    //  }
-                    //  if (vehicleCatVahan === 'Select Vehicle Category') {
-                    //          errorFunc("Please provide Vehicle Category");
-                    //      return;
-                    //  }
-                    //  if (RegNo == '') {
-                    //      errorFunc("Please Fill Registration Number");
-                    //      return;
-                    //  }
-                    //      if (ChassisNo == '') {
-                    //          errorFunc("Please Fill Chassis Number");
-                    //      return;
-                    //  }
-                    //  if (EngineNo == '') {
-                    //          errorFunc("Please Fill Engine Number");
-                    //      return;
-                    //  }
-
-
-                    //      if (billingAddress === '') {
-                    //          errorFunc("Please Enter Billing Address");
-                    //      return;
-                    //  }
-                    //  // if(!isValid)
-                    //  // {
-                    //  //     alert("# ~ & ' <>  are not Allowed  in Billing Address");
-                    //  //     return;
-
-                    //  // }
-                    //  if (Stateid == '' || Stateid == '0') {
-                    //      //alert('Please Select  Vehicle Registration State');
-                    //          errorFunc("Please Select  Vehicle Registration State");
-                    //      return;
-                    //  }
-                    //  if (Stateid == 'Select Vehicle Registration State') {
-                    //      //alert('Please Select  Vehicle Registration State');
-                    //          errorFunc("Please Select  Vehicle Registration State");
-                    //      return;
-                    //  }
-
+                 
 
                     const data = { BharatStage: bharatStage, RegistrationDate: regDate, RegistrationNo: RegNo, ChassisNo: ChassisNo, EngineNo: EngineNo, OwnerName: customerName, EmailId: customerEmail, MobileNo: customerMobile, FilePath: filepath, BillingAddress: customerBillingAddress, MakerVahan: maker, VehicleTypeVahan: vehicleTypeVahan, FuelTypeVahan: fuleTypeVahan, VehicleCatVahan: vchCatgVahan, StateId: customerState, StateName: StateName, OemVehicleType: oemvehicletype }
                     try {
-
                         const result = await postData(url, data);
-                      
                         isSuccessFunc(result);
-                        if (result.Message=="Data Received.") {
+                        var response = $.parseJSON(result);
+                        if (response.Message == "Success") {
                             $('#otp-modal').modal('show');
                             let url = "/api/v1/otp"
                             const result = await fetchData(url);

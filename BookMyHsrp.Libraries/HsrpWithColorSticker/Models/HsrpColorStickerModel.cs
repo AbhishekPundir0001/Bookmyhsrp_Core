@@ -60,12 +60,12 @@ namespace BookMyHsrp.Libraries.HsrpWithColorSticker.Models
         {
             public string BharatStage { get; set; }
             public string RegistrationDate { get; set; }
-            public string RegistrationNo { get; set; }
+            public string VehicleRegNo { get; set; }
             public string ChassisNo { get; set; }
             public string EngineNo { get; set; }
             public string OwnerName { get; set; }
             public string EmailId { get; set; }
-            public string MobileNo { get; set; }
+            public string CustomerMobile { get; set; }
             public string FilePath { get; set; } = "";
             public string BillingAddress { get; set; } = "";
             public string RcFileName { get; set; } = "";
@@ -76,6 +76,7 @@ namespace BookMyHsrp.Libraries.HsrpWithColorSticker.Models
             public string StateId { get; set; } = "";
             public string StateName { get; set; } = "";
             public string OemVehicleType { get; set; } = "";
+            public string OemId { get; set; } = "";
         }
         public class VehicleValidation
         {

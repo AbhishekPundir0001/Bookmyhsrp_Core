@@ -21,10 +21,12 @@ namespace BookMyHsrp.Controllers.CommonController
         [HttpGet]
         public async Task<dynamic> GenerateOtp()
         {
-           var details =  HttpContext.Session.GetString("SessionDetail");
+           var vehicleDetail =  HttpContext.Session.GetString("UserSession");
+           var details =  HttpContext.Session.GetString("UserDetail");
             var data= System.Text.Json.JsonSerializer.Deserialize<GetSessionBookingDetails>(details);
-            var mobile = data.MobileNo;
-            var resultGot = await _generateOtpService.GenerateOtp(mobile);
+            var vehivledetailsData= System.Text.Json.JsonSerializer.Deserialize<GetSessionBookingDetails>(vehicleDetail);
+            var mobile = data.CustomerMobile;
+            var resultGot = await _generateOtpService.GenerateOtp(mobile, vehivledetailsData);
             return resultGot;
         }
 
@@ -34,9 +36,18 @@ namespace BookMyHsrp.Controllers.CommonController
         {
 
             var resultGot = await _generateOtpService.ConfirmOTP(OTP);
-            return Ok(
-                new Response<dynamic>(resultGot, false,
-                    "Data Received."));
+            if (resultGot.Message == "Success")
+            {
+                return Ok(
+                    new Response<dynamic>(resultGot, false,
+                        "Data Received."));
+            }
+            else
+            {
+                return Ok(
+                    new Response<dynamic>(resultGot, false,
+                        "Wrong Otp"));
+            }
         }
     }
     

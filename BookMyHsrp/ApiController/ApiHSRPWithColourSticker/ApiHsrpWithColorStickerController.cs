@@ -31,15 +31,15 @@ namespace BookMyHsrp.ApiController.ApiHSRPWithColourSticker
         //    {   
         //        return BadRequest(new { Error = true, Message = GetModelErrorMessages() });
         //    }
-           
+
         //    var result = await _hsrpWithColorStickerConnector.VahanInformation(requestDto);
         //    return Ok(
         //          new Response<dynamic>(result, false,
         //              "Data Received."));
 
         //}
-        [HttpPost]
-        [Route("report/SetSessionBookingDetail")]
+        //[HttpPost]
+        //[Route("report/SetSessionBookingDetail")]
         public async Task<IActionResult> SessionBookingDetails([FromBody] GetSessionBookingDetails requestDto)
         {
             if (!ModelState.IsValid)
@@ -49,7 +49,7 @@ namespace BookMyHsrp.ApiController.ApiHSRPWithColourSticker
             var jsonSerializer = System.Text.Json.JsonSerializer.Serialize(requestDto);
             HttpContext.Session.SetString("SessionDetail", jsonSerializer);
             var result = await _hsrpWithColorStickerConnector.SessionBookingDetails(requestDto);
-            if (result.Message== "Vehicle Details didn't match")
+            if (result.Message == "Vehicle Details didn't match")
             {
                 return BadRequest(new { Error = true, result.Message });
             }

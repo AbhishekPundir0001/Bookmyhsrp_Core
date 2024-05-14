@@ -9,7 +9,7 @@ namespace BookMyHsrp.Libraries.GenerateOtp.Services
 {
     public interface IGenerateOtpService
     {
-        Task<dynamic> GenerateOtp(string mobile);
+        Task<dynamic> GenerateOtp(string mobile,dynamic data);
         Task<dynamic> ConfirmOTP(string otp);
     }
 }

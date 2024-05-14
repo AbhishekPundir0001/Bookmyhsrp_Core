@@ -29,6 +29,7 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Http;
 using BookMyHsrp.Models;
+using Microsoft.AspNetCore.Http.Internal;
 namespace BookMyHsrp.Libraries.HsrpWithColorSticker.Services
 {
     public class HsrpWithColorStickerService : IHsrpWithColorStickerService
@@ -185,6 +186,91 @@ namespace BookMyHsrp.Libraries.HsrpWithColorSticker.Services
             var vehicleDetails = await _databaseHelper.QueryAsync<dynamic>(
             HsrpWithColorStickerQueries.GetVehicleDetails, parameters);
             return vehicleDetails;
+        }
+        public async Task<dynamic> TaxInvoiceSummary(string OemId)
+        {
+
+
+            var parameters = new DynamicParameters();
+            parameters.Add("@OemId", OemId);
+            var taxInvoiceSummary = await _databaseHelper.QueryAsync<dynamic>(HsrpWithColorStickerQueries.GetTaxInvoiceSummaryReport, parameters);
+            return taxInvoiceSummary;
+        }
+        public async Task<dynamic> BookingHistoryId(string RegistrationNo, string ChassisNo, string EngineNo)
+        {
+
+
+            var parameter = new DynamicParameters();
+            parameter.Add("@RegistrationNo", RegistrationNo);
+            parameter.Add("@ChassisNo", ChassisNo);
+            parameter.Add("@EngineNo", EngineNo);
+            var bookingHistoryId = await _databaseHelper.QueryAsync<dynamic>(HsrpWithColorStickerQueries.GetBookingHistoryId, parameter);
+            return bookingHistoryId;
+        }
+        public async Task<dynamic> VehicleSession(string VehicleCatVahan)
+        {
+
+
+            var parameters = new DynamicParameters();
+            parameters.Add("@VehicleCatType",VehicleCatVahan);
+            var vehicleSesion = await _databaseHelper.QueryAsync<dynamic>(HsrpWithColorStickerQueries.VehicleSession, parameters);
+            return vehicleSesion;
+        }
+        public async Task<dynamic> OemVehicleType(string HSRPHRVehicleType,string VehicleTypeVahan,int  newId,string FuelTypeVahan)
+        {
+
+
+            var parameters = new DynamicParameters();
+            parameters.Add("@VahanVehicleType", HSRPHRVehicleType);
+            parameters.Add("@OrderType", "OB");
+            parameters.Add("@vehicleclass", VehicleTypeVahan);
+            parameters.Add("@oemid", newId);
+            parameters.Add("@FuelType", FuelTypeVahan);
+            var getOemVehicleType = await _databaseHelperPrimary.QueryAsync<dynamic>(HsrpWithColorStickerQueries.GetOemVehicleType, parameters);
+            return getOemVehicleType;
+        }
+        public async Task<dynamic> InsertMisMatchDataLog(dynamic customerInfo, string OemId)
+        {
+
+
+            var parameter = new DynamicParameters();
+            parameter.Add("@Maker", customerInfo.MakerVahan);
+            parameter.Add("@RegistrationNo", customerInfo.RegistrationNo);
+            parameter.Add("@ChassisNo", customerInfo.ChassisNo);
+            parameter.Add("@EngineNo", customerInfo.EngineNo);
+            parameter.Add("@MobileNo", customerInfo.MobileNo);
+            parameter.Add("@EmailId", customerInfo.EmailId);
+            parameter.Add("@VehicleCatVahan", customerInfo.VehicleCatVahan);
+            parameter.Add("@OrderType", "OB");
+            parameter.Add("@VehicleType", customerInfo.VehicleTypeVahan);
+            parameter.Add("@OemId", OemId);
+            var insertMissMatchDataLog = await _databaseHelperPrimary.QueryAsync<dynamic>(HsrpWithColorStickerQueries.InsertMissMatchDataLog, parameter);
+            return insertMissMatchDataLog;
+        }
+        public async Task<dynamic> InsertVahanLogQueryCustomer(dynamic requestDto, string OrderType, string billingaddress,string NonHomo,string OemId)
+        {
+
+
+            var parameter = new DynamicParameters();
+            parameter.Add("@BharatStage", requestDto.BharatStage);
+            parameter.Add("@RegistrationDate", requestDto.RegistrationDate);
+            parameter.Add("@RegistrationNo", requestDto.RegistrationNo);
+            parameter.Add("@ChassisNo", requestDto.ChassisNo);
+            parameter.Add("@EngineNo", requestDto.EngineNo);
+            parameter.Add("@OwnerName", requestDto.OwnerName);
+            parameter.Add("@EmailId", requestDto.EmailId);
+            parameter.Add("@MakerName", requestDto.MakerVahan);
+            parameter.Add("@MobileNo", requestDto.MobileNo);
+            parameter.Add("@StateName", requestDto.StateName);
+            parameter.Add("@OrderType", OrderType);
+            parameter.Add("@VehicleType", requestDto.VehicleTypeVahan);
+            parameter.Add("@StateId", requestDto.StateId);
+            parameter.Add("@BillingAddress", billingaddress);
+            parameter.Add("@VehicleCategory", requestDto.VehicleCatVahan);
+            parameter.Add("@OemId", OemId);
+            parameter.Add("@NonHomo", NonHomo);
+            var InsertVahanLogQuery = await _databaseHelper.QueryAsync<dynamic>(HsrpWithColorStickerQueries.InsertVahanLogQuery, parameter);
+            return InsertVahanLogQuery;
         }
         //(VahanDetailsDto requestDto)
         //{

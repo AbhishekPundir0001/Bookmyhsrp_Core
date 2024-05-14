@@ -129,7 +129,7 @@
                         <div class="main-data main-bg2">
                             <div class="title-area d-flex justify-content-between">
                                 <h4 class="title">Home Delivery</h4>
-                                <a href="#" class="submit-btn">
+                                <a id="btndealer" href="#" class="submit-btn">
                                     Dealer Appointment
                                 </a>
                             </div>
@@ -139,18 +139,20 @@
                                         <div class="col-lg-4 col-md-6 col-sm-12">
                                             <div class="form-group">
                                                 <label class="form-label">Pin Code</label>
-                                                <input type="text" class="form-control">
+                                                <input id="pincode" type="text" class="form-control">
                                             </div>
                                         </div>
                                         <div class="col-lg-4 col-md-6 col-sm-12">
-                                            <button type="button" class="submit-btn2">
+                                            <button id="checkavalibility" type="button" class="submit-btn2">
                                                 Check Availability
                                             </button>
                                         </div>
                                     </div>
-                                    <div class="row">
+                                    <div class="row" >
+                                        <div id="avabilitierror">
                                         <p class="status-p">Currently service is not available in this area. Enter your mobile number,<br>So when service resume on this pincode we ping you back!</p>
-                                        <div class="col-lg-4 col-md-6 col-sm-12">
+                                        </div>
+                                        <div class="col-lg-4 col-md-6 col-sm-12" id="mob">
                                             <div class="form-group">
                                                 <label class="form-label">Mobile No.</label>
                                                 <input type="number" class="form-control">
@@ -172,7 +174,7 @@
                                                                             </div>
                                                                         </div>
                                     -->
-                                    <div class="row">
+                                    <div class="row" id="details">
                                         <div class="col-lg-4 col-md-6 col-sm-12">
                                             <div class="form-group">
                                                 <label class="form-label">Pincode</label>
@@ -234,9 +236,16 @@
     </div>
     <!-- Body main wrapper end -->
     <!-- Body main Script start -->
+   
+@section Scripts
+    {
 
-    <script src="assets/js/owl.carousel.min.js"></script>
+       <script src="~/js/owl.carousel.min.js"></script>
     <script>
+        $('#avabilitierror').hide();
+            $('#details').hide();
+            $('#btndealer').hide();
+            $('#mob').hide();
         $('.adds-carousel').owlCarousel({
             loop: true,
             margin: 10,
@@ -256,8 +265,57 @@
             }
         })
 
-    </script>
+        $('#checkavalibility').click(async function (){
 
+                $(this).prop('disabled', true);
+                var originalButtonText = $(this).html();
+
+                $(this).html('<span class="spinner-border spinner-border-sm"></span> Processing...');
+                var pincode = $('#pincode').val();
+                
+                const errorFunc = (title) => {
+                    Toast.fire({
+                        icon: 'error',
+                        title: title
+                    })
+                    $(this).prop('disabled', false);
+                    $(this).html(originalButtonText);
+
+                }
+                if (!pincode) {
+                    errorFunc('Please Input Pincode');
+                    return;
+
+                }
+            try {
+            var url = "/checkavailibility/" + pincode;
+                const result = await fetchData(url);
+                // var response = $.parseJSON(result);
+                if (result.Status == "1") {
+                   
+
+
+                }
+                else
+                {
+                    $('#avabilitierror').show();
+                    $('#btndealer').show();
+                }
+                } catch (error) {
+                    console.error('Failed to post data:', error);
+                } finally {
+                    $(this).prop('disabled', false);
+                    $(this).html(originalButtonText);
+                    
+                }
+
+
+
+
+        })
+
+    </script>
+    }
     <!-- Body main Script end -->
 </body>
 
