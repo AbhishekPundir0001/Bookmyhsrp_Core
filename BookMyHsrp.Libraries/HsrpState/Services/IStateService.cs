@@ -10,5 +10,6 @@ namespace BookMyHsrp.Libraries.HsrpState.Services
     public interface IStateService
     {
         Task<IEnumerable<StateModels.Root>> GetAllStates();
+        Task<IEnumerable<StateModels.Cities>> GetCityOfState(string Id);
     }
 }

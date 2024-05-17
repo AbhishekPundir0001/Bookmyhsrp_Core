@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
+using System.Globalization;
 using System.Security.AccessControl;
 using System.Security.Cryptography;
 using static BookMyHsrp.Libraries.HsrpWithColorSticker.Models.HsrpColorStickerModel;
@@ -77,6 +78,11 @@ namespace BookMyHsrp.ReportsLogics.HsrpWithColorSticker
                 return vehicleValidationResponse;
             }
             string responseJson = await _hsrpColorStickerService.RosmertaApi(getVehicleRegno, getChassisNo, getEngineNo, "5UwoklBqiW");
+            if(responseJson== "Error While Calling Vahan Service - The remote server returned an error: (500) Internal Server Error.")
+            {
+                vehicleValidationResponse.message = "Error While Calling Vahan Service - The remote server returned an error: (500) Internal Server Error.";
+                return vehicleValidationResponse;
+            }
             VehicleDetails _vd = JsonConvert.DeserializeObject<VehicleDetails>(responseJson);
             if (_vd != null && _vd.stateCd != null && _vd.message != "Vehicle Not Found")
             {
@@ -493,22 +499,48 @@ namespace BookMyHsrp.ReportsLogics.HsrpWithColorSticker
                 try
                 {
                     string dateString = customerInfo.RegistrationDate;
-                    DateTime date = DateTime.ParseExact(dateString, "dd-MM-yyyy", System.Globalization.CultureInfo.InvariantCulture);
-                    string formattedDate = date.ToString("dd-MM-yyyy");
-
-                    IFormatProvider theCultureInfo = new System.Globalization.CultureInfo("en-GB", true);
-                    DateTime from_date = DateTime.ParseExact(formattedDate, "dd-MM-yyyy", theCultureInfo);
-                    DateTime to = DateTime.ParseExact("25-11-2019", "dd-MM-yyyy", theCultureInfo);
-                    string txt_total_days = ((from_date - to).TotalDays).ToString();
-                    int diffResult = int.Parse(txt_total_days.ToString());
-                    if (customerInfo.StateId != "25")
+                    IFormatProvider theCultureInfo = new CultureInfo("en-GB", true);
+                    var resultDateTime = DateTime.TryParseExact(dateString, "dd/MM/yyyy", theCultureInfo, DateTimeStyles.None
+                        , out var dt)
+                        ? dt
+                        : null as DateTime?;
+                    DateTime to = DateTime.ParseExact("25/11/2019", "dd/MM/yyyy", theCultureInfo);
+                    if (resultDateTime.HasValue)
                     {
-                        if (diffResult >= 0)
+
+                        //if State Orissa then check if order can be taken after 2019
+
+                        if (RunCheckIfOrderCanBeTakenAfter2019(stateId: getStateId))
                         {
-                            customerInformationresponseData.Message = "Vehicle owner's with vehicles manufactured after 1st April 2019, should contact their respective Automobile Dealers for HSRP affixation";
-                            return customerInformationresponseData;
+                            var txtTotalDays = ((resultDateTime.Value - to).TotalDays);
+                            if (txtTotalDays > 0)
+                            {
+                                customerInformationresponseData.Status = "false";
+                                customerInformationresponseData.Message = "Vehicle owner's with vehicles manufactured after 25th November 2019, should contact their respective Automobile Dealers for HSRP affixation.";
+                             //   customerInformationresponseData.data = customerInformationData;
+                                return customerInformationresponseData;
+                            }
+
                         }
+
                     }
+                    //string dateString = customerInfo.RegistrationDate;
+                    //DateTime date = DateTime.ParseExact(dateString, "dd-MM-yyyy", System.Globalization.CultureInfo.InvariantCulture);
+                    //string formattedDate = date.ToString("dd-MM-yyyy");
+
+                    //IFormatProvider theCultureInfo = new System.Globalization.CultureInfo("en-GB", true);
+                    //DateTime from_date = DateTime.ParseExact(formattedDate, "dd-MM-yyyy", theCultureInfo);
+                    //DateTime to = DateTime.ParseExact("25-11-2019", "dd-MM-yyyy", theCultureInfo);
+                    //string txt_total_days = ((from_date - to).TotalDays).ToString();
+                    //int diffResult = int.Parse(txt_total_days.ToString());
+                    //if (customerInfo.StateId != "25")
+                    //{
+                    //    if (diffResult >= 0)
+                    //    {
+                    //        customerInformationresponseData.Message = "Vehicle owner's with vehicles manufactured after 1st April 2019, should contact their respective Automobile Dealers for HSRP affixation";
+                    //        return customerInformationresponseData;
+                    //    }
+                    //}
                 }
                 catch (Exception ex)
                 {
@@ -661,6 +693,26 @@ namespace BookMyHsrp.ReportsLogics.HsrpWithColorSticker
             results = new List<ValidationResult>();
 
             return Validator.TryValidateObject(obj, new ValidationContext(obj), results, true);
+        }
+        public static bool RunCheckIfOrderCanBeTakenAfter2019(string stateId)
+        {
+
+            //Orissa
+
+            var dateValidationCheckFor2019 = false;
+            if (stateId == "25")
+            {
+
+                dateValidationCheckFor2019 = false;
+
+            }
+            else
+            {
+
+                dateValidationCheckFor2019 = true;
+            }
+            return dateValidationCheckFor2019;
+
         }
 
     }

@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Dapper;
 
 namespace BookMyHsrp.Libraries.HsrpState.Services
 {
@@ -24,5 +25,15 @@ namespace BookMyHsrp.Libraries.HsrpState.Services
             var result = await _databaseHelper.QueryAsync<StateModels.Root>(StateQueries.GetAllStates);
             return result;
         }
+        public async Task<IEnumerable<StateModels.Cities>> GetCityOfState(string StateId)
+        {
+            var parameter = new DynamicParameters();
+            parameter.Add("@StateId", StateId);
+            var result = await _databaseHelper.QueryAsync<StateModels.Cities>(StateQueries.GetAllStates);
+            return result;
+        }
+
+     
+     
     }
 }

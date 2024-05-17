@@ -23,5 +23,13 @@ namespace BookMyHsrp.Controllers.CommonController
             return resultGot;
 
         }
+        [Route("/city/{Id}")]
+        public async Task<dynamic> GetCityOfState(string Id)
+        {
+
+            var resultGot = await _allStatesService.GetCityOfState(Id);
+            return resultGot;
+
+        }
     }
 }

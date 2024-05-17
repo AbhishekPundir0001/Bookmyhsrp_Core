@@ -16,10 +16,11 @@ namespace BookMyHsrp.Libraries.HomeDelivery.Models
 
             public string DeliveryCity { set; get; }
             public string DeliveryState { set; get; }
-            public string StateId { set; get; }
-            public string DealerAffixationCenterId { set; get; }
+            public int StateId { set; get; }
+            public string DealerAffixationCenterId { set; get; } = "";
             public string DeliveryPoint { set; get; }
             public string StateName { set; get; }
+            public string Pincode { set; get; }
             public string StateShortName { set; get; }
         }
         public class HomeDeliveryCheckAvailabilityRequestdata
@@ -83,6 +84,45 @@ namespace BookMyHsrp.Libraries.HomeDelivery.Models
 
             [Required(ErrorMessage = "MobileNo. Required.")]
             public string notifyMobileNo { get; set; }
+        }
+        public class UpdateAvalibility
+        {
+            public string PinCode { get; set; }
+            public string MobileNo { get; set; }
+
+        }
+        public class HomeAddressData
+        {
+            [Required(ErrorMessage = "Please Input City")]
+            public string DeliveryCity { set; get; }
+            [Required(ErrorMessage = "Please Input State")]
+            public string StateName { set; get; }
+            [Required(ErrorMessage = "Please Input Pincode")]
+            public string Pincode { set; get; }
+            [Required(ErrorMessage = "Please Input AddressLine1")]
+            public string AddressLine1 { set; get; }
+            [Required(ErrorMessage = "Please Input AddressLine2")]
+            public string AddressLine2 { set; get; }
+            [Required(ErrorMessage = "Please Input Landmark")]
+            public string Landmark { set; get; }
+
+        }
+        public class SetHomeDeliverySession
+        {
+            public string Status { set; get; }
+            public string Message { set; get; }
+
+            public string DeliveryCity { set; get; }
+            public string DeliveryState { set; get; }
+            public int StateId { set; get; }
+            public string DealerAffixationCenterId { set; get; } = "";
+            public string DeliveryPoint { set; get; }
+            public string StateName { set; get; }
+            public string Pincode { set; get; }
+            public string StateShortName { set; get; }
+            public string AddressLine1 { set; get; }
+            public string AddressLine2 { set; get; }
+            public string Landmark { set; get; }
         }
 
 

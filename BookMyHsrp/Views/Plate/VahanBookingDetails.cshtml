@@ -702,7 +702,8 @@
                         $('#engineNo').attr('readonly', 'readonly');
                         $('#select-state').prop("disabled", true);
                         $('#divrcupload').hide();
-                        $('#regDate').val(response.VehRegDate);
+                            var date = convertDate(response.VehRegDate)
+                            $('#regDate').val(date);
                         // $('#regDate').vehRegDate));
                         if (response.Fuel == 'NOT APPLICABLE') {
                             $('#fueltype').removeAttr("disabled");
@@ -842,6 +843,15 @@
                
             }
         };
+            $(document).ready(function () {
+                $('#regDate').on('input', function () {
+                    var val = this.value;
+                    if (val.length === 2 || val.length === 5) {
+                        val += '/';
+                    }
+                    this.value = val;
+                });
+            });
           async  function uploadcsvfile() {
                 
                 //var myfile = document.getElementById("uploadfile");
@@ -1005,16 +1015,18 @@
                     }
                 }
             }
+            function convertDate(inputFormat) {
+                // Use a regular expression to split the date string
+                var parts = inputFormat.match(/(\d+)/g);
 
-            // function convertDate(inputFormat) {
-            //     //function pad(s) { return (s < 10) ? '0' + s : s; }
+                // Extract day, month, and year
+                var day = parseInt(parts[0], 10);
+                var month = parseInt(parts[1], 10);
+                var year = parseInt(parts[2], 10);
 
-            //     //var d = new Date(inputFormat);
-
-            //     //return [pad(d.getDate()), pad(d.getMonth() + 1), d.getFullYear()].join('/');
-
-            //     return inputFormat
-            // }
+                // Format the date as dd/mm/yyyy
+                return [day, month, year].join('/');
+            }
 
          
 

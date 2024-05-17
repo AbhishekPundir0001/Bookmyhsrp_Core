@@ -649,14 +649,21 @@ function bindHtmlForStateInSelect(data) {
     }
     let html = '';
     //add Select option
+    
     html += `<option value="">Select Vehicle Registration State</option>`;
     //html += `<option value="">All</option>`;
     data.forEach((item, index) => {
-        html += `<option value="${item.HSRP_StateID}">${item.HSRPStateName}</option>`;
+        let properCaseStateName = toProperCase(item.HSRPStateName);
+        html += `<option value="${item.HSRP_StateID}">${properCaseStateName}</option>`;
     });
     selectState.html(html);
     selectState.select2({
         theme: 'bootstrap-5'
+    });
+}
+function toProperCase(str) {
+    return str.replace(/\w\S*/g, function (txt) {
+        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
     });
 }
 function bindHtmlForStateInSelectById(result, data) {
@@ -676,7 +683,7 @@ function bindHtmlForStateInSelectById(result, data) {
     html += `<option value="">Select State</option>`;
     //html += `<option value="">All</option>`;
     result.forEach((item, index) => {
-        if (data === item.Id) {
+        if (data === item.HSRP_StateID.toString()) {
             isSelected = true
 
         }
@@ -684,7 +691,9 @@ function bindHtmlForStateInSelectById(result, data) {
             isSelected = false
 
         }
-        html += `<option value="${item.Id}" ${isSelected ? 'selected' : ''}>${item.StateName}</option>`;
+        let properCaseStateName = toProperCase(item.HSRPStateName);
+       // html += `<option value="${item.HSRP_StateID}">${properCaseStateName}</option>`;
+        html += `<option value="${item.HSRP_StateID}" ${isSelected ? 'selected' : ''}>${properCaseStateName}</option>`;
     });
     selectState.html(html);
     selectState.select2({

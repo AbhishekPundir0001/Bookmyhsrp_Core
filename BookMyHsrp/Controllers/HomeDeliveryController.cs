@@ -1,5 +1,6 @@
 ﻿using BookMyHsrp.ApiController.ApiHSRPWithColourSticker;
 using BookMyHsrp.Libraries.HomeDelivery.Services;
+using BookMyHsrp.Libraries.ResponseWrapper.Models;
 using BookMyHsrp.ReportsLogics.HsrpWithColorSticker;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Cryptography;
@@ -36,16 +37,16 @@ namespace BookMyHsrp.Controllers
                 check.Status = "0";
                 check.DeliveryCity = "";
                 check.DeliveryState = "";
-                check.Message= "Please Enter Delivery Pincode";
+                check.Message = "Please Enter Delivery Pincode";
             }
             var vehicleDetail = HttpContext.Session.GetString("UserSession");
             var details = HttpContext.Session.GetString("UserDetail");
             var data = System.Text.Json.JsonSerializer.Deserialize<GetSessionBookingDetails>(details);
             var vehicledetails = System.Text.Json.JsonSerializer.Deserialize<GetSessionBookingDetails>(vehicleDetail);
-            if(vehicledetails.OemId!=null && vehicledetails.StateId!=null)
+            if (vehicledetails.OemId != null && vehicledetails.StateId != null)
             {
                 var result = await IsHomeDeliveryAllowed(Convert.ToInt32(vehicledetails.StateId), "Home Delivery");
-                if(result==false)
+                if (result == false)
                 {
                     check.Status = "0";
                     check.Message = "Not Available";
@@ -56,13 +57,28 @@ namespace BookMyHsrp.Controllers
                 else
                 {
                     var checkpincode = await _homeDeliveryService.CheckPinCode(vehicledetails, pincode);
-                    if(checkpincode.Count>0)
+                    if (checkpincode.Count > 0)
                     {
                         var stateId = vehicledetails.StateId;
-                        if(stateId != checkpincode[0].StateId)
+                        int stateIdNew = 0;
+                        var DealerAffixationID = "";
+                        var StateName = "";
+                        var StateShortName = "";
+                        var DealerAffixationCenterCity = "";
+                        var hsrpstate = "";
+                        foreach (var state in checkpincode)
                         {
-                            var resultCheck = await IsHomeDeliveryAllowed(Convert.ToInt32(checkpincode[0].StateId), "Home Delivery");
-                            if(resultCheck == false)
+                            stateIdNew = state.StateID;
+
+                            StateName = state.StateName;
+                            DealerAffixationCenterCity = state.DealerAffixationCenterCity;
+                            hsrpstate = state.hsrpstate;
+                        }
+                        if (stateId != checkpincode[0].StateId)
+                        {
+
+                            var resultCheck = await IsHomeDeliveryAllowed(stateIdNew, "Home Delivery");
+                            if (resultCheck == false)
                             {
                                 check.Status = "0";
                                 check.Message = "Not Available";
@@ -74,15 +90,15 @@ namespace BookMyHsrp.Controllers
 
                         }
 
-                        check.StateId = checkpincode[0].StateId;
-                        check.DealerAffixationCenterId = checkpincode[0].DealerAffixationID;
-                        check.DeliveryPoint ="Home";
-                        check.StateName = checkpincode[0].StateName;
-                        check.StateShortName = checkpincode[0].StateShortName;
+                        check.StateId = stateIdNew;
+                        check.DeliveryPoint = "Home";
+                        check.StateName = StateName;
+                        check.StateShortName = StateShortName;
                         check.Status = "1";
                         check.Message = "Available";
-                        check.DeliveryCity = checkpincode[0].DealerAffixationCenterCity;
-                        check.DeliveryState = checkpincode[0].hsrpstate;
+                        check.DeliveryCity = DealerAffixationCenterCity;
+                        check.DeliveryState = hsrpstate;
+                        check.Pincode = pincode;
                     }
                     else
                     {
@@ -103,19 +119,39 @@ namespace BookMyHsrp.Controllers
                 check.DeliveryCity = "";
                 check.DeliveryState = "";
                 return Json(check);
-                
+
             }
 
             return Json(check);
 
         }
-        public  async Task<dynamic> IsHomeDeliveryAllowed(int stateId, string CheckFor)
+        [Route("/update-for-avalibility")]
+        [HttpPost]
+        public async Task<IActionResult> UpdateAvailibility([FromBody] UpdateAvalibility updateAvalibility)
+        {
+            var vehicleDetail = HttpContext.Session.GetString("UserSession");
+            var UserDetail = HttpContext.Session.GetString("UserDetail");
+            var vehicledetails = System.Text.Json.JsonSerializer.Deserialize<GetSessionBookingDetails>(vehicleDetail);
+            var userdetails = System.Text.Json.JsonSerializer.Deserialize<GetSessionBookingDetails>(UserDetail);
+
+
+            var result = await _homeDeliveryService.UpdateAvailibility(updateAvalibility, vehicledetails, userdetails);
+            return Ok(new Response<dynamic>(result.Message, false, ""));
+
+        }
+
+        public async Task<dynamic> IsHomeDeliveryAllowed(int stateId, string CheckFor)
         {
             bool IsAllow = false;
             try
             {
-                var Result = await _homeDeliveryService.IsHomeDeliveryAllowed(stateId, CheckFor); 
-                if (Result.ToString().ToUpper().Trim() == "Y")
+                var Result = await _homeDeliveryService.IsHomeDeliveryAllowed(stateId, CheckFor);
+                var checking = "";
+                foreach (var check in Result)
+                {
+                    checking = check.HomeDeliveryAllowed;
+                }
+                if (checking.ToString().ToUpper().Trim() == "Y")
                 {
                     IsAllow = true;
                 }
@@ -127,5 +163,34 @@ namespace BookMyHsrp.Controllers
             }
             return IsAllow;
         }
+        [Route("/home-delivery")]
+        [HttpPost]
+        public async Task<IActionResult> HomeDeliverData([FromBody] HomeAddressData homeAddressData)
+        {
+            var setHomeDeliverySession = new SetHomeDeliverySession();
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(new { Error = true, Message = GetModelErrorMessages() });
+            }
+
+            setHomeDeliverySession.Pincode = homeAddressData.Pincode;
+            setHomeDeliverySession.AddressLine1 = homeAddressData.AddressLine1;
+            setHomeDeliverySession.AddressLine2 = homeAddressData.AddressLine2;
+            setHomeDeliverySession.DeliveryCity = homeAddressData.DeliveryCity;
+            setHomeDeliverySession.StateName = homeAddressData.StateName;
+            setHomeDeliverySession.Landmark = homeAddressData.Landmark;
+            setHomeDeliverySession.Message = "Success";
+            return Json(setHomeDeliverySession);
+
+        }
+        private string GetModelErrorMessages()
+        {
+            var errorMessages = ModelState
+                .Where(ms => ms.Value.Errors.Count > 0)
+                .SelectMany(ms => ms.Value.Errors.Select(e => e.ErrorMessage))
+                .ToList();
+            return string.Join(", ", errorMessages);
+        }
     }
 }
+

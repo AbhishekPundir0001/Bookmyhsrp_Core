@@ -129,17 +129,17 @@
                         <div class="main-data main-bg2">
                             <div class="title-area d-flex justify-content-between">
                                 <h4 class="title">Home Delivery</h4>
-                                <a id="btndealer" href="#" class="submit-btn">
+                                <a href="@(Url.Action("DealerDelivery", "DealerDelivery"))" id="btndealer"  class="submit-btn">
                                     Dealer Appointment
                                 </a>
                             </div>
                             <div class="form-area">
                                 <div class="form-area-inner">
-                                    <div class="row align-items-center">
+                                    <div class="row align-items-center" id="checking">
                                         <div class="col-lg-4 col-md-6 col-sm-12">
                                             <div class="form-group">
                                                 <label class="form-label">Pin Code</label>
-                                                <input id="pincode" type="text" class="form-control">
+                                                <input maxlength="6" id="pincode" type="text" class="form-control">
                                             </div>
                                         </div>
                                         <div class="col-lg-4 col-md-6 col-sm-12">
@@ -149,15 +149,16 @@
                                         </div>
                                     </div>
                                     <div class="row" >
-                                        <div id="avabilitierror">
-                                        <p class="status-p">Currently service is not available in this area. Enter your mobile number,<br>So when service resume on this pincode we ping you back!</p>
+                                        <div >
+                                        <p id="avabilitierror" class="status-p">Currently service is not available in this area. Enter your mobile number,<br>So when service resume on this pincode we ping you back!</p>
+                                            <p id="avabilitiThankyou" class="status-p" style="Color:Green">Thank you. You will be updated as soon as the appointment system is available. !</p>
                                         </div>
                                         <div class="col-lg-4 col-md-6 col-sm-12" id="mob">
                                             <div class="form-group">
                                                 <label class="form-label">Mobile No.</label>
-                                                <input type="number" class="form-control">
+                                                <input maxlength="10" id="mobileNo" type="number" class="form-control">
                                             </div>
-                                            <button type="button" class="submit-btn me-3">
+                                            <button id="submit-mobile" type="button" class="submit-btn me-3">
                                                 Submit
                                             </button>
                                             <button type="reset" class="reset-btn">
@@ -175,45 +176,45 @@
                                                                         </div>
                                     -->
                                     <div class="row" id="details">
-                                        <div class="col-lg-4 col-md-6 col-sm-12">
+                                       <div class="col-lg-4 col-md-6 col-sm-12">
                                             <div class="form-group">
                                                 <label class="form-label">Pincode</label>
-                                                <input type="number" class="form-control">
+                                                <input id="pincodeNew" type="number" class="form-control">
                                             </div>
-                                        </div>
+                                        </div> 
                                         <div class="col-lg-4 col-md-6 col-sm-12">
                                             <div class="form-group">
                                                 <label class="form-label">City</label>
-                                                <input type="text" class="form-control">
+                                                <input id="city" type="text" class="form-control">
                                             </div>
                                         </div>
                                         <div class="col-lg-4 col-md-6 col-sm-12">
                                             <div class="form-group">
                                                 <label class="form-label">State</label>
-                                                <input type="text" class="form-control">
+                                                <input id="state" type="text" class="form-control">
                                             </div>
                                         </div>
                                         <div class="col-lg-4 col-md-6 col-sm-12">
                                             <div class="form-group">
                                                 <label class="form-label">Address Line 1*</label>
-                                                <input type="text" class="form-control">
+                                                <input id="addressline1" type="text" class="form-control">
                                             </div>
                                         </div>
                                         <div class="col-lg-4 col-md-6 col-sm-12">
                                             <div class="form-group">
                                                 <label class="form-label">Address Line 2*</label>
-                                                <input type="text" class="form-control">
+                                                <input id="addressline2" type="text" class="form-control">
                                             </div>
                                         </div>
                                         <div class="col-lg-4 col-md-6 col-sm-12">
                                             <div class="form-group">
                                                 <label class="form-label">Landmark</label>
-                                                <input type="text" class="form-control">
+                                                <input id="lamdmark" type="text" class="form-control">
                                             </div>
                                         </div>
 
                                         <div class="col-lg-4">
-                                            <button type="button" class="submit-btn me-3">
+                                            <button id="btn-submit-home-delivery-data" type="button" class="submit-btn me-3">
                                                 Submit
                                             </button>
                                             <button type="reset" class="reset-btn">
@@ -246,6 +247,7 @@
             $('#details').hide();
             $('#btndealer').hide();
             $('#mob').hide();
+            $('#avabilitiThankyou').hide();
         $('.adds-carousel').owlCarousel({
             loop: true,
             margin: 10,
@@ -290,16 +292,24 @@
             try {
             var url = "/checkavailibility/" + pincode;
                 const result = await fetchData(url);
-                // var response = $.parseJSON(result);
-                if (result.Status == "1") {
-                   
+                 //var response = $.parseJSON(result);
+                    if (result.Status == "1") {
 
-
-                }
+                        $('#details').show();
+                        $('#checking').hide();
+                        $('#city').val(result.DeliveryCity);
+                        $('#city').attr('readonly', 'readonly');
+                        
+                        $('#state').val(result.DeliveryState);
+                        $('#state').attr('readonly', 'readonly');
+                        $('#pincodeNew').val(result.Pincode);
+                        $('#pincodeNew').attr('readonly', 'readonly');
+                    }
                 else
                 {
                     $('#avabilitierror').show();
                     $('#btndealer').show();
+                    $('#mob').show();
                 }
                 } catch (error) {
                     console.error('Failed to post data:', error);
@@ -308,11 +318,108 @@
                     $(this).html(originalButtonText);
                     
                 }
+              })
 
+        $('#submit-mobile').click(async function () {
+            $(this).prop('disabled', true);
+            var originalButtonText = $(this).html();
 
+            $(this).html('<span class="spinner-border spinner-border-sm"></span> Processing...');
+            var pincode = $('#pincode').val();
+            var mobileNo = $('#mobileNo').val();
 
+            const errorFunc = (title) => {
+                Toast.fire({
+                    icon: 'error',
+                    title: title
+                })
+                $(this).prop('disabled', false);
+                $(this).html(originalButtonText);
 
-        })
+            }
+            if (!pincode) {
+                errorFunc('Please Input Pincode');
+                return;
+
+            }
+            try {
+                var url = '/update-for-avalibility';
+                const data = { PinCode: pincode, MobileNo: mobileNo }
+                const result = await postData(url, data);
+                    if (result.Data == "Success") {
+                        $('#avabilitiThankyou').show();
+                        $('#avabilitierror').hide();
+                        $('#mobileNo').val('');
+                }
+                } catch (error) {
+                    console.error('Failed to post data:', error);
+                } finally {
+                    $(this).prop('disabled', false);
+                    $(this).html(originalButtonText);
+
+                }
+        });
+            $('#btn-submit-home-delivery-data').click(async function () {
+                // handleButtonClickApproved.call(this, '/plate/details/validateRequired', postData, (result) => {
+                handleButtonClickApproved.call(this, '/home-delivery', postData, (result) => {
+
+                })
+            });
+        async function handleButtonClickApproved(url, postData, isSuccessFunc) {
+
+            $(this).prop('disabled', true);
+            var originalButtonText = $(this).html();
+
+            $(this).html('<span class="spinner-border spinner-border-sm"></span> Processing...');
+            var pincode = $('#pincodeNew').val();
+            var city = $('#city').val();
+            var state = $('#state').val();
+            var addressline1 = $('#addressline1').val();
+            var addressline2 = $('#addressline2').val();
+            var landmark = $('#lamdmark').val();
+
+            const errorFunc = (title) => {
+                Toast.fire({
+                    icon: 'error',
+                    title: title
+                })
+                $(this).prop('disabled', false);
+                $(this).html(originalButtonText);
+
+            }
+            if (!city) {
+                errorFunc("Please Input City");
+                return;
+            }
+            if (!state) {
+                errorFunc("Please Input state");
+                return;
+            }
+            if (!addressline1) {
+                errorFunc("Please Input AddressLine 1");
+                return;
+            }
+            if (!addressline2) {
+                errorFunc("Please Input AddressLine 2");
+
+                return;
+            }
+            if (!landmark) {
+                errorFunc("Please Input Landmark");
+                return;
+            }
+            const data = { Pincode: pincode, DeliveryCity: city, StateName: state, AddressLine1: addressline1, AddressLine2: addressline2, Landmark: landmark }
+            try {
+                const result = await postData(url, data);
+            }
+            catch (error) {
+                console.error('Failed to post data:', error);
+            } finally {
+                $(this).prop('disabled', false);
+                $(this).html(originalButtonText);
+
+            }
+        }
 
     </script>
     }

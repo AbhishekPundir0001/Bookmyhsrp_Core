@@ -77,6 +77,10 @@ namespace BookMyHsrp.Libraries.HsrpWithColorSticker.Models
             public string StateName { get; set; } = "";
             public string OemVehicleType { get; set; } = "";
             public string OemId { get; set; } = "";
+            public string CustomerName { get; set; } = "";
+            public string CustomerEmail { get; set; } = "";
+            public string CustomerBillingAddress { get; set; } = "";
+            public string CustomerCity { get; set; } = "";
         }
         public class VehicleValidation
         {

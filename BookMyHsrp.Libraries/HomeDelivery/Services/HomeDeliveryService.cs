@@ -64,5 +64,27 @@ namespace BookMyHsrp.Libraries.HomeDelivery.Services
                  HomeDeliveryQueries.CheckPincode, parameters);
             return result;
         }
+        public async Task<ResponseDto> UpdateAvailibility(dynamic updateAvalibility,dynamic session,dynamic userdetails)
+        {
+
+            ResponseDto response = new ResponseDto();
+            var parameters = new DynamicParameters();
+            parameters.Add("@Pincode", updateAvalibility.PinCode);
+            parameters.Add("@PincodeMobileNo", updateAvalibility.MobileNo);
+            parameters.Add("@RegNo", session.VehicleRegNo);
+            parameters.Add("@ChassisNo", session.ChassisNo);
+            parameters.Add("@EngineNo", session.EngineNo);
+            parameters.Add("@OwnerName", userdetails.CustomerName);
+            parameters.Add("@EmailId", userdetails.CustomerEmail);
+            parameters.Add("@MobileNo", userdetails.CustomerMobile);
+            parameters.Add("@BillingAddress", userdetails.CustomerBillingAddress);
+            parameters.Add("@State", session.StateName);
+            parameters.Add("@City", session.CustomerCity);
+            var result = await _databaseHelperPrimary.QueryAsync<ResponseDto>(
+                 HomeDeliveryQueries.UpdateAvailibility, parameters);
+            response.Message = "Success";
+            return response;
+        }
     }
+    
 }
