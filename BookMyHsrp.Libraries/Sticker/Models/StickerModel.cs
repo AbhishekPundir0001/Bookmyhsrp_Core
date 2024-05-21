@@ -1,16 +1,15 @@
-﻿using Newtonsoft.Json.Linq;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static BookMyHsrp.Libraries.HsrpWithColorSticker.Models.HsrpColorStickerModel;
 using static BookMyHsrp.Libraries.OemMaster.Models.OemMasterModel;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
-namespace BookMyHsrp.Libraries.HsrpWithColorSticker.Models
+namespace BookMyHsrp.Libraries.Sticker.Models
 {
-    public class HsrpColorStickerModel
+    public class StickerModel
     {
         public class VahanDetailsDto
         {
@@ -21,16 +20,19 @@ namespace BookMyHsrp.Libraries.HsrpWithColorSticker.Models
             //[StringLength(5, ErrorMessage = "Chassis No is Not Valid")]
             public string ChassisNo { get; set; }
             [Required(ErrorMessage = "EngineNo No is required.")]
-           // [StringLength(5, ErrorMessage = "EngineNo No is Not Valid")]
+            // [StringLength(5, ErrorMessage = "EngineNo No is Not Valid")]
             public string EngineNo { get; set; }
             [Required(ErrorMessage = "State is required.")]
             public string StateId { get; set; }
             public string StateName { get; set; }
             public bool isReplacement { get; set; } = false;
-
-
-
+            [Required(ErrorMessage = "Front Laser Code is required.")]
+            public string HsrpFrontLaserCode { get; set; }
+            [Required(ErrorMessage = "Rear Laser Code is required.")]
+            public string HsrpRearLaserCode { get; set; }
         }
+
+
         public class VehicleDetails
         {
             public string message { get; set; }
@@ -47,19 +49,16 @@ namespace BookMyHsrp.Libraries.HsrpWithColorSticker.Models
             public VehicleValidation data;
         }
 
-        
+
         public class ResponseDto
         {
             public string Message;
             public string status;
             public string message;
+            public string StateidVahan;
+            public string StateName;
+            public string UploadFlag;
             public VehicleValidation data;
-        }
-
-        public class ResponseSticker
-        {
-            public string Message { get; set; }
-
         }
 
         public class GetSessionBookingDetails
@@ -83,10 +82,6 @@ namespace BookMyHsrp.Libraries.HsrpWithColorSticker.Models
             public string StateName { get; set; } = "";
             public string OemVehicleType { get; set; } = "";
             public string OemId { get; set; } = "";
-            public string CustomerName { get; set; } = "";
-            public string CustomerEmail { get; set; } = "";
-            public string CustomerBillingAddress { get; set; } = "";
-            public string CustomerCity { get; set; } = "";
         }
         public class VehicleValidation
         {
@@ -119,7 +114,7 @@ namespace BookMyHsrp.Libraries.HsrpWithColorSticker.Models
             public List<OemVehicleTypeList> oemvehicletypelist { get; set; }
 
         }
-      
+
 
     }
 }

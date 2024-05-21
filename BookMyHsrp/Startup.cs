@@ -25,6 +25,8 @@ using System.ComponentModel.DataAnnotations;
 using BookMyHsrp.Controllers.CommonController;
 using BookMyHsrp.ReportsLogics.Common;
 using BookMyHsrp.Libraries.HomeDelivery.Services;
+using BookMyHsrp.ReportsLogics.Sticker;
+using BookMyHsrp.Libraries.Sticker.Services;
 namespace BookMyHsrp
 {
     public class Startup
@@ -130,14 +132,16 @@ namespace BookMyHsrp
             services.AddTransient<IHsrpWithColorStickerService, HsrpWithColorStickerService>();
             services.AddTransient<IExceptionHandler, ExceptionMiddleWare>();
             services.AddTransient<IGenerateOtpService, GenerateOtpService>();
+            services.AddTransient<IStickerService, StickerService>();
             services.AddScoped<HsrpWithColorStickerConnector>();
             services.AddScoped<FileUploadConnector>();
             services.AddScoped<HsrpWithColorStickerService>();
             services.AddScoped<FetchDataAndCache, FetchDataAndCache>();
             services.AddScoped<HomeDeliveryService>();
-            
+            services.AddScoped<StickerConnector>();
+
             // services.AddSingleton<HSRP.Redis.ConnectionHelper>();
-            
+
             services.AddResponseCompression(options =>
             {
                 options.EnableForHttps = true;

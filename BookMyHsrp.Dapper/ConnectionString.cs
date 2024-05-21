@@ -10,6 +10,8 @@ namespace BookMyHsrp.Dapper
     {
         public string PrimaryDatabaseHO { get; set; }
         public string SecondaryDatabaseHO { get; set; }
+        public string DLConnectionString { get; set; }
+        public string HRConnectionString { get; set; }
     }
     public class DynamicDataDto
     {
