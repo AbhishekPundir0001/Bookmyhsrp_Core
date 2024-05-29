@@ -36,6 +36,8 @@ namespace BookMyHsrp.ApiController.ApiHSRPWithColourSticker
                       "Data Received."));
 
         }
+
+
         [HttpPost]
         [Route("report/SetSessionBookingDetail")]
         public async Task<IActionResult> SessionBookingDetails([FromBody] GetSessionBookingDetails requestDto)
