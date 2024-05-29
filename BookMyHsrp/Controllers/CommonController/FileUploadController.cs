@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.Net.Http.Headers;
 using System.Text;
-using static BookMyHsrp.Libraries.HsrpWithColorSticker.Models.HsrpColorStickerModel;
+using static BookMyHsrp.Libraries.HsrpWithColorSticker.Models.ReplacementModel;
 
 namespace BookMyHsrp.Controllers.CommonController
 {
@@ -73,7 +73,7 @@ namespace BookMyHsrp.Controllers.CommonController
             var response = new ResponseSticker();
             try
             {
-                if (fileUploadModel.FrontLaserPhoto == null || fileUploadModel.RearLaserPhoto == null || fileUploadModel.FrontPlatePhoto == null || fileUploadModel.RearPlatePhoto == null)
+                if (fileUploadModel.FrontLaserPhoto == null)
                 {
                     response.Message = "Please upload File";
                 }
@@ -82,13 +82,13 @@ namespace BookMyHsrp.Controllers.CommonController
 
                     var VehicleRegNo = string.Empty;
                     var getSession = new RootDtoSticker();
-                    if (HttpContext.Session.GetString("UserDetail") != null)
-                    {
-                        var data = HttpContext.Session.GetString("UserSession");
-                        var vehicledetails = System.Text.Json.JsonSerializer.Deserialize<GetSessionBookingDetails>(data);
+                    //if (HttpContext.Session.GetString("UserDetail") != null)
+                    //{
+                    //    var data = HttpContext.Session.GetString("UserSession");
+                    //    var vehicledetails = System.Text.Json.JsonSerializer.Deserialize<GetSessionBookingDetails>(data);
 
-                        VehicleRegNo = vehicledetails.VehicleRegNo;
-                    }
+                    //    VehicleRegNo = vehicledetails.VehicleRegNo;
+                    //}
                     if (!Directory.Exists(path))
                     {
                         Directory.CreateDirectory(path);
@@ -107,6 +107,7 @@ namespace BookMyHsrp.Controllers.CommonController
                     sz3 = sz3 / 1024;
                     sz4 = sz4 / 1024;
 
+
                     if (!IsImage(Path.GetExtension(_frontLaserPhoto.FileName)) || !IsImage(Path.GetExtension(_rearLaserPhoto.FileName)) || !IsImage(Path.GetExtension(_fronPlatePhoto.FileName)) || !IsImage(Path.GetExtension(_rearPlatePhoto.FileName)))
                     {
                         //return BadRequest("Error! Invalid image file format, file should be .jpg|.jpeg|.bmp|.png|.pdf!!");
@@ -121,10 +122,13 @@ namespace BookMyHsrp.Controllers.CommonController
                     {
                         if (_frontLaserPhoto != null && _frontLaserPhoto.Length > 0 && _rearLaserPhoto != null && _rearLaserPhoto.Length > 0 && _fronPlatePhoto != null && _fronPlatePhoto.Length > 0 && _rearPlatePhoto != null && _rearPlatePhoto.Length > 0)
                         {
-                            var frontLaserfilePath = Path.Combine(path, "Front" + DateTime.Now.ToString("yyyyMMddHHmmssfff") + "_" + RandomString(4) + Path.GetExtension(_rearLaserPhoto.FileName)); // Set the file path
-                            var rearLaserfilePath = Path.Combine(path, "Rear" + DateTime.Now.ToString("yyyyMMddHHmmssfff") + "_" + RandomString(4) + Path.GetExtension(_rearLaserPhoto.FileName));
-                            var frontPlatefilePath = Path.Combine(path, "File1" + DateTime.Now.ToString("yyyyMMddHHmmssfff") + "_" + RandomString(4) + Path.GetExtension(_rearLaserPhoto.FileName));
-                            var rearPlatefilePath = Path.Combine(path, "File2" + DateTime.Now.ToString("yyyyMMddHHmmssfff") + "_" + RandomString(4) + Path.GetExtension(_rearLaserPhoto.FileName));
+                            //string _dt = DateTime.Now.ToString("dd-MM-yyyy");
+                            //DateTime.Now.ToString("yyyyMMddHHmmssfff")
+                            var _dateFormate = HttpContext.Session.GetString("DateFormate");
+                            var frontLaserfilePath = Path.Combine(path, "Front" + _dateFormate + "_" + RandomString(4) + Path.GetExtension(_frontLaserPhoto.FileName)); // Set the file path
+                            var rearLaserfilePath = Path.Combine(path, "Rear" + _dateFormate + "_" + RandomString(4) + Path.GetExtension(_rearLaserPhoto.FileName));
+                            var frontPlatefilePath = Path.Combine(path, "File1" + _dateFormate + "_" + RandomString(4) + Path.GetExtension(_fronPlatePhoto.FileName));
+                            var rearPlatefilePath = Path.Combine(path, "File2" + _dateFormate + "_" + RandomString(4) + Path.GetExtension(_rearPlatePhoto.FileName));
 
                             using (var stream = new FileStream(frontLaserfilePath, FileMode.Create))
                             {
@@ -162,7 +166,7 @@ namespace BookMyHsrp.Controllers.CommonController
             }
             catch (Exception ex)
             {
-                return BadRequest("No file uploaded");
+                return BadRequest("No file uploaded"+ ex);
             }
             var jsonSerializer = System.Text.Json.JsonSerializer.Serialize(response);
             return Json(jsonSerializer);

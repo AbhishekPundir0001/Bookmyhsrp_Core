@@ -110,6 +110,13 @@ namespace BookMyHsrp.Controllers
                     Message = result.data.message
                 };
 
+                var resultDateFormate = await _StickerConnector.DateFormate();
+                string DateFormate = resultDateFormate[0].FormattedDate;
+                if (resultDateFormate.Count > 0)
+                {
+                    HttpContext.Session.SetString("DateFormate", DateFormate);
+                }
+
                 var GetRootObjectSession = HttpContext.Session.GetString("UserSession");
                 jsonSerializer = System.Text.Json.JsonSerializer.Serialize(rootDto);
                 HttpContext.Session.SetString("UserSession", jsonSerializer);
@@ -150,7 +157,7 @@ namespace BookMyHsrp.Controllers
                 resultGot = await _StickerConnector.CustomerInfo(info, detailsSession);
                 if (resultGot.Message == "Success")
                 {
-                    var getSession = new RootDto();
+                    var getSession = new ReplacementRootDto();
                     getSession.CustomerBillingAddress = info.BillingAddress.Replace("'", "");
                     getSession.BhartStage = info.BharatStage;
                     getSession.CustomerName = info.OwnerName;

@@ -27,6 +27,7 @@ using BookMyHsrp.ReportsLogics.Common;
 using BookMyHsrp.Libraries.HomeDelivery.Services;
 using BookMyHsrp.ReportsLogics.Sticker;
 using BookMyHsrp.Libraries.Sticker.Services;
+using BookMyHsrp.Libraries.HomeDeliverySticker.Services;
 namespace BookMyHsrp
 {
     public class Startup
@@ -133,6 +134,7 @@ namespace BookMyHsrp
             services.AddTransient<IExceptionHandler, ExceptionMiddleWare>();
             services.AddTransient<IGenerateOtpService, GenerateOtpService>();
             services.AddTransient<IStickerService, StickerService>();
+            services.AddTransient<IHomeDeliveryStickerService, HomeDeliveryStickerService>();
             services.AddScoped<HsrpWithColorStickerConnector>();
             services.AddScoped<FileUploadConnector>();
             services.AddScoped<HsrpWithColorStickerService>();
