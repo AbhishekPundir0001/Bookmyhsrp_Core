@@ -14,22 +14,26 @@ namespace BookMyHsrp.Libraries.HsrpState.Services
     public class StateService : IStateService
     {
         private readonly DapperRepository _databaseHelper;
+        private readonly DapperRepository _databaseHelperPrimary;
         private readonly string _connectionString;
+        private readonly string _primaryDatabaseHO;
         public StateService(IOptionsSnapshot<ConnectionString> connectionStringOptions)
         {
             _connectionString = connectionStringOptions.Value.SecondaryDatabaseHO;
+            _primaryDatabaseHO = connectionStringOptions.Value.PrimaryDatabaseHO;
             _databaseHelper = new DapperRepository(_connectionString);
+            _databaseHelperPrimary = new DapperRepository(_primaryDatabaseHO);
         }
         public async Task<IEnumerable<StateModels.Root>> GetAllStates()
         {
             var result = await _databaseHelper.QueryAsync<StateModels.Root>(StateQueries.GetAllStates);
             return result;
         }
-        public async Task<IEnumerable<StateModels.Cities>> GetCityOfState(string StateId)
+        public async Task<IEnumerable<StateModels.Cities>> GetCityOfState(int StateId)
         {
             var parameter = new DynamicParameters();
-            parameter.Add("@StateId", StateId);
-            var result = await _databaseHelper.QueryAsync<StateModels.Cities>(StateQueries.GetAllStates);
+            parameter.Add("@HsrpStateid", StateId);
+            var result = await _databaseHelperPrimary.QueryAsync<StateModels.Cities>(StateQueries.GetCities, parameter);
             return result;
         }
 

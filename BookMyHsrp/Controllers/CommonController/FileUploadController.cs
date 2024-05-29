@@ -77,7 +77,7 @@ namespace BookMyHsrp.Controllers.CommonController
                 {
                     response.Message = "Please upload File";
                 }
-                else 
+                else
                 {
 
                     var VehicleRegNo = string.Empty;
@@ -166,7 +166,7 @@ namespace BookMyHsrp.Controllers.CommonController
             }
             catch (Exception ex)
             {
-                return BadRequest("No file uploaded"+ ex);
+                return BadRequest("No file uploaded" + ex);
             }
             var jsonSerializer = System.Text.Json.JsonSerializer.Serialize(response);
             return Json(jsonSerializer);

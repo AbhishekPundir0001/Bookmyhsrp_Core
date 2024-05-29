@@ -105,6 +105,11 @@ namespace BookMyHsrp.Libraries.HsrpWithColorSticker.Models
         public string Message { get; set; }
         public string VehicleType { get; set; }
         public string VehicleClass_imgPath { get; set; }
+        public string VehicleType_imgPath { get; set; }
+        public string IsOTPVerify { get; set; }
+        public string OTPno { get; set; }
+        public string OrderType { get; set; }
+        public string OEMImgPath { get; set; }
         public string VehicleTypeId { get; set; }
         public string VehicleCat { get; set; }
         public string Vehiclecategoryid { get; set; }

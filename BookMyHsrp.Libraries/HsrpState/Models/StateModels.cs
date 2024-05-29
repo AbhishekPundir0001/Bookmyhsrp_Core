@@ -16,7 +16,7 @@ namespace BookMyHsrp.Libraries.HsrpState.Models
         }
         public class Cities
         {
-            public string City { get; set; }
+            public string District { get; set; }
 
         }
     }

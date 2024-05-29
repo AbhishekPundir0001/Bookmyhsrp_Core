@@ -61,6 +61,7 @@ namespace BookMyHsrp.ReportsLogics.HsrpWithColorSticker
 
             var statename = string.Empty;
             var stateshortname = string.Empty;
+            var StateIdBackup = string.Empty;
             var oemImgPath = string.Empty;
             var oemid = string.Empty;
             int stateID = getStateId;
@@ -68,6 +69,7 @@ namespace BookMyHsrp.ReportsLogics.HsrpWithColorSticker
             {
                 stateshortname = data.HSRPStateShortName;
                 statename= data.HSRPStateName;
+                StateIdBackup = requestDto.StateId;
             }
             var checkOrderExists = await _hsrpColorStickerService.CheckOrderExixts(getVehicleRegno, getChassisNo, getEngineNo);
             if (checkOrderExists.Count > 0 && requestDto.isReplacement == false)
@@ -166,6 +168,7 @@ namespace BookMyHsrp.ReportsLogics.HsrpWithColorSticker
                         vehicleValidationData.non_homo = "N";
                         vehicleValidationData.stateid = getStateId.ToString();
                         vehicleValidationData.statename = statename;
+                        vehicleValidationData.StateIdBackup = StateIdBackup;
                         vehicleValidationData.stateshortname = stateshortname;
                         vehicleValidationData.oem_img_path = oemImgPath;
                         vehicleValidationData.oemid = oemid;
@@ -672,6 +675,12 @@ namespace BookMyHsrp.ReportsLogics.HsrpWithColorSticker
                     customerInformationresponseData.data.SessionCity = "";
                     customerInformationresponseData.data.SessionGST = "";
                     customerInformationresponseData.Message = "Success";
+                    customerInformationresponseData.data.IsOTPVerify = session.IsOTPVerify;
+                    customerInformationresponseData.data.OTPno = session.OTPno;
+                    customerInformationresponseData.data.OrderType = session.OrderType;
+                    customerInformationresponseData.data.OEMImgPath = session.OEMImgPath;
+                    customerInformationresponseData.data.VehicleType_imgPath= session.VehicleType_imgPath;
+                   
                 }
 
                 catch (Exception ex)

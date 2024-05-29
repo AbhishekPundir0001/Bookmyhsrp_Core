@@ -7,7 +7,7 @@ using static BookMyHsrp.Libraries.Sticker.Models.StickerModel;
 
 namespace BookMyHsrp.Libraries.HomeDeliverySticker.Services
 {
-    public interface IHomeDeliveryStickerService 
+    public interface IHomeDeliveryStickerService
     {
         Task<dynamic> IsHomeDeliveryAllowed(int stateId, string CheckFor);
         Task<dynamic> CheckPinCode(dynamic sessionValue, string pincode);

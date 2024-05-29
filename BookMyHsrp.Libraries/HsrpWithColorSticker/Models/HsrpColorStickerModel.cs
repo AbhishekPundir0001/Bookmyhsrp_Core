@@ -74,6 +74,7 @@ namespace BookMyHsrp.Libraries.HsrpWithColorSticker.Models
             public string CustomerMobile { get; set; }
             public string FilePath { get; set; } = "";
             public string BillingAddress { get; set; } = "";
+            public string ReplacementType { get; set; } = "";
             public string RcFileName { get; set; } = "";
             public string MakerVahan { get; set; } = "";
             public string VehicleTypeVahan { get; set; } = "";
@@ -87,10 +88,27 @@ namespace BookMyHsrp.Libraries.HsrpWithColorSticker.Models
             public string CustomerEmail { get; set; } = "";
             public string CustomerBillingAddress { get; set; } = "";
             public string CustomerCity { get; set; } = "";
+            public string OrderType { get; set; } = "";
+            public string VehicleCategory { get; set; } = "";
+            public string VehicleType { get; set; } = "";
+            public string VehicleClass { get; set; } = "";
+            public string StateIdBackup { get; set; } = "";
+            public string VehicleCategoryId { get; set; } = "";
+            public string FuelType { get; set; } = "";
+            public string DeliveryPoint { get; set; } = "";
+            public string PlateSticker { get; set; } = "";
+            public string NonHomo { get; set; } = "";
+            public string VehicleTypeId { get; set; } = "";
+            public string DealerAffixationCenterId { get; set; }
+            public string SelectedSlotID { get; set; }
+            public string SelectedSlotDate { get; set; }
+            public string SelectedSlotTime { get; set; }
+            public string Affix { get; set; }
         }
         public class VehicleValidation
         {
             public string fuel { get; set; }
+            public string StateIdBackup { get; set; }
             public string maker { get; set; }
             public string non_homo { get; set; } = "N";
             public string upload_flag { get; set; } = "N";

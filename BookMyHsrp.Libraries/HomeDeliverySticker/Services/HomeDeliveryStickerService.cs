@@ -11,7 +11,7 @@ using static BookMyHsrp.Libraries.Sticker.Models.StickerModel;
 
 namespace BookMyHsrp.Libraries.HomeDeliverySticker.Services
 {
-    public  class HomeDeliveryStickerService :IHomeDeliveryStickerService
+    public class HomeDeliveryStickerService : IHomeDeliveryStickerService
     {
         private readonly FetchDataAndCache _fetchDataAndCache;
         //private readonly AppSettings _appSettings;

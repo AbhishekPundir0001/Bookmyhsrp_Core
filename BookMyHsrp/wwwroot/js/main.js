@@ -1,4 +1,4 @@
-// Owl Carousel
+﻿// Owl Carousel
 
 $('.adds-carousel').owlCarousel({
     loop: true,
@@ -42,16 +42,22 @@ $('.book-carousel').owlCarousel({
 
 $(window).scroll(function(){
         if($(this).scrollTop() > 100){
+$(window).scroll(function () {
+    if ($(this).scrollTop() > 100) {
             $('.mainmenu__wrap').addClass('sticky__header')
         } else{
+    } else {
             $('.mainmenu__wrap').removeClass('sticky__header')
         }
     });
 
     $(window).scroll(function(){
         if($(this).scrollTop() > 100){
+$(window).scroll(function () {
+    if ($(this).scrollTop() > 100) {
             $('.htc__header__top').addClass('sticky__mobile')
         } else{
+    } else {
             $('.htc__header__top').removeClass('sticky__mobile')
         }
     });
@@ -60,6 +66,7 @@ $(window).scroll(function(){
 //Calender
 
 $(function() {
+$(function () {
 
   rome(inline_cal, { time: false });
 
