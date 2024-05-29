@@ -11,9 +11,9 @@
     <link rel="apple-touch-icon" href="apple-touch-icon.html">
 
     <!-- All css files are included here. -->
-    <link rel="stylesheet" href="~/assets/css/bootstrap.min.css">
-    <link rel="stylesheet" href="~/assets/css/style.css">
-    <link rel="stylesheet" href="~/assets/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="~/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/css/style.css">
+    <link rel="stylesheet" href="~/css/owl.carousel.min.css">
     <!--     <link rel="stylesheet" href="assets/css/owl.theme.default.min.css"> -->
 
 
@@ -103,13 +103,10 @@
                                         @await Html.PartialAsync("~/Views/PartialView/_SelectStatePartial.cshtml")
                                         <div class="col-lg-2 col-md-6 col-sm-12">
                                             <div class="form-group">
-                                                <label class="form-label">Select City</label>
-                                                <select class="form-select">
-                                                    <option selected="selected" value="Select Vehicle Registration State">All</option>
-                                                    <option value="33">Andaman And Nicobar Islands</option>
-                                                    <option value="9">Andhra Pradesh</option>
-                                                    <option value="12">Assam</option>
-                                                    <option value="1">Bihar</option>
+                                                <label class="form-label">City</label>
+                                                <select id="select-city" class="form-select">
+                                                    <option selected="selected" value="Select Vehicle Registration City">All</option>
+                                                   
 
                                                 </select>
                                             </div>
@@ -133,14 +130,14 @@
                                 <div class="row">
                                     <div class="col-sm-12">
                                         <div class="accordion" id="accordionExample">
-                                            <div class="accordion-item">
+                                           @*  <div class="accordion-item">
                                                 <h2 class="accordion-header">
                                                     <!--
                                                                                                         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
                                                                                                             Abishek motors (ring road honda mt) - karampura
                                                                                                         </button>
                                                     -->
-                                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                                    <button id="dealername" class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                                                         Abishek motors (ring road honda mt) - karampura
                                                     </button>
                                                 </h2>
@@ -151,7 +148,7 @@
                                                                 <ul class="area-ul">
                                                                     <li>
                                                                         <span>City:</span><br>
-                                                                        <span class="cd">Rohini</span>
+                                                                        <span id="city" class="cd"></span>
                                                                     </li>
                                                                     <li>
                                                                         <span>Address:</span><br>
@@ -287,11 +284,11 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div> *@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> 
 
                             <!--
                                                         <div class="accordion" id="accordionExample">
@@ -340,6 +337,8 @@
 
             </div>
         </main>
+        <div class="col-md-12" id="dealerTimeSlots">
+        </div>
         <!-- main end -->
         <!-- footer area start -->
       
@@ -353,15 +352,16 @@
     {
         <script src="~/js/owl.carousel.min.js"></script>
         <script>
+            var stateId = "";
             $(async function () {
                 $('#show-div').hide();
-                
              //   await fetchAllStates();
-               await fetchstatesbyId()
-                
+                await fetchstatesbyId();
+                await getDealerData();
+                //await fetchCityByStateId(); 
 
             });
-    $('.adds-carousel').owlCarousel({
+    $('.adds-carousel').owlCarousel ({
     loop: true,
     margin: 10,
     nav: false,
@@ -384,11 +384,12 @@
                 const result = await fetchData(url);
                 if(result!=null && result!="")
                 {
-                    var stateId= Number(result)
+                     stateId= Number(result)
                     await fetchStates(result);
-
+                    await fetchCityByStateId(stateId);
                 }
             }
+         
     $('#select-state').change(async function(){
                 var stateId = $(this).val();
                 if (stateId) {
@@ -397,6 +398,163 @@
                     bindDynamicSelectHtml('#select-dynamic', resultEmbossingCenter, 'Emb_Center_id', 'EmbCenterName', 'Select Embossing Center');
                 }
     })
+            async function fetchCityByStateId(stateId) {
+                let url = '/get-city/' + stateId; 
+                let resultEmbossingCenter = await fetchData(url);
+                bindDynamicSelectHtml('#select-city', resultEmbossingCenter, 'District', 'District', 'Select City');
+
+
+
+
+            }
+            async function getDealerData() {
+                let url = '/bind-dealers';
+                let result = await fetchData(url);
+                if (result.data.Message == 'Success') {
+
+                    if (result.dealerAppointment.length > 0) {
+                        var htmlData = "";
+                        var dataBind = result.dealerAppointment;
+                        gotDealerArray = dataBind;
+                        var arrayCities = [];
+                        for (var i = 0; i < dataBind.length; i++) {
+                            var cityDealer = $.trim(dataBind[i].City.toUpperCase());
+                            var dealer = dataBind[i];
+                            var dealerName = dealer.DealerName;
+                            var dealerAddress = dealer.Address;
+                            var dealerCity = dealer.City;
+                            var dealerPincode = dealer.Pincode;
+                            var dealerContactNo = dealer.DealerAffixationCenterContactNo;
+                            var dealerContactName = dealer.DealerAffixationCenterName;
+                            var distance = dealer.Distance;
+                            var dealerAmountWithGST = dealer.RoundOff_netamount;
+                            var earliestDateAvailable = dealer.EarliestDateAvailable;
+                            var dealerId = dealer.DealerAffixationID;
+                            var expressCheckout = dealer.ExpressCheckout;
+                            var roundOff_netamount = dealer.RoundOff_netamount;
+                            var cnt = dealer.cnt;
+                            var cnt = dealer.EarliestTimeSlotAvailable;
+                            var accordionItem = $('<div class="accordion-item"></div>');
+
+                            // Create accordion header
+                            var accordionHeader = $('<h2 class="accordion-header"></h2>');
+
+                            // Create accordion button
+                            var accordionButton = $('<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_' + i + '" aria-expanded="true" aria-controls="collapse_' + i + '"></button>');
+                            accordionButton.text(dealerName);
+
+                            // Create accordion collapse
+                            var accordionCollapse = $('<div id="collapse_' + i + '" class="accordion-collapse collapse" data-bs-parent="#accordionExample"></div>');
+
+                            // Create accordion body
+                            var accordionBody = $('<div class="accordion-body"></div>');
+                            var row = $('<div class="row"></div>');
+
+                            // Create columns for the address and price details
+                            var colLeft = $('<div class="col-lg-6"></div>');
+                            var colRight = $('<div class="col-lg-6"></div>');
+
+                            // Populate address details
+                            var ul = $('<ul class="area-ul"></ul>');
+                            var liCity = $('<li><span>City:</span><br><span id="city_' + i + '" class="cd">' + dealerCity + '</span></li>');
+                            var liAddress = $('<li><span>Address:</span><br><span class="cd">' + dealerAddress + '</span></li>');
+
+                            // Populate price details
+                            var priceCard = $('<div class="price-card"></div>');
+                            var bDate = $('<div class="b-date"><h6 class="d-title">Earliest Date Available</h6><div class="d-date">' + earliestDateAvailable + '</div></div>');
+                            var priceArea = $('<div class="price-area justify-content-between"></div>');
+                            var tPrice = $('<div class="t-price"><span>HSRP Set</span> RS.' + dealerAmountWithGST + '</div>');
+                          //  var confirmDealerBtn = $('<a  href='/appointmentSlot/ " + result[i].Id + "'  class="submit-btn2 confirm-dealer">Confirm Dealer</a>');
+                            var confirmDealerBtn = $('<a data-id="'+dealerId+'" class="submit-btn2 confirm-dealer">Confirm Dealer</a>');
+                            // Append address details to left column
+                            colLeft.append(ul.append(liCity, liAddress));
+
+                            // Append price details to right column
+                            colRight.append(priceCard.append(bDate, priceArea.append(tPrice, confirmDealerBtn)));
+
+                            // Append columns to row
+                            row.append(colLeft, colRight);
+
+                            // Append row to accordion body
+                            accordionBody.append(row);
+
+                            // Append accordion button, body, and collapse to accordion header
+                            accordionHeader.append(accordionButton);
+                            accordionItem.append(accordionHeader, accordionCollapse.append(accordionBody));
+
+                            // Append accordion item to parent container
+                            $('#accordionExample').append(accordionItem);
+                        }
+                    } else {
+                        ShowToast('No Dealer Found', 'rgb(15, 52, 67)');
+                    }
+                } else {
+                    ShowToast(response.message, 'Red');
+                }
+                      //     var response = $.parseJSON(result);
+                // bindDynamicSelectHtml('#select-city', resultEmbossingCenter, 'District', 'District', 'Select City');
+
+
+
+            
+        }
+            // $(document).on('click', '.confirm-dealer', function (event) {
+            //     event.preventDefault();
+            //     var $this = $(this);
+            //     var $gotDealerDiv = $(this).closest('.card-strip');
+            //     var gotDealerDivId = $gotDealerDiv.attr("data-dealertid");
+            //     $.getJSON("/home/GetLatestAvailableTimeSlot?dealerId=" + gotDealerDivId, function (response) {
+
+            //         if (response.status === "true") {
+            //             var dataBind = response.data;
+            //             $this.parent().html(dataBind);
+            //         } else {
+            //             ShowToast(response.message, 'Red');
+            //         }
+            //     });
+            // });
+
+
+            $(document).on('click', '.confirm-dealer',async function (event) {
+                    var id = $(this).attr('data-id');;
+                    affixationId = Number(id)
+                let url = "/check-affixation-Id/" + affixationId;
+                if (url != null && url!=undefined)
+                {
+                    let result = await fetchData(url);
+                    var response = $.parseJSON(result);
+                    if (response.Message == "Affix") {
+
+                    }
+                    if (response.Message == "Success") {
+                        window.location.href = "/appointmentSlot";
+                    }
+                }
+                
+            
+                else {
+                    return
+                }
+            });
+
+            function PopulateCityByDealers(data) {
+
+                if (data !== null && data.length > 0) {
+                    data = data.filter(onlyUnique).sort();
+                    var optionsGot = "<option value=''>Select City</option>";
+                    optionsGot += "<option value=''>All</option>";
+                    for (var i = 0; i < data.length; i++) {
+                        optionsGot += "<option value='" + data[i] + "'>" + data[i] + "</option>";
+                    }
+                    $('#ddlSelectCity').html(optionsGot);
+                } else {
+                    ShowToast("Cities not found.", "rgb(15, 52, 67)");
+                }
+            }
+            function onlyUnique(value, index, self) {
+                return self.indexOf(value) === index;
+            }
+
         </script>
     }
     <!-- Body main Script end -->

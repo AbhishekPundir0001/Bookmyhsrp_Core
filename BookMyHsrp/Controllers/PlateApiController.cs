@@ -76,8 +76,9 @@ namespace BookMyHsrp.Controllers
                     FuelType = result.data.fuel,
                     PlateSticker = "Plate",
                     IsReplacement = vahanDetailsDto.isReplacement,
-                    Message = result.data.message
-                };
+                    Message = result.data.message,
+                    StateIdBackup = result.data.StateIdBackup
+            };
 
                 var GetRootObjectSession = HttpContext.Session.GetString("UserSession");
                  jsonSerializer = System.Text.Json.JsonSerializer.Serialize(rootDto);
@@ -139,6 +140,8 @@ namespace BookMyHsrp.Controllers
                     getSession.FuelType = info.FuelTypeVahan;
                     getSession.Fuel = info.FuelTypeVahan;
                     getSession.Message = resultGot.Message;
+                    getSession.OrderType = resultGot.data.OrderType;
+                    
                     var GetRootObjectSession = HttpContext.Session.GetString("UserSession");
                     jsonSerializer = System.Text.Json.JsonSerializer.Serialize(getSession);
                     HttpContext.Session.SetString("UserDetail" ,jsonSerializer);

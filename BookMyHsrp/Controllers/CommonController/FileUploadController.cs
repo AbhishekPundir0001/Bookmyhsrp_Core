@@ -1,4 +1,5 @@
-﻿using BookMyHsrp.Dapper;
+﻿using Azure;
+using BookMyHsrp.Dapper;
 using BookMyHsrp.Libraries.Common.Models;
 using BookMyHsrp.Libraries.HsrpWithColorSticker.Models;
 using BookMyHsrp.ReportsLogics.Common;
@@ -27,49 +28,74 @@ namespace BookMyHsrp.Controllers.CommonController
             
         //}
         [Route("upload")]
-        public async void FileUploadAllType([FromForm] FileUploadModel fileUploadModel)
+        public async Task<IActionResult> Upload([FromForm] FileUploadModel fileUploadModel)
         {
-            var VehicleRegNo = string.Empty;
-
-            var getSession = new RootDto();
-            if (HttpContext.Session.GetString("UserDetail") != null)
+            var jsonSerializer = "";
+            var response = new ResponseDto();
+            var file = fileUploadModel.RcPhoto;  // Get the uploaded file
+            if (file != null && file.Length > 0)
             {
-             var data = HttpContext.Session.GetString("UserSession");
-              var vehicledetails = System.Text.Json.JsonSerializer.Deserialize<GetSessionBookingDetails>(data);
-
-                VehicleRegNo = vehicledetails.VehicleRegNo;
+                var filePath = Path.Combine(@"D:\PDF", file.FileName); // Set the file path
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await file.CopyToAsync(stream);
+                    
+                }
+                //jsonSerializer = System.Text.Json.JsonSerializer.Serialize(response);
+                response.Message = "Success";
+                return Ok(response);
+                
             }
-            if (!Directory.Exists(path))
+            else
             {
-                Directory.CreateDirectory(path);
+                return BadRequest("No file uploaded");
             }
-            var files = fileUploadModel.RcPhoto.FileName;
-            //foreach (string str in files)
-            //{
-                //HttpPostedFileBase file = Request.Files[str] as HttpPostedFileBase;
-                ////Checking file is available to save.  
-                //if (file != null)
-                //{
-                //    var InputFileName = Path.GetFileName(file.FileName);
-                //    var ServerSavePath = Path.Combine(fileuploadPath + InputFileName);
-                //    //Save file to server folder  
-                //    file.SaveAs(ServerSavePath);
-
-                //}
-
-            //}
-            //var path = "E:\\pdf\\";
-            //var ca = fileUploadModel.RcPhoto;
-
-            //    string filename = ContentDispositionHeaderValue.Parse(data.ContentDisposition).FileName.ToString();
-
-            //    filename = this.EnsureCorrectFilename(filename);
-
-            //    using (FileStream output = System.IO.File.Create(Path.Combine(path, filename)))
-            //        await data.CopyToAsync(output);
-
-
+            
+            
         }
+        //public async void FileUploadAllType([FromForm] FileUploadModel fileUploadModel)
+        //{
+        //    var VehicleRegNo = string.Empty;
+
+        //    var getSession = new RootDto();
+        //    if (HttpContext.Session.GetString("UserDetail") != null)
+        //    {
+        //     var data = HttpContext.Session.GetString("UserSession");
+        //      var vehicledetails = System.Text.Json.JsonSerializer.Deserialize<GetSessionBookingDetails>(data);
+
+        //        VehicleRegNo = vehicledetails.VehicleRegNo;
+        //    }
+        //    if (!Directory.Exists(path))
+        //    {
+        //        Directory.CreateDirectory(path);
+        //    }
+        //    var files = fileUploadModel.RcPhoto.FileName;
+        //    //foreach (string str in files)
+        //    //{
+        //        //HttpPostedFileBase file = Request.Files[str] as HttpPostedFileBase;
+        //        ////Checking file is available to save.  
+        //        //if (file != null)
+        //        //{
+        //        //    var InputFileName = Path.GetFileName(file.FileName);
+        //        //    var ServerSavePath = Path.Combine(fileuploadPath + InputFileName);
+        //        //    //Save file to server folder  
+        //        //    file.SaveAs(ServerSavePath);
+
+        //        //}
+
+        //    //}
+        //    //var path = "E:\\pdf\\";
+        //    //var ca = fileUploadModel.RcPhoto;
+
+        //    //    string filename = ContentDispositionHeaderValue.Parse(data.ContentDisposition).FileName.ToString();
+
+        //    //    filename = this.EnsureCorrectFilename(filename);
+
+        //    //    using (FileStream output = System.IO.File.Create(Path.Combine(path, filename)))
+        //    //        await data.CopyToAsync(output);
+
+
+        //}
         private string EnsureCorrectFilename(string filename)
         {
             if (filename.Contains("\\"))

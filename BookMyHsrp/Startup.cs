@@ -25,6 +25,10 @@ using System.ComponentModel.DataAnnotations;
 using BookMyHsrp.Controllers.CommonController;
 using BookMyHsrp.ReportsLogics.Common;
 using BookMyHsrp.Libraries.HomeDelivery.Services;
+using BookMyHsrp.Libraries.DealerDelivery.Services;
+using BookMyHsrp.ReportsLogics.DealerDelivery;
+using BookMyHsrp.ReportsLogics.AppointmentSlot;
+using BookMyHsrp.Libraries.AppointmentSlot.Services;
 namespace BookMyHsrp
 {
     public class Startup
@@ -128,11 +132,15 @@ namespace BookMyHsrp
             services.AddTransient<ILoggingService, LoggingService>();
             services.AddTransient<IStateService, StateService>();
             services.AddTransient<IHsrpWithColorStickerService, HsrpWithColorStickerService>();
+            services.AddTransient<IAppointmentSlotServices, AppointmentSlotService>();
             services.AddTransient<IExceptionHandler, ExceptionMiddleWare>();
             services.AddTransient<IGenerateOtpService, GenerateOtpService>();
             services.AddScoped<HsrpWithColorStickerConnector>();
+            services.AddScoped<AppointmentSlotConnector>();
+            services.AddScoped<DealerDeliveryConnector>();
             services.AddScoped<FileUploadConnector>();
             services.AddScoped<HsrpWithColorStickerService>();
+            services.AddTransient<IDealerDeliveryService, DealerDeliveryService>();
             services.AddScoped<FetchDataAndCache, FetchDataAndCache>();
             services.AddScoped<HomeDeliveryService>();
             

@@ -15,8 +15,8 @@ namespace BookMyHsrp.Libraries.HsrpWithColorSticker.Models
             public string VehicleRegNo { get; set; }
             public string ChassisNo { get; set; }
             public string EngineNo { get; set; }
-
-            public string FrontLaserCode { get; set; }
+        public string StateIdBackup { get; set; }
+        public string FrontLaserCode { get; set; }
             public string RearLaserCode { get; set; }
             public string FrontLaserFileName { get; set; }
             public string RearLaserFileName { get; set; }
@@ -34,7 +34,7 @@ namespace BookMyHsrp.Libraries.HsrpWithColorSticker.Models
             public string StateShortName { get; set; }
             public string VehRegDate { get; set; }
             public string VehicleCategory { get; set; }
-            public string VehicleClass { get; set; }
+        public string VehicleClass { get; set; }
             public string VehicleType { get; set; }
             public string VehicleCat { get; set; }
             public string VehicleTypeId { get; set; }
