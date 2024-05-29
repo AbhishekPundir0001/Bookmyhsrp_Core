@@ -5,7 +5,7 @@ using BookMyHsrp.ReportsLogics.HsrpWithColorSticker;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
-using static BookMyHsrp.Libraries.HsrpWithColorSticker.Models.ReplacementModel;
+using static BookMyHsrp.Libraries.HsrpWithColorSticker.Models.HsrpColorStickerModel;
 
 namespace BookMyHsrp.ApiController.ApiHSRPWithColourSticker
 {
@@ -25,21 +25,7 @@ namespace BookMyHsrp.ApiController.ApiHSRPWithColourSticker
         }
         [HttpPost]
         [Route("report/check-vahan-information")]
-        //public async Task<IActionResult> VahanInformation([FromBody]VahanDetailsDto requestDto)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {   
-        //        return BadRequest(new { Error = true, Message = GetModelErrorMessages() });
-        //    }
-
-        //    var result = await _hsrpWithColorStickerConnector.VahanInformation(requestDto);
-        //    return Ok(
-        //          new Response<dynamic>(result, false,
-        //              "Data Received."));
-
-        //}
-        //[HttpPost]
-        //[Route("report/SetSessionBookingDetail")]
+        
         public async Task<IActionResult> SessionBookingDetails([FromBody] GetSessionBookingDetails requestDto)
         {
             if (!ModelState.IsValid)

@@ -1,5 +1,4 @@
-﻿using Azure;
-using BookMyHsrp.Dapper;
+﻿using BookMyHsrp.Dapper;
 using BookMyHsrp.Libraries.Common.Models;
 using BookMyHsrp.Libraries.HsrpWithColorSticker.Models;
 using BookMyHsrp.ReportsLogics.Common;
@@ -7,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.Net.Http.Headers;
 using System.Text;
-using static BookMyHsrp.Libraries.HsrpWithColorSticker.Models.ReplacementModel;
+using static BookMyHsrp.Libraries.HsrpWithColorSticker.Models.HsrpColorStickerModel;
 
 namespace BookMyHsrp.Controllers.CommonController
 {
@@ -30,7 +29,6 @@ namespace BookMyHsrp.Controllers.CommonController
         //}
         [Route("upload")]
         public async Task<IActionResult> FileUploadAllType([FromForm] FileUploadModel fileUploadModel)
-        public async Task<IActionResult> Upload([FromForm] FileUploadModel fileUploadModel)
         {
             var VehicleRegNo = string.Empty;
 
@@ -79,7 +77,7 @@ namespace BookMyHsrp.Controllers.CommonController
                 {
                     response.Message = "Please upload File";
                 }
-                else 
+                else
                 {
 
                     var VehicleRegNo = string.Empty;
@@ -124,61 +122,6 @@ namespace BookMyHsrp.Controllers.CommonController
                     {
                         if (_frontLaserPhoto != null && _frontLaserPhoto.Length > 0 && _rearLaserPhoto != null && _rearLaserPhoto.Length > 0 && _fronPlatePhoto != null && _fronPlatePhoto.Length > 0 && _rearPlatePhoto != null && _rearPlatePhoto.Length > 0)
                         {
-                            var frontLaserfilePath = Path.Combine(path, "Front" + DateTime.Now.ToString("yyyyMMddHHmmssfff") + "_" + RandomString(4) + Path.GetExtension(_rearLaserPhoto.FileName)); // Set the file path
-                            var rearLaserfilePath = Path.Combine(path, "Rear" + DateTime.Now.ToString("yyyyMMddHHmmssfff") + "_" + RandomString(4) + Path.GetExtension(_rearLaserPhoto.FileName));
-                            var frontPlatefilePath = Path.Combine(path, "File1" + DateTime.Now.ToString("yyyyMMddHHmmssfff") + "_" + RandomString(4) + Path.GetExtension(_rearLaserPhoto.FileName));
-                            var rearPlatefilePath = Path.Combine(path, "File2" + DateTime.Now.ToString("yyyyMMddHHmmssfff") + "_" + RandomString(4) + Path.GetExtension(_rearLaserPhoto.FileName));
-            var jsonSerializer = "";
-            var response = new ResponseDto();
-            var file = fileUploadModel.RcPhoto;  // Get the uploaded file
-            if (file != null && file.Length > 0)
-            {
-                var filePath = Path.Combine(@"D:\PDF", file.FileName); // Set the file path
-                using (var stream = new FileStream(filePath, FileMode.Create))
-                {
-                    await file.CopyToAsync(stream);
-                    
-                }
-                //jsonSerializer = System.Text.Json.JsonSerializer.Serialize(response);
-                response.Message = "Success";
-                return Ok(response);
-                
-            }
-            else
-            {
-                return BadRequest("No file uploaded");
-            }
-            
-            
-        }
-        //public async void FileUploadAllType([FromForm] FileUploadModel fileUploadModel)
-        //{
-        //    var VehicleRegNo = string.Empty;
-
-        //    var getSession = new RootDto();
-        //    if (HttpContext.Session.GetString("UserDetail") != null)
-        //    {
-        //     var data = HttpContext.Session.GetString("UserSession");
-        //      var vehicledetails = System.Text.Json.JsonSerializer.Deserialize<GetSessionBookingDetails>(data);
-
-        //        VehicleRegNo = vehicledetails.VehicleRegNo;
-        //    }
-        //    if (!Directory.Exists(path))
-        //    {
-        //        Directory.CreateDirectory(path);
-        //    }
-        //    var files = fileUploadModel.RcPhoto.FileName;
-        //    //foreach (string str in files)
-        //    //{
-        //        //HttpPostedFileBase file = Request.Files[str] as HttpPostedFileBase;
-        //        ////Checking file is available to save.  
-        //        //if (file != null)
-        //        //{
-        //        //    var InputFileName = Path.GetFileName(file.FileName);
-        //        //    var ServerSavePath = Path.Combine(fileuploadPath + InputFileName);
-        //        //    //Save file to server folder  
-        //        //    file.SaveAs(ServerSavePath);
-
                             //string _dt = DateTime.Now.ToString("dd-MM-yyyy");
                             //DateTime.Now.ToString("yyyyMMddHHmmssfff")
                             var _dateFormate = HttpContext.Session.GetString("DateFormate");
@@ -214,27 +157,19 @@ namespace BookMyHsrp.Controllers.CommonController
 
                             response.Message = "File Uploaded Successfully";
                         }
-        //        //}
 
                     }
-        //    //}
-        //    //var path = "E:\\pdf\\";
-        //    //var ca = fileUploadModel.RcPhoto;
 
-        //    //    string filename = ContentDispositionHeaderValue.Parse(data.ContentDisposition).FileName.ToString();
 
-        //    //    filename = this.EnsureCorrectFilename(filename);
 
                 }
             }
             catch (Exception ex)
             {
-                return BadRequest("No file uploaded"+ ex);
+                return BadRequest("No file uploaded" + ex);
             }
             var jsonSerializer = System.Text.Json.JsonSerializer.Serialize(response);
             return Json(jsonSerializer);
-        //    //    using (FileStream output = System.IO.File.Create(Path.Combine(path, filename)))
-        //    //        await data.CopyToAsync(output);
 
         }
 
@@ -252,7 +187,6 @@ namespace BookMyHsrp.Controllers.CommonController
         }
 
 
-        //}
         private string EnsureCorrectFilename(string filename)
         {
             if (filename.Contains("\\"))

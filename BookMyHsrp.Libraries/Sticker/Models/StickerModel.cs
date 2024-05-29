@@ -4,7 +4,6 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static BookMyHsrp.Libraries.HsrpWithColorSticker.Models.ReplacementModel;
 using static BookMyHsrp.Libraries.OemMaster.Models.OemMasterModel;
 
 namespace BookMyHsrp.Libraries.Sticker.Models

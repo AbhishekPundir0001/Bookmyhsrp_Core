@@ -1,7 +1,6 @@
 ﻿using BookMyHsrp.Libraries.ResponseWrapper.Models;
 using BookMyHsrp.ReportsLogics.HsrpWithColorSticker;
 using Microsoft.AspNetCore.Mvc;
-using static BookMyHsrp.Libraries.HsrpWithColorSticker.Models.ReplacementModel;
 
 namespace BookMyHsrp.ApiController.ApiHSRPWithColourSticker
 {

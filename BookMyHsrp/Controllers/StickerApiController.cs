@@ -157,7 +157,7 @@ namespace BookMyHsrp.Controllers
                 resultGot = await _StickerConnector.CustomerInfo(info, detailsSession);
                 if (resultGot.Message == "Success")
                 {
-                    var getSession = new ReplacementRootDto();
+                    var getSession = new RootDto();
                     getSession.CustomerBillingAddress = info.BillingAddress.Replace("'", "");
                     getSession.BhartStage = info.BharatStage;
                     getSession.CustomerName = info.OwnerName;

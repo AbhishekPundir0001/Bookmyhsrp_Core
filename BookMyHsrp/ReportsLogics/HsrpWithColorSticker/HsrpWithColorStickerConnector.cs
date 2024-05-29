@@ -13,7 +13,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.Security.AccessControl;
 using System.Security.Cryptography;
-using static BookMyHsrp.Libraries.HsrpWithColorSticker.Models.ReplacementModel;
+using static BookMyHsrp.Libraries.HsrpWithColorSticker.Models.HsrpColorStickerModel;
 using static BookMyHsrp.Libraries.OemMaster.Models.OemMasterModel;
 
 namespace BookMyHsrp.ReportsLogics.HsrpWithColorSticker

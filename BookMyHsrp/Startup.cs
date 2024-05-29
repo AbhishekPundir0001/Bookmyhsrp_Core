@@ -27,11 +27,11 @@ using BookMyHsrp.ReportsLogics.Common;
 using BookMyHsrp.Libraries.HomeDelivery.Services;
 using BookMyHsrp.ReportsLogics.Sticker;
 using BookMyHsrp.Libraries.Sticker.Services;
-using BookMyHsrp.Libraries.HomeDeliverySticker.Services;
 using BookMyHsrp.Libraries.DealerDelivery.Services;
 using BookMyHsrp.ReportsLogics.DealerDelivery;
 using BookMyHsrp.ReportsLogics.AppointmentSlot;
 using BookMyHsrp.Libraries.AppointmentSlot.Services;
+using BookMyHsrp.Libraries.HomeDeliverySticker.Services;
 namespace BookMyHsrp
 {
     public class Startup
