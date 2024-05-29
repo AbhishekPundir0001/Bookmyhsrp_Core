@@ -1,4 +1,5 @@
 ﻿using BookMyHsrp.Dapper;
+using BookMyHsrp.Libraries.GenerateOtp.Models;
 using BookMyHsrp.Libraries.GenerateOtp.Queries;
 using Dapper;
 using Microsoft.Extensions.Options;
@@ -32,14 +33,13 @@ namespace BookMyHsrp.Libraries.GenerateOtp.Services
             _fetchDataAndCache = fetchDataAndCache;
         }
 
-        public async Task<dynamic> GenerateOtp()
+        public async Task<dynamic> GenerateOtp(string mobile, dynamic data)
         {
-           
-            await _fetchDataAndCache.SetStringInCache("OTPno", "");
-            var mobileNo = _fetchDataAndCache.GetStringFromCache("MobileNo");
+            var generateOtp = new GenerateOtpResponse();
+            generateOtp.Otp="";
             try
             {
-                if (mobileNo == null)
+                if (mobile == null)
                 {
                     throw new ArgumentException("Vehicle Details didn't match");
 
@@ -47,15 +47,15 @@ namespace BookMyHsrp.Libraries.GenerateOtp.Services
                 else
                 {
                     string otpMobile = "";
-                    var otp = _fetchDataAndCache.GetStringFromCache("OTPno");
-                    if (otp.Result =="")
+                    var otp = generateOtp.Otp;
+                    if (otp =="")
                     {
-                        await _fetchDataAndCache.SetStringInCache("OTPno", "N");
-                        otpMobile =await _fetchDataAndCache.GetStringFromCache("OTPno");
+                       generateOtp.OTPno= "N";
+                        otpMobile = generateOtp.OTPno;
                     }
                     if (otpMobile == "N")
                     {
-                        SendOtp();
+                        SendOtp(mobile,data);
                         response.Message = "Success";
                     }
                 }
@@ -74,13 +74,13 @@ namespace BookMyHsrp.Libraries.GenerateOtp.Services
             Random _rdm = new Random();
             return _rdm.Next(_min, _max);
         }
-        private async void SendOtp()
+        private async void SendOtp(string mob,dynamic data)
         {
             int Rno = GenerateRandomNo();
             string OTPno = Rno.ToString();
             string OrderNo = string.Empty;
-            string VehicleRegNo =await _fetchDataAndCache.GetStringFromCache("RegNo");
-            string MobileNo =await _fetchDataAndCache.GetStringFromCache("MobileNo");
+            string VehicleRegNo = data.VehicleRegNo;
+            string MobileNo = mob;
             //string sms = "Your OTP code is: " + OTPno + "\n(Team Rosmerta)";
             string sms = "Your One Time Password (OTP) is " + OTPno + ". Don't share it with anyone.This is for verification of your mobile no. for your transaction in BookMyHSRP.Team Rosmerta";
             //string sms = "Your One Time Password (OTP) is " + OTPno + ". Don't share it with anyone.\nThis is for verification of your mobile no. for your transaction in BookMyHSRP.";
@@ -99,8 +99,8 @@ namespace BookMyHsrp.Libraries.GenerateOtp.Services
             parameter.Add("@OTPVerifyStatus", OTPVerifyStatus);
            
             var result = _databaseHelperPrimary.QueryAsync<dynamic>(GenerateOtpQueries.SMSLogSave, parameter);
-
-            await _fetchDataAndCache.SetStringInCache("OTPno", OTPno);
+            var OtpNo = OTPno;
+            await _fetchDataAndCache.SetStringInCache("OtpNo", OtpNo);
             var result1 = _databaseHelperPrimary.QueryAsync<dynamic>(GenerateOtpQueries.InsertSMSLog2, parameter);
 
            #region  WhatsApp Sending
@@ -113,7 +113,7 @@ namespace BookMyHsrp.Libraries.GenerateOtp.Services
             #region Sending Mail
             string _IsEmail = "True";
             var emailId=await _fetchDataAndCache.GetStringFromCache("EmailId");
-           
+          
             #endregion
         }
         public static String SMSSend(string mobile, string SMSText, string TemplateID, string SenderIDHeader)
@@ -179,7 +179,7 @@ namespace BookMyHsrp.Libraries.GenerateOtp.Services
        
         public async Task<dynamic> ConfirmOTP(string otp)
         {
-            var otpno = await _fetchDataAndCache.GetStringFromCache("OTPno");
+            var otpno = await _fetchDataAndCache.GetStringFromCache("OtpNo");
             if(otpno==null)
             {
                 throw new ValidationException("Something Wrong");
@@ -230,7 +230,7 @@ namespace BookMyHsrp.Libraries.GenerateOtp.Services
                     else
                     {
 
-                        throw new ValidationException("OTP doesnot match, Please Enter correct OTP ..!!");
+                        response.Message = "Wrong Otp";
                     }
                     if(OTPVerifyStatus == "Y")
                     {

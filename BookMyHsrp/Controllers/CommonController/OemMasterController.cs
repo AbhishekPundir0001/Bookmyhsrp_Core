@@ -1,11 +1,11 @@
 ﻿using BookMyHsrp.Libraries.OemMaster.Services;
 using Microsoft.AspNetCore.Mvc;
 
-namespace BookMyHsrp.ExceptionHandling.Controllers.CommonController
+namespace BookMyHsrp.Controllers.CommonController
 {
     [Route("api/v1/oem")]
     public class OemMasterController : Controller
-    { 
+    {
         private readonly ILogger<OemMasterController> logger;
         private readonly IOemMasterService _oemMaster;
         public OemMasterController(IOemMasterService oemMaster)

@@ -1,0 +1,1042 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+
+    <!-- Place favicon.ico in the root directory -->
+    <link rel="shortcut icon" type="image/x-icon" href="Images/favicon.html">
+    <link rel="apple-touch-icon" href="apple-touch-icon.html">
+
+    <!-- All css files are included here. -->
+    <link rel="stylesheet" href="~/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/css/style.css">
+    <link rel="stylesheet" href="~/css/owl.carousel.min.css">
+    <!--     <link rel="stylesheet" href="assets/css/owl.theme.default.min.css"> -->
+
+</head>
+
+<body>
+
+    <!-- Body main wrapper start -->
+
+    <div class="wrapper">
+        <!-- Start Header Style -->
+       
+        <!-- End Header Style -->
+        <!-- Start Mobile Header -->
+        <!--
+                <div class="mobile-header d-block d-lg-none">
+                    <div class="container">
+                        <div class="row align-items-center justify-content-between">
+
+                        </div>
+                    </div>
+                </div>
+        -->
+        <!-- End Mobile Header -->
+        <!--  Start Offcanvas Mobile Menu Section  -->
+        <div class="offcanvas offcanvas-start" tabindex="-1" id="toggleMenu">
+            <div class="offcanvas-header">
+
+                <!-- Start Header Logo -->
+                <a href="index-3.html" class="header-logo">
+                    <img src="~/Images/logo/logo.png" alt="">
+                </a>
+                <!-- End Header Logo -->
+
+                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+                <!-- Start Offcanvas Mobile Menu Wrapper -->
+                <div class="offcanvas-mobile-menu-wrapper">
+                    <!-- Start Mobile Menu  -->
+                    <div class="mobile-menu-bottom">
+                        <!-- Start Mobile Menu Nav -->
+                        <div class="offcanvas-menu">
+                            <ul>
+                                <li><a href="TrackOrder.html">Track Your Order</a></li>
+                                <li><a href="ReAppointment.html">Reschedule Appointment</a></li>
+                                <li><a href="OrderCancel.html">Cancel Order</a></li>
+
+                                <li><a href="PinForHomeDelivery.html">Check For Home Installation</a></li>
+                                <li><a href="ReceiptValidity.html"><b>Receipt Validity</b></a></li>
+                                <li><a href="BookMyHSRP_ContactUs.html"><b>Contact Us</b></a></li>
+                            </ul>
+                        </div>
+                        <!-- End Mobile Menu Nav -->
+                    </div>
+                    <!-- End Mobile Menu -->
+                    <!-- End Mobile contact Info -->
+
+                </div>
+                <!-- Start Mobile contact Info -->
+                <!--
+                    <div class="mobile-contact-info text-center">
+                        <ul class="social-link">
+                            <li><a href="https://example.com/"><i class="fa fa-facebook"></i></a>
+                            </li>
+                            <li><a href="https://example.com/"><i class="fa fa-twitter"></i></a>
+                            </li>
+                            <li><a href="https://example.com/"><i class="fa fa-skype"></i></a></li>
+                        </ul>
+                    </div>-->
+                <!-- End Offcanvas Mobile Menu Wrapper -->
+            </div>
+        </div>
+        <!--  End Offcanvas Mobile Menu Section -->
+
+        <section class="page-header d-lg-none">
+            <div class="container">
+                <div class="page-header__inner text-center">
+                    <h5>Step 1</h5>
+                    <h2>Booking Details</h2>
+                </div>
+            </div>
+        </section>
+
+        <!-- main start -->
+        <main class="main-body">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12 col-lg-3 p-0 order-2 order-lg-1">
+                        <div class="sidebar">
+                            <div class="side-steper d-none d-lg-block">
+                                <ul class="side-ul">
+                                    <li class="active">Step -1 Booking Details</li>
+                                    <li>Step -2 Fitment Location</li>
+                                    <li>Step -3 Appointment Slot</li>
+                                    <li>Step -4 Booking Summary</li>
+                                    <li>Step -5 Verify Details & Pay</li>
+                                    <li>Step -6 Download Receipt</li>
+                                </ul>
+                            </div>
+                            <div class="side-slide">
+                                <div class="owl-carousel adds-carousel owl-theme">
+                                    <div class="item"><img src="~/Images/adds/img-1.png" alt=""></div>
+                                    <div class="item"><img src="~/Images/adds/img-2.png" alt=""></div>
+                                    <div class="item"><img src="~/Images/adds/img-3.png" alt=""></div>
+                                    <div class="item"><img src="~/Images/adds/img-4.png" alt=""></div>
+                                    <div class="item"><img src="~/Images/adds/img-5.png" alt=""></div>
+                                    <div class="item"><img src="~/Images/adds/QR.jpg" alt=""></div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-9 p-0 order-1 order-lg-2">
+                        <div class="main-data main-bg">
+                            <div class="title-area">
+                                <h4 class="title">Booking Details</h4>
+                                <h6 class="sub-title">Vehicle Information</h6>
+                            </div>
+                            <div class="form-area">
+                                <div class="form-area-inner">
+                                    <div class="row">
+                                       @await Html.PartialAsync("~/Views/PartialView/_SelectStatePartial.cshtml")
+                                        <div class="col-lg-4 col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <label class="form-label">Registration Number*</label>
+                                                <input id="registrationNumber" type="text" class="form-control">
+                                                <span class="helper">
+                                                    (Reg No. Ex.- DLXXXXX01)
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <label class="form-label">Chassis No.* (XXXXX12345)</label>
+                                                <input id="chassisNo" type="text" class="form-control">
+                                                <span class="helper">(Kindly enter last 5 digits including special characters (eg *,~,-,/,.)</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <label class="form-label">Engine No.* (XXXXX12345)</label>
+                                                <input id="engineNo" type="text" class="form-control">
+                                                <span class="helper">(Kindly enter last 5 digits)</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 col-md-6 col-sm-12">
+                                            <div class="input-group">
+                                                <label class="form-label w-100">Captcha</label>
+                                                <input id="txtCaptcha" type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
+                                                <button onclick="DrawCaptcha()" class="input-group-text"><i class="fas fa-redo-alt"></i></button>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <label class="form-label">Input Captcha</label>
+                                                <input id="txtInput" type="text" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 col-md-6 col-sm-12">
+                                            <button id="btn-submit-approval-data" type="button" class="submit-btn">
+                                                Click Here
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="show-div" style="display:none;">
+                                    <div class="form-area-inner" id="DivVehicleDetails">
+                                        <div class="title-area">
+                                            <h6 class="sub-title">Vehicle Details</h6>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-4 col-md-6 col-sm-12">
+                                                <div class="form-group">
+                                                    <label class="form-label">Select Bharat Stage (BS)*</label>
+                                                    <select id="norms" class="form-select">
+                                                        <option selected="selected" value="Select Vehicle Registration State">Select Bharat Stage</option>
+                                                        <option value='Bharat (Trem) Stage III B'>Bharat (Trem) Stage III B</option>
+                                                        <option value='Bharat (Trem) Stage IV'>Bharat (Trem) Stage IV</option>
+                                                        <option value='Bharat (Trem) Stage V'>Bharat (Trem) Stage V</option>
+                                                        <option value='BHARAT STAGE I'>BHARAT STAGE I</option>
+                                                        <option value='BHARAT STAGE II'>BHARAT STAGE II</option>
+                                                        <option value='BHARAT STAGE III'>BHARAT STAGE III</option>
+                                                        <option value='Bharat Stage III (CEV)'>Bharat Stage III (CEV)</option>
+                                                        <option value='BHARAT STAGE III/IV'>BHARAT STAGE III/IV</option>
+                                                        <option value='BHARAT STAGE IV'>BHARAT STAGE IV</option>
+                                                        <option value='Bharat Stage IV (CEV)'>Bharat Stage IV (CEV)</option>
+                                                        <option value='BHARAT STAGE IV/VI'>BHARAT STAGE IV/VI</option>
+                                                        <option value='Bharat Stage V (CEV)'>Bharat Stage V (CEV)</option>
+                                                        <option value='BHARAT STAGE VI'>BHARAT STAGE VI</option>
+                                                        <option value='EURO  6AD'>EURO  6AD</option>
+                                                        <option value='EURO 1'>EURO 1</option>
+                                                        <option value='EURO 2'>EURO 2</option>
+                                                        <option value='EURO 3'>EURO 3</option>
+                                                        <option value='EURO 4'>EURO 4</option>
+                                                        <option value='EURO 6'>EURO 6</option>
+                                                        <option value='EURO 6A'>EURO 6A</option>
+                                                        <option value='EURO 6B'>EURO 6B</option>
+                                                        <option value='EURO 6C'>EURO 6C</option>
+                                                        <option value='EURO 6D'>EURO 6D</option>
+
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4 col-md-6 col-sm-12">
+                                                <div class="form-group">
+                                                    <label for="regDate">Vehicle Registration Date(DD/MM/YYYY)*</label>
+                                                    <input name="regDate" type="text" id="regDate" class="form-control" onkeypress="return isNumberKey(event)" onkeyup="DateValidator();" autocomplete="off" maxlength="10" placeholder="DD/MM/YYYY" readonly="readonly">
+                                                    <span id="spanRegDate" class="helper">(Vehicle Reg. date before 25 Nov 2019 only)</span>
+
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4 col-md-6 col-sm-12">
+                                                <div class="form-group">
+                                                    <label class="form-label">Fuel Type*</label>
+                                                    <select id="fueltype" class="form-select">
+                                                        <option selected="selected" value="">Select Fuel Type</option>
+                                                        <option value='CNG ONLY'>CNG ONLY</option>
+                                                        <option value='DIESEL'>DIESEL</option>
+                                                        <option value='DIESEL/HYBRID'>DIESEL/HYBRID</option>
+                                                        <option value='ELECTRIC(BOV)'>ELECTRIC(BOV)</option>
+                                                        <option value='ETHANOL'>ETHANOL</option>
+                                                        <option value='LNG'>LNG</option>
+                                                        <option value='LPG ONLY'>LPG ONLY</option>
+                                                        <option value='METHANOL'>METHANOL</option>
+                                                        <option value='PETROL'>PETROL</option>
+                                                        <option value='PETROL/CNG'>PETROL/CNG</option>
+                                                        <option value='PETROL/ETHANOL'>PETROL/ETHANOL</option>
+                                                        <option value='PETROL/HYBRID'>PETROL/HYBRID</option>
+                                                        <option value='PETROL/LPG'>PETROL/LPG</option>
+                                                        <option value='PETROL/METHANOL'>PETROL/METHANOL</option>
+                                                        <option value='SOLAR'>SOLAR</option>
+
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4 col-md-6 col-sm-12">
+                                                <div class="form-group">
+                                                    <label class="form-label">Maker*</label>
+                                                    <input id="maker" type="text" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4 col-md-6 col-sm-12" id="vcltype1">
+                                                <div class="form-group">
+                                                    <label class="form-label">Vehicle Type*</label>
+                                                    <select id="vcltype" class="form-select">
+                                                        <option selected="selected" value="Select Vehicle Registration State">Select Vehicle Type</option>
+                                                        <option value="Transport">Transport</option>
+                                                        <option value="Non-Transport">Non-Transport</option>
+
+                                                    </select>
+                                                    <input type="text" id="txtVehicleTypeVahan" runat="server" style="display: none"
+                                                           autocomplete="off">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4 col-md-6 col-sm-12">
+                                                <div class="form-group">
+                                                    <label class="form-label">Vehicle Category*</label>
+                                                    <select id="vhlcategory" class="form-select">
+                                                        <option selected="selected" value="Select Vehicle Registration State">Select Vehicle Category</option>
+                                                        <option value='2WN'>2WN</option>
+                                                        <option value='2WT'>2WT</option>
+                                                        <option value='2WIC'>2WIC</option>
+                                                        <option value='3WN'>3WN</option>
+                                                        <option value='3WT'>3WT</option>
+                                                        <option value='LPV'>LPV</option>
+                                                        <option value='4WIC'>4WIC</option>
+                                                        <option value='LMV'>LMV</option>
+                                                        <option value='HPV'>HPV</option>
+                                                        <option value='MPV'>MPV</option>
+                                                        <option value='HMV'>HMV</option>
+                                                        <option value='MMV'>MMV</option>
+                                                        <option value='LGV'>LGV</option>
+                                                        <option value='MGV'>MGV</option>
+                                                        <option value='HGV'>HGV</option>
+
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4 col-md-6 col-sm-12" id="select-vehicle">
+                                                <div class="form-group">
+                                                    <label class="form-label">Vehicle Category*</label>
+                                                    <select id="vhlcategoryVahan" class="form-select">
+                                                        <option selected="selected" value="Select Vehicle Category">Select Vehicle Category</option>
+                                                        <option value='Scooter'>Scooter</option>
+                                                        <option value='Motor Cycle'>Motor Cycle</option>
+                                                         </select>
+                                                    
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4 col-md-6 col-sm-12" id="divrcupload">
+                                                <div class="form-group">
+                                                    <label class="form-label">Upload RC Here*</label>
+                                                    <input id="uploadfile" type="file" class="file-control">
+                                                </div>
+                                           
+                                            <div class="col-lg-8 col-md-6 col-sm-12 align-items-center d-flex">
+                                                    <button onclick="uploadcsvfile()" type="button" class="submit-btn">
+                                                    Upload
+                                                </button>
+                                            </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-area-inner" id="DivContactInfo">
+                                        <div class="title-area">
+                                            <h6 class="sub-title">Contact Information</h6>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-4 col-md-6 col-sm-12">
+                                                <div class="form-group">
+                                                    <label class="form-label">Owner Name*</label>
+                                                    <input id="ownerName" type="text" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4 col-md-6 col-sm-12">
+                                                <div class="form-group">
+                                                    <label class="form-label">Email ID*</label>
+                                                    <input id="emailId" type="text" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4 col-md-6 col-sm-12">
+                                                <div class="form-group">
+                                                    <label class="form-label">Mobile No.*</label>
+                                                    <input maxlength="10" id="mobNo" type="text" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <div class="form-group">
+                                                    <label class="form-label">Billing Address*</label>
+                                                    <textarea id="billingAddress" name="" cols="30" rows="10" class="form-textrea"></textarea>
+                                                </div>
+                                            </div>
+                                            <p class="note mb-5">If any details provided by me for HSRP is found (Partially/Fully). The HSRP will not be affixed to my vehicle and HSRP Fee will not be Refundable.</p>
+                                            <div class="col-lg-6 col-md-12 col-sm-12">
+                                                <button type="reset" class="reset-btn">
+                                                    Reset
+                                                </button>
+                                                <button id="btn-next" type="button" class="submit-btn">
+                                                    Next
+                                                </button>
+                                               @*  <button type="button" class="submit-btn" data-bs-toggle="modal"
+                                                        data-bs-target="#otp-modal">
+                                                    Next
+                                                </button> *@
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <!-- main end -->
+
+    </div>
+    <!-- Body main wrapper end -->
+    <!-- OTP Modal -->
+    <div class="modal otp-modal fade" id="otp-modal" data-bs-backdrop="static" data-bs-keyboard="false"
+         tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Order booking verification</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><i class="fas fa-times"></i></button>
+                </div>
+                <div class="modal-body text-center">
+                    <div class="position-relative">
+                        <div class="img-icon">
+                            <img src="~/Images/password.png" alt="">
+                        </div>
+                        <h6>Please enter the OTP send to your<br>registerd mobile number</h6>
+                        <span>OTP is valid for 10 minutes. </span>
+                        <div class="otp-box">
+                            <form action="#">
+                                <div class="input-field">
+                                    <input id="first" type="number" class="otp-text m-2" />
+                                    <input id="second" type="number" class="otp-text m-2" disabled />
+                                    <input id="third" type="number" class="otp-text m-2" disabled />
+                                    <input  id="fourth" type="number" class="otp-text m-2" disabled />
+                                </div>
+                                <div class="mt-3">
+                                    <button id="btn-validate" class="submit-btn otp-btn"
+                                            data-bs-dismiss="modal">
+                                        Validate
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="card-2">
+                            <p class="resend-para">
+                                Didn't receive OTP? <a href="#"
+                                                       class="text-decoration-none ms-1">Resend</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @await Html.PartialAsync("~/Views/PartialView/_SuccessOTPModelPartial.cshtml")
+
+
+
+
+
+
+
+
+
+
+
+
+
+@section Scripts
+    {
+
+
+        <script src="~/js/owl.carousel.min.js"></script>
+        <!-- OTP Script -->
+
+        <script>
+            $(async function () {
+                $('#show-div').hide();
+                DrawCaptcha();
+                await fetchAllStates();
+
+                $('#DivContactInfo').hide();
+
+            });
+
+            async function otpSuccess() {
+                $('#otp-validate2').modal('show');
+           }
+            function DrawCaptcha() {
+                var a = Math.ceil(Math.random() * 10) + '';
+                var b = Math.ceil(Math.random() * 10) + '';
+                var c = Math.ceil(Math.random() * 10) + '';
+                var d = Math.ceil(Math.random() * 10) + '';
+                //var e = Math.ceil(Math.random() * 10)+ '';
+                //var f = Math.ceil(Math.random() * 10)+ '';
+                //var g = Math.ceil(Math.random() * 10)+ '';
+                //var code = a + ' ' + b + ' ' + ' ' + c + ' ' + d + ' ' + e + ' '+ f + ' ' + g;
+                var code = a + ' ' + b + ' ' + ' ' + c + ' ' + d;
+                document.getElementById("txtCaptcha").value = code
+            }
+            function ValidCaptcha() {
+                $(this).prop('disabled', true);
+                
+                const errorFunc = (title) => {
+                    Toast.fire({
+                        icon: 'error',
+                        title: title
+                    })
+                    
+                   
+
+                }
+                var captcha = removeSpaces(document.getElementById('txtCaptcha').value);
+                var inputCaptcha = removeSpaces(document.getElementById('txtInput').value);
+                if (inputCaptcha == '') {
+                    //alert("Captcha can't be blank!!");
+                    errorFunc("Captcha can't be blank!!");
+                    return;
+                }
+                else if (captcha == inputCaptcha) {
+                    return true;
+                }
+                else {
+                    // alert("Please Input Correct Captcha");
+                    errorFunc("Please Input Correct Captcha");
+                    return;
+                }
+            }
+            function removeSpaces(string) {
+                return string.split(' ').join('');
+            }
+            </script>
+        <script>
+
+            $('#btn-validate').click(async function () {
+                const validateBtn = document.querySelector('.otp-btn');
+                $(this).prop('disabled', true);
+                var originalButtonText = $(this).html();
+
+                const errorFunc = (title) => {
+                    Toast.fire({
+                        icon: 'error',
+                        title: title
+                    })
+                    $(this).prop('disabled', false);
+                    $(this).html(originalButtonText);
+
+                }
+                // Add click event listener to the "Validate" button
+                // validateBtn.addEventListener('click', function (event) {
+                //     event.preventDefault(); // Prevent form submission
+
+                    // Get the OTP input elements
+                    const firstInput = document.getElementById('first');
+                    const secondInput = document.getElementById('second');
+                    const thirdInput = document.getElementById('third');
+                    const fourthInput = document.getElementById('fourth');
+
+                    // Get the values of the OTP inputs
+                    const firstValue = firstInput.value;
+                    const secondValue = secondInput.value;
+                    const thirdValue = thirdInput.value;
+                    const fourthValue = fourthInput.value;
+
+                    // Concatenate the OTP values into a single string
+                    const otp = firstValue + secondValue + thirdValue + fourthValue;
+                if (otp != "") {
+                    let url = "/api/v1/otp/otpConfirmation/" + otp;
+                    const result = await fetchData(url);
+                    if (result.Message == "Data Received.") {
+                        await otpSuccess()
+
+
+                    }
+                    else {
+                        errorFunc("Wrong Otp");
+                        return;
+                    }
+              
+                }
+
+                    // Now, the 'otp' variable contains the concatenated OTP value
+              //      console.log(otp);
+
+                    // You can perform further actions with the OTP value here, such as validation or sending it to a server.
+                //});
+
+            });
+           
+           
+
+
+            const inputs = document.querySelectorAll(".otp-text");
+            
+            // iterate over all inputs
+            inputs.forEach((input, index1) => {
+                input.addEventListener("keyup", (e) => {
+                    // This code gets the current input element and stores it in the currentInput variable
+                    // This code gets the next sibling element of the current input element and stores it in the nextInput variable
+                    // This code gets the previous sibling element of the current input element and stores it in the prevInput variable
+                    const currentInput = input,
+                        nextInput = input.nextElementSibling,
+                        prevInput = input.previousElementSibling;
+
+                    // if the value has more than one character then clear it
+                    if (currentInput.value.length > 1) {
+                        currentInput.value = "";
+                        return;
+                    }
+                    // if the next input is disabled and the current value is not empty
+                    //  enable the next input and focus on it
+                    if (nextInput && nextInput.hasAttribute("disabled") && currentInput.value !== "") {
+                        nextInput.removeAttribute("disabled");
+                        nextInput.focus();
+                    }
+
+                    // if the backspace key is pressed
+                    if (e.key === "Backspace") {
+                        // iterate over all inputs again
+                        inputs.forEach((input, index2) => {
+                            // if the index1 of the current input is less than or equal to the index2 of the input in the outer loop
+                            // and the previous element exists, set the disabled attribute on the input and focus on the previous element
+                            if (index1 <= index2 && prevInput) {
+                                input.setAttribute("disabled", true);
+                                input.value = "";
+                                prevInput.focus();
+                            }
+                        });
+                    }
+                    //if the fourth input( which index number is 3) is not empty and has not disable attribute then
+                    //add active class if not then remove the active class.
+                    if (!inputs[3].disabled && inputs[3].value !== "") {
+                      //  button.classList.add("active");
+                        return;
+                    }
+                   // button.classList.remove("active");
+                });
+            });
+
+            //focus the first input which index is 0 on window load
+            // window.addEventListener("load", () => inputs[0].focus());
+
+ 
+        $('.adds-carousel').owlCarousel({
+            loop: true,
+            margin: 10,
+            nav: false,
+            dots: false,
+            autoplay: true,
+            responsive: {
+                0: {
+                    items: 1
+                },
+                600: {
+                    items: 1
+                },
+                1000: {
+                    items: 1
+                }
+            }
+        })
+
+   
+        function showDiv() {
+            document.getElementById('formDiv').style.display = "block";
+        }
+
+   
+        
+        $('#btn-submit-approval-data').click(async function () {
+               // handleButtonClickApproved.call(this, '/plate/details/validateRequired', postData, (result) => {
+                handleButtonClickApproved.call(this, '/plate/validateRequired', postData, (result) => {
+              
+            })
+        });
+
+        async function handleButtonClickApproved(url, postData, isSuccessFunc) {
+            
+                $(this).prop('disabled', true);
+                var originalButtonText = $(this).html();
+            
+            $(this).html('<span class="spinner-border spinner-border-sm"></span> Processing...');
+            var regNo = $('#registrationNumber').val();
+            var RegNo = regNo.trim();
+            var chno = $('#chassisNo').val();
+            var ChasisNo = chno.trim();
+            var EngNo = $('#engineNo').val();
+            var EngineNo = EngNo.trim();
+            var Stateid = $('#select-state option:selected').val();
+            const errorFunc = (title) => {
+                    Toast.fire({
+                        icon: 'error',
+                        title: title
+                    })
+                    $(this).prop('disabled', false);
+                    $(this).html(originalButtonText);
+                  
+                }
+         if (Stateid === '' || Stateid === '0' || Stateid === 'Select State') {
+                    errorFunc("Please Select State");
+                return;
+            }
+            if (RegNo == '') {
+                    errorFunc("Please Fill Registration Number");
+                return;
+            }
+            if (ChasisNo == '') {
+                    errorFunc("Please Fill Chassis Number");
+                return;
+            }
+            if (EngineNo == '') {
+                    errorFunc("Please Fill Engine Number");
+                return;
+            }
+            if (!ValidCaptcha()) {
+                    $(this).prop('disabled', false);
+                    $(this).html(originalButtonText)
+                return false;
+            }
+        const data = { RegistrationNo: RegNo, ChassisNo: ChasisNo, EngineNo: EngineNo, StateId: Stateid }
+
+            try {
+                const result = await postData(url, data);
+                isSuccessFunc(result);
+                var response = $.parseJSON(result);
+                if (response.Status !== null && response.Status === "true") {
+                    userData = response;
+                    var vehRegDate = "" + response.VehRegDate;
+                    $('#show-div').show();
+                    // userData["VehicleType"] = response.VehicleRegNo;
+                    //     userData["VehRegDate"] = convertDate("" + VehRegDate);
+                    if (response.Message == "Vehicle details available in Vahan") {
+
+
+
+
+                        $('#registrationNumber').attr('readonly', 'readonly');
+                        $('#chassisNo').attr('readonly', 'readonly');
+                        $('#engineNo').attr('readonly', 'readonly');
+                        $('#select-state').prop("disabled", true);
+                        $('#divrcupload').hide();
+                            var date = convertDate(response.VehRegDate)
+                            $('#regDate').val(date);
+                        // $('#regDate').vehRegDate));
+                        if (response.Fuel == 'NOT APPLICABLE') {
+                            $('#fueltype').removeAttr("disabled");
+                            $('#fueltype').val("");
+                            userData["FuelType"] = 'NOT APPLICABLE';
+                        } else {
+                            $('#fueltype').val(response.FuelType);
+                            $('#fueltype').prop("disabled", true);
+                            userData["FuelType"] = response.FuelType;
+                        }
+                        $('#maker').val(response.Maker);
+                        $('#maker').attr('readonly', 'readonly');
+                        $('#vcltype').val(response.VehicleClass);
+                        //$('#ddlvchCatgVahan').val(response.data.vehicle_category);
+                        //alert(response.data.norms);
+
+                        if ($("select[id$='vhlcategory'] option:contains('" + response.VehicleCategory + "')").length > 0) {
+                            $('#vhlcategory').val(response.VehicleCategory);
+                            $('#vhlcategory').attr('disabled', 'disabled');
+                        }
+
+                        if ($("select[id$='norms'] option:contains('" + response.Norms + "')").length > 0) {
+                            $('#norms').val(response.Norms);
+                            $('#norms').attr('disabled', 'disabled');
+                        }
+                            $('#select-vehicle').hide();
+
+                        //alert(response.data.vehicle_category);
+
+                        if (response.VehicleCategory == '2WN' || response.VehicleCategory == '2WIC' || response.VehicleCategory == '2WT') {
+                                $('#select-vehicle').show();
+                        }
+                            else {
+                                $('#select-vehicle').hide();
+                            }
+                            $('#vcltype').prop("disabled", true);
+                            $('#txtVehicleTypeVahan').val(response.VehicleCategory);
+
+                            $('#txtVehicleTypeVahan').attr('readonly', 'readonly');
+                          // await GetOemVehicleType(response.VehicleCategory);
+                            if (response.VehicleCategory == 'OTH' && response.Maker == 'JCB INDIA LIMITED') {
+                                $('#vhlcategory').prop("disabled", false);
+                            }
+                            else if (response.VehicleCategory == 'OTH' && response.Maker == 'JCB INDIA LTD') {
+                                $('#vhlcategory').prop("disabled", false);
+                            }
+                            else if (response.VehicleCategory == 'OTH' && response.Maker == 'WIRTGEN INDIA PVT LTD') {
+                                $('#vhlcategory').prop("disabled", false);
+                            }
+                            else if (response.VehicleCategory == 'OTH' && response.Maker == 'INTERNATIONAL TRACTORS LIMITED') {
+                                $('#vhlcategory').prop("disabled", false);
+                            }
+                            else if (response.VehicleCategory == 'OTH' && response.Maker == 'MANITOU EQUIPMENT INDIA PVT LTD') {
+                                $('#vhlcategory').prop("disabled", false);
+                            }
+                            else if (response.VehicleCategory == 'OTH' && response.Maker == 'ACTION CONSTRUCTION EQUIPMENT LTD.') {
+                                $('#vhlcategory').prop("disabled", false);
+                            }
+                            else if (response.VehicleCategory == 'OTH' && response.Maker == 'ESCORTS CONSTRUCTION EQUIPMENT LTD') {
+                                $('#vhlcategory').prop("disabled", false);
+                            }
+                            else if (response.VehicleCategory == 'OTH' && response.Maker == 'ESCORTS LIMITED (CONSTRUCTION EQUIPMENT)') {
+                                $('#vhlcategory').prop("disabled", false);
+                            }
+                            else if (response.VehicleCategory == 'OTH' && response.Maker == 'SCANIA COMMERCIAL VEHICLES INDIA PVT LIMITED') {
+                                $('#vhlcategory').prop("disabled", false);
+                            }
+                            else if (response.VehicleCategory == 'OTH' && response.Maker == 'TATA HITACHI CONSTRUCTION MACHINERY COMP. PVT LTD') {
+                                $('#vhlcategory').prop("disabled", false);
+                            }
+                            else if (response.VehicleCategory == 'OTH' && response.Maker == 'UTTAM CONSTRUCTION EQUIPMENTS') {
+                                $('#vhlcategory').prop("disabled", false);
+                            }
+                            else if (response.VehicleCategory == 'OTH' && response.Maker == 'JOHN DEERE INDIA  PVT LTD(TRACTOR DEVISION') {
+                                 $('#vhlcategory').prop("disabled", false);
+                            }
+                            else if (response.VehicleCategory == 'OTH' && response.Maker == 'ASHOK LEYLAND LTD') {
+                                $('#vhlcategory').prop("disabled", false);
+                            }
+                            else if (response.VehicleCategory == 'OTH' && response.Maker == 'ESCORTS KUBOTA LIMITED (CONSTRUCTION EQUIPMENT)') {
+                                $('#vhlcategory').prop("disabled", false);
+                            }
+                            else {
+                                $('#vhlcategory').val(response.VehicleCategory);
+                                $('#vhlcategory').prop("disabled", true);
+
+                            }
+                        $('#DivContactInfo').show();
+                        $('#DivVehicleDetails').show();
+                    }
+                    else if (response.Message.includes('Vehicle details available in Vahan but Maker of this vehicle Not Present in HOMOLOGATION') || response.Message == "Vehicle details available in Vahan but OEM/Manufacturer (Homologation) of this vehicle have not authorized you for the State/RTO of this vehicle, please contact respective OEM.") {
+                        errorFunc('UPDATE DETAILS FROM YOUR REGISTRATION CERTIFICATE');
+
+                        $('#registrationNumber').attr('readonly', 'readonly');
+                        $('#chassisNo').attr('readonly', 'readonly');
+                        $('#engineNo').attr('readonly', 'readonly');
+                        $('#txtInput').attr('readonly', 'readonly');
+                        $('#DivContactInfo').show();
+                        $('#DivVehicleDetails').show();
+                        $('#divrcupload').show();
+                        if (response.maker != '') {
+                            $('#maker').val(response.Maker);
+                            $('#maker').attr('readonly', 'readonly');
+
+                        }
+                        else {
+                            $('#maker').removeAttr('readonly');
+                        }
+
+                        $('#vcltype').prop("disabled", false);
+                        $('#txtVehicleTypeVahan').removeAttr('readonly');
+                        $("#regDate").removeAttr('readonly');
+
+                        $('#norms').prop("disabled", false);
+                        $('#fueltype').prop("disabled", false);
+                        $('#vhlcategory').prop("disabled", false);
+
+                    }
+                    else {
+                        ShowToast(response.message !== null ? response.message : "Vehicle details not found.", "rgb(15, 52, 67)");
+                        $this.removeClass("disabled");
+                    }
+
+
+
+
+
+                    
+
+                }
+            }
+                catch (error) {
+                console.error('Failed to post data:', error);
+            } finally {
+                $(this).prop('disabled', false);
+                $(this).html(originalButtonText);
+               
+            }
+        };
+            $(document).ready(function () {
+                $('#regDate').on('input', function () {
+                    var val = this.value;
+                    if (val.length === 2 || val.length === 5) {
+                        val += '/';
+                    }
+                    this.value = val;
+                });
+            });
+          async  function uploadcsvfile() {
+                
+                //var myfile = document.getElementById("uploadfile");
+                var myfile = $("#uploadfile")[0].files[0];
+                var formData = new FormData();
+                formData.append("RcPhoto", myfile)
+
+                // if (myfile.files.length > 0) {
+                //     for (var i = 0; i < myfile.files.length; i++) {
+                //         formData.append('file-' + i, myfile.files[i]);
+                //     }
+                // }
+                var url = "/api/v1/upload"
+                try {
+                    const result = await postDataFormData(url, formData);
+                    isSuccessFunc(result);
+                } catch (error) {
+                    console.error('Failed to post data:', error);
+                } finally {
+                    $(this).prop('disabled', false);
+                    $(this).html(originalButtonText);
+                    successMessage('Save Successfully');
+                    setTimeout(function () {
+                        window.location.reload();
+                    }, 1000);
+                }
+
+               
+            }
+         
+
+
+        $(document).ready(function () {
+            $('#mobNo').on('input', function () {
+                var mobileNumber = $(this).val();
+                $(this).val(mobileNumber.replace(/\D/g, '')); // Remove any non-numeric characters
+            });
+        });
+
+
+
+
+        $('#btn-next').click(async function () {
+                handleButtonClick.call(this, '/plate/customerInfo', postData, (result) => {
+                // bindHtmlHsrpView(result.Data);
+                // $('#div-bind-report').show();
+                // console.log('Data posted successfully, where the server response data is', result);
+            })
+        });
+
+            async function handleButtonClick(url, postData, isSuccessFunc) {
+                
+                $(this).prop('disabled', true);
+                var originalButtonText = $(this).html();
+
+                const errorFunc = (title) => {
+                    Toast.fire({
+                        icon: 'error',
+                        title: title
+                    })
+                    $(this).prop('disabled', false);
+                    $(this).html(originalButtonText);
+
+                }
+                const emailregex = /^\b[A-Z0-9._%-]+@@[A-Z0-9.-]+\.[A-Z]{2,4}\b$/i;
+                var EngNo = $('#engineNo').val();
+                var EngineNo = EngNo.trim();
+                var regNo = $('#registrationNumber').val();
+                var RegNo = regNo.trim();
+                var chno = $('#chassisNo').val();
+                var ChassisNo = chno.trim();
+                var bharatStage = $("#norms").val();
+                var customerName = $("#ownerName").val();
+                var customerEmail = $("#emailId").val();
+                var customerMobile = $("#mobNo").val();
+                var customerBillingAddress = $("#billingAddress").val();
+                var customerState = $("#select-state option:selected").val();
+                var vchCatgVahan = $("#vhlcategory").val();
+                //var oemVehicleType = $("#ddlOemVehicleType").val();
+
+
+                if (vchCatgVahan == '2WN' || vchCatgVahan == '2WIC' || vchCatgVahan == '2WT') {
+                    vchCatgVahan = $('#vhlcategoryVahan').val();
+                    if (vchCatgVahan == '') {
+                        errorFunc("Please select Vehicle Category");
+                        return;
+
+                    } else if (vchCatgVahan == "0") {
+                        errorFunc("Please select Vehicle Category");
+                        return;
+
+                    }
+                }
+
+
+                if (!emailregex.test(customerEmail)) {
+                    errorFunc("Invalid Email Id");
+                    return;
+
+                }
+                if ($('#fueltype').val() === '') {
+                    errorFunc("Select Fuel Type");
+                    return;
+                }
+
+                //alert(oemVehicleType);
+                if (bharatStage !== "" && customerName !== "" && customerEmail !== "" && customerMobile !== "" && customerBillingAddress !== "" && customerState !== "--Select State--" && customerState !== "" && vchCatgVahan !== "0") {
+                  
+                    var newObject = {
+                        bhart_stage: bharatStage,
+                        customer_name: customerName,
+                        customer_email: customerEmail,
+                        customer_mobile: customerMobile,
+                        customer_billing_address: customerBillingAddress,
+                        customer_state: customerState,
+                        OemVehicleType: vchCatgVahan,
+                    }
+                   
+                      var regDate = $('#regDate').val();
+                 
+                      var vehicleTypeVahan = $('#vcltype').val();
+                    var fuleTypeVahan = $('#fueltype').val();
+                    var oemvehicletype = "";
+                    var vehiclecatvahan = $('#vhlcategory').val();
+                   
+                    var StateName = $('#select-state option:selected').text();
+                    
+                     var filepath = '';
+                    //  var billingAddress = $('#billingAddress').val().replace("\n", "");
+                    // // var GST = $('#gstNo').val();
+                    var maker = $('#maker').val();
+
+                     if (vehicleTypeVahan === '') {
+                             errorFunc("Please provide Vehicle Type");
+                         return;
+                     }
+                     if (vehicleTypeVahan === 'Select Vehicle Type') {
+                         errorFunc("Please provide Vehicle Type");
+                         return;
+                     }
+                 
+
+                    const data = { BharatStage: bharatStage, RegistrationDate: regDate, RegistrationNo: RegNo, ChassisNo: ChassisNo, EngineNo: EngineNo, OwnerName: customerName, EmailId: customerEmail, MobileNo: customerMobile, FilePath: filepath, BillingAddress: customerBillingAddress, MakerVahan: maker, VehicleTypeVahan: vehicleTypeVahan, FuelTypeVahan: fuleTypeVahan, VehicleCatVahan: vchCatgVahan, StateId: customerState, StateName: StateName, OemVehicleType: oemvehicletype }
+                    try {
+                        const result = await postData(url, data);
+                        isSuccessFunc(result);
+                        var response = $.parseJSON(result);
+                        if (response.Message == "Success") {
+                            $('#otp-modal').modal('show');
+                            let url = "/api/v1/otp"
+                            const result = await fetchData(url);
+
+
+                        }
+                    }
+                    catch (error) {
+                        console.error('Failed to post data:', error);
+                    } finally {
+                        $(this).prop('disabled', false);
+
+                    }
+                }
+            }
+            function convertDate(inputFormat) {
+                // Use a regular expression to split the date string
+                var parts = inputFormat.match(/(\d+)/g);
+
+                // Extract day, month, and year
+                var day = parseInt(parts[0], 10);
+                var month = parseInt(parts[1], 10);
+                var year = parseInt(parts[2], 10);
+
+                // Format the date as dd/mm/yyyy
+                return [day, month, year].join('/');
+            }
+
+         
+
+
+
+  </script>
+    }
+
+
+</body>
+</html>
+
+

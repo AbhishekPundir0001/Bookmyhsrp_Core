@@ -1,6 +1,8 @@
 ﻿
+using BookMyHsrp.Libraries.HsrpWithColorSticker.Models;
 using BookMyHsrp.Libraries.ResponseWrapper.Models;
 using BookMyHsrp.ReportsLogics.HsrpWithColorSticker;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 using static BookMyHsrp.Libraries.HsrpWithColorSticker.Models.HsrpColorStickerModel;
@@ -46,8 +48,13 @@ namespace BookMyHsrp.ApiController.ApiHSRPWithColourSticker
             {
                 return BadRequest(new { Error = true, Message = GetModelErrorMessages() });
             }
-
+            var jsonSerializer = System.Text.Json.JsonSerializer.Serialize(requestDto);
+            HttpContext.Session.SetString("SessionDetail", jsonSerializer);
             var result = await _hsrpWithColorStickerConnector.SessionBookingDetails(requestDto);
+            if (result.Message == "Vehicle Details didn't match")
+            {
+                return BadRequest(new { Error = true, result.Message });
+            }
             return Ok(
                   new Response<dynamic>(result, false,
                       "Data Received."));

@@ -1,0 +1,429 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+
+    <!-- Place favicon.ico in the root directory -->
+    <link rel="shortcut icon" type="image/x-icon" href="Images/favicon.html">
+    <link rel="apple-touch-icon" href="apple-touch-icon.html">
+
+    <!-- All css files are included here. -->
+    <link rel="stylesheet" href="~/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/css/style.css">
+    <link rel="stylesheet" href="~/css/owl.carousel.min.css">
+    <!--     <link rel="stylesheet" href="assets/css/owl.theme.default.min.css"> -->
+
+</head>
+
+<body>
+
+    <!-- Body main wrapper start -->
+
+    <div class="wrapper">
+        <!-- Start Header Style -->
+     
+        <!-- End Header Style -->
+        <!-- Start Mobile Header -->
+        <!--
+                <div class="mobile-header d-block d-lg-none">
+                    <div class="container">
+                        <div class="row align-items-center justify-content-between">
+
+                        </div>
+                    </div>
+                </div>
+        -->
+        <!-- End Mobile Header -->
+        <!--  Start Offcanvas Mobile Menu Section  -->
+        <div class="offcanvas offcanvas-start" tabindex="-1" id="toggleMenu">
+            <div class="offcanvas-header">
+
+                <!-- Start Header Logo -->
+                <a href="index-3.html" class="header-logo">
+                    <img src="~/Images/logo/logo.png" alt="">
+                </a>
+                <!-- End Header Logo -->
+
+                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+                <!-- Start Offcanvas Mobile Menu Wrapper -->
+                <div class="offcanvas-mobile-menu-wrapper">
+                    <!-- Start Mobile Menu  -->
+                    <div class="mobile-menu-bottom">
+                        <!-- Start Mobile Menu Nav -->
+                        <div class="offcanvas-menu">
+                            <ul>
+                                <li><a href="TrackOrder.html">Track Your Order</a></li>
+                                <li><a href="ReAppointment.html">Reschedule Appointment</a></li>
+                                <li><a href="OrderCancel.html">Cancel Order</a></li>
+
+                                <li><a href="PinForHomeDelivery.html">Check For Home Installation</a></li>
+                                <li><a href="ReceiptValidity.html"><b>Receipt Validity</b></a></li>
+                                <li><a href="BookMyHSRP_ContactUs.html"><b>Contact Us</b></a></li>
+                            </ul>
+                        </div>
+                        <!-- End Mobile Menu Nav -->
+                    </div>
+                    <!-- End Mobile Menu -->
+                    <!-- End Mobile contact Info -->
+
+                </div>
+                <!-- Start Mobile contact Info -->
+                <!--
+                    <div class="mobile-contact-info text-center">
+                        <ul class="social-link">
+                            <li><a href="https://example.com/"><i class="fa fa-facebook"></i></a>
+                            </li>
+                            <li><a href="https://example.com/"><i class="fa fa-twitter"></i></a>
+                            </li>
+                            <li><a href="https://example.com/"><i class="fa fa-skype"></i></a></li>
+                        </ul>
+                    </div>-->
+                <!-- End Offcanvas Mobile Menu Wrapper -->
+            </div>
+        </div>
+        <!--  End Offcanvas Mobile Menu Section -->
+
+        <section class="page-header d-lg-none">
+            <div class="container">
+                <div class="page-header__inner text-center">
+                    <h5>Step 2</h5>
+                    <h2>Fitment Location</h2>
+                </div>
+            </div>
+        </section>
+
+        <!-- main start -->
+        <main class="main-body">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12 col-lg-3 p-0 order-2 order-lg-1">
+                        <div class="sidebar">
+                            <div class="side-steper d-none d-lg-block">
+                                <ul class="side-ul">
+                                    <li class="active">Step -1 Booking Details</li>
+                                    <li class="active">Step -2 Fitment Location</li>
+                                    <li>Step -3 Appointment Slot</li>
+                                    <li>Step -4 Booking Summary</li>
+                                    <li>Step -5 Verify Details & Pay</li>
+                                    <li>Step -6 Download Receipt</li>
+                                </ul>
+                            </div>
+                            <div class="side-slide">
+                                <div class="owl-carousel adds-carousel owl-theme">
+                                    <div class="item"><img src="~/Images/adds/img-1.png" alt=""></div>
+                                    <div class="item"><img src="~/Images/adds/img-2.png" alt=""></div>
+                                    <div class="item"><img src="~/Images/adds/img-3.png" alt=""></div>
+                                    <div class="item"><img src="~/Images/adds/img-4.png" alt=""></div>
+                                    <div class="item"><img src="~/Images/adds/img-5.png" alt=""></div>
+                                    <div class="item"><img src="~/Images/adds/QR.jpg" alt=""></div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-9 p-0 order-1 order-lg-2">
+                        <div class="main-data main-bg2">
+                            <div class="title-area d-flex justify-content-between">
+                                <h4 class="title">Home Delivery</h4>
+                                <a href="@(Url.Action("DealerDelivery", "DealerDelivery"))" id="btndealer"  class="submit-btn">
+                                    Dealer Appointment
+                                </a>
+                            </div>
+                            <div class="form-area">
+                                <div class="form-area-inner">
+                                    <div class="row align-items-center" id="checking">
+                                        <div class="col-lg-4 col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <label class="form-label">Pin Code</label>
+                                                <input maxlength="6" id="pincode" type="text" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 col-md-6 col-sm-12">
+                                            <button id="checkavalibility" type="button" class="submit-btn2">
+                                                Check Availability
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="row" >
+                                        <div >
+                                        <p id="avabilitierror" class="status-p">Currently service is not available in this area. Enter your mobile number,<br>So when service resume on this pincode we ping you back!</p>
+                                            <p id="avabilitiThankyou" class="status-p" style="Color:Green">Thank you. You will be updated as soon as the appointment system is available. !</p>
+                                        </div>
+                                        <div class="col-lg-4 col-md-6 col-sm-12" id="mob">
+                                            <div class="form-group">
+                                                <label class="form-label">Mobile No.</label>
+                                                <input maxlength="10" id="mobileNo" type="number" class="form-control">
+                                            </div>
+                                            <button id="submit-mobile" type="button" class="submit-btn me-3">
+                                                Submit
+                                            </button>
+                                            <button type="reset" class="reset-btn">
+                                                Reset
+                                            </button>
+                                        </div>
+
+                                    </div>
+                                    <!--
+                                                                        <div class="row">
+                                                                            <div class="col-lg-4 col-md-12 col-sm-12">
+                                                                                <a href="#" class="submit-btn mt-5">
+                                                                                    Dealer Appointment</a>
+                                                                            </div>
+                                                                        </div>
+                                    -->
+                                    <div class="row" id="details">
+                                       <div class="col-lg-4 col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <label class="form-label">Pincode</label>
+                                                <input id="pincodeNew" type="number" class="form-control">
+                                            </div>
+                                        </div> 
+                                        <div class="col-lg-4 col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <label class="form-label">City</label>
+                                                <input id="city" type="text" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <label class="form-label">State</label>
+                                                <input id="state" type="text" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <label class="form-label">Address Line 1*</label>
+                                                <input id="addressline1" type="text" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <label class="form-label">Address Line 2*</label>
+                                                <input id="addressline2" type="text" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <label class="form-label">Landmark</label>
+                                                <input id="lamdmark" type="text" class="form-control">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-4">
+                                            <button id="btn-submit-home-delivery-data" type="button" class="submit-btn me-3">
+                                                Submit
+                                            </button>
+                                            <button type="reset" class="reset-btn">
+                                                Reset
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <!-- main end -->
+        <!-- footer area start -->
+       
+
+    </div>
+    <!-- Body main wrapper end -->
+    <!-- Body main Script start -->
+   
+@section Scripts
+    {
+
+       <script src="~/js/owl.carousel.min.js"></script>
+    <script>
+        $('#avabilitierror').hide();
+            $('#details').hide();
+            $('#btndealer').hide();
+            $('#mob').hide();
+            $('#avabilitiThankyou').hide();
+        $('.adds-carousel').owlCarousel({
+            loop: true,
+            margin: 10,
+            nav: false,
+            dots: false,
+            autoplay: true,
+            responsive: {
+                0: {
+                    items: 1
+                },
+                600: {
+                    items: 1
+                },
+                1000: {
+                    items: 1
+                }
+            }
+        })
+
+        $('#checkavalibility').click(async function (){
+
+                $(this).prop('disabled', true);
+                var originalButtonText = $(this).html();
+
+                $(this).html('<span class="spinner-border spinner-border-sm"></span> Processing...');
+                var pincode = $('#pincode').val();
+                
+                const errorFunc = (title) => {
+                    Toast.fire({
+                        icon: 'error',
+                        title: title
+                    })
+                    $(this).prop('disabled', false);
+                    $(this).html(originalButtonText);
+
+                }
+                if (!pincode) {
+                    errorFunc('Please Input Pincode');
+                    return;
+
+                }
+            try {
+            var url = "/checkavailibility/" + pincode;
+                const result = await fetchData(url);
+                 //var response = $.parseJSON(result);
+                    if (result.Status == "1") {
+
+                        $('#details').show();
+                        $('#checking').hide();
+                        $('#city').val(result.DeliveryCity);
+                        $('#city').attr('readonly', 'readonly');
+                        
+                        $('#state').val(result.DeliveryState);
+                        $('#state').attr('readonly', 'readonly');
+                        $('#pincodeNew').val(result.Pincode);
+                        $('#pincodeNew').attr('readonly', 'readonly');
+                    }
+                else
+                {
+                    $('#avabilitierror').show();
+                    $('#btndealer').show();
+                    $('#mob').show();
+                }
+                } catch (error) {
+                    console.error('Failed to post data:', error);
+                } finally {
+                    $(this).prop('disabled', false);
+                    $(this).html(originalButtonText);
+                    
+                }
+              })
+
+        $('#submit-mobile').click(async function () {
+            $(this).prop('disabled', true);
+            var originalButtonText = $(this).html();
+
+            $(this).html('<span class="spinner-border spinner-border-sm"></span> Processing...');
+            var pincode = $('#pincode').val();
+            var mobileNo = $('#mobileNo').val();
+
+            const errorFunc = (title) => {
+                Toast.fire({
+                    icon: 'error',
+                    title: title
+                })
+                $(this).prop('disabled', false);
+                $(this).html(originalButtonText);
+
+            }
+            if (!pincode) {
+                errorFunc('Please Input Pincode');
+                return;
+
+            }
+            try {
+                var url = '/update-for-avalibility';
+                const data = { PinCode: pincode, MobileNo: mobileNo }
+                const result = await postData(url, data);
+                    if (result.Data == "Success") {
+                        $('#avabilitiThankyou').show();
+                        $('#avabilitierror').hide();
+                        $('#mobileNo').val('');
+                }
+                } catch (error) {
+                    console.error('Failed to post data:', error);
+                } finally {
+                    $(this).prop('disabled', false);
+                    $(this).html(originalButtonText);
+
+                }
+        });
+            $('#btn-submit-home-delivery-data').click(async function () {
+                // handleButtonClickApproved.call(this, '/plate/details/validateRequired', postData, (result) => {
+                handleButtonClickApproved.call(this, '/home-delivery', postData, (result) => {
+
+                })
+            });
+        async function handleButtonClickApproved(url, postData, isSuccessFunc) {
+
+            $(this).prop('disabled', true);
+            var originalButtonText = $(this).html();
+
+            $(this).html('<span class="spinner-border spinner-border-sm"></span> Processing...');
+            var pincode = $('#pincodeNew').val();
+            var city = $('#city').val();
+            var state = $('#state').val();
+            var addressline1 = $('#addressline1').val();
+            var addressline2 = $('#addressline2').val();
+            var landmark = $('#lamdmark').val();
+
+            const errorFunc = (title) => {
+                Toast.fire({
+                    icon: 'error',
+                    title: title
+                })
+                $(this).prop('disabled', false);
+                $(this).html(originalButtonText);
+
+            }
+            if (!city) {
+                errorFunc("Please Input City");
+                return;
+            }
+            if (!state) {
+                errorFunc("Please Input state");
+                return;
+            }
+            if (!addressline1) {
+                errorFunc("Please Input AddressLine 1");
+                return;
+            }
+            if (!addressline2) {
+                errorFunc("Please Input AddressLine 2");
+
+                return;
+            }
+            if (!landmark) {
+                errorFunc("Please Input Landmark");
+                return;
+            }
+            const data = { Pincode: pincode, DeliveryCity: city, StateName: state, AddressLine1: addressline1, AddressLine2: addressline2, Landmark: landmark }
+            try {
+                const result = await postData(url, data);
+            }
+            catch (error) {
+                console.error('Failed to post data:', error);
+            } finally {
+                $(this).prop('disabled', false);
+                $(this).html(originalButtonText);
+
+            }
+        }
+
+    </script>
+    }
+    <!-- Body main Script end -->
+</body>
+
+</html>

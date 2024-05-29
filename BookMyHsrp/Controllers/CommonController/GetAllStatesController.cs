@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace BookMyHsrp.Controllers.Common
+namespace BookMyHsrp.Controllers.CommonController
 {
 
     [Route("api/v1/state")]
@@ -14,12 +14,20 @@ namespace BookMyHsrp.Controllers.Common
 
             _allStatesService = allStatesService;
         }
-       
+
         [HttpGet]
         public async Task<dynamic> GetAllStates()
         {
 
             var resultGot = await _allStatesService.GetAllStates();
+            return resultGot;
+
+        }
+        [Route("/get-city/{Id}")]
+        public async Task<dynamic> GetCityOfState(int Id)
+        {
+
+            var resultGot = await _allStatesService.GetCityOfState(Id);
             return resultGot;
 
         }

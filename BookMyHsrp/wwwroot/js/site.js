@@ -44,7 +44,7 @@ async function postDataFormData(url, formData) {
             method: 'POST',
             body: formData,
             processData: false,
-            contentType:false
+            contentType: false
         });
 
         // Checking if the response status is different from 2xx and 3xx
@@ -188,7 +188,7 @@ async function fetchStates(data) {
     try {
         const result = await fetchData(url);
         console.log('Data fetched successfully, where the server response data is', result);
-        bindHtmlForStateInSelectById(result,data);
+        bindHtmlForStateInSelectById(result, data);
 
     } catch (error) {
         console.error('Failed to fetch data:', error);
@@ -198,7 +198,7 @@ async function sourceLead() {
     const url = '/api/v1/sourceLead';
     try {
         const result = await fetchData(url);
-        
+
         console.log('Data fetched successfully, where the server response data is', result);
         bindHtmlForSourceLead(result);
 
@@ -234,7 +234,7 @@ async function fetchMake(data) {
     try {
         const result = await fetchData(url);
         console.log('Data fetched successfully, where the server response data is', result);
-        bindHtmlForMakeById(result,data);
+        bindHtmlForMakeById(result, data);
 
     } catch (error) {
         console.error('Failed to fetch data:', error);
@@ -256,7 +256,7 @@ async function vehicleType(data) {
     try {
         const result = await fetchData(url);
         console.log('Data fetched successfully, where the server response data is', result);
-        bindHtmlForVehicleTypeById(result,data);
+        bindHtmlForVehicleTypeById(result, data);
 
     } catch (error) {
         console.error('Failed to fetch data:', error);
@@ -278,7 +278,7 @@ async function fetchFuelType(data) {
     try {
         const result = await fetchData(url);
         console.log('Data fetched successfully, where the server response data is', result);
-        bindHtmlForFuelTypeById(result,data);
+        bindHtmlForFuelTypeById(result, data);
 
     } catch (error) {
         console.error('Failed to fetch data:', error);
@@ -300,7 +300,7 @@ async function fetchEngineCondition(data) {
     try {
         const result = await fetchData(url);
         console.log('Data fetched successfully, where the server response data is', result);
-        bindHtmlForEngineConditionById(result,data);
+        bindHtmlForEngineConditionById(result, data);
 
     } catch (error) {
         console.error('Failed to fetch data:', error);
@@ -322,7 +322,7 @@ async function productType(data) {
     try {
         const result = await fetchData(url);
         console.log('Data fetched successfully, where the server response data is', result);
-        bindHtmlForProductInSelectById(result,data);
+        bindHtmlForProductInSelectById(result, data);
 
     } catch (error) {
         console.error('Failed to fetch data:', error);
@@ -389,7 +389,7 @@ function bindHtmlForVehicleType(data) {
         theme: 'bootstrap-5'
     });
 }
-function bindHtmlForVehicleTypeById(result ,data) {
+function bindHtmlForVehicleTypeById(result, data) {
     if (!Array.isArray(result)) {
         console.error("Invalid data: expecting an array");
         return;
@@ -412,7 +412,7 @@ function bindHtmlForVehicleTypeById(result ,data) {
         else {
             isSelected = false;
         }
-        html += `<option value="${item.Id}" ${isSelected ? 'selected':''}>${item.Description}</option>`;
+        html += `<option value="${item.Id}" ${isSelected ? 'selected' : ''}>${item.Description}</option>`;
     });
     selectState.html(html);
     selectState.select2({
@@ -442,7 +442,7 @@ function bindHtmlForMake(data) {
         theme: 'bootstrap-5'
     });
 }
-function bindHtmlForMakeById(result ,data) {
+function bindHtmlForMakeById(result, data) {
     if (!Array.isArray(result)) {
         console.error("Invalid data: expecting an array");
         return;
@@ -465,7 +465,7 @@ function bindHtmlForMakeById(result ,data) {
         else {
             isSelected = false;
         }
-        html += `<option value="${item.Id}" ${isSelected ? 'selected' :''}>${item.MakerName}</option>`;
+        html += `<option value="${item.Id}" ${isSelected ? 'selected' : ''}>${item.MakerName}</option>`;
     });
     selectState.html(html);
     selectState.select2({
@@ -495,7 +495,7 @@ function bindHtmlForFuelType(data) {
         theme: 'bootstrap-5'
     });
 }
-function bindHtmlForFuelTypeById(result,data) {
+function bindHtmlForFuelTypeById(result, data) {
     if (!Array.isArray(result)) {
         console.error("Invalid data: expecting an array");
         return;
@@ -519,7 +519,7 @@ function bindHtmlForFuelTypeById(result,data) {
             isSelected = false;
         }
 
-        html += `<option value="${item.Id}" ${isSelected ? 'selected' :''}>${item.Description}</option>`;
+        html += `<option value="${item.Id}" ${isSelected ? 'selected' : ''}>${item.Description}</option>`;
     });
     selectState.html(html);
     selectState.select2({
@@ -543,7 +543,7 @@ function bindHtmlForEngineCondition(data) {
     html += `<option value="">Select Engine Condition</option>`;
     //html += `<option value="">All</option>`;
     data.forEach((item, index) => {
-        
+
         html += `<option value="${item.Id}">${item.Description}</option>`;
     });
     selectState.html(html);
@@ -552,7 +552,7 @@ function bindHtmlForEngineCondition(data) {
     });
 }
 
-function bindHtmlForEngineConditionById(result,data) {
+function bindHtmlForEngineConditionById(result, data) {
     if (!Array.isArray(result)) {
         console.error("Invalid data: expecting an array");
         return;
@@ -573,9 +573,9 @@ function bindHtmlForEngineConditionById(result,data) {
             isSelected = true;
         }
         else {
-            isSelected = false ;
+            isSelected = false;
         }
-        html += `<option value="${item.Id}" ${isSelected ? 'selected':''}>${item.Description}</option>`;
+        html += `<option value="${item.Id}" ${isSelected ? 'selected' : ''}>${item.Description}</option>`;
     });
     selectState.html(html);
     selectState.select2({
@@ -606,7 +606,7 @@ function bindHtmlForSourceLead(data) {
         theme: 'bootstrap-5'
     });
 }
-function bindHtmlForSourceLeadById(result ,data) {
+function bindHtmlForSourceLeadById(result, data) {
     if (!Array.isArray(result)) {
         console.error("Invalid data: expecting an array");
         return;
@@ -629,7 +629,7 @@ function bindHtmlForSourceLeadById(result ,data) {
         else {
             isSelected = false;
         }
-        html += `<option value="${item.Id}"${isSelected ? 'selected':''}>${item.Description}</option>`;
+        html += `<option value="${item.Id}"${isSelected ? 'selected' : ''}>${item.Description}</option>`;
     });
     selectState.html(html);
     selectState.select2({
@@ -649,17 +649,24 @@ function bindHtmlForStateInSelect(data) {
     }
     let html = '';
     //add Select option
+    
     html += `<option value="">Select Vehicle Registration State</option>`;
     //html += `<option value="">All</option>`;
     data.forEach((item, index) => {
-        html += `<option value="${item.HSRP_StateID}">${item.HSRPStateName}</option>`;
+        let properCaseStateName = toProperCase(item.HSRPStateName);
+        html += `<option value="${item.HSRP_StateID}">${properCaseStateName}</option>`;
     });
     selectState.html(html);
     selectState.select2({
         theme: 'bootstrap-5'
     });
 }
-function bindHtmlForStateInSelectById(result,data) {
+function toProperCase(str) {
+    return str.replace(/\w\S*/g, function (txt) {
+        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+    });
+}
+function bindHtmlForStateInSelectById(result, data) {
     if (!Array.isArray(result)) {
         console.error("Invalid data: expecting an array");
         return;
@@ -676,7 +683,7 @@ function bindHtmlForStateInSelectById(result,data) {
     html += `<option value="">Select State</option>`;
     //html += `<option value="">All</option>`;
     result.forEach((item, index) => {
-        if (data === item.Id) {
+        if (data === item.HSRP_StateID.toString()) {
             isSelected = true
 
         }
@@ -684,7 +691,9 @@ function bindHtmlForStateInSelectById(result,data) {
             isSelected = false
 
         }
-        html += `<option value="${item.Id}" ${isSelected ? 'selected':''}>${item.StateName}</option>`;
+        let properCaseStateName = toProperCase(item.HSRPStateName);
+       // html += `<option value="${item.HSRP_StateID}">${properCaseStateName}</option>`;
+        html += `<option value="${item.HSRP_StateID}" ${isSelected ? 'selected' : ''}>${properCaseStateName}</option>`;
     });
     selectState.html(html);
     selectState.select2({
@@ -832,7 +841,6 @@ function datePicker() {
     }
 }
 async function postData(url, data) {
-    debugger
     NProgress.start();
     if (!url) {
         Toast.fire({ icon: 'error', title: 'URL must be provided' });
@@ -850,14 +858,13 @@ async function postData(url, data) {
             // Converting JSON data to string
             body: JSON.stringify(data)
         });
-
         // Checking if the response status is different from 2xx and 3xx
         if (!response.ok) {
             const messageBody = await response.json();
 
             if (response.status === 500) {
-                Toast.fire({ icon: 'error', title: `${messageBody.message}` });
-                throw new Error(`${messageBody.message}`);
+                Toast.fire({ icon: 'error', title: `${messageBody.title}` });
+                throw new Error(`${messageBody.title}`);
             } else {
 
                 Toast.fire({ icon: 'error', title: `${messageBody.Message}` });
@@ -882,4 +889,24 @@ async function postData(url, data) {
     } finally {
         NProgress.done();
     }
+}
+
+var resendLink = $("#resendLink");
+var resendTimer;
+
+
+function startResendTimer(durationSeconds) {
+    var remainingTime = durationSeconds;
+    resendLink.text("Resend OTP in " + remainingTime + "s");
+    resendLink.prop("disabled", true);
+    resendTimer = setInterval(function () {
+        remainingTime--;
+        if (remainingTime <= 0) {
+            clearInterval(resendTimer);
+            resendLink.text("Resend OTP");
+            resendLink.prop("disabled", false);
+        } else {
+            resendLink.text("Resend OTP in " + remainingTime + "s");
+        }
+    }, 1000);
 }

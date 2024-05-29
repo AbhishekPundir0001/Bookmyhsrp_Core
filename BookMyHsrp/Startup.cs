@@ -21,6 +21,17 @@ using BookMyHsrp.Libraries.HsrpWithColorSticker.Services;
 using Microsoft.Extensions.Caching.StackExchangeRedis;
 using BookMyHsrp.Libraries;
 using BookMyHsrp.Libraries.GenerateOtp.Services;
+using System.ComponentModel.DataAnnotations;
+using BookMyHsrp.Controllers.CommonController;
+using BookMyHsrp.ReportsLogics.Common;
+using BookMyHsrp.Libraries.HomeDelivery.Services;
+using BookMyHsrp.ReportsLogics.Sticker;
+using BookMyHsrp.Libraries.Sticker.Services;
+using BookMyHsrp.Libraries.DealerDelivery.Services;
+using BookMyHsrp.ReportsLogics.DealerDelivery;
+using BookMyHsrp.ReportsLogics.AppointmentSlot;
+using BookMyHsrp.Libraries.AppointmentSlot.Services;
+using BookMyHsrp.Libraries.HomeDeliverySticker.Services;
 namespace BookMyHsrp
 {
     public class Startup
@@ -39,6 +50,14 @@ namespace BookMyHsrp
             ConfigureSwagger(services);
             ConfigureDependencies(services);
             ConfigureAuthentication(services);
+            services.AddSession(options =>
+            {
+                // Set options here
+                options.IdleTimeout = TimeSpan.FromMinutes(30);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
+
         }
 
         private void ConfigureControllers(IServiceCollection services)
@@ -107,6 +126,7 @@ namespace BookMyHsrp
            
            
             services.Configure<ConnectionString>(Configuration.GetSection("ConnectionStrings"));
+            services.Configure<DynamicDataDto>(Configuration.GetSection("Api"));
             services.AddStackExchangeRedisCache(options =>
             {
                 options.Configuration = Configuration.GetValue<string>("Redis");
@@ -115,11 +135,21 @@ namespace BookMyHsrp
             services.AddTransient<ILoggingService, LoggingService>();
             services.AddTransient<IStateService, StateService>();
             services.AddTransient<IHsrpWithColorStickerService, HsrpWithColorStickerService>();
+            services.AddTransient<IAppointmentSlotServices, AppointmentSlotService>();
             services.AddTransient<IExceptionHandler, ExceptionMiddleWare>();
             services.AddTransient<IGenerateOtpService, GenerateOtpService>();
+            services.AddTransient<IStickerService, StickerService>();
+            services.AddTransient<IHomeDeliveryStickerService, HomeDeliveryStickerService>();
             services.AddScoped<HsrpWithColorStickerConnector>();
+            services.AddScoped<AppointmentSlotConnector>();
+            services.AddScoped<DealerDeliveryConnector>();
+            services.AddScoped<FileUploadConnector>();
+            services.AddScoped<HsrpWithColorStickerService>();
+            services.AddTransient<IDealerDeliveryService, DealerDeliveryService>();
             services.AddScoped<FetchDataAndCache, FetchDataAndCache>();
-            services.Configure<DynamicDataDto>(Configuration.GetSection("Api"));
+            services.AddScoped<HomeDeliveryService>();
+            services.AddScoped<StickerConnector>();
+
             // services.AddSingleton<HSRP.Redis.ConnectionHelper>();
 
             services.AddResponseCompression(options =>
@@ -231,6 +261,7 @@ namespace BookMyHsrp
             if (env.IsDevelopment())
             {
                 app.UseSwagger();
+                app.UseSession();
                 app.UseSwaggerUI(c =>
                 {
                     c.DisplayRequestDuration();

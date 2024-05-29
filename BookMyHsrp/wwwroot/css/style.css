@@ -1713,6 +1713,15 @@ ul.main__menu > li:hover > a {
     background: #fff !important;
 }
 
+.sticky__header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: #ffffff;
+    z-index: 99;
+}
+
 /*----- main css ----*/
 
 .main-body {
@@ -1812,6 +1821,7 @@ ul.main__menu > li:hover > a {
 
 .footer-bottom2 {
     background: #ffffff;
+    box-shadow: 0 15px 30px 0 rgb(0 0 0 / 6%);
 }
 
     .footer-bottom2 ul li a {
@@ -1935,16 +1945,11 @@ ul.main__menu > li:hover > a {
 /*---------------- Vahan Booking Start --------------*/
 
 .main-bg {
-    background: #ccebf5;
+    background-color: #ccebf5;
 }
 
 .main-bg2 {
-    background: #fde58a;
-}
-
-.main-data {
-    padding: 30px 50px;
-    height: 100%;
+    background-color: #fde58a;
 }
 
 .title-area {
@@ -2166,25 +2171,29 @@ ul.main__menu > li:hover > a {
     column-gap: 10px;
 }
 
-.otp-box .input-field input {
-    height: 55px;
-    width: 50px;
-    border-radius: 10px;
-    outline: none;
-    font-size: 1.125rem;
-    text-align: center;
-    border: 1px solid #ddd;
+.otp-box .input-field {
+    margin-bottom: 20px;
 }
 
-    .otp-box .input-field input:focus {
-        box-shadow: 0 2px 0 rgba(57, 61, 91, 1);
-        border-color: #39435b;
+    .otp-box .input-field input {
+        height: 55px;
+        width: 50px;
+        border-radius: 10px;
+        outline: none;
+        font-size: 1.125rem;
+        text-align: center;
+        border: 1px solid #ddd;
     }
 
-    .otp-box .input-field input::-webkit-inner-spin-button,
-    .otp-box .input-field input::-webkit-outer-spin-button {
-        display: none;
-    }
+        .otp-box .input-field input:focus {
+            box-shadow: 0 2px 0 rgba(57, 61, 91, 1);
+            border-color: #39435b;
+        }
+
+        .otp-box .input-field input::-webkit-inner-spin-button,
+        .otp-box .input-field input::-webkit-outer-spin-button {
+            display: none;
+        }
 
 .otp-modal .modal-body h6 {
     font-size: 16px;
@@ -2459,21 +2468,21 @@ ul.main__menu > li:hover > a {
 
 .submit-btn2 {
     height: 45px;
+    line-height: 45px;
     padding: 0 15px;
     border-radius: 7px;
     font-size: 11.54pt;
     margin-top: 10px;
-    border: none;
     background: #39435b;
     transition: all .3s;
     color: #ffffff;
     font-weight: 500;
+    border: 1px solid #39435b;
 }
 
     .submit-btn2:hover {
         background: #f1f1f1;
         color: #39435b !important;
-        border-color: transparent;
     }
 
 .main-data.main-bg2 .status-p {
@@ -2496,7 +2505,579 @@ input[type=number] {
 
 /*---------------- Plate Delivery end --------------*/
 
+/*---------------- Plate Delivery start Dealer --------------*/
+
+.dealer-search-list .accordion-button {
+    padding: 20px 0px;
+    background: transparent !important;
+    color: #39435b;
+    font-size: 20px;
+    /*    border-bottom: 1px solid #39435b;*/
+    box-shadow: none;
+    outline: none;
+    text-transform: uppercase;
+    font-family: "Fira Sans", sans-serif !important;
+}
+
+    .dealer-search-list .accordion-button:focus {
+        box-shadow: none;
+        outline: none;
+    }
+
+.dealer-search-list .accordion-item {
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid #39435b;
+    border-radius: 0;
+}
+
+    .dealer-search-list .accordion-item .accordion-body {
+        padding: 10px 0 20px;
+    }
+
+.dealer-search-list .accordion-body .area-ul li {
+    margin-bottom: 5px;
+}
+
+    .dealer-search-list .accordion-body .area-ul li span {
+        color: #39435b;
+        font-size: 16px;
+        font-weight: 400;
+    }
+
+        .dealer-search-list .accordion-body .area-ul li span:nth-child(1) {
+            font-weight: 600;
+        }
+
+/*
+.dealer-search-list .accordion-body .area-ul li .cd{
+    text-transform: uppercase;
+}
+*/
+
+.dealer-search-list .accordion-body .b-date .d-title {
+    font-size: 19px;
+    font-weight: 500;
+    color: #39435b;
+    font-weight: 500;
+    margin-top: 10px;
+}
+
+.dealer-search-list .accordion-body .b-date .d-date {
+    background: #fdb813;
+    color: #39435b;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: 500;
+    margin-top: 5px;
+    display: inline-block;
+}
+
+.dealer-search-list .accordion-body .price-area {
+    display: flex;
+    margin-top: 20px;
+}
+
+    .dealer-search-list .accordion-body .price-area .t-price {
+        background: #ffffff;
+        color: #39435b;
+        padding: 10px;
+        border-radius: 5px;
+        font-size: 16px;
+        font-weight: 500;
+        margin-top: 5px;
+        line-height: normal;
+    }
+
+        .dealer-search-list .accordion-body .price-area .t-price span {
+            font-size: 10px;
+            display: block;
+        }
+
+.price-area li {
+    display: inline-block;
+}
+
+    .price-area li:nth-child(1) {
+        background: #fdb813;
+        color: #39435b;
+        padding: 10px;
+        border-radius: 5px;
+        font-size: 16px;
+        font-weight: 500;
+        margin-top: 5px;
+        display: inline-block;
+    }
+
+.price-card {
+    padding: 20px;
+    border-radius: 20px;
+    border-left: 5px solid #39435b;
+    background: #ffffff;
+}
+
+    .price-card .b-date {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .price-card .d-date {
+        padding: 5px !important;
+        margin-left: 20px;
+    }
+
+    .price-card .t-price {
+        background: #f1f1f1 !important;
+    }
+
+/*---------------- Plate Delivery end Dealer --------------*/
+
+
+/*---------------- Plate Appointment Slot Start --------------*/
+
+.booking-area .title {
+    font-size: 20px;
+    font-weight: 500;
+    border-bottom: 2px solid #39435b;
+    color: #39435b;
+    padding-bottom: 10px;
+}
+
+    .booking-area .title span {
+        margin-left: 5px;
+    }
+
+.booking-calender {
+    padding: 10px 0px;
+}
+
+.booking-area .time-title {
+    text-align: center;
+    padding: 10px 0;
+    border-bottom: 2px solid #39435b;
+}
+
+.booking-area .calender-footer {
+    border-top: 2px solid #39435b;
+    padding-top: 10px;
+}
+
+.booking-area .cal-ul li {
+    position: relative;
+    padding-left: 20px;
+    color: #39435b;
+    font-weight: 400;
+}
+
+    .booking-area .cal-ul li:before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 7px;
+        height: 12px;
+        width: 12px;
+        border-radius: 50%;
+    }
+
+    .booking-area .cal-ul li:nth-child(1):before {
+        background: #39435b;
+    }
+
+    .booking-area .cal-ul li:nth-child(2):before {
+        background: #999999;
+    }
+
+    .booking-area .cal-ul li:nth-child(3):before {
+        background: #F04E37;
+    }
+
+.booking-area .time-title h5 {
+    font-size: 20px;
+    margin-bottom: 5px;
+    color: #39435b;
+    font-weight: 500;
+}
+
+.booking-area [type="checkbox"]:checked,
+.booking-area [type="checkbox"]:not(:checked),
+.booking-area [type="radio"]:checked,
+.booking-area [type="radio"]:not(:checked) {
+    position: absolute;
+    left: -9999px;
+    width: 0;
+    height: 0;
+    visibility: hidden;
+}
+
+.booking-area .checkbox-tools:checked + label,
+.booking-area .checkbox-tools:not(:checked) + label {
+    position: relative;
+    display: inline-block;
+    padding: 6px 15px 5px;
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-align: center;
+    border-radius: 20px;
+    overflow: hidden;
+    cursor: pointer;
+    color: #ffffff;
+    -webkit-transition: all 300ms linear;
+    transition: all 300ms linear;
+    border: 2px solid #39435b;
+}
+
+.booking-area .form-group {
+    margin: 0px;
+}
+
+.booking-area .checkbox-tools:not(:checked) + label {
+    background-color: transparent;
+    border: 2px solid #39435b;
+    color: #39435b;
+}
+
+.booking-area .checkbox-tools:checked + label {
+    background-color: #39435b;
+}
+
+.booking-area .time-slot .slot-box {
+    padding-top: 15px;
+    align-items: center;
+}
+
+    .booking-area .time-slot .slot-box .time-desc {
+        font-size: 18px;
+        color: #39435b;
+        font-weight: 500;
+    }
+
+.booking-area .note-ul {
+    margin-top: 20px;
+}
+
+    .booking-area .note-ul li,
+    .booking-area .note-ul p {
+        color: #39435b;
+    }
+
+        .booking-area .note-ul p a {
+            color: #39435b;
+            font-weight: 600;
+        }
+
+            .booking-area .note-ul p a:hover {
+                color: #999999;
+            }
+
+
+/*---------------- Plate Appointment Slot End --------------*/
+
+
+/*---------------- Plate Booking Summary Start --------------*/
+
+.booking-detail .book-desc {
+    margin-bottom: 20px;
+}
+
+    .booking-detail .book-desc label {
+        color: #39435b;
+        font-size: 14px;
+        font-weight: 500;
+    }
+
+    .booking-detail .book-desc p {
+        color: #39435b;
+        font-size: 18px;
+        text-transform: uppercase;
+    }
+
+.booking-detail .form-group label {
+    font-size: 18px;
+    font-weight: 500;
+    color: #39435b;
+}
+
+.booking-detail .form-group input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    margin-right: 5px;
+}
+
+.booking-detail .form-group p {
+    font-size: 13px;
+    color: #39435b;
+    font-weight: 500;
+    margin-top: 5px;
+}
+
+.booking-detail .form-group label img {
+    width: 150px;
+    margin-left: 10px;
+    border-radius: 8px;
+}
+
+.booking-slide .head-img {
+    margin-bottom: 20px;
+}
+
+
+
+/*---------------- Plate Booking Summary End --------------*/
+
+/*---------------- Plate Verify Detail Start --------------*/
+
+.booking-detail .info-ul {
+    margin-bottom: 20px;
+}
+
+    .booking-detail .info-ul li {
+        font-size: 18px;
+        padding-bottom: 5px;
+        color: #39435b;
+    }
+
+        .booking-detail .info-ul li a {
+            color: #39435b;
+            text-decoration: underline;
+            font-weight: 500;
+        }
+
+.payment-card {
+    border-radius: 30px;
+}
+
+    .payment-card .payment-head {
+        background: #39435b;
+        padding: 10px;
+        text-align: center;
+        color: #ffffff;
+        border-top-left-radius: 20px;
+        border-top-right-radius: 20px;
+    }
+
+    .payment-card .payment-body {
+        background: #ffffff;
+        padding: 15px 30px;
+    }
+
+        .payment-card .payment-body .payment-ul {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+        }
+
+            .payment-card .payment-body .payment-ul:not(:last-child) {
+                border-bottom: 1px dashed #39435b;
+            }
+
+            .payment-card .payment-body .payment-ul li {
+                color: #001430;
+            }
+
+                .payment-card .payment-body .payment-ul li:not(:first-child) {
+                    flex-basis: 40%;
+                    text-align: right;
+                }
+
+    .payment-card .payment-foot .payment-ul {
+        justify-content: space-between;
+        display: flex;
+    }
+
+    .payment-card .payment-foot {
+        background: #f1f1f1;
+        padding: 15px 30px;
+        border-bottom-left-radius: 20px;
+        border-bottom-right-radius: 20px;
+    }
+
+        .payment-card .payment-foot .payment-ul li {
+            font-weight: 700;
+        }
+
+            .payment-card .payment-foot .payment-ul li:not(:last-child) {
+                text-align: right;
+            }
+
+.terms-c .terms-ul {
+    list-style: lower-alpha;
+    padding-left: 15px;
+    margin-top: 30px;
+}
+
+.terms-c p input[type="checkbox"] {
+    width: 15px;
+    height: 15px;
+    margin-right: 5px;
+}
+
+.terms-c p {
+    color: #39435b;
+    margin-bottom: 30px;
+}
+
+.terms-c .terms-ul li {
+    padding-bottom: 5px;
+    color: #39435b;
+}
+
+/*---------------- Plate Verify Detail End --------------*/
+
+/*---------------- Plate Payment Receipt Start --------------*/
+
+.receipt-left {
+    padding: 30px 20px;
+}
+
+    .receipt-left .sub-title span {
+        color: #324B96;
+    }
+
+    .receipt-left .qr-box p {
+        margin-bottom: 5px;
+    }
+
+    .receipt-left .qr-box img {
+        width: 150px;
+        height: 150px;
+    }
+
+    .receipt-left .or {
+        font-size: 20px;
+        padding: 20px 0;
+        display: block;
+        color: #39435b;
+    }
+
+    .receipt-left .receipt-desc .submit-btn {
+        margin-bottom: 20px;
+    }
+
+    .receipt-left .receipt-desc p {
+        color: #39435b;
+        font-size: 14px;
+    }
+
+    .receipt-left .receipt-desc h6 {
+        color: #39435b;
+    }
+
+    .receipt-left .receipt-desc p a {
+        color: #39435b;
+        font-size: 14px;
+    }
+
+    .receipt-left .receipt-desc p:hover a {
+        color: #324B96;
+    }
+
+.receipt-right {
+    background: #ffffff;
+    box-shadow: 0 0 40px 5px rgb(0 0 0 / 5%);
+    border-radius: 40px;
+    margin: 30px 0;
+}
+
+    .receipt-right .receipt-right-one {
+        padding: 30px;
+    }
+
+        .receipt-right .receipt-right-one ul {
+            display: flex;
+            justify-content: space-between;
+        }
+
+            .receipt-right .receipt-right-one ul li:not(:last-child) {
+                font-weight: 600;
+                color: #39435b;
+                padding-bottom: 10px;
+            }
+
+            .receipt-right .receipt-right-one ul li:not(:first-child) {
+                text-transform: uppercase;
+                color: #39435b;
+            }
+
+    .receipt-right .receipt-right-two {
+        background: #39435b;
+        padding: 30px 30px;
+        height: 100%;
+        border-top-right-radius: 40px;
+        border-bottom-right-radius: 40px;
+    }
+
+        .receipt-right .receipt-right-two ul {
+            list-style: auto !important;
+        }
+
+            .receipt-right .receipt-right-two ul li {
+                color: #ffffff;
+                font-size: 14px;
+                padding-left: 10px;
+            }
+
+                .receipt-right .receipt-right-two ul li:not(:last-child) {
+                    padding-bottom: 15px;
+                }
+
+        .receipt-right .receipt-right-two p {
+            color: #ffffff;
+            margin-bottom: 10px;
+        }
+
+        .receipt-right .receipt-right-two ul li a {
+            color: #ffffff;
+        }
+
+/*---------------- Plate Payment Receipt end --------------*/
+
+/*---------------- Track Your Order start --------------*/
+
+.main-data {
+    padding: 30px 50px;
+    height: 100%;
+}
+
+.bg-img {
+    background-image: url(../images/bg-img.png);
+    background-repeat: repeat;
+}
+
+.main-body .status-card {
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 30px;
+}
+
+    .main-body .status-card .form-control {
+        border: 1px solid #cccccc;
+    }
+
+    .main-body .status-card .title-area {
+        margin-bottom: 20px;
+    }
+
+    .main-body .status-card .submit-btn {
+        margin-right: 10px;
+    }
+
+/*---------------- Track Your Order end --------------*/
+
+
+
 @media (min-width: 320px) and (max-width: 991px) {
+
+    .sticky__mobile {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background: #ffffff;
+        z-index: 99;
+    }
+
     .main-data {
         padding: 30px 20px;
     }
@@ -2504,7 +3085,9 @@ input[type=number] {
     .reset-btn {
         margin-right: 5px;
     }
+}
 
+@media (min-width: 320px) and (max-width: 767px) {
     .otp-modal .modal-body {
         padding: 15px 0px;
     }
@@ -2512,6 +3095,101 @@ input[type=number] {
     .otp-modal .modal-title {
         font-size: 18px !important;
     }
+
+    .title-area {
+        display: block !important;
+    }
+
+        .title-area .title {
+            font-size: 16pt;
+            margin-bottom: 10px;
+        }
+
+        .title-area .sub-title {
+            font-size: 12pt;
+        }
+
+    .otp-validate2 .m-desc {
+        font-size: 20px;
+    }
+
+    .otp-validate2 .m-btn-group .fitment-btn:nth-child(2) .icon img {
+        width: 30px !important;
+    }
+
+    .dealer-search-list .accordion-button {
+        font-size: 18px;
+    }
+
+    .dealer-search-list .accordion-body .b-date .d-date {
+        display: grid;
+        align-items: center;
+    }
+
+    .price-card {
+        padding: 15px;
+    }
+
+    .rd-day-body {
+        height: 40px !important;
+    }
+
+    .booking-area .calender-footer .cal-ul {
+        display: block !important;
+        margin-bottom: 20px;
+    }
+
+    .booking-area .time-slot .slot-box .time-desc {
+        font-size: 16px;
+    }
+
+    .booking-area .note-ul {
+        margin-bottom: 20px;
+    }
+
+    .booking-slide .head-img {
+        margin-top: 20px;
+    }
+
+    .terms-c p {
+        display: flex;
+    }
+
+        .terms-c p input[type="checkbox"] {
+            margin-top: 5px;
+        }
+
+    .receipt-right .receipt-right-one {
+        padding: 20px;
+    }
+
+    .receipt-right {
+        border-radius: 20px;
+    }
+
+    .receipt-left .qr-box img {
+        width: 100px;
+        height: 100px;
+    }
+
+    .receipt-right {
+        margin-top: 0;
+    }
+
+        .receipt-right .receipt-right-two {
+            border-top-right-radius: 0;
+            border-bottom-left-radius: 20px;
+            border-bottom-right-radius: 20px;
+        }
+
+        .receipt-right .receipt-right-one ul {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+            .receipt-right .receipt-right-one ul li:not(:last-child) {
+                padding-bottom: 0;
+            }
 }
 
 /*---------------- Responsive end --------------*/
