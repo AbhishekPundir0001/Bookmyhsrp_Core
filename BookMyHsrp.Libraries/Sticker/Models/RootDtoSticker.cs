@@ -52,6 +52,7 @@ namespace BookMyHsrp.Libraries.HsrpWithColorSticker.Models
             public string FuelType { get; set; }
             public string DeliveryPoint { get; set; }
         public string Status { get; set; }
+        public string StateIdBackup { get; set; }
 
 
         //Shipping information for Home delivery
