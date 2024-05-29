@@ -17,6 +17,9 @@
 
   <ItemGroup>
     <Folder Include="Common\Services\" />
+    <Folder Include="Replacement\Models\" />
+    <Folder Include="Replacement\Services\" />
+    <Folder Include="Replacement\Queries\" />
     <Folder Include="RequestResponseLoggingMiddleware\Service\" />
   </ItemGroup>
 
