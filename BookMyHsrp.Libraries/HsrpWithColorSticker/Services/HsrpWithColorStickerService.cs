@@ -23,12 +23,13 @@ using System.Resources;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using static BookMyHsrp.Libraries.HsrpWithColorSticker.Models.HsrpColorStickerModel;
+using static BookMyHsrp.Libraries.HsrpWithColorSticker.Models.HsrpColorStickerModel.ResponseDto;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Http;
 using BookMyHsrp.Models;
 using Microsoft.AspNetCore.Http.Internal;
-using static BookMyHsrp.Libraries.HsrpWithColorSticker.Models.HsrpColorStickerModel;
 namespace BookMyHsrp.Libraries.HsrpWithColorSticker.Services
 {
     public class HsrpWithColorStickerService : IHsrpWithColorStickerService

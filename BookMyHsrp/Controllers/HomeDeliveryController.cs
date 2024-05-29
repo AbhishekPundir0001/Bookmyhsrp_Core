@@ -7,7 +7,6 @@ using System.Security.Cryptography;
 using static BookMyHsrp.Libraries.HomeDelivery.Models.HomeDeliveryModel;
 using static BookMyHsrp.Libraries.HsrpWithColorSticker.Models.HsrpColorStickerModel;
 
-
 namespace BookMyHsrp.Controllers
 {
     public class HomeDeliveryController : Controller
@@ -164,7 +163,7 @@ namespace BookMyHsrp.Controllers
             }
             return IsAllow;
         }
-        [Route("/home-delivery-sticker")]
+        [Route("/home-delivery")]
         [HttpPost]
         public async Task<IActionResult> HomeDeliverData([FromBody] HomeAddressData homeAddressData)
         {

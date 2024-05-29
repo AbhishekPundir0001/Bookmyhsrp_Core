@@ -40,34 +40,27 @@ $('.book-carousel').owlCarousel({
 })
 //Sticky Menu
 
-$(window).scroll(function(){
-        if($(this).scrollTop() > 100){
 $(window).scroll(function () {
     if ($(this).scrollTop() > 100) {
-            $('.mainmenu__wrap').addClass('sticky__header')
-        } else{
+        $('.mainmenu__wrap').addClass('sticky__header')
     } else {
-            $('.mainmenu__wrap').removeClass('sticky__header')
-        }
-    });
+        $('.mainmenu__wrap').removeClass('sticky__header')
+    }
+});
 
-    $(window).scroll(function(){
-        if($(this).scrollTop() > 100){
 $(window).scroll(function () {
     if ($(this).scrollTop() > 100) {
-            $('.htc__header__top').addClass('sticky__mobile')
-        } else{
+        $('.htc__header__top').addClass('sticky__mobile')
     } else {
-            $('.htc__header__top').removeClass('sticky__mobile')
-        }
-    });
+        $('.htc__header__top').removeClass('sticky__mobile')
+    }
+});
 
 
 //Calender
 
-$(function() {
 $(function () {
 
-  rome(inline_cal, { time: false });
+    rome(inline_cal, { time: false });
 
 });
