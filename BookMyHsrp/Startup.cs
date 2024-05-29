@@ -25,6 +25,8 @@ using System.ComponentModel.DataAnnotations;
 using BookMyHsrp.Controllers.CommonController;
 using BookMyHsrp.ReportsLogics.Common;
 using BookMyHsrp.Libraries.HomeDelivery.Services;
+using BookMyHsrp.ReportsLogics.Sticker;
+using BookMyHsrp.Libraries.Sticker.Services;
 using BookMyHsrp.Libraries.DealerDelivery.Services;
 using BookMyHsrp.ReportsLogics.DealerDelivery;
 using BookMyHsrp.ReportsLogics.AppointmentSlot;
@@ -135,6 +137,7 @@ namespace BookMyHsrp
             services.AddTransient<IAppointmentSlotServices, AppointmentSlotService>();
             services.AddTransient<IExceptionHandler, ExceptionMiddleWare>();
             services.AddTransient<IGenerateOtpService, GenerateOtpService>();
+            services.AddTransient<IStickerService, StickerService>();
             services.AddScoped<HsrpWithColorStickerConnector>();
             services.AddScoped<AppointmentSlotConnector>();
             services.AddScoped<DealerDeliveryConnector>();
@@ -143,9 +146,10 @@ namespace BookMyHsrp
             services.AddTransient<IDealerDeliveryService, DealerDeliveryService>();
             services.AddScoped<FetchDataAndCache, FetchDataAndCache>();
             services.AddScoped<HomeDeliveryService>();
-            
+            services.AddScoped<StickerConnector>();
+
             // services.AddSingleton<HSRP.Redis.ConnectionHelper>();
-            
+
             services.AddResponseCompression(options =>
             {
                 options.EnableForHttps = true;

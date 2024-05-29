@@ -460,7 +460,7 @@ namespace BookMyHsrp.ReportsLogics.HsrpWithColorSticker
             session.VehicleType_imgPath = "www";
             session.OEMImgPath = "www";
             session.OrderType = "OB";
-            var jsonDeSerializer = System.Text.Json.JsonSerializer.Deserialize<RootDto>(sessionDetails);
+            var jsonDeSerializer = System.Text.Json.JsonSerializer.Deserialize<RootDtoSticker>(sessionDetails);
             try
             {
                 var nonHomo = jsonDeSerializer.NonHomo;
