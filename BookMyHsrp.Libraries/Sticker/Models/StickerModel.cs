@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static BookMyHsrp.Libraries.HsrpWithColorSticker.Models.HsrpColorStickerModel;
+using static BookMyHsrp.Libraries.HsrpWithColorSticker.Models.ReplacementModel;
 using static BookMyHsrp.Libraries.OemMaster.Models.OemMasterModel;
 
 namespace BookMyHsrp.Libraries.Sticker.Models
@@ -82,6 +82,10 @@ namespace BookMyHsrp.Libraries.Sticker.Models
             public string StateName { get; set; } = "";
             public string OemVehicleType { get; set; } = "";
             public string OemId { get; set; } = "";
+            public string CustomerName { get; set; } = "";
+            public string CustomerEmail { get; set; } = "";
+            public string CustomerBillingAddress { get; set; } = "";
+            public string CustomerCity { get; set; } = "";
         }
         public class VehicleValidation
         {

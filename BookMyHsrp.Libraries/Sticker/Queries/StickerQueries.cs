@@ -17,5 +17,8 @@ namespace BookMyHsrp.Libraries.Sticker.Queries
         public static string VehicleSession => "select HSRPHRVehicleType,VehicleTypeid,VehicleCategory from [hsrpoem].[dbo].[VahanVehicleType] where VahanVehicleType=Trim(@VehicleCatType) ";
         public static string VehiclePlateEntryLog => " insert into [BookMyHSRP].dbo.VehiclePlateEntryLog (vahanbsstage, VehicleRegNo, RegistrationDate,ChassisNo,EngineNo,OwnerName,EmailID, MobileNo, CustomerAddress,StateName,OwnerCity,GSTNO,VahanValidation,VahanResponse,Ordertype,VehicleType,VehicleClass,Created_Date,HSRP_StateID,OEMID,StickerValidation,FLaserCode,RLaserCode,fuelType,vahanfuel) values (@SessionBs,@SessionRN,@SessionRD,@SessionCHN,@SessionEN,@SessionON,@SessionEID,@SessionMn,@SessionBA,@Stateid,'','','','',@S_OrderType,@VehicleCat,@VehicleType,getdate(),@S_StateId,@S_Oemid,'N',@SFLCode,@SRLCode,@FuelType,@FuelType) ";
 
+        public static string DateFormate => "DECLARE @date DATETIME = GETDATE(); SELECT FORMAT(@date, 'yyyyMMddHHmmssfff') AS FormattedDate;";
+
+
     }
 }

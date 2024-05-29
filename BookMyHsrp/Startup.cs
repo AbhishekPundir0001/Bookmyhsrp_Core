@@ -27,6 +27,7 @@ using BookMyHsrp.ReportsLogics.Common;
 using BookMyHsrp.Libraries.HomeDelivery.Services;
 using BookMyHsrp.ReportsLogics.Sticker;
 using BookMyHsrp.Libraries.Sticker.Services;
+using BookMyHsrp.Libraries.HomeDeliverySticker.Services;
 using BookMyHsrp.Libraries.DealerDelivery.Services;
 using BookMyHsrp.ReportsLogics.DealerDelivery;
 using BookMyHsrp.ReportsLogics.AppointmentSlot;
@@ -138,6 +139,7 @@ namespace BookMyHsrp
             services.AddTransient<IExceptionHandler, ExceptionMiddleWare>();
             services.AddTransient<IGenerateOtpService, GenerateOtpService>();
             services.AddTransient<IStickerService, StickerService>();
+            services.AddTransient<IHomeDeliveryStickerService, HomeDeliveryStickerService>();
             services.AddScoped<HsrpWithColorStickerConnector>();
             services.AddScoped<AppointmentSlotConnector>();
             services.AddScoped<DealerDeliveryConnector>();

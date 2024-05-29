@@ -199,5 +199,13 @@ namespace BookMyHsrp.Libraries.Sticker.Services
             return vehicleSesion;
         }
 
+        public async Task<dynamic> DateFormate()
+        {
+            var parameters = new DynamicParameters();
+            var result = await _databaseHelper.QueryAsync<dynamic>(StickerQueries.DateFormate, parameters);
+            return result;
+        }
+
+
     }
 }

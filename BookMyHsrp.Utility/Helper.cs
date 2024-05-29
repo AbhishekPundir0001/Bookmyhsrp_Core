@@ -66,6 +66,7 @@ namespace BookMyHsrp.Utility
                 return "Invalid date format";
             }
         }
+
         public static string GetDateTimeString() =>
             DateTime.Now.ToString("dd-MM-yyy hh:mm:ss");
         public static string GetExcelName(string fileName) => $"{fileName}-{GetDateTimeString()}.xlsx";

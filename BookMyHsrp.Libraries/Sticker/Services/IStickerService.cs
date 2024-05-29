@@ -22,6 +22,7 @@ namespace BookMyHsrp.Libraries.Sticker.Services
         Task<dynamic> VehicleSession(string VehicleCatVahan);
 
         Task<dynamic> VehiclePlateEntryLog(string SessionBs, string SessionRN, string SessionRD, string SessionCHN, string SessionEN, string SessionON, string SessionEID, string SessionMn, string SessionBA, string Stateid, string S_OrderType, string VehiceCat, string VehicleType, string S_StateId, string S_Oemid, string SFLCode, string SRLCode, string FuelType);
+        Task<dynamic> DateFormate();
 
     }
 }

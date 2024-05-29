@@ -157,6 +157,9 @@ namespace BookMyHsrp.ReportsLogics.Sticker
                         vehicleValidationResponse.data.regnDate = details.regnDate;
                         vehicleValidationResponse.data.norms = details.norms;
                         vehicleValidationResponse.data.hsrpRearLaserCode = details.hsrpRearLaserCode;
+                        vehicleValidationResponse.data.oemid = oemid;
+                        vehicleValidationResponse.data.stateid = stateID.ToString();
+                        vehicleValidationResponse.data.statename = statename;
                         return vehicleValidationResponse;
 
                     }
@@ -184,6 +187,9 @@ namespace BookMyHsrp.ReportsLogics.Sticker
                         vehicleValidationResponse.data.regnDate = details.regnDate;
                         vehicleValidationResponse.data.norms = details.norms;
                         vehicleValidationResponse.data.hsrpRearLaserCode = details.hsrpRearLaserCode;
+                        vehicleValidationResponse.data.oemid = oemid;
+                        vehicleValidationResponse.data.stateid = stateID.ToString();
+                        vehicleValidationResponse.data.statename = statename;
                         return vehicleValidationResponse;
                     }
 
@@ -369,6 +375,13 @@ namespace BookMyHsrp.ReportsLogics.Sticker
             return customerInformationresponseData;
         }
 
+
+        public async Task<dynamic> DateFormate()
+        {
+            var resultDateFormate = await _StickerService.DateFormate();
+            return resultDateFormate;
+
+        }
 
 
         static bool Validate<T>(T obj, out ICollection<ValidationResult> results)
