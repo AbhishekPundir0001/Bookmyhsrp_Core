@@ -27,4 +27,8 @@
     <ProjectReference Include="..\BookMyHsrp.Utility\BookMyHsrp.Utility.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="ReportsLogics\Replacement\" />
+  </ItemGroup>
+
 </Project>

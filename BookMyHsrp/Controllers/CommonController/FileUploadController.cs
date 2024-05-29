@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.Net.Http.Headers;
 using System.Text;
-using static BookMyHsrp.Libraries.HsrpWithColorSticker.Models.ReplacementModel;
+using static BookMyHsrp.Libraries.HsrpWithColorSticker.Models.HsrpColorStickerModel;
 
 namespace BookMyHsrp.Controllers.CommonController
 {

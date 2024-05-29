@@ -5,7 +5,7 @@ using BookMyHsrp.ReportsLogics.HsrpWithColorSticker;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
-using static BookMyHsrp.Libraries.HsrpWithColorSticker.Models.ReplacementModel;
+using static BookMyHsrp.Libraries.HsrpWithColorSticker.Models.HsrpColorStickerModel;
 
 namespace BookMyHsrp.ApiController.ApiHSRPWithColourSticker
 {

@@ -12,6 +12,7 @@ using System.Globalization;
 using System.Text.Json;
 using System.Web.Helpers;
 using static BookMyHsrp.Libraries.HsrpWithColorSticker.Models.HsrpColorStickerModel;
+
 namespace BookMyHsrp.Controllers
 {
 
@@ -55,7 +56,7 @@ namespace BookMyHsrp.Controllers
                     //else
 
                 }
-                var rootDto = new RootDto
+                var rootDto = new RootDtoSticker
 
                 { Status = result.status,
                     StateId = result.data.stateid,
@@ -126,7 +127,7 @@ namespace BookMyHsrp.Controllers
                 resultGot = await _hsrpWithColorStickerConnector.CustomerInfo(info, detailsSession);
                 if (resultGot.Message == "Success")
                 {
-                    var getSession = new RootDto();
+                    var getSession = new RootDtoSticker();
                     getSession.CustomerBillingAddress = info.BillingAddress.Replace("'", "");
                     getSession.BhartStage = info.BharatStage;
                     getSession.CustomerName = info.OwnerName;
