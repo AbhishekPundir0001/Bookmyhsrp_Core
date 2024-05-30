@@ -1,0 +1,62 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accordion Example</title>
+    <style>
+        .accordion-content {
+            display: none;
+        }
+
+            .accordion-content.active {
+                display: block;
+            }
+    </style>
+</head>
+<body>
+
+    <div class="app inner-pages clearfix color1">
+        <div class="check-status-form addedspace">
+            <div class="content-page">
+                <div class="headings">
+                    <h2>FAQ’s</h2>
+                </div>
+                <div id="nav_tab">
+                    <button type="button" class="btn" onclick="toggleAccordion('accordion1')">HSRP</button>
+                    <div id="accordion1" class="accordion-content">
+                        <!-- Content for HSRP -->
+                        <p>Content related to HSRP</p>
+                    </div>
+
+                    <button type="button" class="btn" style="width: 350px;" onclick="toggleAccordion('accordion2')">Replacement (HSRP Already fitted)</button>
+                    <div id="accordion2" class="accordion-content">
+                        <!-- Content for Replacement -->
+                        <p>Content related to Replacement</p>
+                    </div>
+
+                    <button type="button" class="btn" onclick="toggleAccordion('accordion3')">Frame</button>
+                    <div id="accordion3" class="accordion-content">
+                        <!-- Content for Frame -->
+                        <p>Content related to Frame</p>
+                    </div>
+
+                    <button type="button" class="btn" onclick="toggleAccordion('accordion4')">Park+FasTag</button>
+                    <div id="accordion4" class="accordion-content">
+                        <!-- Content for Park+FasTag -->
+                        <p>Content related to Park+FasTag</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleAccordion(id) {
+            var accordion = document.getElementById(id);
+            accordion.classList.toggle('active');
+        }
+    </script>
+
+</body>
+</html>

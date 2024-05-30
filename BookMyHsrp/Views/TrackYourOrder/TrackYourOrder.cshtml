@@ -1,0 +1,298 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+    <title>Dreams Rent | Template</title>
+
+</head>
+
+<body>
+
+    <!-- Body main wrapper start -->
+
+        <!--  Start Offcanvas Mobile Menu Section  -->
+        <div class="offcanvas offcanvas-start" tabindex="-1" id="toggleMenu">
+            <div class="offcanvas-header">
+
+                <!-- Start Header Logo -->
+                <a href="index-3.html" class="header-logo">
+                    <img src="assets/images/logo/logo.png" alt="">
+                </a>
+                <!-- End Header Logo -->
+
+                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+                <!-- Start Offcanvas Mobile Menu Wrapper -->
+                <div class="offcanvas-mobile-menu-wrapper">
+                    <!-- Start Mobile Menu  -->
+                    <div class="mobile-menu-bottom">
+                        <!-- Start Mobile Menu Nav -->
+                        <div class="offcanvas-menu">
+                            <ul>
+                                <li><a href="TrackOrder.html">Track Your Order</a></li>
+                                <li><a href="ReAppointment.html">Reschedule Appointment</a></li>
+                                <li><a href="OrderCancel.html">Cancel Order</a></li>
+
+                                <li><a href="PinForHomeDelivery.html">Check For Home Installation</a></li>
+                                <li><a href="ReceiptValidity.html"><b>Receipt Validity</b></a></li>
+                                <li><a href="BookMyHSRP_ContactUs.html"><b>Contact Us</b></a></li>
+                            </ul>
+                        </div>
+                        <!-- End Mobile Menu Nav -->
+                    </div>
+                    <!-- End Mobile Menu -->
+                    <!-- End Mobile contact Info -->
+
+                </div>
+                <!-- Start Mobile contact Info -->
+                <!--
+                    <div class="mobile-contact-info text-center">
+                        <ul class="social-link">
+                            <li><a href="https://example.com/"><i class="fa fa-facebook"></i></a>
+                            </li>
+                            <li><a href="https://example.com/"><i class="fa fa-twitter"></i></a>
+                            </li>
+                            <li><a href="https://example.com/"><i class="fa fa-skype"></i></a></li>
+                        </ul>
+                    </div>-->
+                <!-- End Offcanvas Mobile Menu Wrapper -->
+            </div>
+        </div>
+        <!--  End Offcanvas Mobile Menu Section -->
+        <!-- main start -->
+        <main class="main-body bg-img ptb--50 main-bg">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-4">
+                        <div class="status-card" id="main">
+                            <div class="title-area">
+                                <h4 class="title">Track Your Order</h4>
+                            </div>
+                            <div class="card-body">
+                                <form action="">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="form-group">
+                                                <label class="form-label">Order number*</label>
+                                                <input type="text" class="form-control" placeholder="DLHSRP1221XXXXXX" id="orderNo">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <div class="form-group">
+                                                <label class="form-label">Vehicle Reg No.*</label>
+                                            <input type="text" class="form-control" placeholder="DL01ABXXXX" id="vehRegNo">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <label class="form-label w-100">Captcha</label>
+                                            <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" id="txtCaptcha" readonly>
+                                            <button class="input-group-text" id="btnRefreshCaptcha"><i class="fas fa-redo-alt"></i></button>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <label class="form-label w-100">Input Captcha</label>
+                                            <input type="text" class="form-control" id="txtInput">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12">
+                                        <button type="button" class="submit-btn" id="submit-button">
+                                                Search
+                                            </button>
+                                            <button type="button" class="submit-btn">
+                                                Cancel
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    <div class="status-card" id="hidden">   
+                        <div class="row">
+                            <p id="HiddenOrderNo"><p>
+                        </div>
+                        <div class="col-sm-3">
+                            <p id="vehicleNo"></p>
+                        </div>
+                        <div class="col-sm-3">
+                            <p id="appointmentDate"></p>
+                        </div>
+                        <div class="col-sm-3">
+                            <p id="orderstatus"></p>
+                        </div>
+                        <div class="col-sm-3">
+                            <p id="ownername"></p>
+                        </div>
+                        <div class="col-sm-3">
+                            <p id="address"></p>
+                        </div>
+                        <div class="col-sm-3">
+                            <p id="DealerAffixationCenterName"></p>
+                        </div>
+                        <div class="col-sm-3">
+                            <p id="DealerAffixationCenterAddress"></p>
+                        </div>
+                        <div class="control btn-grp">
+                            <button class="filled" id="btnclose">Close</button>
+
+                    </div>
+                </div>
+            </div>
+        </main>
+       
+ @section Scripts {
+        <script>
+
+            function DrawCaptcha() {
+                var a = Math.ceil(Math.random() * 9) + '';
+                var b = Math.ceil(Math.random() * 9) + '';
+                var c = Math.ceil(Math.random() * 9) + '';
+                var d = Math.ceil(Math.random() * 9) + '';
+                var code = a + ' ' + b + ' ' + c + ' ' + d;
+                document.getElementById("txtCaptcha").value = code;
+            }
+
+            window.onload = function () {
+                $('#hidden').hide();
+                            DrawCaptcha();
+            document.getElementById("btnRefreshCaptcha").addEventListener("click", DrawCaptcha);
+            };
+
+
+
+            function ValidCaptcha() {
+                $(this).prop('disabled', true);
+
+                const errorFunc = (title) => {
+                    Toast.fire({
+                        icon: 'error',
+                        title: title
+                    })
+
+
+
+                }
+                var captcha = removeSpaces(document.getElementById('txtCaptcha').value);
+                var inputCaptcha = removeSpaces(document.getElementById('txtInput').value);
+                if (inputCaptcha == '') {
+                    //alert("Captcha can't be blank!!");
+                    errorFunc("Captcha can't be blank!!");
+                    return;
+                }
+                else if (captcha == inputCaptcha) {
+                    return true;
+                }
+                else {
+                    // alert("Please Input Correct Captcha");
+                    errorFunc("Please Input Correct Captcha");
+                    return;
+                }
+            }
+            function removeSpaces(string) {
+                return string.split(' ').join('');
+            }
+
+            function removeSpaces(string) {
+                return string.replace(/\s+/g, '');
+        }
+            $('#submit-button').click(function () {
+                handleButtonClick.call(this, '/track-your-order',postData, (result) => {
+                    // bindHtmlHsrpView(result.Data);
+                    // $('#div-bind-report').show();
+                    // console.log('Data posted successfully, where the server response data is', result);
+                })
+            });
+
+            async function handleButtonClick(url, postData, isSuccessFunc) {
+                
+                const errorFunc = (title) => {
+                    Toast.fire({
+                        icon: 'error',
+                        title: title
+                    })
+                    $(this).prop('disabled', false);
+
+                }
+                var vehRegNo = $('#vehRegNo').val();
+                var orderNo = $('#orderNo').val();
+                if (!vehRegNo) {
+                    errorFunc('Please Insert Registration No.')
+
+                }
+                if (!ValidCaptcha()) {
+                    $(this).prop('disabled', false);
+                    $(this).html(originalButtonText)
+                    return false;
+                }
+
+                var data = { VehicleregNo: vehRegNo, OrderNo: orderNo }
+                const result = await postData(url, data);
+                var data = { VehicleRegNo: vehRegNo, OrderNo: orderNo }
+                var url = "/track-your-order-sp"
+                const spresult = await postData(url, data)
+                
+                
+                if (result == null || result.Count == 0) {
+                    if (spresult == null || spresult.Count == 0) {
+
+                        $('.status-card').hide();
+                        errorFunc("Data Not Found");
+                    }
+                }
+                else {
+                    $('.status-card').hide();
+                    $('#hidden').show();
+                    $('#HiddenOrderNo').text(result[0].ORDER_NUMBER);
+                    $('#vehicleNo').text(result[0].REG_NUMBER)
+                    
+                    const fitmentdate = await postData("/fitment-date", data)
+                    
+                    if ( fitmentdate && fitmentdate.Count > 0) {
+                        $('#appointmentDate').text("Fitment Date will be informed later via SMS and on Call")
+                    }
+                    else {
+                        
+                        var datetimeString = result[0].SlotBookingDate;
+                        var date = new Date(datetimeString);
+                        var day = ('0' + date.getDate()).slice(-2);
+                        var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+                        var month = monthNames[date.getMonth()];
+                        var year = date.getFullYear();
+                        var formattedDate = day + '-' + month + '-' + year;
+                        $('#appointmentDate').text(formattedDate);
+                    }
+                    $('#orderstatus').text(result[0].OrderStatus)
+                    var _AppointmentType = result[0].AppointmentType;
+                    if (_AppointmentType == "Home") {
+                        $('#ownername').text(result[0].OwnerName)
+                        var FullAddress = result[0].ShippingAddress1 + " " + result[0].ShippingAddress2 + " " + result[0].ShippingCity + " " + result[0].ShippingState + " " + result[0].ShippingPinCode;
+                        $('#address').text(FullAddress)
+                    } else {
+                        var dealerid = result[0].Dealerid;
+                        const _dealer = await postData("/dealer-name", data);
+                        if (_dealer.Rows.Count > 0){
+                            $('DealerAffixationCenterAddress').text(result[0].DealerAffixationCenterAddress);
+                            $('DealerAffixationCenterName').text(result[0].DealerAffixationCenterName);
+                        }
+
+                                }
+
+                
+                }
+
+
+
+
+            }
+
+        </script>
+
+        }
+        
+</body>
+
+</html>
