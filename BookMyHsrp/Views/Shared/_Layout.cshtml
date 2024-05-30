@@ -34,7 +34,7 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/cutom-forms.css">
     <link rel="stylesheet" href="~/lib/nprogress/dist/css/nprogress.css">
     <link href="https://cdn.datatables.net/v/bs5/dt-1.13.7/b-2.4.2/b-colvis-2.4.2/fc-4.3.0/fh-3.4.0/datatables.min.css" rel="stylesheet">
-   
+
 
     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.8.0/dist/sweetalert2.min.css" rel="stylesheet">
 
@@ -42,6 +42,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" />
 
 </head>
+
 
 <body>
     <header class="htc__header">
@@ -89,17 +90,17 @@
                     <div class="col-auto" style="margin:0; padding:0;position:relative">
                         <nav class="main__menu__nav ">
                             <ul class="main__menu">
-                                <li class="drop"><a href="TrackOrder.html">Track Your Order</a></li>
-                                <li class="drop"><a href="ReAppointment.html">Reschedule Appointment</a></li>
-                                <li class="drop"><a href="OrderCancel.html">Cancel Order</a></li>
-                                <li class="drop"><a href="PinForHomeDelivery.html">Check For Home Installation</a></li>
+                                <li class="drop"><a href="@Url.Action("TrackYourOrder", "TrackYourOrder")">Track Your Order</a></li>
+                                <li class="drop"><a href="@Url.Action("ReAppointment", "ReAppointment")">Reschedule Appointment</a></li>
+                                <li class="drop"><a href="@Url.Action("OrderCancel", "OrderCancel")">Cancel Order</a></li>
+                                <li class="drop"><a href="@Url.Action("PinForHomeDelivery", "PinForHomeDelivery")">Check For Home Installation</a></li>
                                 <li class="drop">
-                                    <a href="ReceiptValidity.html">
+                                   <a href="@Url.Action("ReceiptValidity", "ReceiptValidity")">
                                         Receipt Validity
                                     </a>
                                 </li>
                                 <li class="drop">
-                                    <a href="BookMyHSRP_ContactUs.html">
+                                    <a href="@Url.Action("ContactUs", "ContactUs")">
                                         Contact Us
                                     </a>
                                 </li>
@@ -138,18 +139,18 @@
         <div class="footer-bottom footer-bottom2">
             <div class="container-fluid">
                 <ul class="d-flex justify-content-between">
-                    <li><a href="BookMyHSRP_HSRPFAQ.html">FAQ</a></li>
+                    <li><a href="@Url.Action("Faq", "Faq")">FAQ</a></li>
 
-                    <li><a href="BookMyHSRP_privacypolicy.aspx">Privacy Policy</a></li>
+                    <li><a href="@Url.Action("PrivacyPolicy", "PrivacyPolicy")">Privacy Policy</a></li>
                     <li><a href="assets/pdf/Refund_cancellationNew.pdf" target="_blank">Refund &amp; Cancellation Policy</a></li>
-                    <li><a href="BookMyHSRP_safe-secure-transaction.aspx">Safe &amp; Secure Transaction</a></li>
-                    <li><a href="BookMyHSRP_termsofuse.aspx">Terms &amp; Conditions</a></li>
+                    <li><a href="@Url.Action("SafeSecureTransaction", "SafeSecureTransaction")">Safe &amp; Secure Transaction</a></li>
+                    <li><a href="@Url.Action("TermsOfUse", "TermsOfUse")">Terms &amp; Conditions</a></li>
 
-                    <li><a href="GovNotification.aspx">Government Notifications</a></li>
+                    <li><a href="@Url.Action("GovNotification", "GovNotification")">Government Notifications</a></li>
                     <li><a href="assets/pdf/HSRP_features.pdf" target="_blank">About HSRP</a></li>
 
                     <li><a href="GrievanceSelectState.aspx">Grievance Redressal</a></li>
-                    <li><a href="DownloadReceipt.aspx">Reprint Receipt</a></li>
+                    <li><a href="@Url.Action("ReprintReceipt", "ReprintReceipt")">Reprint Receipt</a></li>
 
                 </ul>
             </div>
@@ -186,6 +187,8 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.8.0/dist/sweetalert2.all.min.js
     <script src="~/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.full.min.js"></script>
     <script src="~/js/site.js"></script>
-
+    <script src="~/js/jquery.js"></script>
+    <script src="~/js/bootstrap.min.js"></script>
+    <script src="~/js/all.min.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>

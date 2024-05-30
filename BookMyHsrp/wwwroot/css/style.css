@@ -898,6 +898,10 @@ textarea {
     padding: 150px 0
 }
 
+.ptb--200 {
+    padding: 200px 0
+}
+
 /*---------------------------
   20. Page section margin 
 -----------------------------*/
@@ -1743,16 +1747,23 @@ ul.main__menu > li:hover > a {
 }
 
 .banner-inner-2,
-.banner-inner-5 {
+.banner-inner-5,
+.banner-inner-6 {
     background: #324B96 !important;
 }
+
+/*
+.banner-inner-5, .banner-inner-4{
+    height: 155px;
+}
+*/
 
 .banner-inner:hover {
     box-shadow: 0px 40px 40px 0px rgb(14 17 51 / 10%);
 }
 
 .banner-inner-1 .banner-content {
-    padding-top: 15%;
+    padding-top: 30%;
 }
 
 .banner-title span {
@@ -1762,8 +1773,13 @@ ul.main__menu > li:hover > a {
 }
 
 .banner-inner-2 .banner-title span,
-.banner-inner-5 .banner-title span {
+.banner-inner-5 .banner-title span,
+.banner-inner-6 .banner-title span {
     color: #fff !important;
+}
+
+.banner-inner-2, .banner-inner-3, .banner-inner-6, .banner-inner-7 {
+    height: 136px;
 }
 
 .btn.banner-link {
@@ -1774,10 +1790,12 @@ ul.main__menu > li:hover > a {
     color: #001430;
     font-weight: 600;
     transition: all .3s linear;
+    float: right;
 }
 
 .banner-inner-2 .btn.banner-link,
-.banner-inner-5 .btn.banner-link {
+.banner-inner-5 .btn.banner-link,
+.banner-inner-6 .btn.banner-link {
     color: #fff !important;
     border-color: #fff !important;
 }
@@ -1822,6 +1840,10 @@ ul.main__menu > li:hover > a {
 .footer-bottom2 {
     background: #ffffff;
     box-shadow: 0 15px 30px 0 rgb(0 0 0 / 6%);
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    z-index: 99;
 }
 
     .footer-bottom2 ul li a {
@@ -1873,7 +1895,7 @@ ul.main__menu > li:hover > a {
 
     .banner-inner {
         padding: 16px 20px !important;
-        text-align: center;
+        /*        text-align: center;*/
     }
 
     .banner-inner-1 .banner-title {
@@ -1919,7 +1941,7 @@ ul.main__menu > li:hover > a {
         }
 
 .sidebar .side-slide {
-    padding: 20px;
+    padding: 20px 20px 50px;
 }
 
 /*---------------- Sidebar End ----------------*/
@@ -1985,6 +2007,20 @@ ul.main__menu > li:hover > a {
     font-weight: 400;
     font-size: 11.54pt;
     height: 45px;
+    color: #39435b;
+    outline: none;
+    box-shadow: none;
+}
+
+.form-textarea {
+    width: 100%;
+    border: 1px solid #fff;
+    /*    background: #fff;*/
+    padding: 5px 10px;
+    margin: 0;
+    border-radius: 7px !important;
+    font-weight: 400;
+    font-size: 11.54pt;
     color: #39435b;
     outline: none;
     box-shadow: none;
@@ -2978,7 +3014,7 @@ input[type=number] {
     background: #ffffff;
     box-shadow: 0 0 40px 5px rgb(0 0 0 / 5%);
     border-radius: 40px;
-    margin: 30px 0;
+    margin: 30px 0 80px;
 }
 
     .receipt-right .receipt-right-one {
@@ -3042,7 +3078,7 @@ input[type=number] {
 }
 
 .bg-img {
-    background-image: url(../images/bg-img.png);
+    background-image: url(../Images/logo/bg-img.png);
     background-repeat: repeat;
 }
 
@@ -3052,7 +3088,8 @@ input[type=number] {
     border-radius: 30px;
 }
 
-    .main-body .status-card .form-control {
+    .main-body .status-card .form-control,
+    .main-body .status-card .form-textarea {
         border: 1px solid #cccccc;
     }
 
@@ -3065,6 +3102,54 @@ input[type=number] {
     }
 
 /*---------------- Track Your Order end --------------*/
+
+/*---------------- Stickers Start --------------*/
+
+.form-label .guide-a {
+    display: inline-block;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: #f1f1f1;
+    color: #39435b;
+    font-size: 14px;
+    text-align: center;
+    margin-left: 5px;
+}
+
+.guide .modal-dialog .modal-content {
+    border-radius: 20px;
+    position: relative;
+}
+
+.guide .btn-close {
+    background-image: none;
+    background: #FF0000;
+    opacity: 1;
+    line-height: 10px;
+    color: #FFFFFF;
+    border: 1px solid #FF0000;
+    border-top-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    transition: all .2s linear;
+    padding: 7px;
+    box-shadow: none;
+    outline: none;
+    position: absolute;
+    right: 15px;
+    top: 15px;
+}
+
+    .guide .btn-close:hover {
+        background: transparent;
+        color: #FF0000;
+    }
+
+.guide .modal-body .image {
+    margin-top: 40px;
+}
+
+/*---------------- Stickers End --------------*/
 
 
 
@@ -3085,6 +3170,11 @@ input[type=number] {
 
     .reset-btn {
         margin-right: 5px;
+    }
+}
+
+    .footer-bottom2 {
+        position: inherit;
     }
 }
 

@@ -23,14 +23,14 @@ namespace BookMyHsrp.ApiController.ApiHSRPWithColourSticker
                 hsrpWithColorStickerConnector ?? throw new ArgumentNullException(nameof(hsrpWithColorStickerConnector));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
-        //[HttpPost]
-        //[Route("report/check-vahan-information")]
-        //public async Task<IActionResult> VahanInformation([FromBody]VahanDetails requestDto)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {   
-        //        return BadRequest(new { Error = true, Message = GetModelErrorMessages() });
-        //    }
+        [HttpPost]
+        [Route("report/check-vahan-information")]
+        public async Task<IActionResult> VahanInformation([FromBody]VahanDetails requestDto)
+        {
+            if (!ModelState.IsValid)
+            {   
+                return BadRequest(new { Error = true, Message = GetModelErrorMessages() });
+            }
            
         //    var result = await _hsrpWithColorStickerConnector.VahanInformation(requestDto);
         //    return Ok(
