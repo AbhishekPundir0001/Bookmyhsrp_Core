@@ -52,13 +52,13 @@
                         <!-- Start Mobile Menu Nav -->
                         <div class="offcanvas-menu">
                             <ul>
-                                <li><a href="TrackOrder.html">Track Your Order</a></li>
-                                <li><a href="ReAppointment.html">Reschedule Appointment</a></li>
-                                <li><a href="OrderCancel.html">Cancel Order</a></li>
+                                <li><a href="@Url.Action("TrackYourOrder", "TrackYourOrder")">Track Your Order</a></li>
+                                <li><a href="@Url.Action("ReAppointment", "ReAppointment")">Reschedule Appointment</a></li>
+                                <li><a href="@Url.Action("OrderCancel", "OrderCancel")">Cancel Order</a></li>
+                                <li><a href="@Url.Action("PinForHomeDelivery", "PinForHomeDelivery")">Check For Home Installation</a></li>
+                                <li><a href="@Url.Action("ReceiptValidity", "ReceiptValidity")">Receipt Validity</a></li>
+                                <li><a ><b>Contact Us</b></a></li>
 
-                                <li><a href="PinForHomeDelivery.html">Check For Home Installation</a></li>
-                                <li><a href="ReceiptValidity.html"><b>Receipt Validity</b></a></li>
-                                <li><a href="BookMyHSRP_ContactUs.html"><b>Contact Us</b></a></li>
                             </ul>
                         </div>
                         <!-- End Mobile Menu Nav -->
@@ -303,18 +303,17 @@
             <div class="footer-bottom">
                 <div class="container-fluid">
                     <ul class="d-flex justify-content-between">
-                        <li><a href="BookMyHSRP_HSRPFAQ.html">FAQ</a></li>
-
-                        <li><a href="BookMyHSRP_privacypolicy.aspx">Privacy Policy</a></li>
+                        <li><a href="@Url.Action("faq", "Faq")">FAQ</a></li>
+                        <li><a href="@Url.Action("PrivacyPolicy", "PrivacyPolicy")">Privacy Policy</a></li>
                         <li><a href="assets/pdf/Refund_cancellationNew.pdf" target="_blank">Refund &amp; Cancellation Policy</a></li>
-                        <li><a href="BookMyHSRP_safe-secure-transaction.aspx">Safe &amp; Secure Transaction</a></li>
-                        <li><a href="BookMyHSRP_termsofuse.aspx">Terms &amp; Conditions</a></li>
+                        <li><a href="@Url.Action("SafeSecureTransaction", "SafeSecureTransaction")">Safe &amp; Secure Transaction</a></li>
+                        <li><a href="@Url.Action("TermsOfUse", "TermsOfUse")">Terms &amp; Conditions</li>
 
-                        <li><a href="GovNotification.aspx">Government Notifications</a></li>
+                        <li><a href="@Url.Action("GovNotification", "GovNotification")">Government Notifications</a></li>
                         <li><a href="assets/pdf/HSRP_features.pdf" target="_blank">About HSRP</a></li>
 
                         <li><a href="GrievanceSelectState.aspx">Grievance Redressal</a></li>
-                        <li><a href="@(Url.Action("ReprintReceipt", "ReprintReceipt"))">Reprint Receipt</a></li>
+                        <li><a href="@Url.Action("ReprintReceipt", "ReprintReceipt")">Reprint Receipt</a></li>
 
                     </ul>
                 </div>

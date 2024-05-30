@@ -1,0 +1,193 @@
+﻿<html>
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+
+    <!-- Place favicon.ico in the root directory -->
+    <link rel="shortcut icon" type="image/x-icon" href="Images/favicon.html">
+    <link rel="apple-touch-icon" href="apple-touch-icon.html">
+
+    
+    <!--     <link rel="stylesheet" href="assets/css/owl.theme.default.min.css"> -->
+
+</head>
+
+
+    <body>
+        <!-- main start -->
+        <main class="main-body bg-img ptb--50 main-bg">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-4">
+                        <div class="status-card">
+                            <div class="title-area">
+                                <h4 class="title">Reschedule Your Appointment</h4>
+                            </div>
+                            <div class="card-body">
+                                <form action="">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="form-group">
+                                                <label class="form-label">Order number*</label>
+                                                <input type="text" class="form-control" placeholder="DLHSRP1221XXXXXX">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <div class="form-group">
+                                                <label class="form-label">Vehicle Reg No.*</label>
+                                                <input type="text" class="form-control" placeholder="DL01ABXXXX">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <label class="form-label w-100">Captcha</label>
+                                            <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" id="txtCaptcha">
+                                                <button class="input-group-text"><i class="fas fa-redo-alt"></i></button>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <label class="form-label w-100">Input Captcha</label>
+                                                <input type="text" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <button type="button" class="submit-btn">
+                                                Search
+                                            </button>
+                                            <button type="button" class="submit-btn">
+                                                Cancel
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+    <div class="modal otp-modal fade" id="otp-modal" data-bs-backdrop="static" data-bs-keyboard="false"
+         tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Order booking verification</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><i class="fas fa-times"></i></button>
+                </div>
+                <div class="modal-body text-center">
+                    <div class="position-relative">
+                        <div class="img-icon">
+                            <img src="~/Images/password.png" alt="">
+                        </div>
+                        <h6>Please enter the OTP send to your<br>registerd mobile number</h6>
+                        <span>OTP is valid for 10 minutes. </span>
+                        <div class="otp-box">
+                            <form action="#">
+                                <div class="input-field">
+                                    <input id="first" type="number" class="otp-text m-2" />
+                                    <input id="second" type="number" class="otp-text m-2" disabled />
+                                    <input id="third" type="number" class="otp-text m-2" disabled />
+                                    <input id="fourth" type="number" class="otp-text m-2" disabled />
+                                </div>
+                                <div class="mt-3">
+                                    <button id="btn-validate" class="submit-btn otp-btn"
+                                            data-bs-dismiss="modal">
+                                        Validate
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="card-2">
+                            <p class="resend-para">
+                                Didn't receive OTP? <a href="#"
+                                                       class="text-decoration-none ms-1">Resend</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @section Scripts
+    {
+
+
+        <script src="~/js/owl.carousel.min.js"></script>
+
+        <script>
+            window.onload = function () {
+                DrawCaptcha();
+            };
+
+            function DrawCaptcha() {
+                var a = Math.ceil(Math.random() * 10) + '';
+                var b = Math.ceil(Math.random() * 10) + '';
+                var c = Math.ceil(Math.random() * 10) + '';
+                var d = Math.ceil(Math.random() * 10) + '';
+                //var e = Math.ceil(Math.random() * 10)+ '';
+                //var f = Math.ceil(Math.random() * 10)+ '';
+                //var g = Math.ceil(Math.random() * 10)+ '';
+                //var code = a + ' ' + b + ' ' + ' ' + c + ' ' + d + ' ' + e + ' '+ f + ' ' + g;
+                var code = a + ' ' + b + ' ' + ' ' + c + ' ' + d;
+                document.getElementById("txtCaptcha").value = code
+            }
+
+            $('#btn-submit-approval-data').click(async function () {
+                handleButtonClickApproved();
+            })
+            async function handleButtonClickApproved() {
+                
+                $(this).prop('disabled', true);
+                var originalButtonText = $(this).html();
+                $(this).html('<span class="spinner-border spinner-border-sm"></span> Processing')
+                if (!ValidCaptcha()) {
+                    console.log("hello")
+                    return false;
+                }
+                const errorFunc = (title) => {
+                    Toast.fire({
+                        icon: 'error',
+                        title: title
+                    })
+                    $(this).prop('disabled', false);
+                }
+            }
+
+
+
+            function ValidCaptcha() {
+                $(this).prop('disabled', true);
+
+                const errorFunc = (title) => {
+                    Toast.fire({
+                        icon: 'error',
+                        title: title
+                    })
+
+
+
+                }
+                var captcha = removeSpaces(document.getElementById('txtCaptcha').value);
+                var inputCaptcha = removeSpaces(document.getElementById('txtInput').value);
+                if (inputCaptcha == '') {
+                    //alert("Captcha can't be blank!!");
+                    errorFunc("Captcha can't be blank!!");
+                    return;
+                }
+                else if (captcha == inputCaptcha) {
+                    return true;
+                }
+                else {
+                    // alert("Please Input Correct Captcha");
+                    errorFunc("Please Input Correct Captcha");
+                    return;
+                }
+            }
+        </script>
+    }
+</body>
+</html>
