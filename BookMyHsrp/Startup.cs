@@ -139,12 +139,16 @@ namespace BookMyHsrp
             services.AddTransient<ILoggingService, LoggingService>();
             services.AddTransient<IStateService, StateService>();
             services.AddTransient<IHsrpWithColorStickerService, HsrpWithColorStickerService>();
+            services.AddTransient<IReceiptValidityService, ReceiptValidityService>();
+            services.AddTransient<ITrackYourOrderService, TrackYourOrderService>();
+            services.AddTransient<IOrderCancelServices, OrderCancelServices>();
             services.AddTransient<IAppointmentSlotServices, AppointmentSlotService>();
             services.AddTransient<IExceptionHandler, ExceptionMiddleWare>();
             services.AddTransient<IGenerateOtpService, GenerateOtpService>();
             services.AddTransient<IStickerService, StickerService>();
             services.AddTransient<IHomeDeliveryStickerService, HomeDeliveryStickerService>();
             services.AddScoped<HsrpWithColorStickerConnector>();
+            services.AddScoped<TrackYourOrderConnector>();
             services.AddScoped<AppointmentSlotConnector>();
             services.AddScoped<DealerDeliveryConnector>();
             services.AddScoped<FileUploadConnector>();

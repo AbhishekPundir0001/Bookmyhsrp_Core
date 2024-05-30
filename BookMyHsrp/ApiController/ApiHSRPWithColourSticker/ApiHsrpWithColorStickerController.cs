@@ -25,7 +25,7 @@ namespace BookMyHsrp.ApiController.ApiHSRPWithColourSticker
         }
         [HttpPost]
         [Route("report/check-vahan-information")]
-        public async Task<IActionResult> VahanInformation([FromBody]VahanDetails requestDto)
+        public async Task<IActionResult> VahanInformation([FromBody]VahanDetailsDto requestDto)
         {
             if (!ModelState.IsValid)
             {   
