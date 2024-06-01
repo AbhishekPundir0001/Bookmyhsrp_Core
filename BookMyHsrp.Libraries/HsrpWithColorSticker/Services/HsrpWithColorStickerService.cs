@@ -713,11 +713,11 @@ namespace BookMyHsrp.Libraries.HsrpWithColorSticker.Services
         //                   "'  and  OrderStatus in ('Success') and PlateSticker='plate' order by BookingHistoryID desc "; //  
 
         //        var dt = await UtilsAsync.GetDataTableAsync(sqlQuery, CancellationToken.None);
-        //        if (dt.Rows.Count > 0)
+        //        if (successdata[0].Count > 0)
         //        {
         //            sqlQuery =
         //                "select top 1 case when getdate() Between OrderClosedDate And DATEADD(DAY, 7, OrderClosedDate) then 'N' else 'Y' end ReBookingAllow,OrderClosedDate, Vehicleregno from hsrprecords WITH (NOLOCK) where Orderno ='" +
-        //                dt.Rows[0]["Orderno"].ToString() + "' " +
+        //                successdata[0]["Orderno"].ToString() + "' " +
         //                " and  OrderClosedDate <>'' order by OrderClosedDate desc";
         //            var dtInner =
         //                await UtilsAsync.GetDataTableAsync(sqlQuery, CancellationToken.None, isHsrpOemConString: true);
@@ -745,9 +745,9 @@ namespace BookMyHsrp.Libraries.HsrpWithColorSticker.Services
 
         //            var dtInner = await UtilsAsync.GetDataTableAsync(sqlQuery, CancellationToken.None,
         //                isHsrpOemConString: true);
-        //            if (dt.Rows.Count > 0)
+        //            if (successdata[0].Count > 0)
         //            {
-        //                if (dt.Rows[0]["ReBookingAllow"].ToString() == "Y")
+        //                if (successdata[0]["ReBookingAllow"].ToString() == "Y")
         //                {
         //                    trackOrderResponse.status = "true";
         //                    trackOrderResponse.message = "Order found";
