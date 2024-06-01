@@ -910,3 +910,15 @@ function startResendTimer(durationSeconds) {
         }
     }, 1000);
 }
+
+
+async function downloadReceipt(url, data) {
+    const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    });
+    return await response.blob(); // Assuming the response is a blob
+}

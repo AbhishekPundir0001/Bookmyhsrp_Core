@@ -16,7 +16,7 @@ namespace BookMyHsrp.ReportsLogics.Receipt
         }
     
 
-    public string DownloadReceipt(string receiptPath, ReceiptModels.Receipt requestdto)
+    public string DownloadReceipt(string receiptPath, ReceiptModels.Receipt requestdto, string QRPath)
         {
 
             var result =  _receiptService.GetReceipt(requestdto).Result;
@@ -59,6 +59,12 @@ namespace BookMyHsrp.ReportsLogics.Receipt
             string isSuperTag = result[0].isSuperTag.ToString();
             string SuperTagAmount = result[0].SuperTagAmount.ToString();
             string IGSTAmountST = string.Empty;
+
+            string _qrurl = "https://bookmyhsrp.com/TrackOrder.aspx?oid=" + requestdto.OrderNo + "&vr=" + VehicleRegNo + "";
+            string _qrPath = _receiptService.QRGenerate(_qrurl, OrderNo, QRPath);
+            //string ReceiptPathQRCode = "https://chart.googleapis.com/chart?chs=80x80&cht=qr&chl=https://bookmyhsrp.com/TrackOrder.aspx?oid=" + OrderNo + "%26vr=" + VehicleRegNo + "&chld=L|1&choe=UTF-8"; // latest
+            string ReceiptPathQRCode = QRPath+ OrderNo+".jpg";
+
             if (result[0].IGSTAmountST == null)
             {
                 IGSTAmountST = "0.00";
@@ -173,7 +179,9 @@ namespace BookMyHsrp.ReportsLogics.Receipt
 
             string ImgPath = receiptPath + "/" + "assetsfile/images/logo";
 
-            sbTable.Append("<table style='width:100%;text-align:center;font-size: 10pt' border='1'>");
+            //sbTable.Append("html xmlns='http://www.w3.org/1999/xhtml' xml:lang='en'>\r\n <head>\r\n <style type='text/css'>\r\n\r\ntd {\r\n    border: 1px solid black; border-collapse: collapse; /* Example border styling */\r\n}table {\r\n    border-collapse: collapse;\r\n} </style>");
+
+            sbTable.Append("<table style='width:100%;text-align:center;font-size: 10pt;border-collapse: collapse'  border='1'>");
             sbTable.Append("<tr>");
             sbTable.Append("<td>");
 
@@ -326,8 +334,8 @@ namespace BookMyHsrp.ReportsLogics.Receipt
                 }
 
                 sbTable.Append("<td><br/><br/><span style='font-size:14px;text-align:left;'>" + string.Format("{0:0.00}", GstBasic_Amt) + " INR</span></td>");
-                //sbTable.Append("<td><img height='70px' width='70px' src='" + ReceiptPathQRCode + "' id='img_qrcode'></td>");
-                sbTable.Append("<td></td>");
+                sbTable.Append("<td><img height='70px' width='70px' src='" + ReceiptPathQRCode + "' id='img_qrcode'/></td>");
+                //sbTable.Append("<td></td>");
                 sbTable.Append("</tr>");
 
                 sbTable.Append("<tr style='line-height:80%;'>");

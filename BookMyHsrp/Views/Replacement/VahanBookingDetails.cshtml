@@ -137,7 +137,7 @@
                                         <div class="col-lg-4 col-md-6 col-sm-12">
                                             <div class="form-group">
                                                 <label class="form-label">Registration Number*</label>
-                                                <input id="registrationNumber" type="text" class="form-control">
+                                                <input id="registrationNumber" type="text" class="form-control" autocomplete="off">
                                                 <span class="helper">
                                                     (Reg No. Ex.- DLXXXXX01)
                                                 </span>
@@ -146,14 +146,14 @@
                                         <div class="col-lg-4 col-md-6 col-sm-12">
                                             <div class="form-group">
                                                 <label class="form-label">Chassis No.* (XXXXX12345)</label>
-                                                <input id="chassisNo" type="text" class="form-control">
+                                                <input id="chassisNo" type="text" class="form-control" autocomplete="off">
                                                 <span class="helper">(Kindly enter last 5 digits including special characters (eg *,~,-,/,.)</span>
                                             </div>
                                         </div>
                                         <div class="col-lg-4 col-md-6 col-sm-12">
                                             <div class="form-group">
                                                 <label class="form-label">Engine No.* (XXXXX12345)</label>
-                                                <input id="engineNo" type="text" class="form-control">
+                                                <input id="engineNo" type="text" class="form-control" autocomplete="off">
                                                 <span class="helper">(Kindly enter last 5 digits)</span>
                                             </div>
                                         </div>
@@ -631,7 +631,7 @@
 
             $('#btn-submit-approval-data').click(async function () {
                 // handleButtonClickApproved.call(this, '/plate/details/validateRequired', postData, (result) => {
-                handleButtonClickApproved.call(this, '/plate/validateRequired', postData, (result) => {
+                handleButtonClickApproved.call(this, '/Replacement/ReValidateData', postData, (result) => {
 
                 })
             });
@@ -692,9 +692,6 @@
                         // userData["VehicleType"] = response.VehicleRegNo;
                         //     userData["VehRegDate"] = convertDate("" + VehRegDate);
                         if (response.Message == "Vehicle details available in Vahan") {
-
-
-
 
                             $('#registrationNumber').attr('readonly', 'readonly');
                             $('#chassisNo').attr('readonly', 'readonly');
@@ -894,7 +891,7 @@
 
 
             $('#btn-next').click(async function () {
-                handleButtonClick.call(this, '/plate/customerInfo', postData, (result) => {
+                handleButtonClick.call(this, '/Replacement/ReplacementBooking', postData, (result) => {
                     // bindHtmlHsrpView(result.Data);
                     // $('#div-bind-report').show();
                     // console.log('Data posted successfully, where the server response data is', result);
@@ -1027,7 +1024,13 @@
                 return [day, month, year].join('/');
             }
 
-
+            $("#select-state").change(function () {
+                $('#registrationNumber').val('');
+                $('#chassisNo').val('');
+                $('#engineNo').val('');
+                $('#frontLaserCode').val('');
+                $('#rearLaserCode').val('');
+            });
 
 
 
