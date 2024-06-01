@@ -91,6 +91,7 @@ namespace BookMyHsrp.Controllers.CommonController
                 }
             }
 
+
             MemoryStream ms = new MemoryStream();
             TextReader txtReader = new StringReader(html);
 
