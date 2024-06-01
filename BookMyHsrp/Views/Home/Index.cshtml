@@ -52,13 +52,20 @@
                         <!-- Start Mobile Menu Nav -->
                         <div class="offcanvas-menu">
                             <ul>
-                                <li><a href="@Url.Action("TrackYourOrder", "TrackYourOrder")">Track Your Order</a></li>
-                                <li><a href="@Url.Action("ReAppointment", "ReAppointment")">Reschedule Appointment</a></li>
-                                <li><a href="@Url.Action("OrderCancel", "OrderCancel")">Cancel Order</a></li>
-                                <li><a href="@Url.Action("PinForHomeDelivery", "PinForHomeDelivery")">Check For Home Installation</a></li>
-                                <li><a href="@Url.Action("ReceiptValidity", "ReceiptValidity")">Receipt Validity</a></li>
-                                <li><a ><b>Contact Us</b></a></li>
-
+                                <li class="drop"><a href="@Url.Action("TrackYourOrder", "TrackYourOrder")">Track Your Order</a></li>
+                                <li class="drop"><a href="@Url.Action("ReAppointment", "ReAppointment")">Reschedule Appointment</a></li>
+                                <li class="drop"><a href="@Url.Action("OrderCancel", "OrderCancel")">Cancel Order</a></li>
+                                <li class="drop"><a href="@Url.Action("PinForHomeDelivery", "PinForHomeDelivery")">Check For Home Installation</a></li>
+                                <li class="drop">
+                                    <a href="@Url.Action("ReceiptValidity", "ReceiptValidity")">
+                                        Receipt Validity
+                                    </a>
+                                </li>
+                                <li class="drop">
+                                    <a href="@Url.Action("ContactUs", "ContactUs")">
+                                        Contact Us
+                                    </a>
+                                </li>
                             </ul>
                         </div>
                         <!-- End Mobile Menu Nav -->
@@ -303,18 +310,18 @@
             <div class="footer-bottom">
                 <div class="container-fluid">
                     <ul class="d-flex justify-content-between">
-                        <li><a href="@Url.Action("faq", "Faq")">FAQ</a></li>
+                        <li><a href="@Url.Action("Faq", "Faq")">FAQ</a></li>
+
                         <li><a href="@Url.Action("PrivacyPolicy", "PrivacyPolicy")">Privacy Policy</a></li>
                         <li><a href="assets/pdf/Refund_cancellationNew.pdf" target="_blank">Refund &amp; Cancellation Policy</a></li>
                         <li><a href="@Url.Action("SafeSecureTransaction", "SafeSecureTransaction")">Safe &amp; Secure Transaction</a></li>
-                        <li><a href="@Url.Action("TermsOfUse", "TermsOfUse")">Terms &amp; Conditions</li>
+                        <li><a href="@Url.Action("TermsOfUse", "TermsOfUse")">Terms &amp; Conditions</a></li>
 
                         <li><a href="@Url.Action("GovNotification", "GovNotification")">Government Notifications</a></li>
                         <li><a href="assets/pdf/HSRP_features.pdf" target="_blank">About HSRP</a></li>
 
                         <li><a href="GrievanceSelectState.aspx">Grievance Redressal</a></li>
                         <li><a href="@Url.Action("ReprintReceipt", "ReprintReceipt")">Reprint Receipt</a></li>
-
                     </ul>
                 </div>
             </div>

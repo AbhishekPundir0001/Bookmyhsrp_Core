@@ -21,10 +21,6 @@ using BookMyHsrp.Libraries.HsrpWithColorSticker.Services;
 using Microsoft.Extensions.Caching.StackExchangeRedis;
 using BookMyHsrp.Libraries;
 using BookMyHsrp.Libraries.GenerateOtp.Services;
-using BookMyHsrp.Libraries.ReceiptValidity.Services;
-using BookMyHsrp.Libraries.TrackYoutOrder.Services;
-using BookMyHsrp.ReportsLogics.TrackYourOrder;
-using BookMyHsrp.Libraries.OrderCancel.Services;
 using System.ComponentModel.DataAnnotations;
 using BookMyHsrp.Controllers.CommonController;
 using BookMyHsrp.ReportsLogics.Common;
@@ -36,6 +32,14 @@ using BookMyHsrp.ReportsLogics.DealerDelivery;
 using BookMyHsrp.ReportsLogics.AppointmentSlot;
 using BookMyHsrp.Libraries.AppointmentSlot.Services;
 using BookMyHsrp.Libraries.HomeDeliverySticker.Services;
+using BookMyHsrp.ReportsLogics.TrackYourOrder;
+using BookMyHsrp.Libraries.OrderCancel.Services;
+using BookMyHsrp.Libraries.ReceiptValidity.Services;
+using BookMyHsrp.Libraries.TrackYoutOrder.Services;
+using BookMyHsrp.ReportsLogics.Replacement;
+using BookMyHsrp.Libraries.Replacement.Services;
+using BookMyHsrp.ReportsLogics.Receipt;
+using BookMyHsrp.Libraries.Receipt.Services;
 namespace BookMyHsrp
 {
     public class Startup
@@ -139,17 +143,19 @@ namespace BookMyHsrp
             services.AddTransient<ILoggingService, LoggingService>();
             services.AddTransient<IStateService, StateService>();
             services.AddTransient<IHsrpWithColorStickerService, HsrpWithColorStickerService>();
+            services.AddTransient<IAppointmentSlotServices, AppointmentSlotService>();
+            services.AddTransient<IExceptionHandler, ExceptionMiddleWare>();
             services.AddTransient<IReceiptValidityService, ReceiptValidityService>();
             services.AddTransient<ITrackYourOrderService, TrackYourOrderService>();
             services.AddTransient<IOrderCancelServices, OrderCancelServices>();
-            services.AddTransient<IAppointmentSlotServices, AppointmentSlotService>();
-            services.AddTransient<IExceptionHandler, ExceptionMiddleWare>();
             services.AddTransient<IGenerateOtpService, GenerateOtpService>();
             services.AddTransient<IStickerService, StickerService>();
             services.AddTransient<IHomeDeliveryStickerService, HomeDeliveryStickerService>();
+            services.AddTransient<IReplacementService, ReplacementService>();
+            services.AddTransient<IReceiptService, ReceiptService>();
             services.AddScoped<HsrpWithColorStickerConnector>();
-            services.AddScoped<TrackYourOrderConnector>();
             services.AddScoped<AppointmentSlotConnector>();
+            services.AddScoped<TrackYourOrderConnector>();
             services.AddScoped<DealerDeliveryConnector>();
             services.AddScoped<FileUploadConnector>();
             services.AddScoped<HsrpWithColorStickerService>();
@@ -157,6 +163,8 @@ namespace BookMyHsrp
             services.AddScoped<FetchDataAndCache, FetchDataAndCache>();
             services.AddScoped<HomeDeliveryService>();
             services.AddScoped<StickerConnector>();
+            services.AddScoped<ReplacementConnector>();
+            services.AddScoped<ReceiptConnector>();
 
             // services.AddSingleton<HSRP.Redis.ConnectionHelper>();
 

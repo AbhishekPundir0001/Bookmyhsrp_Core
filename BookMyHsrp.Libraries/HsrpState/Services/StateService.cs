@@ -9,7 +9,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Dapper;
 
-
 namespace BookMyHsrp.Libraries.HsrpState.Services
 {
     public class StateService : IStateService
@@ -42,13 +41,3 @@ namespace BookMyHsrp.Libraries.HsrpState.Services
      
     }
 }
-
-
-
-
-
-
-
-
-
-

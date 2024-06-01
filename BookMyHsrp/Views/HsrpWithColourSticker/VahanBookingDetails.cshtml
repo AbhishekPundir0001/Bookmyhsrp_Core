@@ -1,7 +1,21 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
 
+    <!-- Place favicon.ico in the root directory -->
+    <link rel="shortcut icon" type="image/x-icon" href="Images/favicon.html">
+    <link rel="apple-touch-icon" href="apple-touch-icon.html">
+
+    <!-- All css files are included here. -->
+    <link rel="stylesheet" href="~/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/css/style.css">
+    <link rel="stylesheet" href="~/css/owl.carousel.min.css">
+    <!--     <link rel="stylesheet" href="assets/css/owl.theme.default.min.css"> -->
+
+</head>
 
 <body>
 
@@ -610,7 +624,7 @@
         async function handleButtonClickApproved(url, postData, isSuccessFunc) {
                 $(this).prop('disabled', true);
                 var originalButtonText = $(this).html();
-            
+            debugger
             $(this).html('<span class="spinner-border spinner-border-sm"></span> Processing...');
             var regNo = $('#registrationNumber').val();
             var RegNo = regNo.trim();
@@ -836,7 +850,7 @@
         });
 
         async function handleButtonClick(url, postData, isSuccessFunc) {
-            
+            debugger
                 $(this).prop('disabled', true);
                 var originalButtonText = $(this).html();
           
@@ -1026,7 +1040,7 @@
             try {
 
                 const result = await postData(url, data);
-                
+                debugger
                 isSuccessFunc(result);
                     if (result.Data.Message == "Success") {
                         $('#otp-modal').modal('show');

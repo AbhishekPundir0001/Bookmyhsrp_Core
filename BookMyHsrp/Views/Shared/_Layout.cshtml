@@ -34,7 +34,7 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/cutom-forms.css">
     <link rel="stylesheet" href="~/lib/nprogress/dist/css/nprogress.css">
     <link href="https://cdn.datatables.net/v/bs5/dt-1.13.7/b-2.4.2/b-colvis-2.4.2/fc-4.3.0/fh-3.4.0/datatables.min.css" rel="stylesheet">
-
+   
 
     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.8.0/dist/sweetalert2.min.css" rel="stylesheet">
 
@@ -42,7 +42,6 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" />
 
 </head>
-
 
 <body>
     <header class="htc__header">
@@ -95,7 +94,7 @@
                                 <li class="drop"><a href="@Url.Action("OrderCancel", "OrderCancel")">Cancel Order</a></li>
                                 <li class="drop"><a href="@Url.Action("PinForHomeDelivery", "PinForHomeDelivery")">Check For Home Installation</a></li>
                                 <li class="drop">
-                                   <a href="@Url.Action("ReceiptValidity", "ReceiptValidity")">
+                                    <a href="@Url.Action("ReceiptValidity", "ReceiptValidity")">
                                         Receipt Validity
                                     </a>
                                 </li>
@@ -187,8 +186,6 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.8.0/dist/sweetalert2.all.min.js
     <script src="~/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.full.min.js"></script>
     <script src="~/js/site.js"></script>
-    <script src="~/js/jquery.js"></script>
-    <script src="~/js/bootstrap.min.js"></script>
-    <script src="~/js/all.min.js"></script>
+
     @await RenderSectionAsync("Scripts", required: false)
 </body>

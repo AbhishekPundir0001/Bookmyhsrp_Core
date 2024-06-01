@@ -41,8 +41,6 @@ namespace BookMyHsrp.ApiController.ApiHSRPWithColourSticker
                 .ToList();
             return string.Join(", ", errorMessages);
         }
-
-
         public IActionResult Index()
         {
             return View();

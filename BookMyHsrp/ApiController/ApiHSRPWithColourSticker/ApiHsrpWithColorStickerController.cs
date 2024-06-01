@@ -25,23 +25,7 @@ namespace BookMyHsrp.ApiController.ApiHSRPWithColourSticker
         }
         [HttpPost]
         [Route("report/check-vahan-information")]
-        public async Task<IActionResult> VahanInformation([FromBody]VahanDetails requestDto)
-        {
-            if (!ModelState.IsValid)
-            {   
-                return BadRequest(new { Error = true, Message = GetModelErrorMessages() });
-            }
-           
-        //    var result = await _hsrpWithColorStickerConnector.VahanInformation(requestDto);
-        //    return Ok(
-        //          new Response<dynamic>(result, false,
-        //              "Data Received."));
-
-        //}
-
-
-        [HttpPost]
-        [Route("report/SetSessionBookingDetail")]
+        
         public async Task<IActionResult> SessionBookingDetails([FromBody] GetSessionBookingDetails requestDto)
         {
             if (!ModelState.IsValid)
