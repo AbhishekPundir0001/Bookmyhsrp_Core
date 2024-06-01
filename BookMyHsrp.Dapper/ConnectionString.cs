@@ -26,6 +26,7 @@ namespace BookMyHsrp.Dapper
         public string CompanyNamePostfix { get; set; }
         public string RCFilePath { get; set; }
 
+
         public string QRPath { get; set; }
 
     }

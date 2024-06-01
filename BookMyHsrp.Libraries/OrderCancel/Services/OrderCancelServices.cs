@@ -32,7 +32,15 @@ namespace BookMyHsrp.Libraries.OrderCancel.Services
             var receipts = await _databaseHelper.QueryAsync<dynamic>(OrderCancelQueries.CancelOrderGet, parameters);
             return receipts;
         }
-
+        
+            public async Task<dynamic> CancelOrderDetails(dynamic dto)
+        {
+            var parameters = new DynamicParameters();
+            parameters.Add("@VehicleregNo", dto.VehicleregNo);
+            parameters.Add("@OrderNo", dto.OrderNo);
+            var receipts = await _databaseHelper.QueryAsync<dynamic>(OrderCancelQueries.CancelOrderDetails, parameters);
+            return receipts;
+        }
         public async Task<dynamic> DealerWalletdetail(dynamic dto)
         {
 
@@ -42,6 +50,16 @@ namespace BookMyHsrp.Libraries.OrderCancel.Services
             var receipts = await _databaseHelper.QueryAsync<dynamic>(OrderCancelQueries.DealerWalletdetail, parameters);
             return receipts;
         }
+        public async Task<dynamic> DealerAddress(dynamic dto)
+        {
+
+            var parameters = new DynamicParameters();
+            parameters.Add("@VehicleregNo", dto.VehicleregNo);
+            parameters.Add("@OrderNo", dto.OrderNo);
+            var receipts = await _databaseHelper.QueryAsync<dynamic>(OrderCancelQueries.DealerAddress, parameters);
+            return receipts;
+        }
     }
+   
 
 }

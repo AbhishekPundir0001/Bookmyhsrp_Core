@@ -14,5 +14,12 @@ namespace BookMyHsrp.Libraries.OrderCancel.Models
             public string VehicleregNo { get; set; } = "";
 
         }
+        public class OtpModal
+        {
+            public string VehicleRegNo { get; set; } = "";
+            public string MobileNo { get; set; } = "";
+            public string OrderNo { get; set; } = "";
+
+        }
     }
 }
