@@ -949,10 +949,10 @@
                 var rearPlatePhoto = $("#RearPlatePhoto")[0].files[0];
 
                 var formData = new FormData();
-                formData.append("FrontLaserPhoto", frontLaserPhoto)
-                formData.append("RearLaserPhoto", rearLaserPhoto)
                 formData.append("FrontPlatePhoto", frontPlatePhoto)
                 formData.append("RearPlatePhoto", rearPlatePhoto)
+                formData.append("FrontLaserPhoto", frontLaserPhoto)
+                formData.append("RearLaserPhoto", rearLaserPhoto)
 
                 var url = "/api/v1/uploadSticker"
                 try {

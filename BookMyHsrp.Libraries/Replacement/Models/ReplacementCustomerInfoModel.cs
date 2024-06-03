@@ -83,10 +83,11 @@ namespace BookMyHsrp.Libraries.HsrpWithColorSticker.Models
         public string FirDate { get; set; }
         public string FrontLaserPath { get; set; }
         public string RearLaserPath { get; set; }
-        public string FirCopyName { get; set; }
+        public string FirCopy { get; set; }
         public string PlateSticker { get; set; } = "plate";
         public string PoliceStation { get; set; }
-        public string File4 { get; set; }
+        //public string File4 { get; set; }
+        public string RcCopy { get; set; }
         public string ReplacementReason { get; set; }
         public string ReplacementType { get; set; } = "";
 

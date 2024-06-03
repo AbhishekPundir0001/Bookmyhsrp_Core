@@ -456,7 +456,7 @@ namespace BookMyHsrp.ReportsLogics.Replacement
             string getVehicleCategory = customerInfo.VehicleCatVahan;
             string getOrderPlateSticker = customerInfo.PlateSticker;
             string IsVehicletypeEnable = "N";
-            string realOrdertype = "OB";
+            string realOrdertype = string.Empty;
             string ReplacementType = customerInfo.ReplacementType;
             var qstr = "";
             string insertVahanLogQuery = "";
@@ -469,6 +469,27 @@ namespace BookMyHsrp.ReportsLogics.Replacement
             var jsonDeSerializer = System.Text.Json.JsonSerializer.Deserialize<RootDtoSticker>(sessionDetails);
             try
             {
+                if (customerInfo.OrderType.Trim().ToUpper() == "BDB")
+                {
+                    realOrdertype = "DB";
+
+                }
+                else if (customerInfo.OrderType.Trim().ToUpper() == "BDR")
+                {
+                    customerInfo.OrderType = "DR";
+
+                }
+                else if (customerInfo.OrderType.Trim().ToUpper() == "BDF")
+                {
+                    realOrdertype = "DF";
+                }
+                else
+                {
+                    realOrdertype = "OB";
+                }
+
+
+
                 var nonHomo = jsonDeSerializer.NonHomo;
                 if (nonHomo == "Y")
                 {
@@ -507,32 +528,28 @@ namespace BookMyHsrp.ReportsLogics.Replacement
                 }
                 try
                 {
-                    string dateString = customerInfo.RegistrationDate;
-                    IFormatProvider theCultureInfo = new CultureInfo("en-GB", true);
-                    var resultDateTime = DateTime.TryParseExact(dateString, "dd/MM/yyyy", theCultureInfo, DateTimeStyles.None
-                        , out var dt)
-                        ? dt
-                        : null as DateTime?;
-                    DateTime to = DateTime.ParseExact("25/11/2019", "dd/MM/yyyy", theCultureInfo);
-                    if (resultDateTime.HasValue)
+                    #region Check Registartion date for Rajasthan State on or before 01.04.2029
+                    if (customerInfo.StateId == "27")
                     {
-
-                        //if State Orissa then check if order can be taken after 2019
-
-                        if (RunCheckIfOrderCanBeTakenAfter2019(stateId: getStateId))
+                        string dateString = customerInfo.RegistrationDate;
+                        IFormatProvider theCultureInfo = new CultureInfo("en-GB", true);
+                        var resultDateTime = DateTime.TryParseExact(dateString, "dd/MM/yyyy", theCultureInfo, DateTimeStyles.None, out var dt) ? dt : null as DateTime?;
+                        DateTime to = DateTime.ParseExact("01/04/2019", "dd/MM/yyyy", theCultureInfo);
+                        if (resultDateTime.HasValue)
                         {
-                            var txtTotalDays = ((resultDateTime.Value - to).TotalDays);
-                            if (txtTotalDays > 0)
+                            if (RunCheckIfOrderCanBeTakenAfter2019(stateId: getStateId))
                             {
-                                customerInformationresponseData.Status = "false";
-                                customerInformationresponseData.Message = "Vehicle owner's with vehicles manufactured after 25th November 2019, should contact their respective Automobile Dealers for HSRP affixation.";
-                                //   customerInformationresponseData.data = customerInformationData;
-                                return customerInformationresponseData;
+                                var txtTotalDays = ((resultDateTime.Value - to).TotalDays);
+                                if (txtTotalDays > 0)
+                                {
+                                    customerInformationresponseData.Status = "false";
+                                    customerInformationresponseData.Message = "Vehicle owner's with vehicles manufactured after 01 April 2019, should contact their respective Automobile Dealers for HSRP affixation.";
+                                    return customerInformationresponseData;
+                                }
                             }
-
                         }
-
                     }
+                    #endregion
                     //string dateString = customerInfo.RegistrationDate;
                     //DateTime date = DateTime.ParseExact(dateString, "dd-MM-yyyy", System.Globalization.CultureInfo.InvariantCulture);
                     //string formattedDate = date.ToString("dd-MM-yyyy");
@@ -569,7 +586,6 @@ namespace BookMyHsrp.ReportsLogics.Replacement
                     var insertVahanLogQueryCustomer = await _replacementService.InsertVahanLogQueryCustomer(customerInfo, OrderType, billingaddress, NonHomo, OemId);
                     if (customerInfo.RegistrationNo.Trim().ToUpper() == "DL10CG7191")
                     {
-
                     }
                     else
                     {
@@ -686,6 +702,7 @@ namespace BookMyHsrp.ReportsLogics.Replacement
                     customerInformationresponseData.data.OrderType = session.OrderType;
                     customerInformationresponseData.data.OEMImgPath = session.OEMImgPath;
                     customerInformationresponseData.data.VehicleType_imgPath = session.VehicleType_imgPath;
+                    customerInformationresponseData.data.RealOrderType = realOrdertype;
 
                 }
 
