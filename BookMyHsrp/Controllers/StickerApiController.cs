@@ -1,9 +1,11 @@
 ﻿
 using BookMyHsrp.Libraries.HsrpWithColorSticker.Models;
+using BookMyHsrp.Libraries.Sticker.Models;
 using BookMyHsrp.ReportsLogics.Sticker;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.Globalization;
+using System.Xml;
 using static BookMyHsrp.Libraries.Sticker.Models.StickerModel;
 
 namespace BookMyHsrp.Controllers
@@ -70,21 +72,15 @@ namespace BookMyHsrp.Controllers
 
             if (result.status == "true")
             {
-                if (!string.IsNullOrEmpty(result.data.veh_reg_date))
+                if (!string.IsNullOrEmpty(result.data.regnDate))
                 {
                     IFormatProvider theCultureInfo = new CultureInfo("en-GB", true);
-                    var resultDateTime = DateTime.TryParseExact(result.data.veh_reg_date, "yyyy-MM-dd",
-                        theCultureInfo,
-                        DateTimeStyles.None
-                        , out DateTime dt)
-                        ? dt
-                        : null as DateTime?;
+                    var resultDateTime = DateTime.TryParseExact(result.data.regnDate, "yyyy-MM-dd",theCultureInfo,DateTimeStyles.None, out DateTime dt) ? dt : null as DateTime?;
                     if (resultDateTime.HasValue)
                     {
-                        result.data.veh_reg_date = resultDateTime.Value.ToString("dd/MM/yyyy");
+                        result.data.regnDate = resultDateTime.Value.ToString("dd/MM/yyyy");
                     }
                     //else
-
                 }
                 var rootDto = new RootDtoSticker
                 {
@@ -107,6 +103,7 @@ namespace BookMyHsrp.Controllers
                     FuelType = result.data.fuel,
                     PlateSticker = "Sticker",
                     IsReplacement = vahanDetailsDto.isReplacement,
+                    UploadFlag = result.UploadFlag,
                     Message = result.data.message
                 };
 
@@ -135,29 +132,31 @@ namespace BookMyHsrp.Controllers
 
         [HttpPost]
         [Route("sticker/customerInfo")]
-        public async Task<IActionResult> CustomerInfo([FromBody] CustomerInfoModel info)
+        public async Task<IActionResult> CustomerInfo([FromBody] CustomerInfoModelSticker info)
         {
 
             var jsonSerializer = "";
-            var resultGot = new CustomerInformationResponse();
+            var resultGot = new CustomerInformationResponseSticker();
             var detailsSession = HttpContext.Session.GetString("UserSession");
             if (HttpContext.Session.GetString("UserSession") != null)
             {
-                var frontLaserfileName = HttpContext.Session.GetString("frontLaserfileName");
-                var rearLaserfileName = HttpContext.Session.GetString("rearLaserfileName");
-                var frontPlatefileName = HttpContext.Session.GetString("frontPlatefileName");
-                var rearPlatefileName = HttpContext.Session.GetString("rearPlatefileName");
+                //var frontLaserfileName = HttpContext.Session.GetString("frontLaserfileName");
+                //var rearLaserfileName = HttpContext.Session.GetString("rearLaserfileName");
+                //var frontPlatefileName = HttpContext.Session.GetString("frontPlatefileName");
+                //var rearPlatefileName = HttpContext.Session.GetString("rearPlatefileName");
 
-                if(frontLaserfileName==null || frontLaserfileName == "" || rearLaserfileName == null || rearLaserfileName == "" || frontPlatefileName==null || frontPlatefileName=="" || rearPlatefileName == null || rearPlatefileName == "")
+                if (info.UploadFlag == "Y")
                 {
-                    return BadRequest(new { Error = true, Message = "Please Upload File" });
+                    if (info.FrontPlatePath == null || info.FrontPlatePath == "" || info.RearPlatePath == null || info.RearPlatePath == "" || info.FrontLaserCode == null || info.FrontLaserCode == "" || info.RearLaserCode == null || info.RearLaserCode == "")
+                    {
+                        return BadRequest(new { Error = true, Message = "Please Upload File" });
+                    }
                 }
-
 
                 resultGot = await _StickerConnector.CustomerInfo(info, detailsSession);
                 if (resultGot.Message == "Success")
                 {
-                    var getSession = new RootDto();
+                    var getSession = new RootDtoSticker();
                     getSession.CustomerBillingAddress = info.BillingAddress.Replace("'", "");
                     getSession.BhartStage = info.BharatStage;
                     getSession.CustomerName = info.OwnerName;

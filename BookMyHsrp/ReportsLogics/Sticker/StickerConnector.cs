@@ -1,5 +1,6 @@
 ﻿using BookMyHsrp.Dapper;
 using BookMyHsrp.Libraries.HsrpWithColorSticker.Models;
+using BookMyHsrp.Libraries.Sticker.Models;
 using BookMyHsrp.Libraries.Sticker.Services;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
@@ -75,163 +76,171 @@ namespace BookMyHsrp.ReportsLogics.Sticker
             }
 
             string responseJson = await _StickerService.RosmertaApi(getVehicleRegno, getChassisNo, getEngineNo, "5UwoklBqiW");
-            VehicleDetails _vd = JsonConvert.DeserializeObject<VehicleDetails>(responseJson);
-            if (_vd != null && _vd.stateCd != null && _vd.message != "Vehicle Not Found")
-            {
-                var hasError = false;
-                if (_vd.stateCd != null)
+            if (responseJson.Contains("Vehicle details available in Vahan")) {
+                VehicleDetails _vd = JsonConvert.DeserializeObject<VehicleDetails>(responseJson);
+                if (_vd != null && _vd.stateCd != null && _vd.message != "Vehicle Not Found")
                 {
-                    if (_vd.stateCd.ToLower().StartsWith(stateshortname.ToString().ToLower()) == false)
+                    var hasError = false;
+                    if (_vd.stateCd != null)
                     {
-                        vehicleValidationResponse.status = "false";
-                        vehicleValidationResponse.message = "Please input Correct Registration Number of " + statename;
-                        hasError = true;
-                    }
-                }
-                if (hasError)
-                {
-                    return vehicleValidationResponse;
-                }
-                if (_vd.message == "Vehicle details available in Vahan")
-                {
-                    bool CheckedStatus = false;
-                    var insertVahanLogQuery = await _StickerService.InsertVaahanLog(getVehicleRegno, getChassisNo, getEngineNo, _vd);
-                    var res = await _StickerService.checkVehicleForStickerPr(requestDto.RegistrationNo, requestDto.HsrpFrontLaserCode, requestDto.HsrpRearLaserCode);
-                    if(res.Count==0)
-                    {
-                        res = await _StickerService.checkVehicleForStickerDL(requestDto.RegistrationNo, requestDto.HsrpFrontLaserCode, requestDto.HsrpRearLaserCode);
-                        if(getVehicleRegno.StartsWith("hr"))
+                        if (_vd.stateCd.ToLower().StartsWith(stateshortname.ToString().ToLower()) == false)
                         {
-                            if (res.Count == 0)
-                            {
-                                res = await _StickerService.checkVehicleForStickerHR(requestDto.RegistrationNo, requestDto.HsrpFrontLaserCode, requestDto.HsrpRearLaserCode);
-                            }
+                            vehicleValidationResponse.status = "false";
+                            vehicleValidationResponse.message = "Please input Correct Registration Number of " + statename;
+                            hasError = true;
                         }
                     }
-                    if(res.Count > 0)
+                    if (hasError)
                     {
-                        CheckedStatus = true;
-                    }
-                    if (_vd.vchCatg.ToUpper() == "2WN" || _vd.vchCatg.ToUpper() == "2WIC" || _vd.vchCatg.ToUpper() == "2WT")
-                    {
-                        vehicleValidationResponse.status = "false";
-                        vehicleValidationResponse.message = "Your vehicle is not mapped for sticker";
-                        vehicleValidationResponse.data = vehicleValidationData;
                         return vehicleValidationResponse;
                     }
+                    if (_vd.message == "Vehicle details available in Vahan")
+                    {
+                        bool CheckedStatus = false;
+                        var insertVahanLogQuery = await _StickerService.InsertVaahanLog(getVehicleRegno, getChassisNo, getEngineNo, _vd);
+                        var res = await _StickerService.checkVehicleForStickerPr(requestDto.RegistrationNo, requestDto.HsrpFrontLaserCode, requestDto.HsrpRearLaserCode);
+                        if (res.Count == 0)
+                        {
+                            res = await _StickerService.checkVehicleForStickerDL(requestDto.RegistrationNo, requestDto.HsrpFrontLaserCode, requestDto.HsrpRearLaserCode);
+                            if (getVehicleRegno.StartsWith("hr"))
+                            {
+                                if (res.Count == 0)
+                                {
+                                    res = await _StickerService.checkVehicleForStickerHR(requestDto.RegistrationNo, requestDto.HsrpFrontLaserCode, requestDto.HsrpRearLaserCode);
+                                }
+                            }
+                        }
+                        if (res.Count > 0)
+                        {
+                            CheckedStatus = true;
+                        }
+                        if (_vd.vchCatg.ToUpper() == "2WN" || _vd.vchCatg.ToUpper() == "2WIC" || _vd.vchCatg.ToUpper() == "2WT")
+                        {
+                            vehicleValidationResponse.status = "false";
+                            vehicleValidationResponse.message = "Your vehicle is not mapped for sticker";
+                            vehicleValidationResponse.data = vehicleValidationData;
+                            return vehicleValidationResponse;
+                        }
 
-                    var oemId = await _StickerService.GetOemId(_vd.maker);
-                    if (oemId.Count > 0)
-                    {
-                        oemImgPath = oemId[0].oem_logo.ToString();
-                        oemid = oemId[0].Oemid.ToString();
+                        var oemId = await _StickerService.GetOemId(_vd.maker);
+                        if (oemId.Count > 0)
+                        {
+                            oemImgPath = oemId[0].oem_logo.ToString();
+                            oemid = oemId[0].Oemid.ToString();
+                        }
+                        else
+                        {
+                            vehicleValidationResponse.status = "false";
+                            vehicleValidationResponse.message = "As a Vendor we are not authorised for this vehicle Please visit www.siam.in for respective HSRP Maker.";
+                            vehicleValidationResponse.data = vehicleValidationData;
+                            return vehicleValidationResponse;
+                        }
+
+                        if (CheckedStatus == true)
+                        {
+                            VehicleDetails details = new VehicleDetails();
+                            details = _vd;
+                            vehicleValidationResponse.status = "true";
+                            vehicleValidationResponse.message = _vd.message;
+                            vehicleValidationResponse.UploadFlag = "N";
+                            vehicleValidationResponse.data.upload_flag = "N";
+
+                            vehicleValidationResponse.data.vehicleregno = requestDto.RegistrationNo.ToUpper().Trim();
+                            vehicleValidationResponse.data.chassisno = requestDto.ChassisNo.ToUpper().Trim();
+                            vehicleValidationResponse.data.engineno = requestDto.EngineNo.ToUpper().Trim();
+
+                            vehicleValidationResponse.data.fuel = details.fuel;
+                            vehicleValidationResponse.data.message = details.message;
+                            vehicleValidationResponse.data.offCd = details.offCd;
+                            vehicleValidationResponse.data.maker = details.maker;
+                            vehicleValidationResponse.data.hsrpFrontLaserCode = details.hsrpFrontLaserCode;
+                            vehicleValidationResponse.data.vchType = details.vchType;
+                            vehicleValidationResponse.data.vchCatg = details.vchCatg;
+                            vehicleValidationResponse.data.stateCd = details.stateCd;
+                            vehicleValidationResponse.data.regnDate = details.regnDate;
+                            vehicleValidationResponse.data.norms = details.norms;
+                            vehicleValidationResponse.data.hsrpRearLaserCode = details.hsrpRearLaserCode;
+                            vehicleValidationResponse.data.oemid = oemid;
+                            vehicleValidationResponse.data.stateid = stateID.ToString();
+                            vehicleValidationResponse.data.statename = statename;
+                            return vehicleValidationResponse;
+
+                        }
+                        else
+                        {
+
+                            VehicleDetails details = new VehicleDetails();
+                            details = _vd;
+                            vehicleValidationResponse.status = "true";
+                            vehicleValidationResponse.message = _vd.message;
+                            vehicleValidationResponse.UploadFlag = "Y";
+                            vehicleValidationResponse.data.upload_flag = "Y";
+
+                            vehicleValidationResponse.data.vehicleregno = requestDto.RegistrationNo.ToUpper().Trim();
+                            vehicleValidationResponse.data.chassisno = requestDto.ChassisNo.ToUpper().Trim();
+                            vehicleValidationResponse.data.engineno = requestDto.EngineNo.ToUpper().Trim();
+
+                            vehicleValidationResponse.data.fuel = details.fuel;
+                            vehicleValidationResponse.data.message = details.message;
+                            vehicleValidationResponse.data.offCd = details.offCd;
+                            vehicleValidationResponse.data.maker = details.maker;
+                            vehicleValidationResponse.data.hsrpFrontLaserCode = details.hsrpFrontLaserCode;
+                            vehicleValidationResponse.data.vchType = details.vchType;
+                            vehicleValidationResponse.data.vchCatg = details.vchCatg;
+                            vehicleValidationResponse.data.stateCd = details.stateCd;
+                            vehicleValidationResponse.data.regnDate = details.regnDate;
+                            vehicleValidationResponse.data.norms = details.norms;
+                            vehicleValidationResponse.data.hsrpRearLaserCode = details.hsrpRearLaserCode;
+                            vehicleValidationResponse.data.oemid = oemid;
+                            vehicleValidationResponse.data.stateid = stateID.ToString();
+                            vehicleValidationResponse.data.statename = statename;
+                            return vehicleValidationResponse;
+                        }
+
+
                     }
-                    else
+                    else if (_vd.message.Contains("Vehicle details available in Vahan but"))
                     {
+                        var insertVahanLogQuery = await _StickerService.InsertVaahanLog(getVehicleRegno, getChassisNo, getEngineNo, _vd);
+                        bool CheckedStatus = false;
+                        var res = await _StickerService.checkVehicleForStickerPr(requestDto.RegistrationNo, requestDto.HsrpFrontLaserCode, requestDto.HsrpRearLaserCode);
+                        if (res.Count == 0)
+                        {
+                            res = await _StickerService.checkVehicleForStickerDL(requestDto.RegistrationNo, requestDto.HsrpFrontLaserCode, requestDto.HsrpRearLaserCode);
+                            if (getVehicleRegno.StartsWith("hr"))
+                            {
+                                if (res.Count == 0)
+                                {
+                                    res = await _StickerService.checkVehicleForStickerHR(requestDto.RegistrationNo, requestDto.HsrpFrontLaserCode, requestDto.HsrpRearLaserCode);
+                                }
+                            }
+                        }
                         vehicleValidationResponse.status = "false";
                         vehicleValidationResponse.message = "As a Vendor we are not authorised for this vehicle Please visit www.siam.in for respective HSRP Maker.";
                         vehicleValidationResponse.data = vehicleValidationData;
                         return vehicleValidationResponse;
                     }
-
-                    if (CheckedStatus == true)
-                    {
-                        VehicleDetails details = new VehicleDetails();
-                        details = _vd;
-                        vehicleValidationResponse.status = "true";
-                        vehicleValidationResponse.message = _vd.message;
-                        vehicleValidationResponse.UploadFlag = "N";
-
-                        vehicleValidationResponse.data.vehicleregno = requestDto.RegistrationNo.ToUpper().Trim();
-                        vehicleValidationResponse.data.chassisno = requestDto.ChassisNo.ToUpper().Trim();
-                        vehicleValidationResponse.data.engineno = requestDto.EngineNo.ToUpper().Trim();
-
-                        vehicleValidationResponse.data.fuel = details.fuel;
-                        vehicleValidationResponse.data.message = details.message;
-                        vehicleValidationResponse.data.offCd = details.offCd;
-                        vehicleValidationResponse.data.maker = details.maker;
-                        vehicleValidationResponse.data.hsrpFrontLaserCode = details.hsrpFrontLaserCode;
-                        vehicleValidationResponse.data.vchType = details.vchType;
-                        vehicleValidationResponse.data.vchCatg = details.vchCatg;
-                        vehicleValidationResponse.data.stateCd = details.stateCd;
-                        vehicleValidationResponse.data.regnDate = details.regnDate;
-                        vehicleValidationResponse.data.norms = details.norms;
-                        vehicleValidationResponse.data.hsrpRearLaserCode = details.hsrpRearLaserCode;
-                        vehicleValidationResponse.data.oemid = oemid;
-                        vehicleValidationResponse.data.stateid = stateID.ToString();
-                        vehicleValidationResponse.data.statename = statename;
-                        return vehicleValidationResponse;
-
-                    }
                     else
                     {
-
-                        VehicleDetails details = new VehicleDetails();
-                        details = _vd;
-                        vehicleValidationResponse.status = "true";
-                        vehicleValidationResponse.message = _vd.message;
-                        vehicleValidationResponse.UploadFlag = "Y";
-
-                        vehicleValidationResponse.data.vehicleregno = requestDto.RegistrationNo.ToUpper().Trim();
-                        vehicleValidationResponse.data.chassisno = requestDto.ChassisNo.ToUpper().Trim();
-                        vehicleValidationResponse.data.engineno = requestDto.EngineNo.ToUpper().Trim();
-
-                        vehicleValidationResponse.data.fuel = details.fuel;
-                        vehicleValidationResponse.data.message = details.message;
-                        vehicleValidationResponse.data.offCd = details.offCd;
-                        vehicleValidationResponse.data.maker = details.maker;
-                        vehicleValidationResponse.data.hsrpFrontLaserCode = details.hsrpFrontLaserCode;
-                        vehicleValidationResponse.data.vchType = details.vchType;
-                        vehicleValidationResponse.data.vchCatg = details.vchCatg;
-                        vehicleValidationResponse.data.stateCd = details.stateCd;
-                        vehicleValidationResponse.data.regnDate = details.regnDate;
-                        vehicleValidationResponse.data.norms = details.norms;
-                        vehicleValidationResponse.data.hsrpRearLaserCode = details.hsrpRearLaserCode;
-                        vehicleValidationResponse.data.oemid = oemid;
-                        vehicleValidationResponse.data.stateid = stateID.ToString();
-                        vehicleValidationResponse.data.statename = statename;
+                        vehicleValidationResponse.status = "false";
+                        vehicleValidationResponse.message = "Your vehicle detail didn't match with vahan service";
+                        vehicleValidationResponse.UploadFlag = "N";
                         return vehicleValidationResponse;
                     }
-
-
-                }
-                else if (_vd.message.Contains("Vehicle details available in Vahan but"))
-                {
-                    var insertVahanLogQuery = await _StickerService.InsertVaahanLog(getVehicleRegno, getChassisNo, getEngineNo, _vd);
-                    bool CheckedStatus = false;
-                    var res = await _StickerService.checkVehicleForStickerPr(requestDto.RegistrationNo, requestDto.HsrpFrontLaserCode, requestDto.HsrpRearLaserCode);
-                    if (res.Count == 0)
-                    {
-                        res = await _StickerService.checkVehicleForStickerDL(requestDto.RegistrationNo, requestDto.HsrpFrontLaserCode, requestDto.HsrpRearLaserCode);
-                        if (getVehicleRegno.StartsWith("hr"))
-                        {
-                            if (res.Count == 0)
-                            {
-                                res = await _StickerService.checkVehicleForStickerHR(requestDto.RegistrationNo, requestDto.HsrpFrontLaserCode, requestDto.HsrpRearLaserCode);
-                            }
-                        }
-                    }
-                    vehicleValidationResponse.status = "false";
-                    vehicleValidationResponse.message = "As a Vendor we are not authorised for this vehicle Please visit www.siam.in for respective HSRP Maker.";
-                    vehicleValidationResponse.data = vehicleValidationData;
-                    return vehicleValidationResponse;
-                }
-                else
-                {
-                    vehicleValidationResponse.status = "false";
-                    vehicleValidationResponse.message = "Your vehicle detail didn't match with vahan service";
-                    vehicleValidationResponse.UploadFlag = "N";
-                    return vehicleValidationResponse;
                 }
             }
-
-                return vehicleValidationResponse;
+            else
+            {
+                vehicleValidationResponse.status = "false";
+                vehicleValidationResponse.message = "Error While Calling Your Vehicle Details From Vahan Please Try After Some Time";
+            }
+               return vehicleValidationResponse;
         }
 
-        public async Task<dynamic> CustomerInfo(CustomerInfoModel customerInfo, dynamic sessionDetails)
+        public async Task<dynamic> CustomerInfo(CustomerInfoModelSticker customerInfo, dynamic sessionDetails)
         {
             var setCusmoterData = new SetCustomerData();
-            var customerInformationresponseData = new CustomerInformationResponse();
+            var customerInformationresponseData = new CustomerInformationResponseSticker();
             customerInformationresponseData.data = new CustomerInformationData();
             //ICollection<ValidationResult> results = null;
             //if (!Validate(customerInfo, out results))

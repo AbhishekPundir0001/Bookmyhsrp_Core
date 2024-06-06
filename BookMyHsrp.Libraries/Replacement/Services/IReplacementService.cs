@@ -53,7 +53,7 @@ namespace BookMyHsrp.Libraries.Replacement.Services
 
         Task<dynamic> strHsrpRecord5(string RegistrationNo, string ChassisNo);
 
-        Task<dynamic> strHsrpRecord6(string RegistrationNo, string ChassisNo);
+        Task<dynamic> strHsrpRecord6(string RegistrationNo, string ChassisNo, string HSRPRecordId);
 
         Task<dynamic> strHsrpRecord7(string RegistrationNo, string ChassisNo);
 

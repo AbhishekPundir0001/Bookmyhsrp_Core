@@ -1,6 +1,7 @@
 ﻿using BookMyHsrp.Dapper;
 using BookMyHsrp.Libraries.Common.Models;
 using BookMyHsrp.Libraries.HsrpWithColorSticker.Models;
+using BookMyHsrp.Libraries.Sticker.Models;
 using BookMyHsrp.ReportsLogics.Common;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -152,18 +153,18 @@ namespace BookMyHsrp.Controllers.CommonController
                                 await _rearPlatePhoto.CopyToAsync(stream);
                             }
 
-                            HttpContext.Session.SetString("frontLaserfileName", frontLaserfilePath);
-                            HttpContext.Session.SetString("rearLaserfileName", rearLaserfilePath);
-                            HttpContext.Session.SetString("frontPlatefileName", frontPlatefilePath);
-                            HttpContext.Session.SetString("rearPlatefileName", rearPlatefilePath);
+                            //HttpContext.Session.SetString("frontLaserfileName", frontLaserfilePath);
+                            //HttpContext.Session.SetString("rearLaserfileName", rearLaserfilePath);
+                            //HttpContext.Session.SetString("frontPlatefileName", frontPlatefilePath);
+                            //HttpContext.Session.SetString("rearPlatefileName", rearPlatefilePath);
 
+                            response.FrontLaserPhoto = _frontLaserPhoto.FileName;
+                            response.RearLaserPhoto = _rearLaserPhoto.FileName;
+                            response.FrontPlatePhoto = _fronPlatePhoto.FileName;
+                            response.RearPlatePhoto = _rearPlatePhoto.FileName;
                             response.Message = "File Uploaded Successfully";
                         }
-
                     }
-
-
-
                 }
             }
             catch (Exception ex)

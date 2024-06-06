@@ -466,7 +466,7 @@ namespace BookMyHsrp.ReportsLogics.Replacement
             session.VehicleType_imgPath = "www";
             session.OEMImgPath = "www";
             session.OrderType = "OB";
-            var jsonDeSerializer = System.Text.Json.JsonSerializer.Deserialize<RootDtoSticker>(sessionDetails);
+            var jsonDeSerializer = System.Text.Json.JsonSerializer.Deserialize<RootDto>(sessionDetails);
             try
             {
                 if (customerInfo.OrderType.Trim().ToUpper() == "BDB")
@@ -802,7 +802,8 @@ namespace BookMyHsrp.ReportsLogics.Replacement
                 {
                     if (data4.Count == 1)
                     {
-                        var data6= await _replacementService.strHsrpRecord6(requestDto.RegistrationNo, requestDto.ChassisNo);
+                        int recordId = Convert.ToInt32(data4[0].HSRPRecordId);
+                        var data6= await _replacementService.strHsrpRecord6(requestDto.RegistrationNo, requestDto.ChassisNo, recordId.ToString());
                         if(data6.Count>0)
                         {
                             if (data6[0].ReBookingAllow == "Y")
