@@ -40,14 +40,14 @@
                                     <div class="col-lg-6">
                                         <div class="input-group">
                                             <label class="form-label w-100">Captcha</label>
-                                            <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
-                                            <button class="input-group-text"><i class="fas fa-redo-alt"></i></button>
+                                            <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" id="txtCaptcha">
+                                            <button class="input-group-text"><i class="fas fa-redo-alt" id="btnRefreshCaptcha"></i></button>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="input-group">
                                             <label class="form-label w-100">Input Captcha</label>
-                                            <input type="text" class="form-control">
+                                            <input type="text" class="form-control" id="txtInput">
                                         </div>
                                     </div>
                                     <div class="col-lg-12">
@@ -73,15 +73,68 @@
 
 @section Scripts
 {
-    <script src="~/js/owl.carousel.min.js"></script>
-
+    
     <script>
+
+        function DrawCaptcha() {
+            var a = Math.ceil(Math.random() * 9) + '';
+            var b = Math.ceil(Math.random() * 9) + '';
+            var c = Math.ceil(Math.random() * 9) + '';
+            var d = Math.ceil(Math.random() * 9) + '';
+            var code = a + ' ' + b + ' ' + c + ' ' + d;
+            document.getElementById("txtCaptcha").value = code;
+        }
+
+        window.onload = function () {
+
+            DrawCaptcha();
+            document.getElementById("btnRefreshCaptcha").addEventListener("click", DrawCaptcha);
+
+
+        };
         $('#downloadReceipt').click(function () {
             handleButtonClickApproved.call(this, '/Receipt/DownloadReceipt', downloadReceipt, (result) => {
                 // Success callback
                 // You can handle the success result here, if needed
             });
         });
+
+        function ValidCaptcha() {
+            $(this).prop('disabled', true);
+
+            const errorFunc = (title) => {
+                Toast.fire({
+                    icon: 'error',
+                    title: title
+                })
+
+
+
+            }
+            var captcha = removeSpaces(document.getElementById('txtCaptcha').value);
+            var inputCaptcha = removeSpaces(document.getElementById('txtInput').value);
+            if (inputCaptcha == '') {
+                //alert("Captcha can't be blank!!");
+                errorFunc("Captcha can't be blank!!");
+                return;
+            }
+            else if (captcha == inputCaptcha) {
+                return true;
+            }
+            else {
+                // alert("Please Input Correct Captcha");
+                errorFunc("Please Input Correct Captcha");
+                return;
+            }
+        }
+        function removeSpaces(string) {
+            return string.split(' ').join('');
+        }
+
+        function removeSpaces(string) {
+            return string.replace(/\s+/g, '');
+        }
+
 
         async function handleButtonClickApproved(url, downloadReceipt, isSuccessFunc) {
             debugger;
@@ -98,13 +151,18 @@
                 $(this).prop('disabled', false);
                 $(this).html(originalButtonText);
             };
+            if (!ValidCaptcha()) {
+                $(this).prop('disabled', false);
+                $(this).html(originalButtonText)
+                return false;
+            }
 
             const data = { OrderNo: orderNumber }
-            // AJAX request to download receipt
             try {
                 const response = await downloadReceipt(url, data); // Assuming you have defined postData function
-                isSuccessFunc(response);
                 debugger;
+                isSuccessFunc(response);
+                
                 console.log(response);
                 const orderNo = response.OrderNo;
 

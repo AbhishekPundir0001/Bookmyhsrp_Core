@@ -49,7 +49,22 @@
     {
     <script src="~/js/owl.carousel.min.js"></script>
 
-    <script>
+    <script>function DrawCaptcha() {
+                var a = Math.ceil(Math.random() * 9) + '';
+                var b = Math.ceil(Math.random() * 9) + '';
+                var c = Math.ceil(Math.random() * 9) + '';
+                var d = Math.ceil(Math.random() * 9) + '';
+                var code = a + ' ' + b + ' ' + c + ' ' + d;
+                document.getElementById("txtCaptcha").value = code;
+            }
+
+            window.onload = function () {
+
+                DrawCaptcha();
+                document.getElementById("btnRefreshCaptcha").addEventListener("click", DrawCaptcha);
+
+
+            };
         $('#downloadReceipt').click(function () {
             handleButtonClickApproved.call(this, '/Receipt/DownloadReceipt', downloadReceipt, (result) => {
                 // Success callback
@@ -59,6 +74,7 @@
 
         async function handleButtonClickApproved(url, downloadReceipt, isSuccessFunc) {
             debugger;
+            
             var orderNumber = $('#orderNumber').val();
 
             $(this).prop('disabled', true);
