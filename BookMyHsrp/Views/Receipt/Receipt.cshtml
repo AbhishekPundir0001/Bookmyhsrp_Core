@@ -94,6 +94,7 @@
             // AJAX request to download receipt
             try {
                 const response = await downloadReceipt(url, data); // Assuming you have defined postData function
+                if (response.size >15) {
                 isSuccessFunc(response);
                 debugger;
                 console.log(response);
@@ -109,6 +110,10 @@
                 a.click();
 
                 window.URL.revokeObjectURL(url);
+            }
+            else {
+                errorFunc('Invalid Order No.');
+            }
             } catch (error) {
                 errorFunc('Error downloading receipt.');
             }
