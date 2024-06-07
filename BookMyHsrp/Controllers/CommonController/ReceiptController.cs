@@ -44,7 +44,7 @@ namespace BookMyHsrp.Controllers.CommonController
 
         }
 
-        public IActionResult Receipt()  
+        public IActionResult Receipt()
         {
             return View();
         }
@@ -98,8 +98,8 @@ namespace BookMyHsrp.Controllers.CommonController
                 }
 
 
-            MemoryStream ms = new MemoryStream();
-            TextReader txtReader = new StringReader(html);
+                MemoryStream ms = new MemoryStream();
+                TextReader txtReader = new StringReader(html);
 
                 // Create a Document with specified page size and margins
                 Document doc = new Document(PageSize.A4, 25, 25, 25, 25);
@@ -119,31 +119,32 @@ namespace BookMyHsrp.Controllers.CommonController
                 // Reset the stream position to the beginning
                 ms.Position = 0;
 
-            // Return the PDF file path
+                // Return the PDF file path
 
-            //var response = new ResponseSticker();
-            //response.Message = filePath;
+                //var response = new ResponseSticker();
+                //response.Message = filePath;
 
 
-            //var jsonSerializer = System.Text.Json.JsonSerializer.Serialize(response);
-            //return Json(jsonSerializer);
+                //var jsonSerializer = System.Text.Json.JsonSerializer.Serialize(response);
+                //return Json(jsonSerializer);
 
                 if (System.IO.File.Exists(filePath))
                 {
                     // Read the file contents into a byte array
                     byte[] fileBytes = System.IO.File.ReadAllBytes(filePath);
 
-                // Return the file as a byte array with Content-Type application/pdf
-                return File(fileBytes, "application/pdf", requestdto.OrderNo+ ".pdf");
+                    // Return the file as a byte array with Content-Type application/pdf
+                    return File(fileBytes, "application/pdf", requestdto.OrderNo + ".pdf");
+                }
+                else
+                {
+                    // Return a 404 Not Found response if the file doesn't exist
+                    return NotFound();
+                }
+
+
+
             }
-            else
-            {
-                // Return a 404 Not Found response if the file doesn't exist
-                return NotFound();
-            }
-
-
-
         }
     }
 }
