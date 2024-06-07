@@ -171,7 +171,7 @@
                                         <div class="col-lg-4 col-md-6 col-sm-12">
                                             <div class="form-group">
                                                 <label class="form-label">Input Captcha</label>
-                                                <input id="txtInput" type="text" class="form-control">
+                                                <input id="txtInput" type="text" class="form-control" autocomplete="off">
                                             </div>
                                         </div>
                                         <div class="col-lg-4 col-md-6 col-sm-12">
@@ -1142,6 +1142,11 @@
                             return false;
                         }
                     }
+                }
+
+                if (customerMobile.length != 10) {
+                    errorFunc("Please enter Valid Mobile No.");
+                    return;
                 }
 
                 //alert(oemVehicleType);

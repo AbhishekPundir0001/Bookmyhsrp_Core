@@ -14,12 +14,11 @@ namespace BookMyHsrp.ReportsLogics.Receipt
         {
             _receiptService = receiptService ?? throw new ArgumentNullException(nameof(receiptService));
         }
-    
 
-    public string DownloadReceipt(string receiptPath, ReceiptModels.Receipt requestdto, string QRPath)
+        public string DownloadReceipt(string receiptPath, ReceiptModels.Receipt requestdto, string QRPath)
         {
 
-            var result =  _receiptService.GetReceipt(requestdto).Result;
+            var result = _receiptService.GetReceipt(requestdto).Result;
 
             string CompanyName = "ROSMERTA SAFETY SYSTEMS LIMITED";
             string CompanyNamePostFix = "(FORMERLY KNOWN AS ROSMERTA SAFETY SYSTEMS PRIVATE LIMITED)";
@@ -53,7 +52,7 @@ namespace BookMyHsrp.ReportsLogics.Receipt
             double SGSTAmount = Convert.ToDouble(result[0].SGSTAmount);
             string StateId = result[0].HSRP_StateID.ToString();
 
-            var Result_GSTIN =  _receiptService.GetGSTIN(StateId).Result;
+            var Result_GSTIN = _receiptService.GetGSTIN(StateId).Result;
             string GSTIN = Result_GSTIN[0].GSTIN.ToString();
 
             string isSuperTag = result[0].isSuperTag.ToString();
@@ -63,7 +62,7 @@ namespace BookMyHsrp.ReportsLogics.Receipt
             string _qrurl = "https://bookmyhsrp.com/TrackOrder.aspx?oid=" + requestdto.OrderNo + "&vr=" + VehicleRegNo + "";
             string _qrPath = _receiptService.QRGenerate(_qrurl, OrderNo, QRPath);
             //string ReceiptPathQRCode = "https://chart.googleapis.com/chart?chs=80x80&cht=qr&chl=https://bookmyhsrp.com/TrackOrder.aspx?oid=" + OrderNo + "%26vr=" + VehicleRegNo + "&chld=L|1&choe=UTF-8"; // latest
-            string ReceiptPathQRCode = QRPath+ OrderNo+".jpg";
+            string ReceiptPathQRCode = QRPath + OrderNo + ".jpg";
 
             if (result[0].IGSTAmountST == null)
             {
@@ -83,7 +82,7 @@ namespace BookMyHsrp.ReportsLogics.Receipt
                 CGSTAmountST = result[0].CGSTAmountST.ToString();
             }
             string SGSTAmountST = string.Empty;
-           if (result[0].SGSTAmountST == null)
+            if (result[0].SGSTAmountST == null)
             {
                 SGSTAmountST = "0.00";
             }
@@ -92,7 +91,7 @@ namespace BookMyHsrp.ReportsLogics.Receipt
                 SGSTAmountST = result[0].SGSTAmountST.ToString();
             }
             string totalamount = string.Empty;
-           if (result[0].SuperTagTotalAmount == null)
+            if (result[0].SuperTagTotalAmount == null)
             {
                 totalamount = "0.00";
             }
@@ -119,10 +118,11 @@ namespace BookMyHsrp.ReportsLogics.Receipt
                 CustomerCity = result[0].CustomerCity.ToString();
             }
             string CustomerPin = string.Empty;
-            if(result[0].CustomerPin==null)
+            if (result[0].CustomerPin == null)
             {
                 CustomerPin = "";
-            }else
+            }
+            else
             {
                 CustomerPin = result[0].CustomerPin.ToString();
             }
@@ -138,7 +138,7 @@ namespace BookMyHsrp.ReportsLogics.Receipt
                 FrameTagAmount = result[0].FrameTagAmount.ToString();
             }
             string IGSTAmountFrm = string.Empty;
-            if(result[0].IGSTAmountFrm == null)
+            if (result[0].IGSTAmountFrm == null)
             {
                 IGSTAmountFrm = "0.00";
             }
@@ -156,7 +156,7 @@ namespace BookMyHsrp.ReportsLogics.Receipt
                 CGSTAmountFrm = result[0].CGSTAmountFrm.ToString();
             }
             string SGSTAmountFrm = string.Empty;
-            if(result[0].SGSTAmountFrm == null)
+            if (result[0].SGSTAmountFrm == null)
             {
                 SGSTAmountFrm = "0.00";
             }
@@ -165,7 +165,7 @@ namespace BookMyHsrp.ReportsLogics.Receipt
                 SGSTAmountFrm = result[0].SGSTAmountFrm.ToString();
             }
             string Frametotalamount = string.Empty;
-            if (result[0].FrameTagTotalAmount==null)
+            if (result[0].FrameTagTotalAmount == null)
             {
                 Frametotalamount = "0.00";
             }
@@ -410,7 +410,6 @@ namespace BookMyHsrp.ReportsLogics.Receipt
             sbTable.Append("</tr>");
 
             //-------------------------------------
-
             string HindiImgPath = receiptPath + "/" + "HindiLang";//Server.MapPath("~/HindiLang");
             //string HindiImgPath = ConfigurationManager.AppSettings["ReceiptDirectory"].ToString() + "/HindiLang/dealer";
 
@@ -499,7 +498,6 @@ namespace BookMyHsrp.ReportsLogics.Receipt
                     sbTable.Append("<tr><td style='text-align:left;font-size:14px;'>6. In case of fitment at the dealer's end, the responsibility of company would be to deliver the HSRP to the dealer's address as selected by the vehicle owner at the time of booking.</td></tr>");
                     sbTable.Append("<tr><td style='text-align:left;font-size:14px;'>7. It is the responsibility of the vehicle owner to bring the vehicle to the selected dealer to get the HSRP affixed on vehicle.</td></tr>");
                     sbTable.Append("<tr><td style='text-align:left;font-size:14px;'>8. If the HSRP is not affixed within six months from the original affixation date, it shall be destroyed and no refund shall be given in any circumstances.</td></tr>");
-
                 }
             }
 
@@ -509,17 +507,12 @@ namespace BookMyHsrp.ReportsLogics.Receipt
             sbTable.Append("</tr>");
             //-------------------------------------
 
-
             sbTable.Append("</table>");
-
-
-
 
             if (isSuperTag == "Y")
             {
                 //sbTable.Append("<br/>"); sbTable.Append("<br/>");
                 //sbTable.Append("<br/>"); sbTable.Append("<br/>");
-
 
                 if (VehicleRegNo.Trim().ToLower().StartsWith("dl") == true)
                 {
@@ -535,6 +528,12 @@ namespace BookMyHsrp.ReportsLogics.Receipt
                     sbTable.Append("<br/>"); sbTable.Append("<br/>");
                     sbTable.Append("<br/>"); sbTable.Append("<br/>");
                     sbTable.Append("<br/>"); sbTable.Append("<br/>");
+                    sbTable.Append("<br/>"); sbTable.Append("<br/>");
+                    sbTable.Append("<br/>"); sbTable.Append("<br/>");
+                    sbTable.Append("<br/>"); sbTable.Append("<br/>");
+                    sbTable.Append("<br/>"); sbTable.Append("<br/>");
+                    sbTable.Append("\n");
+                    sbTable.Append("\n");
                 }
                 else if ((VehicleRegNo.Trim().ToLower().StartsWith("up") == true) || (VehicleRegNo.Trim().ToLower().StartsWith("mp") == true))
                 {
@@ -554,7 +553,7 @@ namespace BookMyHsrp.ReportsLogics.Receipt
                 }
 
                 //sbTable.Append("<table style='margin-top: 162px;'>");
-                sbTable.Append("<table style='margin-top: 250px;'>");
+                sbTable.Append("<table style='margin-top: 260px;'>");
 
                 sbTable.Append("<tr>");
                 sbTable.Append("<td><b><h4>Receipt of Payment</h4></b></td>");
@@ -760,14 +759,8 @@ namespace BookMyHsrp.ReportsLogics.Receipt
                 sbTable.Append("</table>");
             }
 
-
-
-
-
-
-            var html =  sbTable.ToString();
+            var html = sbTable.ToString();
             return html;
-
         }
 
     }

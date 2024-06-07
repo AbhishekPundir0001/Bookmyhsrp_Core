@@ -91,7 +91,7 @@ namespace BookMyHsrp.Controllers.CommonController
                 }
             }
 
-
+            #region Download PDF
             MemoryStream ms = new MemoryStream();
             TextReader txtReader = new StringReader(html);
 
@@ -114,10 +114,8 @@ namespace BookMyHsrp.Controllers.CommonController
             ms.Position = 0;
 
             // Return the PDF file path
-
             //var response = new ResponseSticker();
             //response.Message = filePath;
-
 
             //var jsonSerializer = System.Text.Json.JsonSerializer.Serialize(response);
             //return Json(jsonSerializer);
@@ -135,11 +133,8 @@ namespace BookMyHsrp.Controllers.CommonController
                 // Return a 404 Not Found response if the file doesn't exist
                 return NotFound();
             }
-
-
-
+            #endregion
         }
-
     }
 }
 

@@ -18,9 +18,11 @@
 </head>
 
 <body>
+    @{
+        string _bookingType = ViewBag.BookingType;
+    }
 
     <!-- Body main wrapper start -->
-
     <div class="wrapper">
         <!-- Start Header Style -->
        
@@ -178,6 +180,42 @@
                                         </div>
                                     </div>
                                 </div>
+
+                                <div class="form-area-inner" id="divTractor">
+                                    <div class="title-area">
+                                        <h6 class="sub-title">Tractor Information</h6>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-4 col-md-6 col-sm-12">
+                                            <div class="form-group"><label class="form-label">Registration Number*</label>
+                                               <input id="registrationNumberTractor" type="text" class="form-control"> 
+                                               <span class="helper"> (Reg No. Ex.- DLXXXXX01) </span>
+                                           </div>
+                                           </div>
+                                        <div class="col-lg-4 col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <label class="form-label">Chassis No.* (XXXXX12345)</label>
+                                                <input id="chassisNoTractor" type="text" class="form-control">
+                                                <span class="helper">(Kindly enter last 5 digits including special characters (eg *,~,-,/,.)</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <label class="form-label">Engine No.* (XXXXX12345)</label>
+                                                <input id="engineNoTractor" type="text" class="form-control">
+                                                <span class="helper">(Kindly enter last 5 digits)</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-4 col-md-6 col-sm-12">
+                                            <button id="btn-submit-approval-data" type="button" class="submit-btn">
+                                                Validate
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                </div>
+
                                 <div id="show-div" style="display:none;">
                                     <div class="form-area-inner" id="DivVehicleDetails">
                                         <div class="title-area">
@@ -418,24 +456,22 @@
 
     @await Html.PartialAsync("~/Views/PartialView/_SuccessOTPModelPartial.cshtml")
 
-
-
-
-
-
-
-
-
-
-
-
-
 @section Scripts
     {
-
-
         <script src="~/js/owl.carousel.min.js"></script>
         <!-- OTP Script -->
+
+        <script>
+            debugger;
+            $('#divTractor').hide();
+            var _BookingType = '@_bookingType';
+            if (_BookingType == 'Tractor') {
+                $('#engineNo').val('00000');
+            }
+            else{
+                $('#engineNo').val('');
+            }
+        </script>
 
         <script>
             $(async function () {
@@ -676,12 +712,14 @@
                     errorFunc("Please Fill Engine Number");
                 return;
             }
+
             if (!ValidCaptcha()) {
                     $(this).prop('disabled', false);
                     $(this).html(originalButtonText)
                 return false;
             }
-        const data = { RegistrationNo: RegNo, ChassisNo: ChasisNo, EngineNo: EngineNo, StateId: Stateid }
+                var _BookingType = '@_bookingType';
+                const data = { RegistrationNo: RegNo, ChassisNo: ChasisNo, EngineNo: EngineNo, StateId: Stateid, BookingType: _BookingType }
 
             try {
                 const result = await postData(url, data);
