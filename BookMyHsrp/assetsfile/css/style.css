@@ -1757,7 +1757,7 @@ ul.main__menu > li:hover > a {
 
 .banner-inner-2,
 .banner-inner-5,
-.banner-inner-6 {
+.banner-inner-6{
     background: #324B96 !important;
 }
 
@@ -1783,14 +1783,11 @@ ul.main__menu > li:hover > a {
 
 .banner-inner-2 .banner-title span,
 .banner-inner-5 .banner-title span,
-.banner-inner-6 .banner-title span {
+.banner-inner-6 .banner-title span{
     color: #fff !important;
 }
 
-.banner-inner-2,
-.banner-inner-3,
-.banner-inner-6,
-.banner-inner-7 {
+.banner-inner-2,.banner-inner-3,.banner-inner-6,.banner-inner-7{
     height: 136px;
 }
 
@@ -1907,7 +1904,7 @@ ul.main__menu > li:hover > a {
 
     .banner-inner {
         padding: 16px 20px !important;
-        /*        text-align: center;*/
+/*        text-align: center;*/
     }
 
     .banner-inner-1 .banner-title {
@@ -3092,50 +3089,50 @@ input[type=number] {
     height: 100%;
 }
 
-.bg-img {
+.bg-img{
     background-image: url(../images/bg-img.png);
     background-repeat: repeat;
 }
 
-.main-body .status-card {
+.main-body .status-card{
     background: #ffffff;
     padding: 30px;
     border-radius: 30px;
 }
 
 .main-body .status-card .form-control,
-.main-body .status-card .form-textarea {
+.main-body .status-card .form-textarea{
     border: 1px solid #cccccc;
 }
 
-.main-body .status-card .title-area {
+.main-body .status-card .title-area{
     margin-bottom: 20px;
 }
 
-.main-body .status-card .submit-btn {
+.main-body .status-card .submit-btn{
     margin-right: 10px;
 }
 
-.main-body .status-card .d-desc {
+.main-body .status-card .d-desc{
     margin-bottom: 20px;
 }
 
-.main-body .status-card .d-desc label {
+.main-body .status-card .d-desc label{
     color: #39435b;
     font-weight: 600;
 }
 
-.main-body .status-card .d-desc p {
+.main-body .status-card .d-desc p{
     text-transform: uppercase;
 }
 
-.order-modal .modal-body {
+.order-modal .modal-body{
     background: #ffffff;
     padding: 30px;
     border-radius: 30px;
 }
 
-.order-modal .modal-content {
+.order-modal .modal-content{
     border-radius: 30px;
 }
 
@@ -3177,7 +3174,7 @@ input[type=number] {
 
 /*---------------- Stickers Start --------------*/
 
-.form-label .guide-a {
+.form-label .guide-a{
     display: inline-block;
     width: 25px;
     height: 25px;
@@ -3189,12 +3186,12 @@ input[type=number] {
     margin-left: 5px;
 }
 
-.guide .modal-dialog .modal-content {
+.guide .modal-dialog .modal-content{
     border-radius: 20px;
     position: relative;
 }
 
-.guide .btn-close {
+.guide .btn-close{
     background-image: none;
     background: #FF0000;
     opacity: 1;
@@ -3212,85 +3209,16 @@ input[type=number] {
     top: 15px;
 }
 
-.guide .btn-close:hover {
+.guide .btn-close:hover{
     background: transparent;
     color: #FF0000;
 }
 
-.guide .modal-body .image {
+.guide .modal-body .image{
     margin-top: 40px;
 }
 
 /*---------------- Stickers End --------------*/
-
-/*---------------- FAQ Start --------------*/
-
-.faq-area .nav-link.active {
-    background: #39435b;
-    color: #ffffff !important;
-}
-
-.faq-area .nav-link {
-    font-weight: 400;
-    background: transparent;
-    border: 1px solid #39435b;
-    border-radius: 50px;
-    transition: all .3s;
-    display: inline-block;
-    padding: 14px 35px;
-    color: #39435b !important;
-}
-
-.faq-area .nav-item:not(:last-child) {
-    margin-right: 15px;
-}
-
-.faq-area .accordion-item {
-    margin-bottom: 10px;
-    border-radius: 5px !important;
-    border: none;
-    position: relative;
-    background: transparent;
-}
-
-.faq-area .accordion-item .accordion-button {
-    border-radius: 5px;
-    background: #f2f8fa;
-    outline: none;
-    box-shadow: none;
-    color: #39435b;
-    font-size: 15px;
-}
-
-.faq-area .accordion-item .question-img {
-    position: absolute;
-    left: -35px;
-    max-width: 40px;
-    max-height: 32px;
-    top: 5px;
-}
-
-.faq-area .accordion-item .answer p,
-.faq-area .accordion-item .answer li,
-.faq-area .accordion-item .answer tr th,
-.faq-area .accordion-item .answer tr td {
-    font-size: 14px;
-}
-
-.faq-area .accordion-item .answer tr th,
-.faq-area .accordion-item .answer tr td {
-    padding: 0px;
-}
-
-.faq-area .accordion-item .answer table {
-    margin-top: 10px;
-}
-
-.faq-area .accordion-item .answer li {
-    list-style: disc;
-}
-
-/*---------------- FAQ End --------------*/
 
 
 
@@ -3312,13 +3240,13 @@ input[type=number] {
     .reset-btn {
         margin-right: 5px;
     }
-
-    .footer-bottom2 {
+    
+    .footer-bottom2{
         position: inherit;
     }
 }
 
-@media (min-width: 320px) and (max-width: 767px) {
+@media (min-width: 320px) and (max-width: 767px){
     .otp-modal .modal-body {
         padding: 15px 0px;
     }
@@ -3326,120 +3254,100 @@ input[type=number] {
     .otp-modal .modal-title {
         font-size: 18px !important;
     }
-
-    .title-area {
+    
+    .title-area{
         display: block !important;
     }
-
-    .title-area .title {
+    
+    .title-area .title{
         font-size: 16pt;
         margin-bottom: 10px;
     }
-
-    .title-area .sub-title {
+    
+    .title-area .sub-title{
         font-size: 12pt;
     }
-
-    .otp-validate2 .m-desc {
+    
+    .otp-validate2 .m-desc{
         font-size: 20px;
     }
-
-    .otp-validate2 .m-btn-group .fitment-btn:nth-child(2) .icon img {
+    
+    .otp-validate2 .m-btn-group .fitment-btn:nth-child(2) .icon img{
         width: 30px !important;
     }
-
-    .dealer-search-list .accordion-button {
+    
+    .dealer-search-list .accordion-button{
         font-size: 18px;
     }
-
-    .dealer-search-list .accordion-body .b-date .d-date {
+    
+    .dealer-search-list .accordion-body .b-date .d-date{
         display: grid;
         align-items: center;
     }
-
-    .price-card {
+    
+    .price-card{
         padding: 15px;
     }
-
-    .rd-day-body {
+    
+    .rd-day-body{
         height: 40px !important;
     }
-
-    .booking-area .calender-footer .cal-ul {
+    
+    .booking-area .calender-footer .cal-ul{
         display: block !important;
         margin-bottom: 20px;
     }
-
-    .booking-area .time-slot .slot-box .time-desc {
+    
+    .booking-area .time-slot .slot-box .time-desc{
         font-size: 16px;
     }
-
-    .booking-area .note-ul {
+    
+    .booking-area .note-ul{
         margin-bottom: 20px;
     }
-
-    .booking-slide .head-img {
+    
+    .booking-slide .head-img{
         margin-top: 20px;
     }
-
-    .terms-c p {
+    
+    .terms-c p{
         display: flex;
     }
-
-    .terms-c p input[type="checkbox"] {
+    
+    .terms-c p input[type="checkbox"]{
         margin-top: 5px;
     }
-
-    .receipt-right .receipt-right-one {
+    
+    .receipt-right .receipt-right-one{
         padding: 20px;
     }
-
-    .receipt-right {
+    
+    .receipt-right{
         border-radius: 20px;
     }
-
-    .receipt-left .qr-box img {
+    
+    .receipt-left .qr-box img{
         width: 100px;
         height: 100px;
     }
-
-    .receipt-right {
+    
+    .receipt-right{
         margin-top: 0;
     }
-
-    .receipt-right .receipt-right-two {
+    
+    .receipt-right .receipt-right-two{
         border-top-right-radius: 0;
         border-bottom-left-radius: 20px;
         border-bottom-right-radius: 20px;
     }
-
-    .receipt-right .receipt-right-one ul {
+    
+    .receipt-right .receipt-right-one ul{
         display: block;
         margin-bottom: 5px;
     }
-
-    .receipt-right .receipt-right-one ul li:not(:last-child) {
+    
+    .receipt-right .receipt-right-one ul li:not(:last-child){
         padding-bottom: 0;
-    }
-
-    .faq-area .nav-item {
-        width: 100%;
-    }
-
-    .faq-area .nav-item:not(:last-child) {
-        margin-bottom: 5px;
-    }
-
-    .faq-area .nav-link {
-        width: 100%;
-        padding: 10px 10px;
-    }
-
-    .faq-area .accordion-item .question-img {
-        left: -16px;
-        max-width: 28px;
-        max-height: 32px;
-        z-index: 99;
     }
 }
 

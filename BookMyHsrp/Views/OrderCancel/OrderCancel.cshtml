@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
     <title>Dreams Rent | Template</title>
-
+    <link rel="stylesheet" href="~/assets/css/style.css">
 </head>
 
 <body>
@@ -110,36 +110,58 @@
                             </form>
                         </div>
                     </div>
-                    <div class="status-card" id="hidden">
-                        <div class="row">
-                            <p id="HiddenOrderNo"><p>
-                        </div>
-                        <div class="col-sm-3">
-                            <p id="vehicleNo"></p>
-                        </div>
-                        <div class="col-sm-3">
-                            <p id="appointmentDate"></p>
-                        </div>
-                        <div class="col-sm-3">
-                            <p id="orderstatus"></p>
-                        </div>
-                        <div class="col-sm-3">
-                            <p id="ownername"></p>
-                        </div>
-                        <div class="col-sm-3">
-                            <p id="address"></p>
-                        </div>
-                        <div class="col-sm-3">
-                            <p id="DealerAffixationCenterName"></p>
-                        </div>
-                        <div class="col-sm-3">
-                            <p id="DealerAffixationCenterAddress"></p>
-                        </div>
-                        <div class="control btn-grp">
-                            <button class="filled" id="btnclose">Close</button>
 
+                    
+                       
+                    </div>
+                    
+                </div>
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="status-card" id="finalcancelconfirmation">
+                        <div class="title-area">
+                            <h4 class="title">Order Cancellation Request Received</h4>
+                            <p>Cancelled and payment refund initiated as per your order details are Below</p>
+                        </div>
+                        <div class="card-body">
+                            <form action="">
+                                <div class="row">
+                                    <div class="col-lg-6 col-sm-12">
+                                        <div class="d-desc">
+                                            <label>Order Number</label>
+                                            <p id="ordernofinal"></p>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-sm-12">
+                                        <div class="d-desc">
+                                            <label>Vehicle Reg. Number</label>
+                                            <p id="vehicleregnofinal"></p>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-sm-12">
+                                        <div class="d-desc">
+                                            <label>Order Status</label>
+                                            <p id="orderstatusfinal"></p>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-sm-12">
+                                        <div class="d-desc">
+                                            <label>Fuel Type</label>
+                                            <p id="fueltypefinal"></p>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-sm-12">
+                                        <div class="d-desc">
+                                            <label>Vehicle Class</label>
+                                            <p id="vehicleclassfinal"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
                     </div>
+                </div>
+                </div>
                 </div>
     </main>
 
@@ -189,12 +211,17 @@
         </div>
     </div>
 
+
     @await Html.PartialAsync("~/Views/PartialView/_SuccessOTPModelPartialCancelOrder.cshtml")
   
     @section Scripts {
         <script>
+
+           
+
+
             async function otpSuccess() {
-                            debugger
+                            
                             const errorFunc = (title) => {
                     Toast.fire({
                         icon: 'error',
@@ -203,13 +230,14 @@
                     $(this).prop('disabled', false);
 
                 }
-
+                
                 var vehRegNo = $('#vehRegNo').val();
                 var orderNo = $('#orderNo').val();
                 const data = { VehicleRegNo: vehRegNo, OrderNo: orderNo }
                 $('#otp-validate3').modal('show');
                 const successdata = await postData("/CancelOrderDetails", data)
                 if (successdata.length > 0) {
+                    debugger
                     $('#orderno').text(successdata[0].OrderNo);
                     $('#vehicleregno').text(successdata[0].VehicleRegNo);
                     $('#orderstatus1').text(successdata[0].OrderStatus);
@@ -227,9 +255,10 @@
 
                     } else {
                         var url = "/DealerAddress";
-                        const dealeraddress = await postData(url, data);
+                        const dealeraddress = await postData(url, dealerid);
                         $('#name').text(dealeraddress[0].DealerAffixationCenterName);
                         $('#fitmentaddress').text(dealerAffixationCenterAddress);
+                        
 
 
                     }
@@ -248,9 +277,12 @@
             }
 
             window.onload = function () {
-                $('#hidden').hide();
+
                 DrawCaptcha();
                 document.getElementById("btnRefreshCaptcha").addEventListener("click", DrawCaptcha);
+                $('#hiddencancel').hide();
+                $('#finalcancelconfirmation').hide();
+           
             };
 
 
@@ -291,7 +323,7 @@
                     let url = "/api/v1/otp/otpConfirmation/" + otp;
                     const result = await fetchData(url);
                     if (result.Message == "Data Received.") {
-                        debugger
+                        
                         await otpSuccess()
 
 
@@ -402,6 +434,8 @@
             function removeSpaces(string) {
                 return string.replace(/\s+/g, '');
             }
+
+            
             $('#submit-button').click(function () {
                 handleButtonClick.call(this, '/DealerWalletdetail', postData, (result) => {
                     // bindHtmlHsrpView(result.Data);
@@ -409,9 +443,12 @@
                     // console.log('Data posted successfully, where the server response data is', result);
                 })
             });
+           
+
+
 
             async function handleButtonClick(url, postData, isSuccessFunc) {
-
+                debugger
                 const errorFunc = (title) => {
                     Toast.fire({
                         icon: 'error',
@@ -434,16 +471,14 @@
 
                 var data = { VehicleregNo: vehRegNo, OrderNo: orderNo }
                 const result = await postData(url, data);
-                var data = { VehicleRegNo: vehRegNo, OrderNo: orderNo }
-
                 if (result.length > 0) {
-                    debugger
+
                     var MobileNo = result[0].MobileNo
-                    const data = { VehicleRegNo: vehRegNo, MobileNo: MobileNo ,OrderNo: orderNo}
+                    const data = { VehicleRegNo: vehRegNo, MobileNo: MobileNo, OrderNo: orderNo }
                     $('#otp-modal').modal('show');
                     let url = "ordercancelOTP";
-                    const otpresult = await postData(url,data);
-                   
+                    const otpresult = await postData(url, data);
+
 
                 }
                 else {
@@ -480,6 +515,7 @@
                         if (_dealer.Rows.Count > 0) {
                             $('DealerAffixationCenterAddress').text(result[0].DealerAffixationCenterAddress);
                             $('DealerAffixationCenterName').text(result[0].DealerAffixationCenterName);
+                            return pass;
                         }
 
                     }
@@ -487,10 +523,140 @@
 
                 }
 
-
-
-
             }
+
+
+
+            
+            $('#btnSearch').click(function () {
+                
+                handleButtonClick1.call(this, '/CancelOrderDetails', postData, (result) => {
+                    // bindHtmlHsrpView(result.Data);
+                    // $('#div-bind-report').show();
+                    // console.log('Data posted successfully, where the server response data is', result);
+                })
+            });
+            $('#confirmcancelorder').click(function () {
+
+                handleButtonClick2.call(this, '/OrderCancelConfirmation', postData, (result) => {
+                    // bindHtmlHsrpView(result.Data);
+                    // $('#div-bind-report').show();
+                    // console.log('Data posted successfully, where the server response data is', result);
+                })
+            });
+            async function handleButtonClick2(url, postData, isSuccessFunc) {
+                debugger
+                const errorFunc = (title) => {
+                    Toast.fire({
+                        icon: 'error',
+                        title: title
+                    })
+                    $(this).prop('disabled', false);
+
+                }
+                var vehRegNo = $('#vehRegNo').val();
+                var orderNo = $('#orderNo').val();
+                var remarkInput = document.getElementById('remark');
+                var vehicleClassSelect = document.getElementById('vehicleClass');
+                var remarks = vehicleClassSelect.value + " -- remarks: " + remarkInput.value
+                debugger
+                if (remarkInput.value.trim() === "") {
+                    return errorFunc("Please enter remarks");
+                } if (remarkInput.value.includes("'")) {
+                    return errorFunc("Apostrophe (') is not allowed in Remark");
+                }
+                if (vehicleClassSelect.value !== "wrongvehicle" && vehicleClassSelect.value !== "others") {
+                    return errorFunc("Please select reason for order cancelling")
+                }
+
+                var data = { VehicleregNo: vehRegNo, OrderNo: orderNo, Reason: remarks }
+                const result = await postData(url, data)
+                debugger
+                $('#btn-close').click();
+                $('#finalcancelconfirmation').show();
+                $('#main').hide();
+                if (result.length > 0) {
+                    
+                    $('#ordernofinal').text(result[0].OrderNo)
+                    $('#vehicleregnofinal').text(result[0].VehicleRegNo)
+                    $('#orderstatusfinal').text(result[0].OrderStatus)
+                    $('#fueltypefinal').text(result[0].fuelType)
+                    $('#vehicleclassfinal').text(result[0].VehicleClass)
+                } else {
+                    errorFunc("OrderNo Not Cancel")
+                }
+            }
+
+            async function handleButtonClick1(url, postData, isSuccessFunc) {
+                
+                const errorFunc = (title) => {
+                    Toast.fire({
+                        icon: 'error',
+                        title: title
+                    })
+                    $(this).prop('disabled', false);
+
+                }
+
+                var vehRegNo = $('#vehRegNo').val();
+                var orderNo = $('#orderNo').val();
+                var data = { VehicleregNo: vehRegNo, OrderNo: orderNo }
+                const result = await postData(url, data);
+                
+                debugger
+                $('#maincancel').hide();
+                $('#hiddencancel').show();
+
+                $('#hiddenorderno').text(result[0].OrderNo)
+                $('#hiddenvehicleregno').text(result[0].VehicleRegNo)
+                if (result[0].SlotBookingDateNew == "01-Jan-1900" || result[0].SlotBookingDateNew == null) {
+                    $('#hiddenappointmentdate').text("Fitment Date will be informed later via SMS and on Call");
+                } else {
+                    $('#hiddenappointmentdate').text(result[0].SlotBookingDateNew);
+                }
+                var dealerid = result[0].Dealerid;
+                var _appointmenttype = result[0].AppointmentType;
+                if (_appointmenttype == "Home") {
+                    var FullAddress = result[0]["ShippingAddress1"] + " " + result[0]["ShippingAddress2"] + " " + result[0]["ShippingCity"] + " " + result[0]["ShippingState"] + " " + result[0]["ShippingPinCode"];
+                    $('#hiddenfitmentaddress').text(FullAddress);
+
+                } else {
+                    var url = "/DealerAddress";
+                    const dealeraddress = await postData(url, data);
+                    $('#hiddenfitmentaddress').text(dealerAffixationCenterAddress);
+                }
+                $('#hiddenvehiclemaker').text(result[0].ManufacturerName);
+                $('#hiddenengineno').text(result[0].EngineNo);
+                $('#hiddenappointmentslot').text(result[0].SlotTime); // Note: There are two elements with this ID, consider changing one to a unique ID.
+                $('#hiddenchassisno').text(result[0].ChassisNo);
+                $('#hiddenfueltype').text(result[0].fuelType);
+                $('#hiddenvehicletype').text(result[0].VehicleType);
+                $('#hiddenvehicleclass').text(result[0].VehicleClass);
+                $('#btnSearch').hide();
+                $('#confirm').show();
+                var dealerid = result[0].Dealerid;
+                var _appointmenttype = result[0].AppointmentType;
+                if (_appointmenttype == "Home") {
+                    var FullAddress = result[0]["ShippingAddress1"] + " " + result[0]["ShippingAddress2"] + " " + result[0]["ShippingCity"] + " " + result[0]["ShippingState"] + " " + result[0]["ShippingPinCode"];
+                    $('#fitmentaddress').text(FullAddress);
+
+                } else {
+                    var url = "/DealerAddress";
+                    const dealeraddress = await postData(url, data);
+                    var dAddress = dealeraddress[0].DealerAffixationCenterName;
+                    var dCity = dealeraddress[0].DealerAffixationCenterAddress;
+                    var dPincode = dealeraddress[0].DealerAffixationCenterPinCode;
+                    var FullAddress = dAddress + " " + dCity + " " + dPincode;
+                    $('#fitmentaddress').text(FullAddress);
+                }
+                var url = "/CancelOrderStatus"
+                const selectstatus = await postData(url, data);
+                if (selectstatus > 0) {
+                    var HsrpOrderStatus = selectstatus[0].OrderStatus;
+                    return pass;
+                }
+            }
+
 
         </script>
 
