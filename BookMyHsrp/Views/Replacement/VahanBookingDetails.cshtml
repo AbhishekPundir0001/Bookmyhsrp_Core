@@ -95,6 +95,10 @@
             </div>
         </section>
 
+        <input type="hidden" id="hdnFrontPlatePhoto" />
+        <input type="hidden" id="hdnRearPlatePhoto" />
+        <input type="hidden" id="hdnFirCopy" />
+        <input type="hidden" id="hdnRc" />
         <!-- main start -->
         <main class="main-body">
             <div class="container-fluid">
@@ -301,7 +305,7 @@
 
                                                 </div>
                                             </div>
-                                            <div class="col-lg-4 col-md-6 col-sm-12" id="divrcupload">
+                                         @*    <div class="col-lg-4 col-md-6 col-sm-12" id="divrcupload">
                                                 <div class="form-group">
                                                     <label class="form-label">Upload RC Here*</label>
                                                     <input id="uploadfile" type="file" class="file-control">
@@ -312,7 +316,107 @@
                                                         Upload
                                                     </button>
                                                 </div>
+                                            </div> *@
+
+                                            <div class="form-data clearfix">
+                                                <div class="control col-lg-4 col-md-6 col-sm-12">
+                                                    <label>
+                                                        Reason For Replacement *
+                                                    </label>
+                                                    <select id="ddlreason" onchange="ReasonChange();" class="form-control">
+                                                        <option value='0'>Select Reason For Replacement</option>
+                                                        <option value='LT'>Theft or Lost</option>
+                                                        <option value='BD'>Damage of any plate</option>
+                                                        <option id="ddlCA" value='CA'>Conversion/alternation of vehicle from TV to NTV or Vise Versa  </option>
+                                                        <option id="ddlRE" value='RE'>Reassignment of Registration Mark to other state vehicle  </option>
+                                                    </select>
+                                                </div>
                                             </div>
+
+                                            <div class="form-data clearfix">
+                                                <div class="control col-lg-4 col-md-6 col-sm-12">
+                                                @* <div class="control col-lg-4 col-md-6 col-sm-12" onchange="SetOrderType2();"> *@
+                                                    <input type="radio" name="rdo" value="BDF" id="rdoBDF">
+                                                    <label for="rdoBDF">Only Front Number plate &nbsp</label><br>
+
+                                                    <input type="radio" name="rdo" value="BDR" id="rdoBDR">
+                                                    <label for="rdoBDR">Only Rear Number Plate &nbsp</label><br>
+
+                                                    <input type="radio" name="rdo" value="thirdPlate" id="rdothirdPlate">
+                                                    <label for="rdothirdPlate">Only third license plate &nbsp</label><br>
+
+                                                    <input type="radio" name="rdo" value="BDB" id="rdoBDB" checked>
+                                                    <label for="rdoBDB">Combination of All &nbsp</label>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="col-lg-4 col-md-6 col-sm-12" id="DivFIR1">
+                                                <div class="form-group">
+                                                    <label class="form-label">FIR/LR No*</label>
+                                                    <input id="txtFirno" type="text" class="form-control" autocomplete="off" onkeyup="this.value = this.value.toUpperCase();" onkeypress="return blockSpecialCharforreg(event)" maxlength="30" />
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4 col-md-6 col-sm-12" id="DivFIRDate" style="display: none;">
+                                                <div class="form-group">
+                                                    <label for="regDate">FIR Date(DD/MM/YYYY)*</label>
+                                                    <input name="regDate" type="text" id="txtFirDate" class="form-control" autocomplete="off" maxlength="10" placeholder="DD/MM/YYYY">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4 col-md-6 col-sm-12" id="DivPS" style="display: none;">
+                                                <div class="form-group">
+                                                    <label class="form-label">Police Station Name*</label>
+                                                    <input id="txtpolicestationName" type="text" class="form-control" autocomplete="off" onkeyup="this.value = this.value.toUpperCase();" onkeypress="return blockSpecialCharForName(event)" />
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-6 col-md-6 col-sm-12" id="DivDF">
+                                                <div class="form-group">
+                                                    <label class="form-label">Front Plate Photo*</label>
+                                                    <input type="file" class="file-control" id="fileid3">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-md-6 col-sm-12" id="DivFrontLaser" style="display: none">
+                                                <div class="form-group">
+                                                    <label for="txtflc">Front Laser Code*</label>
+                                                    <input name="txtflc" type="text" id="txtflc" class="form-control" onkeyup="this.value = this.value.toUpperCase();" onkeypress="return blockSpecialCharforreg(event)" maxlength="25">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-6 col-md-6 col-sm-12" id="DivDR">
+                                                <div class="form-group">
+                                                    <label class="form-label">Rear Plate Photo*</label>
+                                                    <input type="file" class="file-control" id="fileid4">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-md-6 col-sm-12" id="DivRearLaser" style="display: none">
+                                                <div class="form-group">
+                                                    <label for="txtrlc">Rear Laser Code*</label>
+                                                    <input name="txtrlc" type="text" id="txtrlc" class="form-control" onkeyup="this.value = this.value.toUpperCase();" onkeypress="return blockSpecialCharforreg(event)" maxlength="25">
+                                                </div>
+                                            </div>
+                                           
+                                            <div class="col-lg-4 col-md-6 col-sm-12" id="DivFIR3">
+                                                <div class="form-group">
+                                                    <label class="form-label">FIR Copy*</label>
+                                                    <input type="file" class="file-control" id="fileid">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4 col-md-6 col-sm-12" id="DivRC">
+                                                <div class="form-group">
+                                                    <label for="uploadRc">Upload RC*</label>
+                                                    <input type="file" class="file-control" id="fileid2">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4 col-md-6 col-sm-12">
+                                                <div class="form-group">
+                                                    <button onclick="uploadFileReplacement()" type="button" class="submit-btn">
+                                                        Upload
+                                                    </button>
+                                                    <label id="lblMsg"></label>
+                                                </div>
+                                            </div>
+
                                         </div>
                                     </div>
                                     <div class="form-area-inner" id="DivContactInfo">
@@ -430,10 +534,25 @@
 
     @section Scripts
     {
-
-
         <script src="~/js/owl.carousel.min.js"></script>
         <!-- OTP Script -->
+
+        <script>
+            $('#txtFirDate').on('input', function () {
+                var inputValue = $(this).val();
+                if (inputValue.length === 2 && inputValue.indexOf('/') === -1) {
+                    // If input length is 2 and there is no slash present, add a slash
+                    $(this).val(inputValue + '/');
+                }
+                $('#txtFirDate').on('input', function () {
+                    var inputValue = $(this).val();
+                    if (inputValue.length === 5 && inputValue.charAt(2) === '/') {
+                        // If input length is 5 and the third character is a slash, add another slash
+                        $(this).val(inputValue + '/');
+                    }
+                });
+            });
+        </script>
 
         <script>
             $(async function () {
@@ -442,7 +561,6 @@
                 await fetchAllStates();
 
                 $('#DivContactInfo').hide();
-
             });
 
             async function otpSuccess() {
@@ -468,9 +586,6 @@
                         icon: 'error',
                         title: title
                     })
-
-
-
                 }
                 var captcha = removeSpaces(document.getElementById('txtCaptcha').value);
                 var inputCaptcha = removeSpaces(document.getElementById('txtInput').value);
@@ -531,14 +646,11 @@
                     const result = await fetchData(url);
                     if (result.Message == "Data Received.") {
                         await otpSuccess()
-
-
                     }
                     else {
                         errorFunc("Wrong Otp");
                         return;
                     }
-
                 }
 
                 // Now, the 'otp' variable contains the concatenated OTP value
@@ -546,11 +658,7 @@
 
                 // You can perform further actions with the OTP value here, such as validation or sending it to a server.
                 //});
-
             });
-
-
-
 
             const inputs = document.querySelectorAll(".otp-text");
 
@@ -622,12 +730,9 @@
                 }
             })
 
-
             function showDiv() {
                 document.getElementById('formDiv').style.display = "block";
             }
-
-
 
             $('#btn-submit-approval-data').click(async function () {
                 // handleButtonClickApproved.call(this, '/plate/details/validateRequired', postData, (result) => {
@@ -687,6 +792,7 @@
                     var response = $.parseJSON(result);
                     if (response.Status !== null && response.Status === "true") {
                         userData = response;
+                        debugger;
                         var vehRegDate = "" + response.VehRegDate;
                         $('#show-div').show();
                         // userData["VehicleType"] = response.VehicleRegNo;
@@ -698,8 +804,9 @@
                             $('#engineNo').attr('readonly', 'readonly');
                             $('#select-state').prop("disabled", true);
                             $('#divrcupload').hide();
-                            var date = convertDate(response.VehRegDate)
-                            $('#regDate').val(date);
+                            // var date = convertDate(response.VehRegDate)
+                            $('#regDate').val(response.VehRegDate);
+                            // $('#regDate').val(date);
                             // $('#regDate').vehRegDate));
                             if (response.Fuel == 'NOT APPLICABLE') {
                                 $('#fueltype').removeAttr("disabled");
@@ -816,19 +923,11 @@
                             $('#norms').prop("disabled", false);
                             $('#fueltype').prop("disabled", false);
                             $('#vhlcategory').prop("disabled", false);
-
                         }
                         else {
                             ShowToast(response.message !== null ? response.message : "Vehicle details not found.", "rgb(15, 52, 67)");
                             $this.removeClass("disabled");
                         }
-
-
-
-
-
-
-
                     }
                 }
                 catch (error) {
@@ -836,9 +935,45 @@
                 } finally {
                     $(this).prop('disabled', false);
                     $(this).html(originalButtonText);
-
                 }
             };
+
+            async function uploadFileReplacement() {
+                debugger;
+                var frontPlatePhoto = $("#fileid3")[0].files[0];
+                var rearPlatePhoto = $("#fileid4")[0].files[0];
+                var firCopy = $("#fileid")[0].files[0];
+                var rcCopy = $("#fileid2")[0].files[0];
+                var orderType = $('input[name="rdo"]:checked').val();
+                var replacementReason = $('#ddlreason').val();
+                var stateId = $("#select-state").val();
+
+                var formData = new FormData();
+                formData.append("FrontPlatePhoto", frontPlatePhoto)
+                formData.append("RearPlatePhoto", rearPlatePhoto)
+                formData.append("FirCopy", firCopy)
+                formData.append("RcCopy", rcCopy)
+                formData.append("OrderType", orderType)
+                formData.append("ReplacementReason", replacementReason)
+                formData.append("StateId", stateId)
+
+                var url = "/api/v1/uploadFileReplacement"
+                try {
+                    const result = await postDataFormData(url, formData);
+                    var response = $.parseJSON(result);
+                    debugger;
+                    $('#lblMsg').html(response.Message);
+                    $('#hdnFrontPlatePhoto').val(response.FrontPlatePhoto);
+                    $('#hdnRearPlatePhoto').val(response.RearPlatePhoto);
+                    $('#hdnFirCopy').val(response.FirCopy);
+                    $('#hdnRc').val(response.RcCopy);
+                } catch (error) {
+                    // console.error('Failed to post data:', error);
+                    $('#lblMsg').html('No File Uploaded');
+                } finally {
+                }
+            }
+            
             $(document).ready(function () {
                 $('#regDate').on('input', function () {
                     var val = this.value;
@@ -848,47 +983,13 @@
                     this.value = val;
                 });
             });
-            async function uploadcsvfile() {
-
-                //var myfile = document.getElementById("uploadfile");
-                var myfile = $("#uploadfile")[0].files[0];
-                var formData = new FormData();
-                formData.append("RcPhoto", myfile)
-
-                // if (myfile.files.length > 0) {
-                //     for (var i = 0; i < myfile.files.length; i++) {
-                //         formData.append('file-' + i, myfile.files[i]);
-                //     }
-                // }
-                var url = "/api/v1/upload"
-                try {
-                    const result = await postDataFormData(url, formData);
-                    isSuccessFunc(result);
-                } catch (error) {
-                    console.error('Failed to post data:', error);
-                } finally {
-                    $(this).prop('disabled', false);
-                    $(this).html(originalButtonText);
-                    successMessage('Save Successfully');
-                    setTimeout(function () {
-                        window.location.reload();
-                    }, 1000);
-                }
-
-
-            }
-
-
-
+           
             $(document).ready(function () {
                 $('#mobNo').on('input', function () {
                     var mobileNumber = $(this).val();
                     $(this).val(mobileNumber.replace(/\D/g, '')); // Remove any non-numeric characters
                 });
             });
-
-
-
 
             $('#btn-next').click(async function () {
                 handleButtonClick.call(this, '/Replacement/ReplacementBooking', postData, (result) => {
@@ -899,7 +1000,7 @@
             });
 
             async function handleButtonClick(url, postData, isSuccessFunc) {
-
+                debugger;
                 $(this).prop('disabled', true);
                 var originalButtonText = $(this).html();
 
@@ -910,7 +1011,6 @@
                     })
                     $(this).prop('disabled', false);
                     $(this).html(originalButtonText);
-
                 }
                 const emailregex = /^\b[A-Z0-9._%-]+@@[A-Z0-9.-]+\.[A-Z]{2,4}\b$/i;
                 var EngNo = $('#engineNo').val();
@@ -927,7 +1027,19 @@
                 var customerState = $("#select-state option:selected").val();
                 var vchCatgVahan = $("#vhlcategory").val();
                 //var oemVehicleType = $("#ddlOemVehicleType").val();
+                var Stateid = $('#select-state').val();
+                var _Reason = $('#ddlreason').val();
+                var VehicleOrdertype = $('input[name="rdo"]:checked').val();
 
+                var frontPlatePhoto = $('#hdnFrontPlatePhoto').val();
+                var rearPlatePhoto = $('#hdnRearPlatePhoto').val();
+                var fir = $('#hdnFirCopy').val();
+                var rc = $('#hdnRc').val();
+                var firNo = $('#txtFirno').val();
+                var firDate = $('#txtFirDate').val();
+                var policeStation = $('#txtpolicestationName').val();
+                var frontLaserCode = $('#txtflc').val();
+                var rearLaserCode = $('#txtrlc').val();
 
                 if (vchCatgVahan == '2WN' || vchCatgVahan == '2WIC' || vchCatgVahan == '2WT') {
                     vchCatgVahan = $('#vhlcategoryVahan').val();
@@ -938,19 +1050,98 @@
                     } else if (vchCatgVahan == "0") {
                         errorFunc("Please select Vehicle Category");
                         return;
-
                     }
                 }
-
 
                 if (!emailregex.test(customerEmail)) {
                     errorFunc("Invalid Email Id");
                     return;
-
                 }
                 if ($('#fueltype').val() === '') {
                     errorFunc("Select Fuel Type");
                     return;
+                }
+
+                if (VehicleOrdertype == '0') {
+                    alert('Please Select Order Type');
+                    return false;
+                }
+
+                if (VehicleOrdertype == '') {
+                    alert('Please Select Order Type');
+                    return false;
+                }
+
+                if (_Reason == '') {
+                    alert('Please Select Reason For Replacement');
+                    return false;
+                }
+
+                if (_Reason == '0') {
+                    alert('Please Select Reason For Replacement');
+                    return false;
+                }
+
+                if (Stateid != 25) {
+                    if (_Reason == 'LT' || _Reason == 'BD') {
+                        if (VehicleOrdertype == 'BDB') {
+                            if (rc == '') {
+                                alert('Please Upload RC File..!');
+                                return false;
+                            }
+                        }
+
+                        if (VehicleOrdertype == 'BDR') {
+                            if (rc == '') {
+                                alert('Please Upload RC File..!');
+                                return false;
+                            }
+
+                            if (frontPlatePhoto == '') {
+                                alert('Please Upload Front HSRP Plate Photo..!');
+                                return false;
+                            }
+
+                            if (frontLaserCode == '') {
+                                alert('Please Enter Front Laser Code..!');
+                                return false;
+                            }
+                        }
+
+                        if (VehicleOrdertype == 'BDF') {
+                            if (rc == '') {
+                                alert('Please Upload RC File..!');
+                                return false;
+                            }
+
+                            if (rearPlatePhoto == '') {
+                                alert('Please Upload Rear HSRP Plate Photo..!');
+                                return false;
+                            }
+
+                            if (rearLaserCode == '') {
+                                alert('Please Enter Rear Laser Code..!');
+                                return false;
+                            }
+                        }
+
+                        if (firNo == '') {
+                            alert('Please Provide FIR No.');
+                            return false;
+                        }
+                        if (firDate == '') {
+                            alert('Please Provide FIR Date.');
+                            return false;
+                        }
+                        // if (FirInfo == '') {
+                        //     alert('Please Provide FIR Information.');
+                        //     return false;
+                        // }
+                        if (policeStation == '') {
+                            alert('Please Provide Police Station Name.');
+                            return false;
+                        }
+                    }
                 }
 
                 //alert(oemVehicleType);
@@ -989,8 +1180,7 @@
                         return;
                     }
 
-
-                    const data = { BharatStage: bharatStage, RegistrationDate: regDate, RegistrationNo: RegNo, ChassisNo: ChassisNo, EngineNo: EngineNo, OwnerName: customerName, EmailId: customerEmail, MobileNo: customerMobile, FilePath: filepath, BillingAddress: customerBillingAddress, MakerVahan: maker, VehicleTypeVahan: vehicleTypeVahan, FuelTypeVahan: fuleTypeVahan, VehicleCatVahan: vchCatgVahan, StateId: customerState, StateName: StateName, OemVehicleType: oemvehicletype }
+                    const data = { BharatStage: bharatStage, RegistrationDate: regDate, RegistrationNo: RegNo, ChassisNo: ChassisNo, EngineNo: EngineNo, OwnerName: customerName, EmailId: customerEmail, MobileNo: customerMobile, FilePath: filepath, BillingAddress: customerBillingAddress, MakerVahan: maker, VehicleTypeVahan: vehicleTypeVahan, FuelTypeVahan: fuleTypeVahan, VehicleCatVahan: vchCatgVahan, StateId: customerState, StateName: StateName, OemVehicleType: oemvehicletype, FrontLaserPath: frontPlatePhoto, RearLaserPath: rearPlatePhoto, FirCopy: fir, RcCopy: rc, FrontLaserCode: frontLaserCode, RearLaserCode: rearLaserCode, FirNumber: firNo, FirDate: firDate, PoliceStation: policeStation, ReplacementReason: _Reason, OrderType: VehicleOrdertype }
                     try {
                         const result = await postData(url, data);
                         isSuccessFunc(result);
@@ -999,15 +1189,12 @@
                             $('#otp-modal').modal('show');
                             let url = "/api/v1/otp"
                             const result = await fetchData(url);
-
-
                         }
                     }
                     catch (error) {
                         console.error('Failed to post data:', error);
                     } finally {
                         $(this).prop('disabled', false);
-
                     }
                 }
             }
@@ -1031,13 +1218,346 @@
                 $('#frontLaserCode').val('');
                 $('#rearLaserCode').val('');
             });
+        </script>
 
+        <script>
+            $("#DivFIR1").hide();
+            $("#DivRegDate").hide;
+            // $("#DivPS").hide();
+            $("#DivDF").hide();
+            $("#DivFrontLaser").hide();
+            $("#DivDR").hide();
+            $("#DivFIR3").hide();
+            $("#DivRC").hide();
+            // $("#DivFIRDate").hide();
 
+            function ReasonChange() {
+                debugger;
+                $("#lblMessage").html('');
+                var _Reason = $('#ddlreason').val();
+                // alert(_Reason);
+                $("#fileid").val(null);
+                $("#fileid2").val(null);
+                $("#fileid3").val(null);
+                $("#fileid4").val(null);
 
+                $("#DivFIRDate").show();
+                $("#DivPS").show();
+                if (_Reason == 'LT' || _Reason == 'BD') {
+
+                    $('#DivFIR1').show();
+                    $('#DivFIR2').show();
+                    $('#DivFIR3').show();
+
+                    $('#DivRC').show();
+                }
+
+                if (_Reason == 'CA' || _Reason == 'RE') {
+
+                    $('#rdoBDF').hide();
+                    $('#rdoBDR').hide();
+                    $('#rdothirdPlate').hide();
+                }
+
+                if (_Reason == 'LT' || _Reason == 'BD') {
+
+                    $('#rdoBDF').show();
+                    $('#rdoBDR').show();
+                    $('#rdothirdPlate').show();
+                }
+
+                //else if (_Reason == 'BD')
+                //{
+                //    $('#DivFIR1').hide();
+                //    $('#DivFIR2').hide();
+                //    $('#DivFIR3').hide();
+                //}
+                else {
+                    $('#DivFIR1').hide();
+                    $('#DivFIR2').hide();
+                    $('#DivFIR3').hide();
+                    $('#DivDF').hide();
+                    $('#DivDR').hide();
+                }
+
+                // Orissa Case
+                var Stateid = $('#select-state').val();
+                if (Stateid == 25) {
+                    if (_Reason == 'LT') {
+                        $('#DivFIR1').show();
+                        $('#DivFIR2').show();
+                        $('#DivFIR3').show();
+                        $('#txtFirno').show();
+                        $('#fileid').show();
+                        $('#DivDF').hide();
+                        $('#DivDR').hide();
+                        $('#DivRC').hide();
+                        $('#DivFrontLaser').hide();
+                        $('#DivRearLaser').hide();
+
+                        //var VehiceOrderType = $('#ContentPlaceHolder1_RdbtnOrderType input:checked').val();
+                        //if (VehiceOrderType == 'BDB') {
+                        //    $('#DivFIR2').show();
+                        //}
+                    }
+
+                    if (_Reason == 'BD') {
+                        $('#DivDF').show();
+                        $('#DivFrontLaser').show();
+                        $('#DivFIR1').hide();
+                        $('#DivFIR2').hide();
+                        $('#DivFIR3').hide();
+                        $('#DivDR').hide();
+                        $('#DivRC').hide();
+                        $('#DivRearLaser').hide();
+
+                        var VehiceOrderType = $('input[name="rdo"]:checked').val();
+                        if (VehiceOrderType == 'BDF') {
+                            $('#DivDF').show();
+                            $('#DivFrontLaser').show();
+                            $('#DivFIR1').hide();
+                            $('#DivFIR2').hide();
+                            $('#DivFIR3').hide();
+                            $('#DivDR').hide();
+                            $('#DivRC').hide();
+                            $('#DivRearLaser').hide();
+                        }
+
+                        if (VehiceOrderType == 'BDR') {
+                            $('#DivDR').show();
+                            $('#DivRearLaser').show();
+                            $('#DivFIR1').hide();
+                            $('#DivFIR2').hide();
+                            $('#DivFIR3').hide();
+                            $('#DivDF').hide();
+                            $('#DivRC').hide();
+                            $('#DivFrontLaser').hide();
+                        }
+
+                        if (VehiceOrderType == 'BDB') {
+                            $('#DivDF').show();
+                            $('#DivFrontLaser').show();
+                            $('#DivDR').show();
+                            $('#DivRearLaser').show();
+                            $('#DivFIR1').hide();
+                            $('#DivFIR2').hide();
+                            $('#DivFIR3').hide();
+                            $('#DivRC').hide();
+                        }
+                    }
+
+                    if (_Reason == 'CA') {
+                        $('#DivRC').show();
+                        $('#DivDF').hide();
+                        $('#DivFrontLaser').hide();
+                        $('#DivFIR1').hide();
+                        $('#DivFIR2').hide();
+                        $('#DivFIR3').hide();
+                        $('#DivDR').hide();
+                        $('#DivRearLaser').hide();
+                    }
+
+                    if (_Reason == 'RE') {
+                        $('#DivRC').show();
+                        $('#DivDF').hide();
+                        $('#DivFrontLaser').hide();
+                        $('#DivFIR1').hide();
+                        $('#DivFIR2').hide();
+                        $('#DivFIR3').hide();
+                        $('#DivDR').hide();
+                        $('#DivRearLaser').hide();
+                    }
+                }
+            }
+
+            $('input[name="rdo"]').change(function () {
+                debugger;
+                $("#lblMessage").html('');
+                var VehiceOrderType = $('input[name="rdo"]:checked').val();
+
+                //$('#ContentPlaceHolder1_HiddenOrderType').val(VehiceOrderType);
+                // alert(VehiceOrderType);
+                var Stateid = $('#select-state').val();
+
+                $("#fileid").val(null);
+                $("#fileid2").val(null);
+                $("#fileid3").val(null);
+                $("#fileid4").val(null);
+                if (VehiceOrderType == 'BDB') {
+                    $('#DivDF').hide();
+                    $('#DivDR').hide();
+                    $('#DivRearLaser').hide();
+                    $('#DivFrontLaser').hide();
+
+                    if (Stateid == 25) {
+                        var _Reason = $('#ddlreason').val();
+                        //if (_Reason == 'LT') {
+                        //    $('#DivFIR3').show();
+                        //    $('#DivFIR1').hide();
+                        //    $('#DivFIR2').hide();
+                        //    /*$('#DivFIR3').hide();*/
+                        //    $('#DivRC').hide();
+                        //    $('#DivFrontLaser').hide();
+                        //    $('#DivDF').hide();
+                        //    $('#DivDR').hide();
+                        //    $('#DivRearLaser').hide();
+                        //}
+                        if (_Reason == 'LT') {
+                            $('#DivFIR1').show();
+                            $('#txtFirno').show();
+                            $('#txtFirDate').show();
+                            $('#DivFIR3').show();
+                            $('#fileid').show();
+
+                            $('#DivFIR2').show();
+                            $('#txtpolicestationName').show();
+                            $('#DivRC').hide();
+                            $('#DivFrontLaser').hide();
+                            $('#DivDF').hide();
+                            $('#DivDR').hide();
+                            $('#DivRearLaser').hide();
+                        }
+                        if (_Reason == 'BD') {
+
+                            $('#DivDF').show();
+                            $('#fileid3').show();
+                            $('#DivFrontLaser').show();
+                            $('#txtflc').show();
+
+                            $('#DivFIR1').hide();
+                            $('#DivFIR2').hide();
+                            $('#txtpolicestationName').show();
+                            $('#fileid').hide();
+                            $('#DivFIR3').hide();
+                            $('#DicRC').hide();
+                            $('#fieldid2').hide();
+
+                            $('#DivDR').show();
+                            $('#fileid4').show();
+                            $('#DivRearLaser').show();
+                            $('#txtrlc').show();
+                        }
+                    }
+                }
+                else if (VehiceOrderType == 'BDF') {
+                    $('#DivDF').hide();
+                    $('#DivDR').show();
+                    $('#DivRearLaser').show();
+                    $('#DivFrontLaser').hide();
+
+                    if (Stateid == 25) {
+                        var _Reason = $('#ddlreason').val();
+                        //if (_Reason == 'LT') {
+                        //    $('#DivFIR3').show();
+                        //    $('#DivFIR1').hide();
+                        //    $('#DivFIR2').hide();
+                        //    /*$('#DivFIR3').hide();*/
+                        //    $('#DivRC').hide();
+                        //    $('#DivFrontLaser').hide();
+                        //    $('#DivDF').hide();
+                        //    $('#DivDR').hide();
+                        //    $('#DivRearLaser').hide();
+
+                        //$('#DivFIR3').show();
+                        //$('#DivFIR1').show();
+                        //$('#DivFIR2').hide();
+                        ///*$('#DivFIR3').hide();*/
+                        //$('#DivRC').hide();
+                        //}
+                        if (_Reason == 'LT') {
+                            $('#DivFIR1').show();
+                            $('#txtFirno').show();
+                            $('#txtFirDate').show();
+                            $('#DivFIR3').show();
+                            $('#fileid').show();
+                            $('#txtpolicestationName').show();
+
+                            $('#DivFIR2').show();
+                            $('#DivRC').hide();
+                            $('#DivFrontLaser').hide();
+                            $('#DivDF').hide();
+                            $('#DivDR').hide();
+                            $('#DivRearLaser').hide();
+                        }
+                        if (_Reason == 'BD') {
+                            $('#DivDF').show();
+                            $('#fileid3').show();
+                            $('#DivFrontLaser').show();
+                            $('#txtflc').show();
+
+                            $('#DivFIR1').hide();
+                            $('#txtFirno').hide();
+                            $('#DivFIR2').hide();
+                            $('#DivDR').hide();
+                            $('#DivRearLaser').hide();
+                            $('#fileid').hide();
+                            $('#txtlcr').hide();
+                            $('#DivFIR3').hide();
+                            $('#DicRC').hide();
+                            $('#fieldid2').hide();
+                            $('#fieldid4').hide();
+
+                            $('#txtFirDate').hide();
+                        }
+                    }
+                }
+                else if (VehiceOrderType == 'BDR') {
+                    $('#DivDF').show();
+                    $('#DivDR').hide();
+                    $('#DivRearLaser').hide();
+                    $('#DivFrontLaser').show();
+
+                    if (Stateid == 25) {
+                        var _Reason = $('#ddlreason').val();
+                        if (_Reason == 'LT') {
+                            $('#DivFIR1').show();
+                            $('#txtFirno').show();
+                            $('#txtFirDate').show();
+                            $('#DivFIR3').show();
+                            $('#fileid').show();
+                            $('#txtpolicestationName').show();
+
+                            $('#DivFIR2').show();
+                            $('#DivRC').hide();
+                            $('#DivFrontLaser').hide();
+                            $('#DivDF').hide();
+                            $('#DivDR').hide();
+                            $('#DivRearLaser').hide();
+                        }
+                        if (_Reason == 'BD') {
+                            $('#DivDR').show();
+                            $('#fileid4').show();
+                            $('#DivRearLaser').show();
+                            $('#txtrlc').show();
+                            $('#txtpolicestationName').hide();
+
+                            $('#DivFIR1').hide();
+                            $('#txtFirno').hide();
+                            $('#DivFIR2').hide();
+                            $('#DivDF').hide();
+                            $('#DivFrontLaser').hide();
+                            $('#fileid').hide();
+                            $('#txtflc').hide();
+                            $('#DivFIR3').hide();
+                            $('#DicRC').hide();
+                            $('#fieldid2').hide();
+                            $('#fieldid4').hide();
+                            $('#txtFirDate').hide();
+                        }
+                    }
+                }
+                else if (VehiceOrderType == 'thirdPlate') {
+                    window.location.href = "https://bookmyhsrp.com/sticker/VahanBookingDetail.aspx";
+                }
+                else {
+                    $('#DivDF').hide();
+                    $('#DivDR').hide();
+                    $('#DivRearLaser').hide();
+                    $('#DivFrontLaser').hide();
+                }
+            });            
         </script>
     }
-
-
 </body>
 </html>
 

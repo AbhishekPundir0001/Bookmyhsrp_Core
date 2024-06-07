@@ -667,7 +667,7 @@ namespace BookMyHsrp.Libraries.Replacement.Services
             parameter.Add("@VehicleRegNo", RegistrationNo);
             parameter.Add("@Chassisno", ChassisNo.Substring(ChassisNo.Length-5));
             parameter.Add("@Engineno", EngineNo.Substring(EngineNo.Length-5));
-            var result = await _databaseHelper.QueryAsync<dynamic>(ReplacementQueries.strBmhsrp1, parameter);
+            var result = await _databaseHelperPrimary.QueryAsync<dynamic>(ReplacementQueries.strBmhsrp1, parameter);
             return result;
         }
 
@@ -677,7 +677,7 @@ namespace BookMyHsrp.Libraries.Replacement.Services
             parameter.Add("@VehicleRegNo", RegistrationNo);
             parameter.Add("@Chassisno", ChassisNo.Substring(ChassisNo.Length - 5));
             parameter.Add("@Engineno", EngineNo.Substring(EngineNo.Length - 5));
-            var result = await _databaseHelper.QueryAsync<dynamic>(ReplacementQueries.strBmhsrp2, parameter);
+            var result = await _databaseHelperPrimary.QueryAsync<dynamic>(ReplacementQueries.strBmhsrp2, parameter);
             return result;
         }
 
@@ -713,6 +713,7 @@ namespace BookMyHsrp.Libraries.Replacement.Services
             var parameter = new DynamicParameters();
             parameter.Add("@VehicleRegNo", RegistrationNo);
             parameter.Add("@Chassisno", ChassisNo.Substring(ChassisNo.Length - 5));
+            //parameter.Add("@Chassisno", "50702");
             var result = await _databaseHelper.QueryAsync<dynamic>(ReplacementQueries.strHsrpRecord4, parameter);
             return result;
         }
@@ -726,11 +727,12 @@ namespace BookMyHsrp.Libraries.Replacement.Services
             return result;
         }
 
-        public async Task<dynamic> strHsrpRecord6(string RegistrationNo, string ChassisNo)
+        public async Task<dynamic> strHsrpRecord6(string RegistrationNo, string ChassisNo,string HSRPRecordId)
         {
             var parameter = new DynamicParameters();
             parameter.Add("@VehicleRegNo", RegistrationNo);
             parameter.Add("@Chassisno", ChassisNo.Substring(ChassisNo.Length - 5));
+            parameter.Add("@HSRPRecordId", HSRPRecordId);
             var result = await _databaseHelper.QueryAsync<dynamic>(ReplacementQueries.strHsrpRecord6, parameter);
             return result;
         }
