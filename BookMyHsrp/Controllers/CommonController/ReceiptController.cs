@@ -63,67 +63,75 @@ namespace BookMyHsrp.Controllers.CommonController
 
             string filePath = string.Empty; // Define a variable to store the file path
 
-            if (requestdto.OrderNo.Substring(0, 2) == "BM")
+            if (html == "incorrect")
             {
-                string MonthYears = DateTime.Now.ToString("MMM-yyyy");
-                string filename = requestdto.OrderNo + DateTime.Now.ToString("ddMMyyyyHHmmssfff") + ".pdf";
-                string PdfFolder = folderpath;
-                filePath = Path.Combine(PdfFolder, "Plate", MonthYears, filename); // Define the file path for saving
-                if (!Directory.Exists(PdfFolder + "\\" + "Plate"))
-                {
-                    Directory.CreateDirectory(PdfFolder + "\\" + "Plate");
-                }
-
-                if (!Directory.Exists(PdfFolder + "\\" + "Plate" + "\\" + MonthYears))
-                {
-                    Directory.CreateDirectory(PdfFolder + "\\" + "Plate" + "\\" + MonthYears);
-                }
+                return Ok("Cannot find pdf");
             }
             else
             {
-                string MonthYears = DateTime.Now.ToString("MMM-yyyy");
-                string filename = requestdto.OrderNo + DateTime.Now.ToString("ddMMyyyyHHmmssfff") + ".pdf";
-                string PdfFolder = folderpath;
-                filePath = Path.Combine(PdfFolder, "Sticker", MonthYears, filename); // Define the file path for saving
-                if (!Directory.Exists(PdfFolder + "\\" + "Sticker" + "\\" + MonthYears))
+                if (requestdto.OrderNo.Substring(0, 2) == "BM")
                 {
-                    Directory.CreateDirectory(PdfFolder + "\\" + "Sticker" + "\\" + MonthYears);
-                }
-            }
+                    string MonthYears = DateTime.Now.ToString("MMM-yyyy");
+                    string filename = requestdto.OrderNo + DateTime.Now.ToString("ddMMyyyyHHmmssfff") + ".pdf";
+                    string PdfFolder = folderpath;
+                    filePath = Path.Combine(PdfFolder, "Plate", MonthYears, filename); // Define the file path for saving
+                    if (!Directory.Exists(PdfFolder + "\\" + "Plate"))
+                    {
+                        Directory.CreateDirectory(PdfFolder + "\\" + "Plate");
+                    }
 
-            #region Download PDF
+                    if (!Directory.Exists(PdfFolder + "\\" + "Plate" + "\\" + MonthYears))
+                    {
+                        Directory.CreateDirectory(PdfFolder + "\\" + "Plate" + "\\" + MonthYears);
+                    }
+                }
+                else
+                {
+                    string MonthYears = DateTime.Now.ToString("MMM-yyyy");
+                    string filename = requestdto.OrderNo + DateTime.Now.ToString("ddMMyyyyHHmmssfff") + ".pdf";
+                    string PdfFolder = folderpath;
+                    filePath = Path.Combine(PdfFolder, "Sticker", MonthYears, filename); // Define the file path for saving
+                    if (!Directory.Exists(PdfFolder + "\\" + "Sticker" + "\\" + MonthYears))
+                    {
+                        Directory.CreateDirectory(PdfFolder + "\\" + "Sticker" + "\\" + MonthYears);
+                    }
+                }
+
+
             MemoryStream ms = new MemoryStream();
             TextReader txtReader = new StringReader(html);
 
-            // Create a Document with specified page size and margins
-            Document doc = new Document(PageSize.A4, 25, 25, 25, 25);
+                // Create a Document with specified page size and margins
+                Document doc = new Document(PageSize.A4, 25, 25, 25, 25);
 
-            // Create a PdfWriter to write the PDF to the file stream
-            PdfWriter pdfWriter = PdfWriter.GetInstance(doc, new FileStream(filePath, FileMode.Create));
+                // Create a PdfWriter to write the PDF to the file stream
+                PdfWriter pdfWriter = PdfWriter.GetInstance(doc, new FileStream(filePath, FileMode.Create));
 
-            // Open the document
-            doc.Open();
+                // Open the document
+                doc.Open();
 
-            // Parse HTML and convert it to PDF
-            XMLWorkerHelper.GetInstance().ParseXHtml(pdfWriter, doc, txtReader);
+                // Parse HTML and convert it to PDF
+                XMLWorkerHelper.GetInstance().ParseXHtml(pdfWriter, doc, txtReader);
 
-            // Close the document
-            doc.Close();
+                // Close the document
+                doc.Close();
 
-            // Reset the stream position to the beginning
-            ms.Position = 0;
+                // Reset the stream position to the beginning
+                ms.Position = 0;
 
             // Return the PDF file path
+
             //var response = new ResponseSticker();
             //response.Message = filePath;
+
 
             //var jsonSerializer = System.Text.Json.JsonSerializer.Serialize(response);
             //return Json(jsonSerializer);
 
-            if (System.IO.File.Exists(filePath))
-            {
-                // Read the file contents into a byte array
-                byte[] fileBytes = System.IO.File.ReadAllBytes(filePath);
+                if (System.IO.File.Exists(filePath))
+                {
+                    // Read the file contents into a byte array
+                    byte[] fileBytes = System.IO.File.ReadAllBytes(filePath);
 
                 // Return the file as a byte array with Content-Type application/pdf
                 return File(fileBytes, "application/pdf", requestdto.OrderNo+ ".pdf");
@@ -133,7 +141,9 @@ namespace BookMyHsrp.Controllers.CommonController
                 // Return a 404 Not Found response if the file doesn't exist
                 return NotFound();
             }
-            #endregion
+
+
+
         }
     }
 }

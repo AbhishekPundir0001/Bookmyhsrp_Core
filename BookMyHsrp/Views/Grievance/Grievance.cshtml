@@ -1,0 +1,141 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="~/css/style.css">
+</head>
+
+<body>
+
+    <!-- Body main wrapper start -->
+
+    <div class="wrapper">
+
+        <!-- main start -->
+        <main class="main-body bg-img ptb--50 main-bg">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <div class="status-card">
+                            <div class="title-area">
+                                <h4 class="title">Grievance</h4>
+                            </div>
+                            <div class="card-body">
+                                <form action="">
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label class="form-label">Vehicle Reg No *</label>
+                                                <input type="text" class="form-control" id="vehicleregno">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label class="form-label">Customer Name *</label>
+                                                <input type="text" class="form-control" id="customername">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <label class="form-label w-100">Order No *</label>
+                                                <input type="text" class="form-control" id="orderno">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <label class="form-label w-100">Mobile No *</label>
+                                                <input type="text" class="form-control" id="mobileno" maxlength="10" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <label class="form-label w-100">Email Id *</label>
+                                                <input type="text" class="form-control" id="emailid">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <label class="form-label w-100">Query *</label>
+                                                <textarea name="query" id="query" cols="30" rows="2" class="form-textarea"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <button type="button" class="submit-btn" id="submit-btn" >
+                                                Submit
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+    </div>
+
+@section Scripts {
+
+    <script>
+
+
+            
+
+
+            $('#submit-btn').click(function () {
+
+                handleButtonClick.call(this, '/grievanceinsert', postData, (result) => {
+    })
+    });
+        async function handleButtonClick(url, postData, isSuccessFunc) {
+            debugger
+            const errorFunc = (title) => {
+                Toast.fire({
+                    icon: 'error',
+                    title: title
+                })
+                $(this).prop('disabled', false);
+            }
+
+            const emailregex = /^\b[A-Z0-9._%-]+@@[A-Z0-9.-]+\.[A-Z]{2,4}\b$/i;
+            var VehicleRegNo = $('#vehicleregno').val().toString()
+            var OrderNo = $('#orderno').val().toString();
+            var MobileNo = $('#mobileno').val().toString();
+            var EmailId = $('#emailid').val().toString();
+            var Query = $('#query').val().toString();
+            var CustomerName = $('#customername').val().toString();
+            if (EmailId === '') {
+                return errorFunc ("Please enter Email Id")
+            } if (VehicleRegNo === '') {
+                return errorFunc ("Please enter Vehicle No")
+            } if (OrderNo === '') {
+                    return errorFunc("Please enter Order No")
+            } if (Query === '') {
+                    return errorFunc("Query can't be blank")
+            } if (CustomerName === '') {
+                    return errorFunc("Please enter your name")
+            }
+
+                if (!emailregex.test(EmailId)) {
+                    return errorFunc("Invalid Email Id");
+                   
+                }
+
+                const data = { VehicleRegNo, OrderNo, MobileNo, EmailId, Query, CustomerName}
+                const result = await postData(url, data);
+                if (result.message === "Request Already Raised"){
+                    return errorFunc("Request Already Raised");
+                }else{
+                    return errorFunc("TESTING")
+                }
+            debugger
+        }
+    </script>
+}
+
+</body>
+
+</html>

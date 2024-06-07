@@ -44,6 +44,7 @@ using BookMyHsrp.ReportsLogics.Replacement;
 using BookMyHsrp.Libraries.Replacement.Services;
 using BookMyHsrp.ReportsLogics.Receipt;
 using BookMyHsrp.Libraries.Receipt.Services;
+using BookMyHsrp.Libraries.Grievance.Services;
 namespace BookMyHsrp
 {
     public class Startup
@@ -157,6 +158,7 @@ namespace BookMyHsrp
             services.AddTransient<IHomeDeliveryStickerService, HomeDeliveryStickerService>();
             services.AddTransient<IReplacementService, ReplacementService>();
             services.AddTransient<IReceiptService, ReceiptService>();
+            services.AddTransient<IGrievanceServices, GrievanceServices>();
             services.AddScoped<HsrpWithColorStickerConnector>();
             services.AddScoped<AppointmentSlotConnector>();
             services.AddScoped<TrackYourOrderConnector>();

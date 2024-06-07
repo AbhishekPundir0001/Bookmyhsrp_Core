@@ -1,25 +1,168 @@
-﻿<div class="modal otp-modal otp-validate2 fade" id="otp-validate3" data-bs-backdrop="static" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
-    <div class="modal-dialog">
+﻿<div class="modal order-modal fade" id="otp-validate3" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <div class="modal-body text-center">
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><i class="fas fa-times"></i></button>
-                <div class="m-desc">Checking!</div>
-                <p id="orderno"></p>
-                <p id="vehicleregno"></p>
-                <p id="appointmentdate"></p>
-                <p id="orderstatus1"></p>
-                <p id="name"></p>
-                <p id="fitmentaddress"></p>
-                <div class="col-lg-12">
-                    <button type="button" class="submit-btn" id="submit-cancel">
-                        Search
-                    </button>
+            <div class="modal-body">
+
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="btn-close">
+                    <i class="fas fa-times"></i>
+                </button>
+                <div class="status-card" id="maincancel">
+                    <div class="title-area">
+                        <h4 class="title">Order Cancellation</h4>
                     </div>
+                    <div class="card-body">
+                        <form action="">
+                            <div class="row">
+                                <div class="col-lg-6 col-sm-12">
+                                    <div class="d-desc">
+                                        <label>Order Number</label>
+                                        <p id="orderno"></p>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-sm-12">
+                                    <div class="d-desc">
+                                        <label>Vehicle Reg. Number</label>
+                                        <p id="vehicleregno"></p>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-sm-12">
+                                    <div class="d-desc">
+                                        <label>Appointment Date</label>
+                                        <p id="appointmentdate"></p>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-sm-12">
+                                    <div class="d-desc">
+                                        <label>Order Status</label>
+                                        <p id="orderstatus1"></p>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-sm-12">
+                                    <div class="d-desc">
+                                        <label>Name</label>
+                                        <p id="name"></p>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-sm-12">
+                                    <div class="d-desc">
+                                        <label>Fitment Address</label>
+                                        <p id="fitmentaddress"></p>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-12 mt-5">
+                                    <button type="button" class="submit-btn" id="btnSearch">
+                                        Confirm
+                                    </button>
+                                    <button type="button" class="submit-btn">
+                                        Not Confirm
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="status-card" id="hiddencancel">
+                <div class="card-body">
+                <div class="title-area">
+                    <h4 class="title">Booking Summary</h4>
+                </div>
+                <form action="">
+                    <div class="row">
+                        <div class="col-lg-6 col-sm-12">
+                            <div class="d-desc">
+                                <label>Order Number</label>
+                                <p id="hiddenorderno"></p>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-sm-12">
+                            <div class="d-desc">
+                                <label>Vehicle Reg. Number</label>
+                                <p id="hiddenvehicleregno"></p>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-sm-12">
+                            <div class="d-desc">
+                                <label>Appointment Date</label>
+                                <p id="hiddenappointmentdate"></p>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-sm-12">
+                            <div class="d-desc">
+                                <label>Appointment Slot:</label>
+                                <p id="hiddenappointmentslot"></p>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-sm-12">
+                            <div class="d-desc">
+                                <label>EngineNo./Motor No.:</label>
+                                <p id="hiddenengineno"></p>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-sm-12">
+                            <div class="d-desc">
+                                <label>Chassis No:</label>
+                                <p id="hiddenchassisno"></p>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-sm-12">
+                            <div class="d-desc">
+                                <label>Vehicle Make:</label>
+                                <p id="hiddenvehiclemaker"></p>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-sm-12">
+                            <div class="d-desc">
+                                <label>Fuel Type:</label>
+                                <p id="hiddenfueltype"></p>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-sm-12">
+                            <div class="d-desc">
+                                <label>Fitment Address</label>
+                                <p id="hiddenfitmentaddress"></p>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-sm-12">
+                            <div class="d-desc">
+                                <label>Vehicle Type:</label>
+                                <p id="hiddenvehicletype"></p>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-sm-12">
+                            <div class="d-desc">
+                                <label>Vehicle Class:</label>
+                                <p id="hiddenvehicleclass"></p>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-sm-12">
+                            <div class="d-desc">
+                                <label for="vehicleClass">Reason for Order Cancel</label>
+                                <select id="vehicleClass" class="form-select">
+                                    <option value="" disabled selected>Select a reason</option>
+                                    <option value="wrongvehicle">Wrong Vehicle type Select</option>
+                                    <option value="others">Others</option>
+                                </select>
+                            </div>
+                            <div class="col-lg-6 col-sm-12">
+                                <div class="d-desc">
+                                    <label for="remark">Remark:</label>
+                                    <input type="text" class="form-control" id="remark" name="remark" placeholder="Enter your remarks here">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 mt-5">
+                            <button type="button" class="submit-btn" id="confirmcancelorder">
+                                Confirm&Cancel
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            </div>
             </div>
         </div>
-    </div>
-</div>@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+     </div>
+</div>
+@section Scripts {
 }
