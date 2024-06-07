@@ -329,7 +329,7 @@ namespace BookMyHsrp.Libraries.HsrpWithColorSticker.Services
                 ResponseDto response = new ResponseDto();
                 string nonHomo = string.Empty;
                 await _fetchDataAndCache.SetStringInCache("IsOTPVerify", "N");
-                _fetchDataAndCache.SetStringInCache("OTPno", null);
+                await _fetchDataAndCache.SetStringInCache("OTPno", null);
                 await _fetchDataAndCache.SetStringInCache("VehicleType_imgPath", "www");
                 await _fetchDataAndCache.SetStringInCache("OEMImgPath", "www");
                 await _fetchDataAndCache.SetStringInCache("OrderType", "OB");
