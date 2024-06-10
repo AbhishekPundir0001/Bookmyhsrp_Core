@@ -27,6 +27,7 @@ namespace BookMyHsrp.Libraries.HsrpWithColorSticker.Models
             public string StateId { get; set; }
             public string StateName { get; set; }
             public bool isReplacement { get; set; } = false;
+            public string BookingType { get; set; }
 
 
 
@@ -58,12 +59,12 @@ namespace BookMyHsrp.Libraries.HsrpWithColorSticker.Models
 
         public class ResponseSticker
         {
-            public string RearPlatePhoto { get; set; }
-            public string FrontLaserPhoto { get; set; }
             public string Message { get; set; }
             
+            public string RearPlatePhoto { get; set; }
             public string FrontPlatePhoto { get; set; }
             public string RearLaserPhoto { get; set; }
+            public string FrontLaserPhoto { get; set; }
 
         }
 

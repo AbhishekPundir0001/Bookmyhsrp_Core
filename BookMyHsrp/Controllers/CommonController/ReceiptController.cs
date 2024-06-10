@@ -44,7 +44,7 @@ namespace BookMyHsrp.Controllers.CommonController
 
         }
 
-        public IActionResult Receipt()  
+        public IActionResult Receipt()
         {
             return View();
         }
@@ -141,11 +141,11 @@ namespace BookMyHsrp.Controllers.CommonController
                     // Return a 404 Not Found response if the file doesn't exist
                     return NotFound();
                 }
+
+
+
             }
-
-
         }
-
     }
 }
 

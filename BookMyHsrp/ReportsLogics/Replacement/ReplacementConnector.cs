@@ -329,8 +329,7 @@ namespace BookMyHsrp.ReportsLogics.Replacement
             else
             {
                 vehicleValidationResponse.status = "false";
-                vehicleValidationResponse.message =
-                    "Your Vehicle Data Not Pulled From Vahan Please Try After Some Time.";
+                vehicleValidationResponse.message = "You are not authorized to book re-order. For any query kindly mail to online@bookmyhsrp.com";
                 vehicleValidationResponse.data = vehicleValidationData;
                 return vehicleValidationResponse;
             }

@@ -19,7 +19,8 @@
 
 <body>
 
-
+    <br />
+    <br />
     <div class="form-area">
         <div class="form-area-inner">
             <div class="row">
@@ -32,9 +33,9 @@
                         </span>
                     </div>
                 </div>
-                <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="col-lg-4 col-md-6 col-sm-12" style="color:red;">
                    @*  <a href="#" onclick="downloadReceipt()">Download Receipt</a> *@
-                    <a href="#" id="downloadReceipt">Download Receipt</a>
+                    <a href="#" id="downloadReceipt" style="color:red;">Download Receipt</a>
                 </div>
             </div>
         </div>
@@ -93,6 +94,7 @@
             // AJAX request to download receipt
             try {
                 const response = await downloadReceipt(url, data); // Assuming you have defined postData function
+                if (response.size >15) {
                 isSuccessFunc(response);
                 debugger;
                 console.log(response);
@@ -108,6 +110,10 @@
                 a.click();
 
                 window.URL.revokeObjectURL(url);
+            }
+            else {
+                errorFunc('Invalid Order No.');
+            }
             } catch (error) {
                 errorFunc('Error downloading receipt.');
             }

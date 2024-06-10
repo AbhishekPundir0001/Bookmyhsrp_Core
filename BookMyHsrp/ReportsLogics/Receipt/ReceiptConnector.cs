@@ -775,7 +775,7 @@ namespace BookMyHsrp.ReportsLogics.Receipt
             else
             {
 
-                return "incorrect" ;
+                return "incorrect";
             }
         }
     }

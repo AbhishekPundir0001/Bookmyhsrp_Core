@@ -35,6 +35,15 @@ namespace BookMyHsrp.Controllers
         [Route("/plate/validateRequired")]
         public async Task<IActionResult> ValidateRequired([FromBody] VahanDetailsDto vahanDetailsDto)
         {
+            if (vahanDetailsDto.BookingType != "Trailer")
+            {
+                if (vahanDetailsDto.EngineNo.Length < 5)
+                {
+                    return BadRequest(new { Error = true, Message = "Please provide Valid Engine No" });
+                }
+            }
+
+
             var jsonSerializer = "";
             var result = await _hsrpWithColorStickerConnector.VahanInformation(vahanDetailsDto);
             if (result.status == "true")
