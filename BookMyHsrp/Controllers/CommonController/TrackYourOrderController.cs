@@ -42,7 +42,7 @@ namespace BookMyHsrp.Controllers.CommonController
             }
             else
             {
-                throw new Exception("Data Not Found");
+                return Json("Not Found");
             }
             
         }
@@ -59,7 +59,7 @@ namespace BookMyHsrp.Controllers.CommonController
             }
             else
             {
-                throw new Exception("Data Not Found");
+                return Json("Not Found");
             }
 
         }
@@ -87,8 +87,8 @@ namespace BookMyHsrp.Controllers.CommonController
             }
             else
             {
-               
-                throw new Exception("data not found");
+
+                return Json("Not Found");
 
             }
 

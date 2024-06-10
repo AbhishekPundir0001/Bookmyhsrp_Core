@@ -5,6 +5,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
     <title>Dreams Rent | Template</title>
+    
+    <style>
+        .main-body .status-card{
+            height:100%;
+        }
+    </style>
 
 </head>
 
@@ -63,10 +69,10 @@
         </div>
         <!--  End Offcanvas Mobile Menu Section -->
         <!-- main start -->
-        <main class="main-body bg-img ptb--50 main-bg">
+        <main class="main-body bg-img pt--50 pb--80 main-bg">
             <div class="container">
                 <div class="row justify-content-center">
-                    <div class="col-lg-4">
+                    <div class="col-lg-6">
                         <div class="status-card" id="main">
                             <div class="title-area">
                                 <h4 class="title">Track Your Order</h4>
@@ -111,38 +117,70 @@
                                 </form>
                             </div>
                         </div>
-                    <div class="status-card" id="hidden">   
-                        <div class="row">
-                            <p id="HiddenOrderNo"><p>
+                </div>
+                <div class="col-lg-6">
+                    <div class="status-card" id="hidden">
+                        <div class="title-area">
+                            <h4 class="title">Appointment Status</h4>
                         </div>
-                        <div class="col-sm-3">
-                            <p id="vehicleNo"></p>
-                        </div>
-                        <div class="col-sm-3">
-                            <p id="appointmentDate"></p>
-                        </div>
-                        <div class="col-sm-3">
-                            <p id="orderstatus"></p>
-                        </div>
-                        <div class="col-sm-3">
-                            <p id="ownername"></p>
-                        </div>
-                        <div class="col-sm-3">
-                            <p id="address"></p>
-                        </div>
-                        <div class="col-sm-3">
-                            <p id="DealerAffixationCenterName"></p>
-                        </div>
-                        <div class="col-sm-3">
-                            <p id="DealerAffixationCenterAddress"></p>
-                        </div>
-                        <div class="control btn-grp">
-                            <button class="filled" id="btnclose">Close</button>
+                        <div class="card-body">
+                            <form action="">
+                                <div class="row">
+                                    <div class="col-lg-6 col-sm-12">
+                                        <div class="d-desc">
+                                            <label>Order Number</label>
+                                            <p id="HiddenOrderNo"></p>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-sm-12">
+                                        <div class="d-desc">
+                                            <label>Vehicle Reg. Number</label>
+                                            <p id="vehicleNo"></p>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-sm-12">
+                                        <div class="d-desc">
+                                            <label>Appointment Date</label>
+                                            <p id="appointmentDate"></p>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-sm-12">
+                                        <div class="d-desc">
+                                            <label>Order Status</label>
+                                            <p id="orderstatus"></p>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-sm-12">
+                                        <div class="d-desc">
+                                            <label>Name</label>
+                                            <p id="ownername"></p>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-sm-12">
+                                        <div class="d-desc">
+                                            <label>Fitment Address</label>
+                                            <p id="address"></p>
+                                        </div>
+                                    </div>
 
+                                    <div class="col-lg-12 mt-5">
+                                        <button type="button" class="submit-btn" id="download_receipt">
+                                            Confirm
+                                        </button>
+                                        <button type="button" class="submit-btn" id="btnclose">
+                                            Not Confirm
+                                        </button>
+                                    </div>
+
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
+                
             </div>
-        </main>
+        </div>
+    </main>
        
  @section Scripts {
         <script>
@@ -157,7 +195,7 @@
             }
 
             window.onload = function () {
-                $('#hidden').hide();
+ 
                             DrawCaptcha();
             document.getElementById("btnRefreshCaptcha").addEventListener("click", DrawCaptcha);
             };
@@ -208,7 +246,7 @@
             });
 
             async function handleButtonClick(url, postData, isSuccessFunc) {
-                
+                debugger
                 const errorFunc = (title) => {
                     Toast.fire({
                         icon: 'error',
@@ -234,11 +272,10 @@
                 var data = { VehicleRegNo: vehRegNo, OrderNo: orderNo }
                 var url = "/track-your-order-sp"
                 const spresult = await postData(url, data)
-                
-                
-                if (result == null || result.Count == 0) {
-                    if (spresult == null || spresult.Count == 0) {
+                debugger
 
+                if (result == "Not Found" || result.Count == 0) {
+                    if (spresult == "Not Found" || spresult.Count == 0) {
                         $('.status-card').hide();
                         errorFunc("Data Not Found");
                     }
