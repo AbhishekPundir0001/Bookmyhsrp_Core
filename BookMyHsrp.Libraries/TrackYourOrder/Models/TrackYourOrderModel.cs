@@ -10,10 +10,14 @@ namespace BookMyHsrp.Libraries.TrackYoutOrder.Models
     {
         public class TrackYourOrder
         {
-            
+
             public string OrderNo { get; set; } = "";
             public string VehicleregNo { get; set; } = "";
-        
-    }
+
+        }
+        public class GetDealerId
+        {
+            public string Dealerid { get; set; } = "";
+        }
     }
 }

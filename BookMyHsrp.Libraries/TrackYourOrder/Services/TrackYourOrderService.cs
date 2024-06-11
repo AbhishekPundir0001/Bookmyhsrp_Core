@@ -52,7 +52,7 @@ namespace BookMyHsrp.Libraries.TrackYoutOrder.Services
         public async Task<dynamic> GetDealerName(dynamic dto)
         {
             var parameters = new DynamicParameters();
-            parameters.Add("@Dealerid", dto.DealerId);
+            parameters.Add("@Dealerid", dto.Dealerid);
             var DealerName = await _databaseHelper.QueryAsync<dynamic>(TrackYourOrderQueries.Dealername, parameters);
             return DealerName;
         }
