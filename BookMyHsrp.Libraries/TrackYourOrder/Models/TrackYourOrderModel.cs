@@ -17,6 +17,8 @@ namespace BookMyHsrp.Libraries.TrackYoutOrder.Models
         }
         public class GetDealerId
         {
+            public string OrderNo { get; set; } = "";
+            public string VehicleregNo { get; set; } = "";
             public string Dealerid { get; set; } = "";
         }
     }

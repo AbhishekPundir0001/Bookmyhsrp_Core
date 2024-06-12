@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
-    <title>Dreams Rent | Template</title>
+    <title>Track Your Order</title>
     
     <style>
         .main-body .status-card{
@@ -17,9 +17,6 @@
 
 <body>
 
-    <!-- Body main wrapper start -->
-
-        <!--  Start Offcanvas Mobile Menu Section  -->
         <div class="offcanvas offcanvas-start" tabindex="-1" id="toggleMenu">
             <div class="offcanvas-header">
 
@@ -68,13 +65,12 @@
                 <!-- End Offcanvas Mobile Menu Wrapper -->
             </div>
         </div>
-        <!--  End Offcanvas Mobile Menu Section -->
-        <!-- main start -->
+       
         <main class="main-body bg-img pt--50 pb--80 main-bg">
             <div class="container">
                 <div class="row justify-content-center">
 
-                <div class="col-lg-6">
+                <div class="col-lg-4">
                         <div class="status-card" id="main">
                             <div class="title-area">
                                 <h4 class="title">Track Your Order</h4>
@@ -387,7 +383,7 @@
 
                             var dealerid = result[0].dealerid.toString();
 
-                            var data = { Dealerid: dealerid };
+                            var data = { VehicleregNo: vehRegNo, OrderNo: orderNo,Dealerid: dealerid };
                             const _dealer = await postData("/dealer-name", data);
 
                             if (_dealer.length > 0) {
@@ -471,5 +467,4 @@
         }
         
 </body>
-
 </html>

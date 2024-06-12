@@ -51,11 +51,11 @@ namespace BookMyHsrp.Libraries.OrderCancel.Services
             var receipts = await _databaseHelper.QueryAsync<dynamic>(OrderCancelQueries.DealerWalletdetail, parameters);
             return receipts;
         }
-        public async Task<dynamic> DealerAddress(dynamic dealerid)
+        public async Task<dynamic> DealerAddress(dynamic dto)
         {
 
             var parameters = new DynamicParameters();
-            parameters.Add("@Dealerid", dealerid);
+            parameters.Add("@Dealerid", dto.Dealerid);
             var receipts = await _databaseHelper.QueryAsync<dynamic>(OrderCancelQueries.DealerAddress, parameters);
             return receipts;
         }

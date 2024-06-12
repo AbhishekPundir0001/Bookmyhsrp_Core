@@ -8,6 +8,12 @@ namespace BookMyHsrp.Libraries.OrderCancel.Models
 {
     public class OrderCancelModel
     {
+        public class Dealerids
+        {
+            public string OrderNo { get; set; } = "";
+            public string VehicleregNo { get; set; } = "";
+            public string Dealerid { get; set; } = "";
+        }
         public class logDto1
         {
             public string VehicleNo { get; set; } = "";
