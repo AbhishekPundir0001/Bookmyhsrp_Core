@@ -116,6 +116,7 @@ namespace BookMyHsrp.Libraries.GenerateOtp.Services
           
             #endregion
         }
+
         public static String SMSSend(string mobile, string SMSText, string TemplateID, string SenderIDHeader)
         {
             //txtAuthKey.Text="343817AaX3yb5BY4rI5f967427P1";
@@ -176,7 +177,17 @@ namespace BookMyHsrp.Libraries.GenerateOtp.Services
             return result;
         }
 
-       
+
+        public async Task<string> OrdercancelSMSSend(string mobile, string SMSText, string TemplateID, string SenderIDHeader)
+        {
+            ResponseDto response = new ResponseDto();
+            string MobileNo = mobile;
+            string sms = SMSText;
+            string id = TemplateID;
+            string idHeader = SenderIDHeader;
+            string message = SMSSend(MobileNo, sms, id, idHeader);
+            return message;
+        }
         public async Task<dynamic> ConfirmOTP(string otp)
         {
             var otpno = await _fetchDataAndCache.GetStringFromCache("OtpNo");

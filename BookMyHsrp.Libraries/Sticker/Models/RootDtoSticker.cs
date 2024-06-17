@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BookMyHsrp.Libraries.HsrpWithColorSticker.Models
+namespace BookMyHsrp.Libraries.Sticker.Models
 {
     public class RootDtoSticker
     {
@@ -74,7 +74,7 @@ namespace BookMyHsrp.Libraries.HsrpWithColorSticker.Models
             public string RazorPaySignature { get; set; }
             public string RazorpayNetAmount { get; set; }
             public string HSRPOrderNo { get; set; }
-            public VerifyDetailPaymentResponse paymentValidateResponse { get; set; }
+            public VerifyDetailPaymentResponseSticker paymentValidateResponse { get; set; }
 
 
             public string OrderStatus { get; set; }
@@ -115,7 +115,7 @@ namespace BookMyHsrp.Libraries.HsrpWithColorSticker.Models
         public string SuperTagApplyed { get; set; }
         public string SuperTagMessage { get; set; }
         public string FrameApplyed { get; set; }
-        public VerifyDetailPaymentData data { get; set; }
+        public VerifyDetailPaymentDataSticker data { get; set; }
     }
     public class PaymentConfirmationResponseDataSticker
     {

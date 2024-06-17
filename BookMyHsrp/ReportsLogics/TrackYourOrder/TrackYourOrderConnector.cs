@@ -4,6 +4,7 @@ using BookMyHsrp.Libraries.TrackYoutOrder.Models;
 using BookMyHsrp.Libraries.TrackYoutOrder.Services;
 using Microsoft.AspNetCore.Mvc;
 using static BookMyHsrp.Libraries.HsrpWithColorSticker.Models.HsrpColorStickerModel;
+using static BookMyHsrp.Libraries.TrackYoutOrder.Models.TrackYourOrderModel;
 
 namespace BookMyHsrp.ReportsLogics.TrackYourOrder
 {
@@ -46,7 +47,7 @@ namespace BookMyHsrp.ReportsLogics.TrackYourOrder
             var response = new ResponseDto();
             var result = await _trackYourOrderService.GetTrackYourOrderStatusSp(requestdto);
             // var result1 = await _trackYourOrderService.GetTrackYourOrderStatusSp(requestdto)
-            if (result.Count > 0)
+            if(result.Count > 0)
             {
                 return result;
 
@@ -59,7 +60,7 @@ namespace BookMyHsrp.ReportsLogics.TrackYourOrder
 
 
         }
-        public async Task<dynamic> DealerName([FromBody] TrackYourOrderModel.TrackYourOrder requestdto)
+        public async Task<dynamic> DealerName([FromBody] GetDealerId requestdto)
             {
                 var response = new ResponseDto();
                 var result = await _trackYourOrderService.GetDealerName(requestdto);

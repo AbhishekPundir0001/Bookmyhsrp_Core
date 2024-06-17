@@ -18,12 +18,12 @@ using static BookMyHsrp.Libraries.OemMaster.Models.OemMasterModel;
 
 namespace BookMyHsrp.ReportsLogics.HsrpWithColorSticker
 {
-    public class HsrpWithColorStickerConnector 
+    public class HsrpWithColorStickerConnector
     {
-       
+
 
         //private readonly FetchDataAndCache _fetchDataAndCache; // instance of ReportHelper
-       // private readonly IHsrpWithColorStickerService _hsrpWithColorStickerService;
+        // private readonly IHsrpWithColorStickerService _hsrpWithColorStickerService;
         //private readonly HttpContext _httpContext;
         private readonly HsrpWithColorStickerService _hsrpColorStickerService;
         private readonly string nonHomo;
@@ -32,7 +32,7 @@ namespace BookMyHsrp.ReportsLogics.HsrpWithColorSticker
         public HsrpWithColorStickerConnector(HsrpWithColorStickerService hsrpColorStickerService, IOptionsSnapshot<DynamicDataDto> dynamicData)
         {
             // _fetchDataAndCache = fetchDataAndCache; // Dependency injection
-           // _hsrpWithColorStickerService = hsrpWithColorStickerService ?? throw new ArgumentNullException(nameof(hsrpWithColorStickerService));
+            // _hsrpWithColorStickerService = hsrpWithColorStickerService ?? throw new ArgumentNullException(nameof(hsrpWithColorStickerService));
             _hsrpColorStickerService = hsrpColorStickerService ?? throw new ArgumentNullException(nameof(hsrpColorStickerService));
             nonHomo = dynamicData.Value.NonHomo;
             _nonHomoOemId = dynamicData.Value.NonHomoOemId;
@@ -41,7 +41,7 @@ namespace BookMyHsrp.ReportsLogics.HsrpWithColorSticker
         }
         public async Task<dynamic> VahanInformation(VahanDetailsDto requestDto)
         {
-            
+
             ICollection<ValidationResult> results = null;
             var vehicleValidationResponse = new ResponseDto();
             vehicleValidationResponse.data = new VehicleValidation();
@@ -68,7 +68,7 @@ namespace BookMyHsrp.ReportsLogics.HsrpWithColorSticker
             foreach (var data in resultGot)
             {
                 stateshortname = data.HSRPStateShortName;
-                statename= data.HSRPStateName;
+                statename = data.HSRPStateName;
                 StateIdBackup = requestDto.StateId;
             }
             var checkOrderExists = await _hsrpColorStickerService.CheckOrderExixts(getVehicleRegno, getChassisNo, getEngineNo);
@@ -231,44 +231,55 @@ namespace BookMyHsrp.ReportsLogics.HsrpWithColorSticker
                         {
                             if (checkOrderExistsCHECK[0].IsOemRtoMapped.ToString() == "Y")
 
-                            {
-                               
-                                int NonHomoCount = 0;
-                                string NonHomo = nonHomo;
-                                string[] sp_NonHomo = NonHomo.Split(',');
-                                for (int i = 0; i < sp_NonHomo.Length; i++)
                                 {
-                                    if (sp_NonHomo[i].ToString() == requestDto.StateId)
+
+                                    int NonHomoCount = 0;
+                                    string NonHomo = nonHomo;
+                                    string[] sp_NonHomo = NonHomo.Split(',');
+                                    for (int i = 0; i < sp_NonHomo.Length; i++)
                                     {
-                                        NonHomoCount++;
+                                        if (sp_NonHomo[i].ToString() == requestDto.StateId)
+                                        {
+                                            NonHomoCount++;
+                                        }
+                                    }
+                                    string NonHomoOemId = _nonHomoOemId;
+                                    string[] sp_NonHomoOemId = _nonHomoOemId.Split(',');
+                                    if ((NonHomoCount > 0) && (_vd.message.Contains("Vehicle details available in Vahan but Maker of this vehicle Not Present in HOMOLOGATION") || (_vd.message.Contains("Vehicle details available in Vahan but OEM/Manufacturer (Homologation) of this vehicle have not authorized you for the State/RTO of this vehicle") && _nonHomoOemId.Contains(oemid))))
+                                    {
+                                        VehicleDetails details = new VehicleDetails();
+                                        vehicleValidationResponse.data.vehicleregno = requestDto.RegistrationNo.ToUpper().Trim();
+                                        vehicleValidationResponse.data.chassisno = requestDto.ChassisNo.ToUpper().Trim();
+                                        vehicleValidationResponse.data.engineno = requestDto.EngineNo.ToUpper().Trim();
+                                        vehicleValidationResponse.data.non_homo = "Y";
+                                        vehicleValidationResponse.status = "true";
+                                        vehicleValidationResponse.message = _vd.message;
+                                        details = _vd;
+                                        vehicleValidationResponse.data.fuel = details.fuel;
+                                        vehicleValidationResponse.data.message = details.message;
+                                        vehicleValidationResponse.data.offCd = details.offCd;
+                                        vehicleValidationResponse.data.maker = details.maker;
+                                        vehicleValidationResponse.data.hsrpFrontLaserCode = details.hsrpFrontLaserCode;
+                                        vehicleValidationResponse.data.vchType = details.vchType;
+                                        vehicleValidationResponse.data.vchCatg = details.vchCatg;
+                                        vehicleValidationResponse.data.stateCd = details.stateCd;
+                                        vehicleValidationResponse.data.regnDate = details.regnDate;
+                                        vehicleValidationResponse.data.norms = details.norms;
+                                        vehicleValidationResponse.data.hsrpRearLaserCode = details.hsrpRearLaserCode;
+                                        return vehicleValidationResponse;
+                                    }
+
+                                    else
+                                    {
+                                        vehicleValidationResponse.data.non_homo = "N";
+                                        vehicleValidationResponse.status = "false";
+                                        vehicleValidationResponse.message =
+                                            "As a Vendor we are not authorised for this vehicle Please visit www.siam.in for respective HSRP Maker.";
+                                        vehicleValidationResponse.data = vehicleValidationData;
+                                        return vehicleValidationResponse;
+
                                     }
                                 }
-                                string NonHomoOemId = _nonHomoOemId;
-                                string[] sp_NonHomoOemId = _nonHomoOemId.Split(',');
-                                if ((NonHomoCount > 0) && (_vd.message.Contains("Vehicle details available in Vahan but Maker of this vehicle Not Present in HOMOLOGATION") || (_vd.message.Contains("Vehicle details available in Vahan but OEM/Manufacturer (Homologation) of this vehicle have not authorized you for the State/RTO of this vehicle") && _nonHomoOemId.Contains(oemid))))
-                                {
-                                    VehicleDetails details = new VehicleDetails();
-                                    vehicleValidationResponse.data.vehicleregno = requestDto.RegistrationNo.ToUpper().Trim();
-                                    vehicleValidationResponse.data.chassisno = requestDto.ChassisNo.ToUpper().Trim();
-                                    vehicleValidationResponse.data.engineno = requestDto.EngineNo.ToUpper().Trim();
-                                    vehicleValidationResponse.data.non_homo = "Y";
-                                    vehicleValidationResponse.status = "true";
-                                    vehicleValidationResponse.message = _vd.message;
-                                    details = _vd;
-                                    vehicleValidationResponse.data.fuel = details.fuel;
-                                    vehicleValidationResponse.data.message = details.message;
-                                    vehicleValidationResponse.data.offCd = details.offCd;
-                                    vehicleValidationResponse.data.maker = details.maker;
-                                    vehicleValidationResponse.data.hsrpFrontLaserCode = details.hsrpFrontLaserCode;
-                                    vehicleValidationResponse.data.vchType = details.vchType;
-                                    vehicleValidationResponse.data.vchCatg = details.vchCatg;
-                                    vehicleValidationResponse.data.stateCd = details.stateCd;
-                                    vehicleValidationResponse.data.regnDate = details.regnDate;
-                                    vehicleValidationResponse.data.norms = details.norms;
-                                    vehicleValidationResponse.data.hsrpRearLaserCode = details.hsrpRearLaserCode;
-                                    return vehicleValidationResponse;
-                                }
-
                                 else
                                 {
                                     vehicleValidationResponse.data.non_homo = "N";
@@ -277,7 +288,6 @@ namespace BookMyHsrp.ReportsLogics.HsrpWithColorSticker
                                         "As a Vendor we are not authorised for this vehicle Please visit www.siam.in for respective HSRP Maker.";
                                     vehicleValidationResponse.data = vehicleValidationData;
                                     return vehicleValidationResponse;
-
                                 }
                             }
                             else
@@ -289,7 +299,6 @@ namespace BookMyHsrp.ReportsLogics.HsrpWithColorSticker
                                 vehicleValidationResponse.data = vehicleValidationData;
                                 return vehicleValidationResponse;
                             }
-
                         }
                         else
                         {
@@ -299,58 +308,43 @@ namespace BookMyHsrp.ReportsLogics.HsrpWithColorSticker
                                 "As a Vendor we are not authorised for this vehicle Please visit www.siam.in for respective HSRP Maker.";
                             vehicleValidationResponse.data = vehicleValidationData;
                             return vehicleValidationResponse;
-
-
-
-
                         }
-
-
                     }
-                    else
+                    else if (_vd.message == "Vehicle Not Found")
                     {
                         vehicleValidationResponse.data.non_homo = "N";
+                        var insertVahanLogQuery = await _hsrpColorStickerService.InsertVaahanLogWithoutApi(getVehicleRegno, getChassisNo, getEngineNo, _vd);
                         vehicleValidationResponse.status = "false";
-                        vehicleValidationResponse.message =
-                            "As a Vendor we are not authorised for this vehicle Please visit www.siam.in for respective HSRP Maker.";
+                        vehicleValidationResponse.message = "Your vehicle detail didn't match with vahan service..";
                         vehicleValidationResponse.data = vehicleValidationData;
                         return vehicleValidationResponse;
-
-
-
-
                     }
+
                 }
-                else if (_vd.message == "Vehicle Not Found")
+                else
                 {
-                    vehicleValidationResponse.data.non_homo = "N";
-                    var insertVahanLogQuery = await _hsrpColorStickerService.InsertVaahanLogWithoutApi(getVehicleRegno, getChassisNo, getEngineNo, _vd);
                     vehicleValidationResponse.status = "false";
-                    vehicleValidationResponse.message = "Your vehicle detail didn't match with vahan service..";
+                    vehicleValidationResponse.message =
+                        "Your Vehicle Data Not Pulled From Vahan Please Try After Some Time.";
                     vehicleValidationResponse.data = vehicleValidationData;
                     return vehicleValidationResponse;
                 }
-                
+                return vehicleValidationResponse;
             }
             else
             {
-                vehicleValidationResponse.status = "false";
-                vehicleValidationResponse.message =
-                    "Your Vehicle Data Not Pulled From Vahan Please Try After Some Time.";
-                vehicleValidationResponse.data = vehicleValidationData;
                 return vehicleValidationResponse;
             }
-                return vehicleValidationResponse;
-            }
-        
-        public  async Task<List<OemVehicleTypeList>> GetOemVehicleTypes(string VehicleClass, string OemId)
+        }
+
+        public async Task<List<OemVehicleTypeList>> GetOemVehicleTypes(string VehicleClass, string OemId)
         {
             List<OemVehicleTypeList> lst = new List<OemVehicleTypeList>();
 
             var vehicleDetails = await _hsrpColorStickerService.GetVehicleDetails(OemId, VehicleClass);
 
 
-            
+
             if (vehicleDetails.Count > 0)
             {
                 for (int i = 0; i < vehicleDetails.Count; i++)
@@ -367,61 +361,61 @@ namespace BookMyHsrp.ReportsLogics.HsrpWithColorSticker
         }
 
 
-        public  async Task<TrackOrderResponse> CheckVehicleForDfdrdb(VahanDetailsDto info)
-                {
-                    var trackOrderResponse = new TrackOrderResponse();
+        public async Task<TrackOrderResponse> CheckVehicleForDfdrdb(VahanDetailsDto info)
+        {
+            var trackOrderResponse = new TrackOrderResponse();
 
-                    ICollection<ValidationResult> results = null;
-                    if (!Validate(info, out results))
-                    {
-                        trackOrderResponse.status = "false";
-                        trackOrderResponse.message = results.Select(x => x.ErrorMessage).FirstOrDefault();
-                        return trackOrderResponse;
-                    }
-            var getOrderNumber =await _hsrpColorStickerService.GetOrderNumber(info);
+            ICollection<ValidationResult> results = null;
+            if (!Validate(info, out results))
+            {
+                trackOrderResponse.status = "false";
+                trackOrderResponse.message = results.Select(x => x.ErrorMessage).FirstOrDefault();
+                return trackOrderResponse;
+            }
+            var getOrderNumber = await _hsrpColorStickerService.GetOrderNumber(info);
             if (getOrderNumber)
+            {
+
+                var data = await _hsrpColorStickerService.SelectByOrderNumber(getOrderNumber[0].Orderno);
+                if (data.Count > 0)
+                {
+                    if (data[0].ReBookingAllow.ToString() == "Y")
                     {
-
-                        var data = await _hsrpColorStickerService.SelectByOrderNumber(getOrderNumber[0].Orderno);
-                      if (data.Count > 0)
-                        {
-                            if (data[0].ReBookingAllow.ToString() == "Y")
-                            {
-                                trackOrderResponse.status = "true";
-                                trackOrderResponse.message = "Order found";
-                                return trackOrderResponse;
-                            }
-                        }
-
-                        trackOrderResponse.status = "false";
-                        trackOrderResponse.message = "Vehicle not found.";
-                        return trackOrderResponse;
-                    }
-                    else
-                    {
-                         var result = await _hsrpColorStickerService.CheckDateBetweenCloseDate(info);
-       
-                        if (result.Count > 0)
-                        {
-                            if (result.ReBookingAllow.ToString() == "Y")
-                            {
-                                trackOrderResponse.status = "true";
-                                trackOrderResponse.message = "Order found";
-                                return trackOrderResponse;
-                            }
-                        }
-                        else
-                        {
-                            trackOrderResponse.status = "true";
-                            trackOrderResponse.message = "New Order.";
-                            return trackOrderResponse;
-                        }
-
-                        trackOrderResponse.status = "false";
-                        trackOrderResponse.message = "Vehicle not found.";
+                        trackOrderResponse.status = "true";
+                        trackOrderResponse.message = "Order found";
                         return trackOrderResponse;
                     }
                 }
+
+                trackOrderResponse.status = "false";
+                trackOrderResponse.message = "Vehicle not found.";
+                return trackOrderResponse;
+            }
+            else
+            {
+                var result = await _hsrpColorStickerService.CheckDateBetweenCloseDate(info);
+
+                if (result.Count > 0)
+                {
+                    if (result.ReBookingAllow.ToString() == "Y")
+                    {
+                        trackOrderResponse.status = "true";
+                        trackOrderResponse.message = "Order found";
+                        return trackOrderResponse;
+                    }
+                }
+                else
+                {
+                    trackOrderResponse.status = "true";
+                    trackOrderResponse.message = "New Order.";
+                    return trackOrderResponse;
+                }
+
+                trackOrderResponse.status = "false";
+                trackOrderResponse.message = "Vehicle not found.";
+                return trackOrderResponse;
+            }
+        }
         public async Task<dynamic> SessionBookingDetails(dynamic requestDto)
         {
             var data = _hsrpColorStickerService.SessionBookingDetails(requestDto);
@@ -472,7 +466,7 @@ namespace BookMyHsrp.ReportsLogics.HsrpWithColorSticker
             session.VehicleType_imgPath = "www";
             session.OEMImgPath = "www";
             session.OrderType = "OB";
-            var jsonDeSerializer = System.Text.Json.JsonSerializer.Deserialize<RootDtoSticker>(sessionDetails);
+            var jsonDeSerializer = System.Text.Json.JsonSerializer.Deserialize<RootDto>(sessionDetails);
             try
             {
                 var nonHomo = jsonDeSerializer.NonHomo;
@@ -532,7 +526,7 @@ namespace BookMyHsrp.ReportsLogics.HsrpWithColorSticker
                             {
                                 customerInformationresponseData.Status = "false";
                                 customerInformationresponseData.Message = "Vehicle owner's with vehicles manufactured after 25th November 2019, should contact their respective Automobile Dealers for HSRP affixation.";
-                             //   customerInformationresponseData.data = customerInformationData;
+                                //   customerInformationresponseData.data = customerInformationData;
                                 return customerInformationresponseData;
                             }
 
@@ -554,7 +548,7 @@ namespace BookMyHsrp.ReportsLogics.HsrpWithColorSticker
                     billingaddress = jsonDeSerializer.CustomerBillingAddress.Replace("'", "''");
                 }
                 var bookingHistoryId = await _hsrpColorStickerService.BookingHistoryId(customerInfo.RegistrationNo, customerInfo.ChassisNo, customerInfo.EngineNo);
-                if (bookingHistoryId.Count>0)
+                if (bookingHistoryId.Count > 0)
                 {
                     var insertVahanLogQueryCustomer = await _hsrpColorStickerService.InsertVahanLogQueryCustomer(customerInfo, OrderType, billingaddress, NonHomo, OemId);
                     if (customerInfo.RegistrationNo.Trim().ToUpper() == "DL10CG7191")
@@ -626,7 +620,7 @@ namespace BookMyHsrp.ReportsLogics.HsrpWithColorSticker
                                     newId = Id.Oemid;
                                 }
                                 var getOemVehicleType = await _hsrpColorStickerService.OemVehicleType(HSRPHRVehicleType, customerInfo.VehicleTypeVahan, newId, customerInfo.FuelTypeVahan);
-                                if (getOemVehicleType.Count>0)
+                                if (getOemVehicleType.Count > 0)
                                 {
 
                                     foreach (var vehicle in getOemVehicleType)
@@ -675,8 +669,8 @@ namespace BookMyHsrp.ReportsLogics.HsrpWithColorSticker
                     customerInformationresponseData.data.OTPno = session.OTPno;
                     customerInformationresponseData.data.OrderType = session.OrderType;
                     customerInformationresponseData.data.OEMImgPath = session.OEMImgPath;
-                    customerInformationresponseData.data.VehicleType_imgPath= session.VehicleType_imgPath;
-                   
+                    customerInformationresponseData.data.VehicleType_imgPath = session.VehicleType_imgPath;
+
                 }
 
                 catch (Exception ex)
@@ -693,7 +687,7 @@ namespace BookMyHsrp.ReportsLogics.HsrpWithColorSticker
                 throw ex;
             }
         }
-            static bool Validate<T>(T obj, out ICollection<ValidationResult> results)
+        static bool Validate<T>(T obj, out ICollection<ValidationResult> results)
         {
             results = new List<ValidationResult>();
 

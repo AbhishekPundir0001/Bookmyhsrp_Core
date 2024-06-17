@@ -36,6 +36,15 @@ using BookMyHsrp.ReportsLogics.TrackYourOrder;
 using BookMyHsrp.Libraries.OrderCancel.Services;
 using BookMyHsrp.Libraries.ReceiptValidity.Services;
 using BookMyHsrp.Libraries.TrackYoutOrder.Services;
+using BookMyHsrp.ReportsLogics.TrackYourOrder;
+using BookMyHsrp.Libraries.OrderCancel.Services;
+using BookMyHsrp.Libraries.ReceiptValidity.Services;
+using BookMyHsrp.Libraries.TrackYoutOrder.Services;
+using BookMyHsrp.ReportsLogics.Replacement;
+using BookMyHsrp.Libraries.Replacement.Services;
+using BookMyHsrp.ReportsLogics.Receipt;
+using BookMyHsrp.Libraries.Receipt.Services;
+using BookMyHsrp.Libraries.Grievance.Services;
 using BookMyHsrp.Libraries.OemMaster.Services;
 using BookMyHsrp.Libraries.BookingSummary.Services;
 using BookMyHsrp.Libraries.VerifyPaymentDetail.Services;
@@ -154,6 +163,9 @@ namespace BookMyHsrp
             services.AddTransient<IOemMasterService, OemMasterService>();
             services.AddTransient<IStickerService, StickerService>();
             services.AddTransient<IHomeDeliveryStickerService, HomeDeliveryStickerService>();
+            services.AddTransient<IReplacementService, ReplacementService>();
+            services.AddTransient<IReceiptService, ReceiptService>();
+            services.AddTransient<IGrievanceServices, GrievanceServices>();
             services.AddScoped<HsrpWithColorStickerConnector>();
             services.AddScoped<AppointmentSlotConnector>();
             services.AddScoped<TrackYourOrderConnector>();
@@ -165,6 +177,8 @@ namespace BookMyHsrp
             services.AddScoped<FetchDataAndCache, FetchDataAndCache>();
             services.AddScoped<HomeDeliveryService>();
             services.AddScoped<StickerConnector>();
+            services.AddScoped<ReplacementConnector>();
+            services.AddScoped<ReceiptConnector>();
 
             // services.AddSingleton<HSRP.Redis.ConnectionHelper>();
 
