@@ -61,5 +61,52 @@ namespace BookMyHsrp.Libraries.AppointmentSlot.Services
             return result;
 
         }
+        public async  Task<dynamic> AppointmentBlockedDates(string tempdate, string dealerId, dynamic dealiveryPoint)
+        {
+           
+            var parameters = new DynamicParameters();
+            parameters.Add("@TempDate", tempdate);
+            parameters.Add("@DealerId", dealerId);
+            parameters.Add("@DealiveryPoint", dealiveryPoint);
+            
+            var result = await _databaseHelperPrimary.QueryAsync<dynamic>(AppointmentSlotQueries.AppointmentBlockedDatesQuery, parameters);
+            return result;
+
+        }
+        public async Task<dynamic> AppointmentBlockedDatesForSelectedDate(string selectedDate, string dealerId, dynamic dealiveryPoint)
+        {
+            var parameters = new DynamicParameters();
+            parameters.Add("@SelectedDate", selectedDate);
+            parameters.Add("@DealerId", dealerId);
+            parameters.Add("@DealiveryPoint", dealiveryPoint);
+
+            var result = await _databaseHelperPrimary.QueryAsync<dynamic>(AppointmentSlotQueries.AppointmentBlockedDatesForSelectedDateQuery, parameters);
+            return result;
+        }
+        public async Task<dynamic> CheckAppointmentSlotTime(string selectedDate, string vehicleTypeId, string dealerId, string dealiveryPoint, string stateId)
+        {
+            var parameters = new DynamicParameters();
+            parameters.Add("@SelectedDate", selectedDate);
+            parameters.Add("@VehicleTypeId", vehicleTypeId);
+            parameters.Add("@DealerId", dealerId);
+            parameters.Add("@DealiveryPoint", dealiveryPoint);
+            parameters.Add("@StateId", stateId);
+
+            var result = await _databaseHelperPrimary.QueryAsync<dynamic>(AppointmentSlotQueries.CheckAppointmentSlotTime, parameters);
+            return result;
+        }
+        public async Task<dynamic> CheckAppointmentSlotTimeHome(string selectedDate, string vehicleTypeId, string dealerId, string dealiveryPoint, string stateId)
+    
+        {
+            var parameters = new DynamicParameters();
+            parameters.Add("@SelectedDate", selectedDate);
+            parameters.Add("@VehicleTypeId", vehicleTypeId);
+            parameters.Add("@DealerId", dealerId);
+            parameters.Add("@DealiveryPoint", dealiveryPoint);
+            parameters.Add("@StateId", stateId);
+
+            var result = await _databaseHelperPrimary.QueryAsync<dynamic>(AppointmentSlotQueries.CheckAppointmentSlotTimeHome, parameters);
+            return result;
+        }
     }
 }

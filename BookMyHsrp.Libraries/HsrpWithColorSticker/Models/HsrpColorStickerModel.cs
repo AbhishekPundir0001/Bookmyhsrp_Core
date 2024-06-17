@@ -15,13 +15,17 @@ namespace BookMyHsrp.Libraries.HsrpWithColorSticker.Models
         public class VahanDetailsDto
         {
             [Required(ErrorMessage = "Registration No is required.")]
-            //[StringLength(5 , ErrorMessage = "Registration No is  Not Valid")]
+            [StringLength(30, MinimumLength = 5,
+            ErrorMessage = "Vehicle Registration must be greater than 5.")]
             public string RegistrationNo { get; set; }
             [Required(ErrorMessage = "Chassis No is required.")]
-            //[StringLength(5, ErrorMessage = "Chassis No is Not Valid")]
+            [StringLength(30, MinimumLength = 5,
+            ErrorMessage = "Chassis Number must be greater than 5.")]
+          
             public string ChassisNo { get; set; }
             [Required(ErrorMessage = "EngineNo No is required.")]
-           // [StringLength(5, ErrorMessage = "EngineNo No is Not Valid")]
+            [StringLength(30, MinimumLength = 5,
+            ErrorMessage = "Engine Number must be greater than 5.")]
             public string EngineNo { get; set; }
             [Required(ErrorMessage = "State is required.")]
             public string StateId { get; set; }
@@ -64,7 +68,30 @@ namespace BookMyHsrp.Libraries.HsrpWithColorSticker.Models
 
         public class GetSessionBookingDetails
         {
-            public string BharatStage { get; set; }
+            public long DealerAffixationID { get; set; }
+            public int Dealerid { get; set; }
+            public string DealerName { get; set; }
+            public string VehicleCat { get; set; }
+            public string Vehiclecategory { get; set; }
+            public string DealerAffixationCenterName { get; set; }
+            public string Address { get; set; }
+            public string City { get; set; }
+            public string CustomerName { get; set; }
+            public string DealerAffixationCenterContactNo { get; set; }
+            public string Pincode { get; set; }
+            public string Country { get; set; }
+            public string StateName { get; set; }
+            public int WebsiteId { get; set; }
+            public string DealerAffixationCenterLat { get; set; }
+            public string DealerAffixationCenterLon { get; set; }
+            public string EarliestDateAvailable { get; set; }
+            public decimal RoundOff_netamount { get; set; }
+            public bool ExpressCheckout { get; set; } = false;
+            public string Distance { get; set; }
+            public string EarliestTimeSlotAvailable { get; set; }
+            public int cnt { get; set; }
+            public string TotalAmountWithGST { get; set; }
+            public string BhartStage { get; set; }
             public string RegistrationDate { get; set; }
             public string VehicleRegNo { get; set; }
             public string ChassisNo { get; set; }
@@ -81,10 +108,8 @@ namespace BookMyHsrp.Libraries.HsrpWithColorSticker.Models
             public string FuelTypeVahan { get; set; } = "";
             public string VehicleCatVahan { get; set; } = "";
             public string StateId { get; set; } = "";
-            public string StateName { get; set; } = "";
             public string OemVehicleType { get; set; } = "";
             public string OemId { get; set; } = "";
-            public string CustomerName { get; set; } = "";
             public string CustomerEmail { get; set; } = "";
             public string CustomerBillingAddress { get; set; } = "";
             public string CustomerCity { get; set; } = "";
@@ -104,6 +129,15 @@ namespace BookMyHsrp.Libraries.HsrpWithColorSticker.Models
             public string SelectedSlotDate { get; set; }
             public string SelectedSlotTime { get; set; }
             public string Affix { get; set; }
+            public string BharatStage { get; set; }
+            public int OemID { get; set; }
+            public string OemName { get; set; }
+            public int DealerID { get; set; }
+            public int StateID { get; set; }
+            public int RTOLocationID { get; set; }
+            public string RTOLocationName { get; set; }
+            public string DealerAffixationCenterAddress { get; set; }
+          
         }
         public class VehicleValidation
         {

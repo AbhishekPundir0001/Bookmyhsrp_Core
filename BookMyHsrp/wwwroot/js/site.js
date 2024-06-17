@@ -183,6 +183,19 @@ async function fetchAllStates() {
         console.error('Failed to fetch data:', error);
     }
 }
+
+async function oemVehicleType(data) {
+    const url = '/api/v1/oem/by-vehicle-type/' + data;
+    try {
+        const result = await fetchData(url);
+        console.log('Data fetched successfully, where the server response data is', result);
+        bindHtmlForOemVehicleType(result);
+
+    } catch (error) {
+        console.error('Failed to fetch data:', error);
+    }
+}
+
 async function fetchStates(data) {
     const url = '/api/v1/state';
     try {
@@ -694,6 +707,31 @@ function bindHtmlForStateInSelectById(result, data) {
         let properCaseStateName = toProperCase(item.HSRPStateName);
        // html += `<option value="${item.HSRP_StateID}">${properCaseStateName}</option>`;
         html += `<option value="${item.HSRP_StateID}" ${isSelected ? 'selected' : ''}>${properCaseStateName}</option>`;
+    });
+    selectState.html(html);
+    selectState.select2({
+        theme: 'bootstrap-5'
+    });
+}
+function bindHtmlForOemVehicleType(data) {
+    if (!Array.isArray(data)) {
+        console.error("Invalid data: expecting an array");
+        return;
+    }
+
+    let selectState = $('#select-oem-vehicle');
+    if (!selectState.length) {
+        console.error("Element with id 'select-oem-vehicle' does not exist");
+        return;
+    }
+    let html = '';
+    //add Select option
+
+    html += `<option value="">Select Oem Vehicle</option>`;
+    //html += `<option value="">All</option>`;
+    data.forEach((item, index) => {
+        let properCaseStateName = toProperCase(item.HSRPStateName);
+        html += `<option value="${item.HSRP_StateID}">${properCaseStateName}</option>`;
     });
     selectState.html(html);
     selectState.select2({

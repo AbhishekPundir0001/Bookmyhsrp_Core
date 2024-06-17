@@ -10,6 +10,7 @@ namespace BookMyHsrp.Libraries.HsrpWithColorSticker.Models
     public class RootDto
     {
             public string StateId { get; set; }
+            public string RegistrationDate { get; set; }
         public string Message { get; set; }
         public string PlateSticker { get; set; }
             public string VehicleRegNo { get; set; }

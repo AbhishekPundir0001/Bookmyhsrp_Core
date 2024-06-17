@@ -25,13 +25,13 @@ namespace BookMyHsrp.Libraries.OemMaster.Services
             _fetchDataAndCache = fetchDataAndCache;
         }
 
-        public Task<IEnumerable<OemMasterModel.OemVehicleTypeList>> GetAllOemByVehicleType(string vehicleType)
+        public async Task<IEnumerable<OemMasterModel.OemVehicleTypeList>> GetAllOemByVehicleType(string vehicleType , dynamic vehicledetails)
         {
-            var oemid = _fetchDataAndCache.GetStringFromCache("OemId");
+            
             var parameter = new DynamicParameters();
             parameter.Add("@VehicleType", vehicleType);
-            parameter.Add("@OemId", oemid);
-            var result = _databaseHelper.QueryAsync<OemMasterModel.OemVehicleTypeList>(OemMasterQueries.GetAllOemByVehicleType, parameter);
+            parameter.Add("@OemId", vehicledetails.OemId);
+            var result = await _databaseHelper.QueryAsync<OemMasterModel.OemVehicleTypeList>(OemMasterQueries.GetAllOemByVehicleType, parameter);
             return result;
 
 

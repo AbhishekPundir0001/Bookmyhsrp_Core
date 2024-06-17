@@ -82,9 +82,21 @@ namespace BookMyHsrp.ReportsLogics.HsrpWithColorSticker
             string responseJson = await _hsrpColorStickerService.RosmertaApi(getVehicleRegno, getChassisNo, getEngineNo, "5UwoklBqiW");
             if(responseJson== "Error While Calling Vahan Service - The remote server returned an error: (500) Internal Server Error.")
             {
-                vehicleValidationResponse.message = "Error While Calling Vahan Service - The remote server returned an error: (500) Internal Server Error.";
+                vehicleValidationResponse.message = "Error While Calling Vahan Service";
                 return vehicleValidationResponse;
             }
+            if(responseJson== "Vehicle Not Found")
+            {
+                vehicleValidationResponse.message = "Vehicle Not Found";
+                return vehicleValidationResponse;
+
+            }
+            if (responseJson.Contains("The input is not a valid Base-64 string as it contains a non-base 64 character, more than two padding characters, or an illegal character among the padding characters"))
+            {
+                vehicleValidationResponse.message = "Error While Calling Vahan Service";
+                return vehicleValidationResponse;
+            }
+
             VehicleDetails _vd = JsonConvert.DeserializeObject<VehicleDetails>(responseJson);
             if (_vd != null && _vd.stateCd != null && _vd.message != "Vehicle Not Found")
             {
@@ -527,23 +539,7 @@ namespace BookMyHsrp.ReportsLogics.HsrpWithColorSticker
                         }
 
                     }
-                    //string dateString = customerInfo.RegistrationDate;
-                    //DateTime date = DateTime.ParseExact(dateString, "dd-MM-yyyy", System.Globalization.CultureInfo.InvariantCulture);
-                    //string formattedDate = date.ToString("dd-MM-yyyy");
-
-                    //IFormatProvider theCultureInfo = new System.Globalization.CultureInfo("en-GB", true);
-                    //DateTime from_date = DateTime.ParseExact(formattedDate, "dd-MM-yyyy", theCultureInfo);
-                    //DateTime to = DateTime.ParseExact("25-11-2019", "dd-MM-yyyy", theCultureInfo);
-                    //string txt_total_days = ((from_date - to).TotalDays).ToString();
-                    //int diffResult = int.Parse(txt_total_days.ToString());
-                    //if (customerInfo.StateId != "25")
-                    //{
-                    //    if (diffResult >= 0)
-                    //    {
-                    //        customerInformationresponseData.Message = "Vehicle owner's with vehicles manufactured after 1st April 2019, should contact their respective Automobile Dealers for HSRP affixation";
-                    //        return customerInformationresponseData;
-                    //    }
-                    //}
+                   
                 }
                 catch (Exception ex)
                 {

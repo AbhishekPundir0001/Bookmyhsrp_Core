@@ -24,5 +24,26 @@ namespace BookMyHsrp.Libraries.AppointmentSlot.Model
             public string EndDate { get; set; }
             public string BlockDate { get; set; }
         }
+        public class AppointmentSlotCheckEc
+        {
+            public string StartDate { get; set; }
+            public string EndDate { get; set; }
+        }
+        public class CheckTimeSlot
+        {
+            public string Date { get; set; }
+            public string StartDate { get; set; }
+        }
+        public class TimeSlotList
+        {
+            public int TimeSlotID { get; set; }
+            public int SlotID { get; set; }
+            public string SlotName { get; set; }
+            public int RTOCodeID { get; set; }
+            public int VehicleTypeID { get; set; }
+            public int AvaiableCount { get; set; }
+            public int BookedCount { get; set; }
+            public string AvaiableStatus { get; set; }
+        }
     }
 }
