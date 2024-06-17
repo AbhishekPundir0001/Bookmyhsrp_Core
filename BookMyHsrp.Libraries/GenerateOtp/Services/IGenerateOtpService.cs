@@ -11,5 +11,6 @@ namespace BookMyHsrp.Libraries.GenerateOtp.Services
     {
         Task<dynamic> GenerateOtp(string mobile,dynamic data);
         Task<dynamic> ConfirmOTP(string otp);
+        Task<string> OrdercancelSMSSend(string mobile, string SMSText, string TemplateID, string SenderIDHeader);
     }
 }

@@ -269,14 +269,14 @@ namespace BookMyHsrp.ReportsLogics.HsrpWithColorSticker
                                     return vehicleValidationResponse;
                                 }
 
-                                else
-                                {
-                                    vehicleValidationResponse.data.non_homo = "N";
-                                    vehicleValidationResponse.status = "false";
-                                    vehicleValidationResponse.message =
-                                        "As a Vendor we are not authorised for this vehicle Please visit www.siam.in for respective HSRP Maker.";
-                                    vehicleValidationResponse.data = vehicleValidationData;
-                                    return vehicleValidationResponse;
+                                    else
+                                    {
+                                        vehicleValidationResponse.data.non_homo = "N";
+                                        vehicleValidationResponse.status = "false";
+                                        vehicleValidationResponse.message =
+                                            "As a Vendor we are not authorised for this vehicle Please visit www.siam.in for respective HSRP Maker.";
+                                        vehicleValidationResponse.data = vehicleValidationData;
+                                        return vehicleValidationResponse;
 
                                 }
                             }
@@ -472,7 +472,7 @@ namespace BookMyHsrp.ReportsLogics.HsrpWithColorSticker
             session.VehicleType_imgPath = "www";
             session.OEMImgPath = "www";
             session.OrderType = "OB";
-            var jsonDeSerializer = System.Text.Json.JsonSerializer.Deserialize<RootDtoSticker>(sessionDetails);
+            var jsonDeSerializer = System.Text.Json.JsonSerializer.Deserialize<RootDto>(sessionDetails);
             try
             {
                 var nonHomo = jsonDeSerializer.NonHomo;

@@ -1,18 +1,22 @@
-﻿<!DOCTYPE html>
+﻿
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
-    <title>Dreams Rent | Template</title>
+    <title>Track Your Order</title>
+    
+    <style>
+        .main-body .status-card{
+            height:100%;
+        }
+    </style>
 
 </head>
 
 <body>
 
-    <!-- Body main wrapper start -->
-
-        <!--  Start Offcanvas Mobile Menu Section  -->
         <div class="offcanvas offcanvas-start" tabindex="-1" id="toggleMenu">
             <div class="offcanvas-header">
 
@@ -61,12 +65,12 @@
                 <!-- End Offcanvas Mobile Menu Wrapper -->
             </div>
         </div>
-        <!--  End Offcanvas Mobile Menu Section -->
-        <!-- main start -->
-        <main class="main-body bg-img ptb--50 main-bg">
+       
+        <main class="main-body bg-img pt--50 pb--80 main-bg">
             <div class="container">
                 <div class="row justify-content-center">
-                    <div class="col-lg-4">
+
+                <div class="col-lg-4">
                         <div class="status-card" id="main">
                             <div class="title-area">
                                 <h4 class="title">Track Your Order</h4>
@@ -111,38 +115,153 @@
                                 </form>
                             </div>
                         </div>
-                    <div class="status-card" id="hidden">   
-                        <div class="row">
-                            <p id="HiddenOrderNo"><p>
+                </div>
+                </div>
+            <div class="row justify-content-center">
+                <div class="col-lg-6">
+                    <div class="status-card" id="hidden">
+                        <div class="title-area">
+                            <h4 class="title">Appointment Status</h4>
                         </div>
-                        <div class="col-sm-3">
-                            <p id="vehicleNo"></p>
-                        </div>
-                        <div class="col-sm-3">
-                            <p id="appointmentDate"></p>
-                        </div>
-                        <div class="col-sm-3">
-                            <p id="orderstatus"></p>
-                        </div>
-                        <div class="col-sm-3">
-                            <p id="ownername"></p>
-                        </div>
-                        <div class="col-sm-3">
-                            <p id="address"></p>
-                        </div>
-                        <div class="col-sm-3">
-                            <p id="DealerAffixationCenterName"></p>
-                        </div>
-                        <div class="col-sm-3">
-                            <p id="DealerAffixationCenterAddress"></p>
-                        </div>
-                        <div class="control btn-grp">
-                            <button class="filled" id="btnclose">Close</button>
+                        <div class="card-body">
+                            <form action="">
+                                <div class="row">
+                                    <div class="col-lg-6 col-sm-12">
+                                        <div class="d-desc">
+                                            <label>Order Number</label>
+                                            <p id="HiddenOrderNo"></p>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-sm-12">
+                                        <div class="d-desc">
+                                            <label>Vehicle Reg. Number</label>
+                                            <p id="vehicleNo"></p>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-sm-12">
+                                        <div class="d-desc">
+                                            <label>Appointment Date</label>
+                                            <p id="appointmentDate"></p>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-sm-12">
+                                        <div class="d-desc">
+                                            <label>Order Status</label>
+                                            <p id="orderstatus"></p>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-sm-12">
+                                        <div class="d-desc">
+                                            <label>Name</label>
+                                            <p id="ownername"></p>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-sm-12">
+                                        <div class="d-desc">
+                                            <label>Fitment Address</label>
+                                            <p id="address"></p>
+                                        </div>
+                                    </div>
 
+                                    <div class="col-lg-12 mt-5">
+                                        <button type="button" class="submit-btn" id="download_receipt">
+                                            Confirm
+                                        </button>
+                                        <button type="button" class="submit-btn" id="btnclose">
+                                            Not Confirm
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
+                </div>
+            <div class="row justify-content-center">
+                <div class="col-lg-6">
+                    <div class="status-card" id="hidden1">
+                        <div class="card-body">
+                            <form action="">
+                                <div class="row">
+                                    <div class="col-lg-6 col-sm-12">
+                                        <div class="d-desc">
+                                            <label>Order Number</label>
+                                            <p id="hiddenOrderNo1"></p>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-sm-12">
+                                        <div class="d-desc">
+                                            <label>Vehicle Reg. Number</label>
+                                            <p id="hiddenvehicleNo"></p>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-sm-12">
+                                        <div class="d-desc">
+                                            <label>Previous Date</label>
+                                            <p id="previousappointmentdate"></p>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-sm-12">
+                                        <div class="d-desc">
+                                            <label>Reschedule Date</label>
+                                            <p id="hiddenresceduledate"></p>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-sm-12">
+                                        <div class="d-desc">
+                                            <label>Final Appointment Date</label>
+                                            <p id="hiddenresceduleondate"></p>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-sm-12">
+                                        <div class="d-desc">
+                                            <label>Order Status</label>
+                                            <p id="hiddenorderstatus"></p>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-sm-12">
+                                        <div class="d-desc">
+                                            <label>Name</label>
+                                            <p id="hiddenownername"></p>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-sm-12">
+                                        <div class="d-desc">
+                                            <label>Fitment Address</label>
+                                            <p id="hiddenaddress"></p>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 mt-5">
+                                        <button type="button" class="submit-btn" id="btnclose">
+                                            Close
+                                        </button>
+                                        <button type="button" class="submit-btn" id="btnclose">
+                                            Download
+                                        </button>
+                                    </div>
+
+
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-lg-6">
+                    <div class="status-card" id="hidden2">
+                        <div class="card-body">
+                            <form action="">
+                                <div class="row" id="reschedulediv">
+                                       
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
             </div>
-        </main>
+        </div>
+    </main>
        
  @section Scripts {
         <script>
@@ -158,6 +277,8 @@
 
             window.onload = function () {
                 $('#hidden').hide();
+                $('#hidden1').hide();
+                $('#hidden2').hide();
                             DrawCaptcha();
             document.getElementById("btnRefreshCaptcha").addEventListener("click", DrawCaptcha);
             };
@@ -228,23 +349,76 @@
                     $(this).html(originalButtonText)
                     return false;
                 }
-
                 var data = { VehicleregNo: vehRegNo, OrderNo: orderNo }
                 const result = await postData(url, data);
+                if (result == "Not Found" || result.Count == 0) {
+                    return errorFunc("Data Not Found");
+                }
                 var data = { VehicleRegNo: vehRegNo, OrderNo: orderNo }
                 var url = "/track-your-order-sp"
                 const spresult = await postData(url, data)
                 
-                
-                if (result == null || result.Count == 0) {
-                    if (spresult == null || spresult.Count == 0) {
 
+                if (result == "Not Found" || result.Count == 0) {
+                    if (spresult == "Not Found" || spresult.Count == 0) {
                         $('.status-card').hide();
-                        errorFunc("Data Not Found");
+                        return errorFunc("Data Not Found");
                     }
                 }
                 else {
-                    $('.status-card').hide();
+                    debugger
+                    if (spresult.ReAppointmentStatus == "1") {
+                        $('.status-card').hide();
+                        $('#hidden1').show();
+                        $('#hidden2').show();
+                        $('#hiddenOrderNo1').text(result[0].ORDER_NUMBER);
+                        $('#hiddenorderstatus').text(result[0].ORDER_NUMBER);
+                        $('#hiddenvehicleNo').text(result[0].REG_NUMBER);
+                        if (_AppointmentType == "Home") {
+                            $('#hiddenownername').text(result[0].OwnerName)
+                            var FullAddress = result[0].ShippingAddress1 + " " + result[0].ShippingAddress2 + " " + result[0].ShippingCity + " " + result[0].ShippingState + " " + result[0].ShippingPinCode;
+                            return $('#hiddenaddress').text(FullAddress)
+                        }
+                        else {
+
+                            var dealerid = result[0].dealerid.toString();
+
+                            var data = { VehicleregNo: vehRegNo, OrderNo: orderNo,Dealerid: dealerid };
+                            const _dealer = await postData("/dealer-name", data);
+
+                            if (_dealer.length > 0) {
+                                $('#hiddenownername').text(_dealer[0].DealerAffixationCenterName);
+                                $('#hiddenaddress').text(_dealer[0].DealerAffixationCenterAddress);
+                            }
+                        }
+                        for (var i = 0; i < spresult.length; i++) {
+                            debugger
+                            $('#previousappointmentdate').text(spresult[i].AppointmentDate);
+                            $('#hiddenresceduledate').text(spresult[i].RescheduledAppointmentDate);
+                            $('#hiddenresceduleondate').text(spresult[i].RescheduledAppointmentDate);
+                            debugger
+                            var divToUpdate = document.getElementById('reschedulediv');
+                            var customHTML =
+                                "<div class='row'>" +
+                                "<div class='col-lg-6 col-sm-12'>" +
+                                "<div class='d-desc'>" +
+                                "<label>Rescheduled On</label>" +
+                                "<p>" + spresult[i].CreationDate + "</p>" +
+                                "</div>" +
+                                "</div>" +
+                                "<div class='col-lg-6 col-sm-12'>" +
+                                "<div class='d-desc'>" +
+                                "<label>" + spresult[i].OrderNo + "</label>" +
+                                "<a href='" + spresult[i].ReceiptPath + "' target='_blank'>Download</a>" +
+                                "</div>" +
+                                "</div>" +
+                                "</div>";
+
+                            divToUpdate.innerHTML = customHTML;
+                        }
+                        }
+                 
+                        $('.status-card').hide();
                     $('#hidden').show();
                     $('#HiddenOrderNo').text(result[0].ORDER_NUMBER);
                     $('#vehicleNo').text(result[0].REG_NUMBER)
@@ -270,23 +444,22 @@
                     if (_AppointmentType == "Home") {
                         $('#ownername').text(result[0].OwnerName)
                         var FullAddress = result[0].ShippingAddress1 + " " + result[0].ShippingAddress2 + " " + result[0].ShippingCity + " " + result[0].ShippingState + " " + result[0].ShippingPinCode;
-                        $('#address').text(FullAddress)
-                    } else {
-                        var dealerid = result[0].Dealerid;
+                        return $('#address').text(FullAddress)
+                    } 
+                    else {
+                        
+                        var dealerid = result[0].dealerid.toString();
+                       
+                        var data = { Dealerid: dealerid };
                         const _dealer = await postData("/dealer-name", data);
-                        if (_dealer.Rows.Count > 0){
-                            $('DealerAffixationCenterAddress').text(result[0].DealerAffixationCenterAddress);
-                            $('DealerAffixationCenterName').text(result[0].DealerAffixationCenterName);
+                        
+                        if (_dealer.length > 0){
+                            $('#ownername').text(_dealer[0].DealerAffixationCenterName);
+                            return $('#address').text(_dealer[0].DealerAffixationCenterAddress);
                         }
 
-                                }
-
-                
+                    }
                 }
-
-
-
-
             }
 
         </script>
@@ -294,5 +467,4 @@
         }
         
 </body>
-
 </html>

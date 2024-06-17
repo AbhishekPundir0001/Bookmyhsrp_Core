@@ -12,5 +12,7 @@ namespace BookMyHsrp.Libraries.Receipt.Services
     {
         Task<dynamic> GetReceipt(dynamic dto);
         Task<dynamic> GetGSTIN(string StateId);
+        string QRGenerate(string inputText, string OrderNo, string QRPath);
+
     }
 }

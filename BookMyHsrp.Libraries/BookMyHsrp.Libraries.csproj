@@ -14,6 +14,8 @@
     <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="8.0.0" />
     <PackageReference Include="Microsoft.Extensions.Options" Version="8.0.2" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="QRCoder" Version="1.3.6" />
+    <PackageReference Include="QRCoderNetCore" Version="1.0.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -24,6 +26,12 @@
   <ItemGroup>
     <ProjectReference Include="..\BookMyHsrp.Dapper\BookMyHsrp.Dapper.csproj" />
     <ProjectReference Include="..\BookMyHsrp.Utility\BookMyHsrp.Utility.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="QRCoder">
+      <HintPath>..\..\..\..\Desktop\New folder (2)\QRCoder.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

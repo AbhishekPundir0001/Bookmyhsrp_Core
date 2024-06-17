@@ -13,5 +13,12 @@ namespace BookMyHsrp.Libraries.Receipt.Models
             public string OrderNo { get; set; } = "";
             public string VehicleregNo { get; set; } = "";
         }
+
+        public class ResponseSticker
+        {
+            public string Message { get; set; }
+
+        }
+
     }
 }

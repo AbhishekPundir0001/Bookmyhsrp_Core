@@ -138,7 +138,7 @@
                                         <div class="col-lg-4 col-md-6 col-sm-12">
                                             <div class="form-group">
                                                 <label class="form-label">Pin Code</label>
-                                                <input maxlength="6" id="pincode" type="text" class="form-control">
+                                                <input maxlength="6" id="pincode" type="text" class="form-control" onkeypress="return isNumberKey(event);" autocomplete="off">
                                             </div>
                                         </div>
                                         <div class="col-lg-4 col-md-6 col-sm-12">
@@ -160,7 +160,7 @@
                                             <button id="submit-mobile" type="button" class="submit-btn me-3">
                                                 Submit
                                             </button>
-                                            <button type="reset" class="reset-btn">
+                                            <button type="reset" class="reset-btn" id="reset">
                                                 Reset
                                             </button>
                                         </div>
@@ -236,8 +236,8 @@
     <!-- Body main Script start -->
     @section Scripts
     {
-
         <script src="~/js/owl.carousel.min.js"></script>
+       
         <script>
             $('#avabilitierror').hide();
             $('#details').hide();
@@ -399,10 +399,10 @@
 
                     return;
                 }
-                if (!landmark) {
-                    errorFunc("Please Input Landmark");
-                    return;
-                }
+                // if (!landmark) {
+                //     errorFunc("Please Input Landmark");
+                //     return;
+                // }
                 const data = { Pincode: pincode, DeliveryCity: city, StateName: state, AddressLine1: addressline1, AddressLine2: addressline2, Landmark: landmark }
                 try {
                     const result = await postData(url, data);
@@ -417,6 +417,23 @@
             }
 
         </script>
+
+        <script>
+            function isNumberKey(evt) {
+                var charCode = (evt.which) ? evt.which : evt.keyCode
+                return !(charCode > 31 && (charCode < 48 || charCode > 57));
+            }
+
+            $(document).ready(function () {
+            $('#reset').click(function () {
+                debugger;
+                $('#addressline1').val('');
+                $('#addressline2').val('');
+                $('#lamdmark').val('');
+            });
+            });
+        </script>
+
     }
     <!-- Body main Script end -->
 </body>

@@ -129,6 +129,7 @@ namespace BookMyHsrp.Libraries.HsrpWithColorSticker.Models
         public string VehicleTypeid { get; set; }
 
         public string PlateOrderType { get; set; }
+        public string RealOrderType { get; set; }
     }
     public class Session
     {

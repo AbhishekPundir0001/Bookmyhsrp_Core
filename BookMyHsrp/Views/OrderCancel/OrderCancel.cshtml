@@ -5,7 +5,6 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
     <title>Dreams Rent | Template</title>
-
 </head>
 
 <body>
@@ -68,7 +67,7 @@
                 <div class="col-lg-4">
                     <div class="status-card" id="main">
                         <div class="title-area">
-                            <h4 class="title">Order Cancellation & Refund</h4>
+                            <h4 class="title">Cancel Order</h4>
                         </div>
                         <div class="card-body">
                             <form action="">
@@ -110,41 +109,161 @@
                             </form>
                         </div>
                     </div>
-                    <div class="status-card" id="hidden">
-                        <div class="row">
-                            <p id="HiddenOrderNo"><p>
-                        </div>
-                        <div class="col-sm-3">
-                            <p id="vehicleNo"></p>
-                        </div>
-                        <div class="col-sm-3">
-                            <p id="appointmentDate"></p>
-                        </div>
-                        <div class="col-sm-3">
-                            <p id="orderstatus"></p>
-                        </div>
-                        <div class="col-sm-3">
-                            <p id="ownername"></p>
-                        </div>
-                        <div class="col-sm-3">
-                            <p id="address"></p>
-                        </div>
-                        <div class="col-sm-3">
-                            <p id="DealerAffixationCenterName"></p>
-                        </div>
-                        <div class="col-sm-3">
-                            <p id="DealerAffixationCenterAddress"></p>
-                        </div>
-                        <div class="control btn-grp">
-                            <button class="filled" id="btnclose">Close</button>
 
+                    
+                       
+                    </div>
+                    
+                </div>
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="status-card" id="finalcancelconfirmation">
+                        <div class="title-area">
+                            <h4 class="title">Order Cancellation Request Received</h4>
+                            <p>Cancelled and payment refund initiated as per your order details are Below</p>
+                        </div>
+                        <div class="card-body">
+                            <form action="">
+                                <div class="row">
+                                    <div class="col-lg-6 col-sm-12">
+                                        <div class="d-desc">
+                                            <label>Order Number</label>
+                                            <p id="ordernofinal"></p>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-sm-12">
+                                        <div class="d-desc">
+                                            <label>Vehicle Reg. Number</label>
+                                            <p id="vehicleregnofinal"></p>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-sm-12">
+                                        <div class="d-desc">
+                                            <label>Order Status</label>
+                                            <p id="orderstatusfinal"></p>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-sm-12">
+                                        <div class="d-desc">
+                                            <label>Fuel Type</label>
+                                            <p id="fueltypefinal"></p>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-sm-12">
+                                        <div class="d-desc">
+                                            <label>Vehicle Class</label>
+                                            <p id="vehicleclassfinal"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
+                </div>
+                </div>
     </main>
 
+    </div>
+    <!-- Body main wrapper end -->
+    <!-- OTP Modal -->
+    <div class="modal otp-modal fade" id="otp-modal" data-bs-backdrop="static" data-bs-keyboard="false"
+         tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Order booking verification</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><i class="fas fa-times"></i></button>
+                </div>
+                <div class="modal-body text-center">
+                    <div class="position-relative">
+                        <div class="img-icon">
+                            <img src="~/Images/password.png" alt="">
+                        </div>
+                        <h6>Please enter the OTP send to your<br>registerd mobile number</h6>
+                        <span>OTP is valid for 10 minutes. </span>
+                        <div class="otp-box">
+                            <form action="#">
+                                <div class="input-field">
+                                    <input id="first" type="number" class="otp-text m-2" />
+                                    <input id="second" type="number" class="otp-text m-2" disabled />
+                                    <input id="third" type="number" class="otp-text m-2" disabled />
+                                    <input id="fourth" type="number" class="otp-text m-2" disabled />
+                                </div>
+                                <div class="mt-3">
+                                    <button id="btn-validate" class="submit-btn otp-btn"
+                                            data-bs-dismiss="modal">
+                                        Validate
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="card-2">
+                            <p class="resend-para">
+                                Didn't receive OTP? <a href="#"
+                                                       class="text-decoration-none ms-1">Resend</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    @await Html.PartialAsync("~/Views/PartialView/_SuccessOTPModelPartialCancelOrder.cshtml")
+  
     @section Scripts {
         <script>
+
+           
+
+
+            async function otpSuccess() {
+                            
+                            const errorFunc = (title) => {
+                    Toast.fire({
+                        icon: 'error',
+                        title: title
+                    })
+                    $(this).prop('disabled', false);
+
+                }
+                
+                var vehRegNo = $('#vehRegNo').val();
+                var orderNo = $('#orderNo').val();
+                const data = { VehicleRegNo: vehRegNo, OrderNo: orderNo }
+                $('#otp-validate3').modal('show');
+                const successdata = await postData("/CancelOrderDetails", data)
+                if (successdata.length > 0) {
+                    debugger
+                    $('#orderno').text(successdata[0].OrderNo);
+                    $('#vehicleregno').text(successdata[0].VehicleRegNo);
+                    $('#orderstatus1').text(successdata[0].OrderStatus);
+                    if (successdata[0].SlotBookingDateNew == "01-Jan-1900" || successdata[0].SlotBookingDateNew == null) {
+                        $('#appointmentdate').text("Fitment Date will be informed later via SMS and on Call");
+                    } else {
+                        $('#appointmentdate').text(successdata[0].SlotBookingDateNew);
+                    }
+                    var dealerid = successdata[0].Dealerid.toString();
+                    var _appointmenttype = successdata[0].AppointmentType;
+                    if (_appointmenttype == "Home") {
+                        $('#name').text(successdata[0].OwnerName);
+                        var FullAddress = successdata[0]["ShippingAddress1"] + " " + successdata[0]["ShippingAddress2"] + " " + successdata[0]["ShippingCity"] + " " + successdata[0]["ShippingState"] + " " + successdata[0]["ShippingPinCode"];
+                        $('#fitmentaddress').text(FullAddress);
+
+                    } else {
+                        var url = "/DealerAddress";
+
+                        var data1 = { VehicleRegNo: vehRegNo, OrderNo: orderNo ,Dealerid: dealerid };
+                        const dealeraddress = await postData(url, data1);
+                        $('#name').text(dealeraddress[0].DealerAffixationCenterName);
+                        $('#fitmentaddress').text(dealeraddress[0].DealerAffixationCenterAddress);
+                    }
+                } else {
+                    errorFunc("NOT FOUND")
+                }
+            }
 
             function DrawCaptcha() {
                 var a = Math.ceil(Math.random() * 9) + '';
@@ -156,10 +275,125 @@
             }
 
             window.onload = function () {
-                $('#hidden').hide();
+
                 DrawCaptcha();
                 document.getElementById("btnRefreshCaptcha").addEventListener("click", DrawCaptcha);
+                $('#hiddencancel').hide();
+                $('#finalcancelconfirmation').hide();
+           
             };
+
+
+
+            $('#btn-validate').click(async function () {
+                const validateBtn = document.querySelector('.otp-btn');
+                $(this).prop('disabled', true);
+                var originalButtonText = $(this).html();
+
+                const errorFunc = (title) => {
+                    Toast.fire({
+                        icon: 'error',
+                        title: title
+                    })
+                    $(this).prop('disabled', false);
+                    $(this).html(originalButtonText);
+
+                }
+                // Add click event listener to the "Validate" button
+                // validateBtn.addEventListener('click', function (event) {
+                //     event.preventDefault(); // Prevent form submission
+
+                // Get the OTP input elements
+                const firstInput = document.getElementById('first');
+                const secondInput = document.getElementById('second');
+                const thirdInput = document.getElementById('third');
+                const fourthInput = document.getElementById('fourth');
+
+                // Get the values of the OTP inputs
+                const firstValue = firstInput.value;
+                const secondValue = secondInput.value;
+                const thirdValue = thirdInput.value;
+                const fourthValue = fourthInput.value;
+
+                // Concatenate the OTP values into a single string
+                const otp = firstValue + secondValue + thirdValue + fourthValue;
+                if (otp != "") {
+                    let url = "/api/v1/otp/otpConfirmation/" + otp;
+                    const result = await fetchData(url);
+                    if (result.Message == "Data Received.") {
+                        
+                        await otpSuccess()
+
+
+
+                    }
+                    else {
+                        errorFunc("Wrong Otp");
+                        return;
+                    }
+
+                }
+
+                // Now, the 'otp' variable contains the concatenated OTP value
+                //      console.log(otp);
+
+                // You can perform further actions with the OTP value here, such as validation or sending it to a server.
+                //});
+
+            });
+
+
+
+
+            const inputs = document.querySelectorAll(".otp-text");
+
+            // iterate over all inputs
+            inputs.forEach((input, index1) => {
+                input.addEventListener("keyup", (e) => {
+                    // This code gets the current input element and stores it in the currentInput variable
+                    // This code gets the next sibling element of the current input element and stores it in the nextInput variable
+                    // This code gets the previous sibling element of the current input element and stores it in the prevInput variable
+                    const currentInput = input,
+                        nextInput = input.nextElementSibling,
+                        prevInput = input.previousElementSibling;
+
+                    // if the value has more than one character then clear it
+                    if (currentInput.value.length > 1) {
+                        currentInput.value = "";
+                        return;
+                    }
+                    // if the next input is disabled and the current value is not empty
+                    //  enable the next input and focus on it
+                    if (nextInput && nextInput.hasAttribute("disabled") && currentInput.value !== "") {
+                        nextInput.removeAttribute("disabled");
+                        nextInput.focus();
+                    }
+
+                    // if the backspace key is pressed
+                    if (e.key === "Backspace") {
+                        // iterate over all inputs again
+                        inputs.forEach((input, index2) => {
+                            // if the index1 of the current input is less than or equal to the index2 of the input in the outer loop
+                            // and the previous element exists, set the disabled attribute on the input and focus on the previous element
+                            if (index1 <= index2 && prevInput) {
+                                input.setAttribute("disabled", true);
+                                input.value = "";
+                                prevInput.focus();
+                            }
+                        });
+                    }
+                    //if the fourth input( which index number is 3) is not empty and has not disable attribute then
+                    //add active class if not then remove the active class.
+                    if (!inputs[3].disabled && inputs[3].value !== "") {
+                        //  button.classList.add("active");
+                        return;
+                    }
+                    // button.classList.remove("active");
+                });
+            });
+
+            //focus the first input which index is 0 on window load
+            // window.addEventListener("load", () => inputs[0].focus());
 
 
 
@@ -198,6 +432,8 @@
             function removeSpaces(string) {
                 return string.replace(/\s+/g, '');
             }
+
+            
             $('#submit-button').click(function () {
                 handleButtonClick.call(this, '/DealerWalletdetail', postData, (result) => {
                     // bindHtmlHsrpView(result.Data);
@@ -205,9 +441,12 @@
                     // console.log('Data posted successfully, where the server response data is', result);
                 })
             });
+           
+
+
 
             async function handleButtonClick(url, postData, isSuccessFunc) {
-
+                debugger
                 const errorFunc = (title) => {
                     Toast.fire({
                         icon: 'error',
@@ -230,23 +469,203 @@
 
                 var data = { VehicleregNo: vehRegNo, OrderNo: orderNo }
                 const result = await postData(url, data);
-                var data = { VehicleRegNo: vehRegNo, OrderNo: orderNo }
-                var url = "/CancelOrderGet"
-                const result1 = await postData(url, data);
+                if (result.length > 0) {
+                    if (result == "data not found") {
+                        return errorFunc("Data Not Found")
+                    }
+                    var MobileNo = result[0].MobileNo
+                    const data = { VehicleRegNo: vehRegNo, MobileNo: MobileNo, OrderNo: orderNo }
+                    $('#otp-modal').modal('show');
+                    let url = "ordercancelOTP";
+                    const otpresult = await postData(url, data);
+                    return otpresult;
 
-                if (result1.Count > 0) 
-                    
+                }
+                else {
+                    $('.status-card').hide();
+                    $('#hidden').show();
+                    $('#HiddenOrderNo').text(result[0].ORDER_NUMBER);
+                    $('#vehicleNo').text(result[0].REG_NUMBER)
+
+                    const fitmentdate = await postData("/fitment-date", data)
+
+                    if (fitmentdate && fitmentdate.Count > 0) {
+                        $('#appointmentDate').text("Fitment Date will be informed later via SMS and on Call")
+                    }
+                    else {
+
+                        var datetimeString = result[0].SlotBookingDate;
+                        var date = new Date(datetimeString);
+                        var day = ('0' + date.getDate()).slice(-2);
+                        var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+                        var month = monthNames[date.getMonth()];
+                        var year = date.getFullYear();
+                        var formattedDate = day + '-' + month + '-' + year;
+                        $('#appointmentDate').text(formattedDate);
+                    }
+                    $('#orderstatus').text(result[0].OrderStatus)
+                    var _AppointmentType = result[0].AppointmentType;
+                    if (_AppointmentType == "Home") {
+                        $('#ownername').text(result[0].OwnerName)
+                        var FullAddress = result[0].ShippingAddress1 + " " + result[0].ShippingAddress2 + " " + result[0].ShippingCity + " " + result[0].ShippingState + " " + result[0].ShippingPinCode;
+                        $('#address').text(FullAddress)
+                    } else {
+                        debugger
+                        var dealerid = result[0].Dealerid.toString();
+                        var data1 = { VehicleRegNo: vehRegNo, OrderNo: orderNo, Dealerid: dealerid };
+                        const _dealer = await postData("/dealer-name", data1);
+                        if (_dealer.Rows.Count > 0) {
+                            $('DealerAffixationCenterAddress').text(_dealer[0].DealerAffixationCenterAddress);
+                            return $('DealerAffixationCenterName').text(_dealer[0].DealerAffixationCenterName);
+                            
+                        }
+
+                    }
+
+
                 }
 
-
             }
-                
-
 
 
 
             
-           
+            $('#btnSearch').click(function () {
+                
+                handleButtonClick1.call(this, '/CancelOrderDetails', postData, (result) => {
+                    // bindHtmlHsrpView(result.Data);
+                    // $('#div-bind-report').show();
+                    // console.log('Data posted successfully, where the server response data is', result);
+                })
+            });
+            $('#confirmcancelorder').click(function () {
+
+                handleButtonClick2.call(this, '/OrderCancelConfirmation', postData, (result) => {
+                    // bindHtmlHsrpView(result.Data);
+                    // $('#div-bind-report').show();
+                    // console.log('Data posted successfully, where the server response data is', result);
+                })
+            });
+            async function handleButtonClick2(url, postData, isSuccessFunc) {
+                debugger
+                const errorFunc = (title) => {
+                    Toast.fire({
+                        icon: 'error',
+                        title: title
+                    })
+                    $(this).prop('disabled', false);
+
+                }
+                var vehRegNo = $('#vehRegNo').val();
+                var orderNo = $('#orderNo').val();
+                var remarkInput = document.getElementById('remark');
+                var vehicleClassSelect = document.getElementById('vehicleClass');
+                var remarks = vehicleClassSelect.value + " -- remarks: " + remarkInput.value
+                debugger
+                if (remarkInput.value.trim() === "") {
+                    return errorFunc("Please enter remarks");
+                } if (remarkInput.value.includes("'")) {
+                    return errorFunc("Apostrophe (') is not allowed in Remark");
+                }
+                if (vehicleClassSelect.value !== "wrongvehicle" && vehicleClassSelect.value !== "others") {
+                    return errorFunc("Please select reason for order cancelling")
+                }
+
+                var data = { VehicleregNo: vehRegNo, OrderNo: orderNo, Reason: remarks }
+                const result = await postData(url, data)
+                debugger
+                $('#btn-close').click();
+                $('#finalcancelconfirmation').show();
+                $('#main').hide();
+                if (result.length > 0) {
+                    if (result == "Order cannot be cancelled") {
+                        errorFunc("Order cannot be Cancelled")
+                    } else {
+                        $('#ordernofinal').text(result[0].OrderNo)
+                        $('#vehicleregnofinal').text(result[0].VehicleRegNo)
+                        $('#orderstatusfinal').text(result[0].OrderStatus)
+                        $('#fueltypefinal').text(result[0].fuelType)
+                        $('#vehicleclassfinal').text(result[0].VehicleClass)
+                    }
+                }
+            }
+
+            async function handleButtonClick1(url, postData, isSuccessFunc) {
+                
+                const errorFunc = (title) => {
+                    Toast.fire({
+                        icon: 'error',
+                        title: title
+                    })
+                    $(this).prop('disabled', false);
+
+                }
+
+                var vehRegNo = $('#vehRegNo').val();
+                var orderNo = $('#orderNo').val();
+                var data = { VehicleregNo: vehRegNo, OrderNo: orderNo }
+                const result = await postData(url, data);
+                
+                debugger
+                $('#maincancel').hide();
+                $('#hiddencancel').show();
+
+                $('#hiddenorderno').text(result[0].OrderNo)
+                $('#hiddenvehicleregno').text(result[0].VehicleRegNo)
+                if (result[0].SlotBookingDateNew == "01-Jan-1900" || result[0].SlotBookingDateNew == null) {
+                    $('#hiddenappointmentdate').text("Fitment Date will be informed later via SMS and on Call");
+                } else {
+                    $('#hiddenappointmentdate').text(result[0].SlotBookingDateNew);
+                }
+                var dealerid = result[0].Dealerid.toString();
+                var _appointmenttype = result[0].AppointmentType;
+                if (_appointmenttype == "Home") {
+                    var FullAddress = result[0]["ShippingAddress1"] + " " + result[0]["ShippingAddress2"] + " " + result[0]["ShippingCity"] + " " + result[0]["ShippingState"] + " " + result[0]["ShippingPinCode"];
+                    $('#hiddenfitmentaddress').text(FullAddress);
+
+                } else {
+                    debugger
+                    var url = "/DealerAddress";
+                    var data1 = { VehicleRegNo: vehRegNo, OrderNo: orderNo, Dealerid: dealerid };
+                    const dealeraddress = await postData(url, data1);
+                    $('#hiddenfitmentaddress').text(dealeraddress[0].DealerAffixationCenterAddress);
+                }
+                $('#hiddenvehiclemaker').text(result[0].ManufacturerName);
+                $('#hiddenengineno').text(result[0].EngineNo);
+                $('#hiddenappointmentslot').text(result[0].SlotTime); // Note: There are two elements with this ID, consider changing one to a unique ID.
+                $('#hiddenchassisno').text(result[0].ChassisNo);
+                $('#hiddenfueltype').text(result[0].fuelType);
+                $('#hiddenvehicletype').text(result[0].VehicleType);
+                $('#hiddenvehicleclass').text(result[0].VehicleClass);
+                $('#btnSearch').hide();
+                $('#confirm').show();
+                var dealerid = result[0].Dealerid.toString();
+                var _appointmenttype = result[0].AppointmentType;
+                if (_appointmenttype == "Home") {
+                    var FullAddress = result[0]["ShippingAddress1"] + " " + result[0]["ShippingAddress2"] + " " + result[0]["ShippingCity"] + " " + result[0]["ShippingState"] + " " + result[0]["ShippingPinCode"];
+                    $('#fitmentaddress').text(FullAddress);
+
+                }
+                else 
+                {
+                    var url = "/DealerAddress";
+                    var data1 = { VehicleRegNo: vehRegNo, OrderNo: orderNo, Dealerid: dealerid };
+                    const dealeraddress = await postData(url, data1);
+                    var dAddress = dealeraddress[0].DealerAffixationCenterName;
+                    var dCity = dealeraddress[0].DealerAffixationCenterAddress;
+                    var dPincode = dealeraddress[0].DealerAffixationCenterPinCode;
+                    var FullAddress = dAddress + " " + dCity + " " + dPincode;
+                    $('#fitmentaddress').text(FullAddress);
+                }
+                var url = "/CancelOrderStatus"
+                const selectstatus = await postData(url, data);
+                if (selectstatus > 0) {
+                    var HsrpOrderStatus = selectstatus[0].OrderStatus;
+                    return pass;
+                }
+            }
+
+
         </script>
 
     }

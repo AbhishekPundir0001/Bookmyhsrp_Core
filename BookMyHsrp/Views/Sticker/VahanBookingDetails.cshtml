@@ -95,6 +95,11 @@
             </div>
         </section>
 
+        <input type="hidden" id="hdnFrontPlate" />
+        <input type="hidden" id="hdnRearPlate" />
+        <input type="hidden" id="hdnFrontLaser" />
+        <input type="hidden" id="hdnRearLaser" />
+        <input type="hidden" id="hdnUploadFlag" />
         <!-- main start -->
         <main class="main-body">
             <div class="container-fluid">
@@ -179,7 +184,7 @@
                                         <div class="col-lg-4 col-md-6 col-sm-12">
                                             <div class="form-group">
                                                 <label class="form-label">Input Captcha</label>
-                                                <input id="txtInput" type="text" class="form-control">
+                                                <input id="txtInput" type="text" class="form-control" autocomplete="off">
                                             </div>
                                         </div>
                                         <div class="col-lg-4 col-md-6 col-sm-12">
@@ -313,31 +318,32 @@
 
                                                 </div>
                                             </div>
-                                            <div class="col-lg-4 col-md-6 col-sm-12">
+                                            <div class="col-lg-4 col-md-6 col-sm-12" id="divFrontLaser">
                                                 <div class="form-group">
                                                     <label class="form-label">Front Laser Photo* <a href="#" class="guide-a" data-bs-toggle="modal" data-bs-target="#guide-1"><i class="fas fa-question"></i></a></label>
                                                     <input type="file" id="FrontLaserPhoto" class="file-control">
                                                 </div>
                                             </div>
-                                             <div class="col-lg-4 col-md-6 col-sm-12">
+                                            <div class="col-lg-4 col-md-6 col-sm-12" id="divRearLaser">
                                                 <div class="form-group">
                                                     <label class="form-label">Rear Laser Photo* <a href="#" class="guide-a" data-bs-toggle="modal" data-bs-target="#guide-2"><i class="fas fa-question"></i></a></label>
                                                     <input type="file" class="file-control" id="RearLaserPhoto">
                                                 </div>
                                             </div>
-                                            <div class="col-lg-4 col-md-6 col-sm-12">
+                                            <div class="col-lg-4 col-md-6 col-sm-12" id="divFrontPlate">
                                                 <div class="form-group">
                                                     <label class="form-label">Front Plate Photo* <a href="#" class="guide-a" data-bs-toggle="modal" data-bs-target="#guide-3"><i class="fas fa-question"></i></a></label>
                                                     <input type="file" class="file-control" id="FrontPlatePhoto">
                                                 </div>
                                             </div>
-                                            <div class="col-lg-4 col-md-6 col-sm-12">
+                                            <div class="col-lg-4 col-md-6 col-sm-12" id="divRearPlate">
                                                 <div class="form-group">
                                                     <label class="form-label">Rear Plate Photo* <a href="#" class="guide-a" data-bs-toggle="modal" data-bs-target="#guide-4"><i class="fas fa-question"></i></a></label>
                                                     <input type="file" class="file-control" id="RearPlatePhoto">
                                                 </div>
                                             </div>
-                                            <div class="col-lg-8 col-md-6 col-sm-12 align-items-center d-flex">
+                                            @* <div class="col-lg-8 col-md-6 col-sm-12 align-items-center d-flex" id="divUpload"> *@
+                                            <div class="col-lg-8 col-md-6 col-sm-12 align-items-center" id="divUpload">
                                                 <button onclick="uploadcsvfilesticker()" type="button" class="submit-btn">
                                                     Upload
                                                 </button>
@@ -359,7 +365,7 @@
                                             <div class="col-lg-4 col-md-6 col-sm-12">
                                                 <div class="form-group">
                                                     <label class="form-label">Email ID*</label>
-                                                    <input id="emailId" type="text" class="form-control">
+                                                    <input id="emailId" type="text" class="form-control" maxlength="60">
                                                 </div>
                                             </div>
                                             <div class="col-lg-4 col-md-6 col-sm-12">
@@ -435,8 +441,11 @@
                         </div>
                         <div class="card-2">
                             <p class="resend-para">
-                                Didn't receive OTP? <a href="#"
-                                                       class="text-decoration-none ms-1">Resend</a>
+                                <span id="timer">
+                                    If you do not receive the OTP on your registered mobile number, click on resend button after
+                                    <span id="time">120</span> Seconds
+                                </span>
+                                Didn't receive OTP? <a href="#" class="text-decoration-none ms-1" id="resend">Resend</a>
                             </p>
                         </div>
                     </div>
@@ -508,24 +517,40 @@
     <!-- Guide 4 End -->
     @await Html.PartialAsync("~/Views/PartialView/_SuccessOTPModelPartialSticker.cshtml")
 
-
-
-
-
-
-
-
-
-
-
-
-
+    <style>
+        .disabled {
+            pointer-events: none; /* Disable click events */
+            color: gray; /* Optionally change color to indicate disabled state */
+        }
+    </style>
     @section Scripts
     {
-
-
         <script src="~/js/owl.carousel.min.js"></script>
         <!-- OTP Script -->
+
+        <script>
+            async function otpTimer() {
+                $(document).ready(function () {
+                    // $('#resend').attr('disabled', 'disabled');
+                    $('#resend').addClass('disabled');
+                    var counter = 120;
+                    var interval = setInterval(function () {
+                        counter--;
+                        // Display 'counter' wherever you want to display it.
+                        if (counter <= 0) {
+                            clearInterval(interval);
+                            $('#timer').html("If you do not receive the OTP on your registered mobile number, click on resend button");
+                            $('#resend').removeClass('disabled');
+                            return;
+                        } else {
+                            $('#time').text(counter);
+                            console.log("Timer --> " + counter);
+                        }
+                    }, 1000);
+                });
+            }
+
+        </script>
 
         <script>
             $(async function () {
@@ -623,8 +648,6 @@
                     const result = await fetchData(url);
                     if (result.Message == "Data Received.") {
                         await otpSuccess()
-
-
                     }
                     else {
                         errorFunc("Wrong Otp");
@@ -797,9 +820,23 @@
                         //     userData["VehRegDate"] = convertDate("" + VehRegDate);
                         if (response.Message == "Vehicle details available in Vahan") {
 
+                            if (response.UploadFlag == 'Y') {
+                                $('#divFrontLaser').show();
+                                $('#divRearLaser').show();
+                                $('#divFrontPlate').show();
+                                $('#divRearPlate').show();
+                                $('#divUpload').show();
+                            }
+                            else {
+                                $('#hdnUploadFlag').val('N')
+                                $('#divFrontLaser').hide();
+                                $('#divRearLaser').hide();
+                                $('#divFrontPlate').hide();
+                                $('#divRearPlate').hide();
+                                $('#divUpload').hide();
+                            }
 
-
-
+                            $('#hdnUploadFlag').val(response.UploadFlag);
                             $('#registrationNumber').attr('readonly', 'readonly');
                             $('#chassisNo').attr('readonly', 'readonly');
                             $('#engineNo').attr('readonly', 'readonly');
@@ -949,10 +986,10 @@
                 var rearPlatePhoto = $("#RearPlatePhoto")[0].files[0];
 
                 var formData = new FormData();
-                formData.append("FrontLaserPhoto", frontLaserPhoto)
-                formData.append("RearLaserPhoto", rearLaserPhoto)
                 formData.append("FrontPlatePhoto", frontPlatePhoto)
                 formData.append("RearPlatePhoto", rearPlatePhoto)
+                formData.append("FrontLaserPhoto", frontLaserPhoto)
+                formData.append("RearLaserPhoto", rearLaserPhoto)
 
                 var url = "/api/v1/uploadSticker"
                 try {
@@ -960,6 +997,10 @@
                     var response = $.parseJSON(result);
                     debugger;
                     $('#lblMsg').html(response.Message);
+                    $('#hdnFrontLaser').val(response.FrontLaserPhoto);
+                    $('#hdnRearLaser').val(response.RearLaserPhoto);
+                    $('#hdnFrontPlate').val(response.FrontPlatePhoto);
+                    $('#hdnRearPlate').val(response.RearPlatePhoto);
                     } catch (error) {
                     // console.error('Failed to post data:', error);
                     $('#lblMsg').html('No File Uploaded');
@@ -983,7 +1024,7 @@
             });
 
             async function handleButtonClick(url, postData, isSuccessFunc) {
-
+                debugger;
                 $(this).prop('disabled', true);
                 var originalButtonText = $(this).html();
 
@@ -996,6 +1037,7 @@
                     $(this).html(originalButtonText);
 
                 }
+
                 const emailregex = /^\b[A-Z0-9._%-]+@@[A-Z0-9.-]+\.[A-Z]{2,4}\b$/i;
                 var EngNo = $('#engineNo').val();
                 var EngineNo = EngNo.trim();
@@ -1010,8 +1052,13 @@
                 var customerBillingAddress = $("#billingAddress").val();
                 var customerState = $("#select-state option:selected").val();
                 var vchCatgVahan = $("#vhlcategory").val();
-                //var oemVehicleType = $("#ddlOemVehicleType").val();
+                var _uploadFlag = $('#hdnUploadFlag').val();
+                var _frontPlate = $('#hdnFrontPlate').val();
+                var _rearPlate = $('#hdnRearPlate').val();
+                var _frontLaser = $('#hdnFrontLaser').val();
+                var _rearLaser = $('#hdnRearLaser').val();
 
+                //var oemVehicleType = $("#ddlOemVehicleType").val();
 
                 if (vchCatgVahan == '2WN' || vchCatgVahan == '2WIC' || vchCatgVahan == '2WT') {
                     vchCatgVahan = $('#vhlcategoryVahan').val();
@@ -1022,18 +1069,38 @@
                     } else if (vchCatgVahan == "0") {
                         errorFunc("Please select Vehicle Category");
                         return;
-
                     }
                 }
-
 
                 if (!emailregex.test(customerEmail)) {
                     errorFunc("Invalid Email Id");
                     return;
-
                 }
                 if ($('#fueltype').val() === '') {
                     errorFunc("Select Fuel Type");
+                    return;
+                }
+                if (_uploadFlag == 'Y') {
+                    if (_frontPlate == '') {
+                        errorFunc("Please Upload Front Plate Photo");
+                        return;
+                    }
+                    if (_rearPlate == '') {
+                        errorFunc("Please Upload Rear Plate Photo");
+                        return;
+                    }
+                    if (_frontLaser == '') {
+                        errorFunc("Please Upload Front Laser Code");
+                        return;
+                    }
+                    if (_rearLaser == '') {
+                        errorFunc("Please Upload Rear Laser Code");
+                        return;
+                    }
+                }
+
+                if (customerMobile.length != 10) {
+                    errorFunc("Please enter Valid Mobile No.");
                     return;
                 }
 
@@ -1073,8 +1140,7 @@
                         return;
                     }
 
-
-                    const data = { BharatStage: bharatStage, RegistrationDate: regDate, RegistrationNo: RegNo, ChassisNo: ChassisNo, EngineNo: EngineNo, OwnerName: customerName, EmailId: customerEmail, MobileNo: customerMobile, FilePath: filepath, BillingAddress: customerBillingAddress, MakerVahan: maker, VehicleTypeVahan: vehicleTypeVahan, FuelTypeVahan: fuleTypeVahan, VehicleCatVahan: vchCatgVahan, StateId: customerState, StateName: StateName, OemVehicleType: oemvehicletype }
+                    const data = { BharatStage: bharatStage, RegistrationDate: regDate, RegistrationNo: RegNo, ChassisNo: ChassisNo, EngineNo: EngineNo, OwnerName: customerName, EmailId: customerEmail, MobileNo: customerMobile, FilePath: filepath, BillingAddress: customerBillingAddress, MakerVahan: maker, VehicleTypeVahan: vehicleTypeVahan, FuelTypeVahan: fuleTypeVahan, VehicleCatVahan: vchCatgVahan, StateId: customerState, StateName: StateName, OemVehicleType: oemvehicletype, FrontPlatePath: _frontPlate, RearPlatePath: _rearPlate, FrontLaserCode: _frontLaser, RearLaserCode: _rearLaser, UploadFlag: _uploadFlag }
                     try {
                         const result = await postData(url, data);
                         isSuccessFunc(result);
@@ -1084,7 +1150,7 @@
                             let url = "/api/v1/otp"
                             const result = await fetchData(url);
 
-
+                            await otpTimer();
                         }
                     }
                     catch (error) {
@@ -1106,6 +1172,21 @@
             //     return inputFormat
             // }
 
+            $('#resend').click(async function () {
+                debugger;
+                try {
+                    let url = "/api/v1/otp"
+                    const result = await fetchData(url);
+                    debugger;                   
+                    await otpTimer();
+                }
+                catch (error) {
+                    console.error('Failed to post data:', error);
+                } finally {
+                    $(this).prop('disabled', false);
+                }
+            });
+         
             $("#select-state").change(function () {
                 debugger;
                 $('#registrationNumber').val('');
