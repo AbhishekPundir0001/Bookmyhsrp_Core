@@ -19,6 +19,7 @@ namespace BookMyHsrp.Dapper
         public string VehicleStatusAP2 { get; set; } = "";
         public string OemID { get; set; } = "";
         public string ReceiptPath { get; set; } = "";
+        public string QRPath { get; set; } = "";
         public string NonHomo { get; set; } = "";
         public string NonHomoOemId { get; set; } = "";
         public string ImgoemRosmertaUrl { get; set; }
