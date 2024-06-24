@@ -135,6 +135,7 @@ namespace BookMyHsrp.Controllers.CommonController
 
                     // Return the file as a byte array with Content-Type application/pdf
                     return File(fileBytes, "application/pdf", requestdto.OrderNo + ".pdf");
+                    //return Ok(new { success = true, message = "Receipt downloaded successfully!", file = fileBytes });
                 }
                 else
                 {
