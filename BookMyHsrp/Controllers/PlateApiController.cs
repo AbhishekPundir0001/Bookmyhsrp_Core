@@ -143,13 +143,14 @@ namespace BookMyHsrp.Controllers
                     getSession.CustomerEmail = info.EmailId;
                     getSession.CustomerMobile = info.MobileNo;
                     getSession.VehicleType = resultGot.data.VehicleType;
-                    getSession.VehicleCat = resultGot.data.VehicleCat;
+                    getSession.VehicleCat = resultGot.data.Vehiclecategory;
                     getSession.VehicleTypeId = resultGot.data.VehicleTypeId;
                     getSession.VehicleCategoryId = resultGot.data.Vehiclecategoryid;
                     getSession.FuelType = info.FuelTypeVahan;
                     getSession.Fuel = info.FuelTypeVahan;
                     getSession.Message = resultGot.Message;
                     getSession.OrderType = resultGot.data.OrderType;
+                    getSession.RegistrationDate = resultGot.data.RegDate;
                     
                     var GetRootObjectSession = HttpContext.Session.GetString("UserSession");
                     jsonSerializer = System.Text.Json.JsonSerializer.Serialize(getSession);

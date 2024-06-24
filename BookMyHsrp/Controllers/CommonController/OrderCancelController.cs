@@ -32,7 +32,7 @@ namespace BookMyHsrp.Controllers.CommonController
         {
             var mobile = requestdto.MobileNo;
             var resultGot = await _generateOtpService.GenerateOtp(mobile, requestdto);
-            return resultGot;
+            return Json("Success");
         }
 
         [Route("/ordercancel")]
@@ -69,7 +69,7 @@ namespace BookMyHsrp.Controllers.CommonController
                 else
                 {
 
-                    throw new Exception("data not found");
+                    return Json("data not found");
 
                 }
 
@@ -79,9 +79,9 @@ namespace BookMyHsrp.Controllers.CommonController
      
         [Route("/DealerAddress")]
         [HttpPost]
-        public async Task<IActionResult> CancelOrderDetails(string Dealerid)
+        public async Task<IActionResult> CancelOrderDetails([FromBody] Dealerids requestdto)
         {
-            var result = await _orderCancelServices.DealerAddress(Dealerid);
+            var result = await _orderCancelServices.DealerAddress(requestdto);
             // var result = await _trackYourOrderService.GetTrackYourOrderStatusSp(requestdto)
             if (result.Count > 0)
             {
@@ -89,17 +89,14 @@ namespace BookMyHsrp.Controllers.CommonController
             }
             else
             {
-
-                throw new Exception("data not found");
-
+                return Json("data not found");
             }
-
         }
 
 
         [Route("/OrderCancelConfirmation")]
         [HttpPost]
-        public async Task<IActionResult> OrderCancelConfirmation([FromBody] OrderCancelModel.OrderCancelReason requestdto)
+        public async Task<IActionResult> OrderCancelConfirmation([FromBody] OrderCancelReason requestdto)
         {
             var hsrporderstatus = await _orderCancelServices.OrderStatusCancel(requestdto);
             var HsrpOrderStatus = "";
@@ -117,7 +114,6 @@ namespace BookMyHsrp.Controllers.CommonController
                     if (query.Count > 0)
                     {
                         var result = await _orderCancelServices.CancelOrderDetails(requestdto);
-                        var dealerid = result[0].Dealerid;
                         var _appointmenttype = result[0].AppointmentType;
                         var FullAddress = string.Empty;
                         if (_appointmenttype == "Home")
@@ -126,7 +122,9 @@ namespace BookMyHsrp.Controllers.CommonController
                         }
                         else
                         {
-                            var dealeraddress = await _orderCancelServices.DealerAddress(dealerid);
+                            Dealerids dealerids = new Dealerids();
+                            dealerids.Dealerid = result[0].Dealerid.ToString();
+                            var dealeraddress = await _orderCancelServices.DealerAddress(dealerids);
                             var dAddress = dealeraddress[0].DealerAffixationCenterName;
                             var dCity = dealeraddress[0].DealerAffixationCenterAddress;
                             var dPincode = dealeraddress[0].DealerAffixationCenterPinCode;
@@ -153,7 +151,7 @@ namespace BookMyHsrp.Controllers.CommonController
                     else
                     {
                         var result = await _orderCancelServices.CancelOrderDetails(requestdto);
-                        dynamic dealerid = result[0].Dealerid;
+                        string dealerid = result[0].Dealerid.ToString();
                         var _appointmenttype = result[0].AppointmentType;
                         string FullAddress = string.Empty;
                         if (_appointmenttype == "Home")
@@ -162,7 +160,9 @@ namespace BookMyHsrp.Controllers.CommonController
                         }
                         else
                         {
-                            var dealeraddress = await _orderCancelServices.DealerAddress(dealerid);
+                            Dealerids dealerids = new Dealerids();
+                            dealerids.Dealerid = result[0].Dealerid.ToString();
+                            var dealeraddress = await _orderCancelServices.DealerAddress(dealerids);
                             var dAddress = dealeraddress[0].DealerAffixationCenterName;
                             var dCity = dealeraddress[0].DealerAffixationCenterAddress;
                             var dPincode = dealeraddress[0].DealerAffixationCenterPinCode;
@@ -206,12 +206,13 @@ namespace BookMyHsrp.Controllers.CommonController
                     var finalresult = await _orderCancelServices.cancellationfinalpage(requestdto);
                     return Ok(finalresult);
                 }
-                catch { Exception e;
-                    return Ok("HI");
+                catch {
+                    Exception e;
+                    return Json("Order cannot be cancelled");
                 }
             }
             else{
-                return Ok("HI");
+                return Json("Order cannot be cancelled");
             }
                 
         }
@@ -224,12 +225,12 @@ namespace BookMyHsrp.Controllers.CommonController
             // var result = await _trackYourOrderService.GetTrackYourOrderStatusSp(requestdto)
             if (result != null)
             {
-                return Ok(result);
+                return Json(result);
             }
             else
             {
 
-                throw new Exception("data not found");
+                return Json("data not found");
 
             }
 
@@ -247,7 +248,7 @@ namespace BookMyHsrp.Controllers.CommonController
             else
             {
 
-                throw new Exception("data not found");
+                return Json("data not found");
 
             }
 

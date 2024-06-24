@@ -1,0 +1,220 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+    <!-- Place favicon.ico in the root directory -->
+    <link rel="shortcut icon" type="image/x-icon" href="images/favicon.html">
+    <link rel="apple-touch-icon" href="apple-touch-icon.html">
+
+    <!-- All css files are included here. -->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/owl.carousel.min.css">
+    <!--     <link rel="stylesheet" href="assets/css/owl.theme.default.min.css"> -->
+    <!--    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.1.4/dist/css/datepicker.min.css">-->
+
+
+
+</head>
+
+<body>
+
+    <!-- Body main wrapper start -->
+
+    <div class="wrapper">
+        <!-- Start Header Style -->
+       
+        <!-- End Header Style -->
+        <!-- Start Mobile Header -->
+        <!--
+                <div class="mobile-header d-block d-lg-none">
+                    <div class="container">
+                        <div class="row align-items-center justify-content-between">
+
+                        </div>
+                    </div>
+                </div>
+        -->
+        <!-- End Mobile Header -->
+        <!--  Start Offcanvas Mobile Menu Section  -->
+       
+        <!--  End Offcanvas Mobile Menu Section -->
+
+        <section class="page-header d-lg-none">
+            <div class="container">
+                <div class="page-header__inner text-center">
+                    <h5>Step 4</h5>
+                    <h2>Booking Summary</h2>
+                </div>
+            </div>
+        </section>
+
+        <!-- main start -->
+        <main class="main-body">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12 col-lg-3 p-0 order-2 order-lg-1">
+                        <div class="sidebar">
+                            <div class="side-steper d-none d-lg-block">
+                                <ul class="side-ul">
+                                    <li class="active">Step -1 Booking Details</li>
+                                    <li class="active">Step -2 Fitment Location</li>
+                                    <li class="active">Step -3 Appointment Slot</li>
+                                    <li class="active">Step -4 Booking Summary</li>
+                                    <li>Step -5 Verify Details & Pay</li>
+                                    <li>Step -6 Download Receipt</li>
+                                </ul>
+                            </div>
+                            <div class="side-slide">
+                                <div class="owl-carousel adds-carousel owl-theme">
+                                    <div class="item"><img src="~/Images/adds/img-1.png" alt=""></div>
+                                    <div class="item"><img src="~/Images/adds/img-2.png" alt=""></div>
+                                    <div class="item"><img src="~/Images/adds/img-3.png" alt=""></div>
+                                    <div class="item"><img src="~/Images/adds/img-4.png" alt=""></div>
+                                    <div class="item"><img src="~/Images/adds/img-5.png" alt=""></div>
+                                    <div class="item"><img src="~/Images/adds/QR.jpg" alt=""></div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-9 p-0 order-1 order-lg-2">
+                        <div class="main-data main-bg">
+                            <div class="title-area d-flex justify-content-between">
+                                <h4 class="title">Booking Summary</h4>
+                                <a href="plate-AppointmentSlot.html" class="submit-btn">Back</a>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-9">
+                                    <div class="booking-detail">
+                                        <div class="row">
+                                            <div class="col-lg-9">
+                                                <div class="book-desc">
+                                                    <label>Appointment Address</label>
+                                                    <partial id="appointmentAddress">
+                                                       </p>
+                                                   
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="book-desc">
+                                                    <label>Appointment Date</label>
+                                                    <p id="appointmentDate"></p>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="book-desc">
+                                                    <label>Appointment Time Slot</label>
+                                                    <p id="slotTime"></p>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="book-desc">
+                                                    <label>Bharat Stage (BS)</label>
+                                                    <p id="bharatStage"></p>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="book-desc">
+                                                    <label>Registration Number</label>
+                                                    <p id="registrationNumber"></p>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="book-desc">
+                                                    <label>Engine No./Motor No.</label>
+                                                    <p id="engineNo"></p>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="book-desc">
+                                                    <label>Chassis No.</label>
+                                                    <p id="chassisNo"></p>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="book-desc">
+                                                    <label>Vehicle Make</label>
+                                                    <p id="vehicleMake"></p>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="book-desc">
+                                                    <label>Vehicle Type</label>
+                                                    <p id="vehicleType"></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <a href="@Url.Action("VerifyPaymentDetail", "VerifyPaymentDetail")" class="submit-btn">Confirm & Proceed</a>
+
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="booking-slide">
+                                        <div class="head-img">
+                                            <img src="assets/images/banner-staticold.png" alt="">
+                                        </div>
+                                        <div class="owl-carousel book-carousel owl-theme">
+                                            <div class="item"><img src="~/Images/slides/01.png" alt=""></div>
+                                            <div class="item"><img src="~/Images/slides/02.png" alt=""></div>
+                                            <div class="item"><img src="~/Images/slides/03.png" alt=""></div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <!-- main end -->
+        <!-- footer area start -->
+     
+        <!-- footer area end -->
+
+    </div>
+   
+
+
+
+    @section Scripts
+    {
+        <script>
+
+            $(async function () {
+
+                await BookingSummaryConfirmation();
+               
+            });
+            async function BookingSummaryConfirmation(){
+                let url = '/bookingSummary-confirmation'
+                const result = await fetchData(url);
+                if (result!=null){
+                    var date = sessionStorage.getItem('appointmentDate');
+                    var time = sessionStorage.getItem('timeSlot');
+                    $('#bharatStage').text(result.BharatStage);
+                    $('#appointmentDate').text(date);
+                    $('#slotTime').text(time);
+                    $('#registrationNumber').text(result.BharatStage);
+                    $('#chassisNo').text(result.BharatStage);
+                    $('#engineNo').text(result.BharatStage);
+                    $('#vehicleMake').text(result.OemName);
+                    $('#vehicleType').text(result.VehicleCategory);
+                    $('#appointmentAddress').text(result.DealerAffixationCenterName +' ' + result.DealerAffixationCenterAddress);
+                    
+                }
+                
+            }
+        
+        </script>
+    }
+
+
+    <!-- Body main Script end -->
+</body>
+
+</html>

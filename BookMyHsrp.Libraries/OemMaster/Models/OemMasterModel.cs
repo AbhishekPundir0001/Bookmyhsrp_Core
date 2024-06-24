@@ -13,6 +13,8 @@ namespace BookMyHsrp.Libraries.OemMaster.Models
             public string VehicleType { get; set; }
             public string DisplayVehicleType { get; set; }
             public string IsEnabled { get; set; }
+            public string IsVehicleTypeEnable { get; set; }
+            public string Vehicletypenew { get; set; }
         }
     }
 }

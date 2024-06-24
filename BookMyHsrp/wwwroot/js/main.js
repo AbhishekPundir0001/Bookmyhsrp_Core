@@ -59,8 +59,29 @@ $(window).scroll(function () {
 
 //Calender
 
-$(function () {
+//$(function () {
+   
+//    const calender = rome(inline_cal, {
+//        min: '2024-05-10',
+//        max: '2024-06-20',
+//        "time": false,
+//        dateValidator: rome.val.except(['2024-05-04', '2024-05-15']),
+        
+//    }); 
+//    calender.on("back", AddHolidayClass)
+//    calender.on("next", AddHolidayClass)
+//    calender.on("ready", AddHolidayClass)
+//    });
 
-    rome(inline_cal, { time: false });
+//function AddHolidayClass (d) {
+  
+//        var ele = $(".rd-day-body");
 
-});
+//        for (var i = 0; i < ele.length; i++) {
+//            var eleVal = $(ele[i]).text();
+//            if (eleVal === '15') {
+//                $(ele[i]).addClass('holiday');
+//            }
+//        }
+    
+//}

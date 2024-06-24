@@ -15,6 +15,7 @@
     <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="8.0.4" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="NLog" Version="5.3.2" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
     <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="6.5.0" />
     <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="6.5.0" />
@@ -27,6 +28,12 @@
   <ItemGroup>
     <ProjectReference Include="..\BookMyHsrp.Libraries\BookMyHsrp.Libraries.csproj" />
     <ProjectReference Include="..\BookMyHsrp.Utility\BookMyHsrp.Utility.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Razorpay">
+      <HintPath>..\..\RazorPay\Razorpay.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

@@ -45,6 +45,10 @@ using BookMyHsrp.Libraries.Replacement.Services;
 using BookMyHsrp.ReportsLogics.Receipt;
 using BookMyHsrp.Libraries.Receipt.Services;
 using BookMyHsrp.Libraries.Grievance.Services;
+using BookMyHsrp.Libraries.OemMaster.Services;
+using BookMyHsrp.Libraries.BookingSummary.Services;
+using BookMyHsrp.Libraries.VerifyPaymentDetail.Services;
+using BookMyHsrp.ReportsLogics.VerifyPaymentDetails;
 namespace BookMyHsrp
 {
     public class Startup
@@ -151,9 +155,12 @@ namespace BookMyHsrp
             services.AddTransient<IAppointmentSlotServices, AppointmentSlotService>();
             services.AddTransient<IExceptionHandler, ExceptionMiddleWare>();
             services.AddTransient<IReceiptValidityService, ReceiptValidityService>();
+            services.AddTransient<IVerifyPaymentDetailService, VerifyPaymentDetailService>();
             services.AddTransient<ITrackYourOrderService, TrackYourOrderService>();
             services.AddTransient<IOrderCancelServices, OrderCancelServices>();
+            services.AddTransient<IBookingSummaryService, BookingSummaryService>();
             services.AddTransient<IGenerateOtpService, GenerateOtpService>();
+            services.AddTransient<IOemMasterService, OemMasterService>();
             services.AddTransient<IStickerService, StickerService>();
             services.AddTransient<IHomeDeliveryStickerService, HomeDeliveryStickerService>();
             services.AddTransient<IReplacementService, ReplacementService>();
@@ -163,6 +170,7 @@ namespace BookMyHsrp
             services.AddScoped<AppointmentSlotConnector>();
             services.AddScoped<TrackYourOrderConnector>();
             services.AddScoped<DealerDeliveryConnector>();
+            services.AddScoped<VerifyPaymentDetailsConnector>();
             services.AddScoped<FileUploadConnector>();
             services.AddScoped<HsrpWithColorStickerService>();
             services.AddTransient<IDealerDeliveryService, DealerDeliveryService>();

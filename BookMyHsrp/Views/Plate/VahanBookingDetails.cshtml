@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="~/css/style.css">
     <link rel="stylesheet" href="~/css/owl.carousel.min.css">
     <!--     <link rel="stylesheet" href="assets/css/owl.theme.default.min.css"> -->
-
+   
 </head>
 
 <body>
@@ -163,7 +163,7 @@
                                         <div class="col-lg-4 col-md-6 col-sm-12">
                                             <div class="input-group">
                                                 <label class="form-label w-100">Captcha</label>
-                                                <input id="txtCaptcha" type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
+                                                <input id="txtCaptcha" type="text" class="form-control" aria-label="Amount (to the nearest dollar)" readonly>
                                                 <button onclick="DrawCaptcha()" class="input-group-text"><i class="fas fa-redo-alt"></i></button>
                                             </div>
                                         </div>
@@ -340,6 +340,14 @@
                                                     
                                                 </div>
                                             </div>
+                                            <div class="col-lg-4 col-md-6 col-sm-12" id="oem-vehicle-type">
+                                                <div class="form-group">
+                                                    <label class="form-label">--Select Oem VehicleType--</label>
+                                                    <select class="form-select custom-select" id="select-oem-vehicle">
+                                                       
+                                                    </select>
+                                                </div>
+                                            </div>
                                             <div class="col-lg-4 col-md-6 col-sm-12" id="divrcupload">
                                                 <div class="form-group">
                                                     <label class="form-label">Upload RC Here*</label>
@@ -499,6 +507,7 @@
                 document.getElementById("txtCaptcha").value = code
             }
             function ValidCaptcha() {
+                debugger
                 $(this).prop('disabled', true);
                 
                 const errorFunc = (title) => {
@@ -510,8 +519,9 @@
                    
 
                 }
-                var captcha = removeSpaces(document.getElementById('txtCaptcha').value);
-                var inputCaptcha = removeSpaces(document.getElementById('txtInput').value);
+               var captcha =  removeSpaces(document.getElementById('txtCaptcha').value);
+                var userInput = document.getElementById("txtInput").value.trim();
+                var inputCaptcha = userInput;
                 if (inputCaptcha == '') {
                     //alert("Captcha can't be blank!!");
                     errorFunc("Captcha can't be blank!!");
@@ -726,16 +736,15 @@
                 isSuccessFunc(result);
                 var response = $.parseJSON(result);
                 if (response.Status !== null && response.Status === "true") {
+                    debugger
                     userData = response;
                     var vehRegDate = "" + response.VehRegDate;
                     $('#show-div').show();
                     // userData["VehicleType"] = response.VehicleRegNo;
                     //     userData["VehRegDate"] = convertDate("" + VehRegDate);
                     if (response.Message == "Vehicle details available in Vahan") {
-
-
-
-
+                            var data1 = response.VehicleClass
+                            await oemVehicleType(data1);
                         $('#registrationNumber').attr('readonly', 'readonly');
                         $('#chassisNo').attr('readonly', 'readonly');
                         $('#engineNo').attr('readonly', 'readonly');
@@ -942,7 +951,7 @@
         });
 
             async function handleButtonClick(url, postData, isSuccessFunc) {
-                
+                debugger
                 $(this).prop('disabled', true);
                 var originalButtonText = $(this).html();
 
@@ -1012,6 +1021,15 @@
                       var regDate = $('#regDate').val();
                  
                       var vehicleTypeVahan = $('#vcltype').val();
+                    var oemvehicletype;
+                    if (vehicleTypeVahan === 'Transport') {
+                        vchCatgVahan = $('#select-oem-vehicle option:selected').text();
+                        if (oemvehicletype === 'Select Oem Vehicle' || oemvehicletype === '') {
+                            errorFunc("Please Select Oem Vehicle Type");
+                            return;
+
+                        }
+                    }
                     var fuleTypeVahan = $('#fueltype').val();
                     var oemvehicletype = "";
                     var vehiclecatvahan = $('#vhlcategory').val();
@@ -1027,11 +1045,11 @@
                              errorFunc("Please provide Vehicle Type");
                          return;
                      }
-                     if (vehicleTypeVahan === 'Select Vehicle Type') {
+                    if (vehicleTypeVahan === 'Select Vehicle Type' || vehicleTypeVahan === '') {
                          errorFunc("Please provide Vehicle Type");
                          return;
                      }
-                 
+
 
                     const data = { BharatStage: bharatStage, RegistrationDate: regDate, RegistrationNo: RegNo, ChassisNo: ChassisNo, EngineNo: EngineNo, OwnerName: customerName, EmailId: customerEmail, MobileNo: customerMobile, FilePath: filepath, BillingAddress: customerBillingAddress, MakerVahan: maker, VehicleTypeVahan: vehicleTypeVahan, FuelTypeVahan: fuleTypeVahan, VehicleCatVahan: vchCatgVahan, StateId: customerState, StateName: StateName, OemVehicleType: oemvehicletype }
                     try {
@@ -1066,12 +1084,59 @@
                 // Format the date as dd/mm/yyyy
                 return [day, month, year].join('/');
             }
+          async  function oemVehicleType(data) {
+                const url = '/api/v1/oem/by-vehicle-type/' + data;
+                try {
+                    const result = await fetchData(url);
+                    console.log('Data fetched successfully, where the server response data is', result);
+                    bindHtmlForOemVehicleType(result);
 
-         
+                } catch (error) {
+                    console.error('Failed to fetch data:', error);
+                }
+            }
+            function bindHtmlForOemVehicleType(data) {
+                debugger
+                if (!Array.isArray(data)) {
+                    console.error("Invalid data: expecting an array");
+                    return;
+                }
+
+                let selectState = $('#select-oem-vehicle');
+                if (!selectState.length) {
+                    console.error("Element with id 'select-oem-vehicle' does not exist");
+                    return;
+                }
+                let html = '';
+                //add Select option
+
+                html += `<option value="">Select Oem Vehicle</option>`;
+                //html += `<option value="">All</option>`;
+                data.forEach((item, index) => {
+                    let properCaseStateName = toProperCase(item.Vehicletypenew);
+                    html += `<option value="${item.Vehicletypenew}">${properCaseStateName}</option>`;
+                    if (item.IsVehicleTypeEnable == 'Y') {
+                        $('#oem-vehicle-type').show();
 
 
 
-  </script>
+                    }
+                    else {
+                        $('#oem-vehicle-type').hide();
+                    }
+                });
+                selectState.html(html);
+                selectState.select2({
+                    theme: 'bootstrap-5'
+                });
+                
+            }
+
+
+
+
+
+        </script>
     }
 
 

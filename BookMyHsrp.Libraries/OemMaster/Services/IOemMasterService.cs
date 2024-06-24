@@ -10,6 +10,6 @@ namespace BookMyHsrp.Libraries.OemMaster.Services
 {
     public interface IOemMasterService
     {
-        Task<IEnumerable<OemMasterModel.OemVehicleTypeList>> GetAllOemByVehicleType(string vehicleType);
+        Task<IEnumerable<OemMasterModel.OemVehicleTypeList>> GetAllOemByVehicleType(string vehicleType,dynamic vehicledetails);
     }
 }

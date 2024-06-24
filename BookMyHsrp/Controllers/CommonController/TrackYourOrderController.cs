@@ -17,13 +17,14 @@ namespace BookMyHsrp.Controllers.CommonController
     public class TrackYourOrderController : Controller
     {
         public readonly TrackYourOrderConnector _trackyourorderconnector;
+        StringBuilder sbbuild = new StringBuilder();
         public TrackYourOrderController(TrackYourOrderConnector trackyourorderconnector)
         {
             _trackyourorderconnector = trackyourorderconnector ?? throw new ArgumentNullException(nameof(TrackYourOrderConnector));
 
         }
 
-        [Route("/trackyourorder/TrackYourOrder")]
+        [Route("/TrackYourOrder")]
         public IActionResult TrackYourOrder()
         {
             return View();
@@ -42,7 +43,7 @@ namespace BookMyHsrp.Controllers.CommonController
             }
             else
             {
-                throw new Exception("Data Not Found");
+                return Json("Not Found");
             }
             
         }
@@ -50,16 +51,15 @@ namespace BookMyHsrp.Controllers.CommonController
         [HttpPost]
         public async Task<IActionResult> SpTrackYourOrder([FromBody] TrackYourOrder requestdto)
         {
-            var response = new ResponseDto();
-            var result = await _trackyourorderconnector.SpTrackYourOrder(requestdto);
+            var result1 = await _trackyourorderconnector.SpTrackYourOrder(requestdto);
             // var result1 = await _trackYourOrderService.GetTrackYourOrderStatusSp(requestdto)
-            if (result != null)
+            if (result1 != null)
             {
-                return Ok(result);
+                return Ok(result1);
             }
             else
             {
-                throw new Exception("Data Not Found");
+                return Json("Not Found");
             }
 
         }
@@ -76,9 +76,9 @@ namespace BookMyHsrp.Controllers.CommonController
         }
         [Route("/dealer-name")]
         [HttpPost]
-        public async Task<IActionResult> DealerName([FromBody] TrackYourOrderModel.TrackYourOrder requestdto)
+        public async Task<IActionResult> DealerName([FromBody] GetDealerId requestdto)
         {
-            var response = new ResponseDto();
+            
             var result = await _trackyourorderconnector.DealerName(requestdto);
             // var result1 = await _trackYourOrderService.GetTrackYourOrderStatusSp(requestdto)
             if (result != null)
@@ -87,8 +87,8 @@ namespace BookMyHsrp.Controllers.CommonController
             }
             else
             {
-               
-                throw new Exception("data not found");
+
+                return Json("Not Found");
 
             }
 

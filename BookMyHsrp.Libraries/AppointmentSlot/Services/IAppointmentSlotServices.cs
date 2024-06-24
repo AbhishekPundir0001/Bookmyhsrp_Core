@@ -13,5 +13,9 @@ namespace BookMyHsrp.Libraries.AppointmentSlot.Services
         Task<dynamic> GetAffixationId(string Id);
         Task<dynamic> GetHolidays();
         Task<dynamic> CheckAppointmentDate(string OrderType,dynamic vehicledetails,dynamic userdetails,dynamic DealerAppointment);
+        Task<dynamic> AppointmentBlockedDates(string tempdate,string  dealerId,dynamic dealiveryPoint);
+        Task<dynamic> AppointmentBlockedDatesForSelectedDate(string selectedDate,string  dealerId,dynamic dealiveryPoint);
+        Task<dynamic> CheckAppointmentSlotTime(string selectedDate,string vehicleTypeId,string dealerId,string dealiveryPoint,string stateId);
+        Task<dynamic> CheckAppointmentSlotTimeHome(string selectedDate,string vehicleTypeId,string dealerId,string dealiveryPoint,string stateId);
     }
 }

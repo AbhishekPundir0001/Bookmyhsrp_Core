@@ -12,7 +12,7 @@ namespace BookMyHsrp.Libraries.OrderCancel.Services
         Task<dynamic> DealerWalletdetail(dynamic dto);
         Task<dynamic> CancelOrderDetails(dynamic dto);
         Task<dynamic> CancelOrderGet(dynamic dto);
-        Task<dynamic> DealerAddress(dynamic Dealerid);
+        Task<dynamic> DealerAddress(dynamic dto);
         Task<dynamic> OrderStatusCancel(dynamic dto);
             Task<dynamic> voidOrder(dynamic dto);
             Task<dynamic> OrderStatusUpdate(dynamic dto);
