@@ -29,5 +29,10 @@ namespace BookMyHsrp.Dapper
 
         public string QRPath { get; set; } = "";
 
+        public string key { get; set; }
+        public string secret { get; set; }
+        public string Host { get; set;}
+
+
     }
 }

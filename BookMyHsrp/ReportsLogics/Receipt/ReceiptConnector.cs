@@ -15,165 +15,167 @@ namespace BookMyHsrp.ReportsLogics.Receipt
         {
             _receiptService = receiptService ?? throw new ArgumentNullException(nameof(receiptService));
         }
-    
 
-    public string DownloadReceipt(string receiptPath, ReceiptModels.Receipt requestdto, string QRPath)
+
+        public string DownloadReceipt(string receiptPath, ReceiptModels.Receipt requestdto, string QRPath)
         {
 
-            var result =  _receiptService.GetReceipt(requestdto).Result;
+            var result = _receiptService.GetReceipt(requestdto).Result;
+            if (result[0].status == 1)
+            {
+                string CompanyName = "ROSMERTA SAFETY SYSTEMS LIMITED";
+                string CompanyNamePostFix = "(FORMERLY KNOWN AS ROSMERTA SAFETY SYSTEMS PRIVATE LIMITED)";
+                //string AppointmentType = "Dealer";
+                string AppointmentType = result[0].AppointmentType;
+                string DealerAffixationCenterName = result[0].DealerAffixationCenterName;
+                string DealerAffixationCenterAddress = result[0].DealerAffixationCenterAddress;
+                string FitmentPersonName = result[0].FitmentPersonName;
+                string FitmentPersonMobile = result[0].FitmentPersonMobile;
+                string OrderDate = result[0].OrderDate;
+                string OrderNo = result[0].OrderNo;
+                string OrderStatus = result[0].OrderStatus;
+                string SlotBookingDate = result[0].SlotBookingDate;
+                string SlotTime = result[0].SlotTime;
+                string OwnerName = result[0].OwnerName;
+                string VehicleRegNo = result[0].VehicleRegNo;
+                string fuelType = result[0].fuelType;
+                string VehicleClass = result[0].VehicleClass;
+                string VehicleType = result[0].VehicleType;
+                string OrderType = result[0].ordertype;
+                string oemid = result[0].oemid.ToString();
+                decimal GstBasic_Amt = Convert.ToDecimal(result[0].BasicAamount) + Convert.ToDecimal(result[0].FitmentCharge);
+                string ConvenienceFee = result[0].ConvenienceFee.ToString();
+                string MRDCharges = "0";
+                string HomeDeliveryCharge = result[0].HomeDeliveryCharge.ToString();
+                string TotalAmount = result[0].TotalAmount.ToString();
+                string ReceiptValidUpTo = result[0].ReceiptValidUpTo.ToString();
+                double IGSTAmount = Convert.ToDouble(result[0].IGSTAmount);
+                double CGSTAmount = Convert.ToDouble(result[0].CGSTAmount);
+                double NetAmount = Convert.ToDouble(result[0].NetAmount);
+                double SGSTAmount = Convert.ToDouble(result[0].SGSTAmount);
+                string StateId = result[0].HSRP_StateID.ToString();
 
-            string CompanyName = "ROSMERTA SAFETY SYSTEMS LIMITED";
-            string CompanyNamePostFix = "(FORMERLY KNOWN AS ROSMERTA SAFETY SYSTEMS PRIVATE LIMITED)";
-            //string AppointmentType = "Dealer";
-            string AppointmentType = result[0].AppointmentType;
-            string DealerAffixationCenterName = result[0].DealerAffixationCenterName;
-            string DealerAffixationCenterAddress = result[0].DealerAffixationCenterAddress;
-            string FitmentPersonName = result[0].FitmentPersonName;
-            string FitmentPersonMobile = result[0].FitmentPersonMobile;
-            string OrderDate = result[0].OrderDate;
-            string OrderNo = result[0].OrderNo;
-            string OrderStatus = result[0].OrderStatus;
-            string SlotBookingDate = result[0].SlotBookingDate;
-            string SlotTime = result[0].SlotTime;
-            string OwnerName = result[0].OwnerName;
-            string VehicleRegNo = result[0].VehicleRegNo;
-            string fuelType = result[0].fuelType;
-            string VehicleClass = result[0].VehicleClass;
-            string VehicleType = result[0].VehicleType;
-            string OrderType = result[0].ordertype;
-            string oemid = result[0].oemid.ToString();
-            decimal GstBasic_Amt = Convert.ToDecimal(result[0].BasicAamount) + Convert.ToDecimal(result[0].FitmentCharge);
-            string ConvenienceFee = result[0].ConvenienceFee.ToString();
-            string MRDCharges = "0";
-            string HomeDeliveryCharge = result[0].HomeDeliveryCharge.ToString();
-            string TotalAmount = result[0].TotalAmount.ToString();
-            string ReceiptValidUpTo = result[0].ReceiptValidUpTo.ToString();
-            double IGSTAmount = Convert.ToDouble(result[0].IGSTAmount);
-            double CGSTAmount = Convert.ToDouble(result[0].CGSTAmount);
-            double NetAmount = Convert.ToDouble(result[0].NetAmount);
-            double SGSTAmount = Convert.ToDouble(result[0].SGSTAmount);
-            string StateId = result[0].HSRP_StateID.ToString();
-
-            var Result_GSTIN =  _receiptService.GetGSTIN(StateId).Result;
-            string GSTIN = Result_GSTIN[0].GSTIN.ToString();
+                var Result_GSTIN = _receiptService.GetGSTIN(StateId).Result;
+                string GSTIN = Result_GSTIN[0].GSTIN.ToString();
 
                 string isSuperTag = result[0].isSuperTag.ToString();
                 string SuperTagAmount = result[0].SuperTagAmount.ToString();
                 string IGSTAmountST = string.Empty;
 
-            string _qrurl = "https://bookmyhsrp.com/TrackOrder.aspx?oid=" + requestdto.OrderNo + "&vr=" + VehicleRegNo + "";
-            string _qrPath = _receiptService.QRGenerate(_qrurl, OrderNo, QRPath);
-            //string ReceiptPathQRCode = "https://chart.googleapis.com/chart?chs=80x80&cht=qr&chl=https://bookmyhsrp.com/TrackOrder.aspx?oid=" + OrderNo + "%26vr=" + VehicleRegNo + "&chld=L|1&choe=UTF-8"; // latest
-            string ReceiptPathQRCode = QRPath+ OrderNo+".jpg";
+                string _qrurl = "https://bookmyhsrp.com/TrackOrder.aspx?oid=" + requestdto.OrderNo + "&vr=" + VehicleRegNo + "";
+                string _qrPath = _receiptService.QRGenerate(_qrurl, OrderNo, QRPath);
+                //string ReceiptPathQRCode = "https://chart.googleapis.com/chart?chs=80x80&cht=qr&chl=https://bookmyhsrp.com/TrackOrder.aspx?oid=" + OrderNo + "%26vr=" + VehicleRegNo + "&chld=L|1&choe=UTF-8"; // latest
+                string ReceiptPathQRCode = QRPath + OrderNo + ".jpg";
 
-            if (result[0].IGSTAmountST == null)
-            {
-                IGSTAmountST = "0.00";
-            }
-            else
-            {
-                IGSTAmountST = result[0].IGSTAmountST.ToString();
-            }
-            string CGSTAmountST = string.Empty;
-            if (result[0].CGSTAmountST == null)
-            {
-                CGSTAmountST = "0.00";
-            }
-            else
-            {
-                CGSTAmountST = result[0].CGSTAmountST.ToString();
-            }
-            string SGSTAmountST = string.Empty;
-           if (result[0].SGSTAmountST == null)
-            {
-                SGSTAmountST = "0.00";
-            }
-            else
-            {
-                SGSTAmountST = result[0].SGSTAmountST.ToString();
-            }
-            string totalamount = string.Empty;
-           if (result[0].SuperTagTotalAmount == null)
-            {
-                totalamount = "0.00";
-            }
-            else
-            {
-                totalamount = result[0].SuperTagTotalAmount.ToString();
-            }
-            string CustomerAddress1 = string.Empty;
-            if (result[0].CustomerAddress1 == null)
-            {
-                CustomerAddress1 = "";
-            }
-            else
-            {
-                CustomerAddress1 = result[0].CustomerAddress1.ToString();
-            }
-            string CustomerCity = string.Empty;
-            if (result[0].CustomerCity == null)
-            {
-                CustomerCity = "";
-            }
-            else
-            {
-                CustomerCity = result[0].CustomerCity.ToString();
-            }
-            string CustomerPin = string.Empty;
-            if(result[0].CustomerPin==null)
-            {
-                CustomerPin = "";
-            }else
-            {
-                CustomerPin = result[0].CustomerPin.ToString();
-            }
+                if (result[0].IGSTAmountST == null)
+                {
+                    IGSTAmountST = "0.00";
+                }
+                else
+                {
+                    IGSTAmountST = result[0].IGSTAmountST.ToString();
+                }
+                string CGSTAmountST = string.Empty;
+                if (result[0].CGSTAmountST == null)
+                {
+                    CGSTAmountST = "0.00";
+                }
+                else
+                {
+                    CGSTAmountST = result[0].CGSTAmountST.ToString();
+                }
+                string SGSTAmountST = string.Empty;
+                if (result[0].SGSTAmountST == null)
+                {
+                    SGSTAmountST = "0.00";
+                }
+                else
+                {
+                    SGSTAmountST = result[0].SGSTAmountST.ToString();
+                }
+                string totalamount = string.Empty;
+                if (result[0].SuperTagTotalAmount == null)
+                {
+                    totalamount = "0.00";
+                }
+                else
+                {
+                    totalamount = result[0].SuperTagTotalAmount.ToString();
+                }
+                string CustomerAddress1 = string.Empty;
+                if (result[0].CustomerAddress1 == null)
+                {
+                    CustomerAddress1 = "";
+                }
+                else
+                {
+                    CustomerAddress1 = result[0].CustomerAddress1.ToString();
+                }
+                string CustomerCity = string.Empty;
+                if (result[0].CustomerCity == null)
+                {
+                    CustomerCity = "";
+                }
+                else
+                {
+                    CustomerCity = result[0].CustomerCity.ToString();
+                }
+                string CustomerPin = string.Empty;
+                if (result[0].CustomerPin == null)
+                {
+                    CustomerPin = "";
+                }
+                else
+                {
+                    CustomerPin = result[0].CustomerPin.ToString();
+                }
 
-            string isFramrTag = result[0].IsFrame.ToString();
-            string FrameTagAmount = string.Empty;
-            if (result[0].FrameTagAmount == null)
-            {
-                FrameTagAmount = "0.00";
-            }
-            else
-            {
-                FrameTagAmount = result[0].FrameTagAmount.ToString();
-            }
-            string IGSTAmountFrm = string.Empty;
-            if(result[0].IGSTAmountFrm == null)
-            {
-                IGSTAmountFrm = "0.00";
-            }
-            else
-            {
-                IGSTAmountFrm = result[0].IGSTAmountFrm.ToString();
-            }
-            string CGSTAmountFrm = string.Empty;
-            if (result[0].CGSTAmountFrm == null)
-            {
-                CGSTAmountFrm = "0.00";
-            }
-            else
-            {
-                CGSTAmountFrm = result[0].CGSTAmountFrm.ToString();
-            }
-            string SGSTAmountFrm = string.Empty;
-            if(result[0].SGSTAmountFrm == null)
-            {
-                SGSTAmountFrm = "0.00";
-            }
-            else
-            {
-                SGSTAmountFrm = result[0].SGSTAmountFrm.ToString();
-            }
-            string Frametotalamount = string.Empty;
-            if (result[0].FrameTagTotalAmount==null)
-            {
-                Frametotalamount = "0.00";
-            }
-            else
-            {
-                Frametotalamount = result[0].FrameTagTotalAmount.ToString();
-            }
+                string isFramrTag = result[0].IsFrame.ToString();
+                string FrameTagAmount = string.Empty;
+                if (result[0].FrameTagAmount == null)
+                {
+                    FrameTagAmount = "0.00";
+                }
+                else
+                {
+                    FrameTagAmount = result[0].FrameTagAmount.ToString();
+                }
+                string IGSTAmountFrm = string.Empty;
+                if (result[0].IGSTAmountFrm == null)
+                {
+                    IGSTAmountFrm = "0.00";
+                }
+                else
+                {
+                    IGSTAmountFrm = result[0].IGSTAmountFrm.ToString();
+                }
+                string CGSTAmountFrm = string.Empty;
+                if (result[0].CGSTAmountFrm == null)
+                {
+                    CGSTAmountFrm = "0.00";
+                }
+                else
+                {
+                    CGSTAmountFrm = result[0].CGSTAmountFrm.ToString();
+                }
+                string SGSTAmountFrm = string.Empty;
+                if (result[0].SGSTAmountFrm == null)
+                {
+                    SGSTAmountFrm = "0.00";
+                }
+                else
+                {
+                    SGSTAmountFrm = result[0].SGSTAmountFrm.ToString();
+                }
+                string Frametotalamount = string.Empty;
+                if (result[0].FrameTagTotalAmount == null)
+                {
+                    Frametotalamount = "0.00";
+                }
+                else
+                {
+                    Frametotalamount = result[0].FrameTagTotalAmount.ToString();
+                }
 
                 StringBuilder sbTable = new StringBuilder();
                 sbTable.Clear();
@@ -410,10 +412,10 @@ namespace BookMyHsrp.ReportsLogics.Receipt
                 sbTable.Append("</td>");
                 sbTable.Append("</tr>");
 
-            //-------------------------------------
+                //-------------------------------------
 
-            string HindiImgPath = receiptPath + "/" + "HindiLang";//Server.MapPath("~/HindiLang");
-            //string HindiImgPath = ConfigurationManager.AppSettings["ReceiptDirectory"].ToString() + "/HindiLang/dealer";
+                string HindiImgPath = receiptPath + "/" + "HindiLang";//Server.MapPath("~/HindiLang");
+                                                                      //string HindiImgPath = ConfigurationManager.AppSettings["ReceiptDirectory"].ToString() + "/HindiLang/dealer";
 
                 sbTable.Append("<tr>");
                 sbTable.Append("<td>");
@@ -472,37 +474,37 @@ namespace BookMyHsrp.ReportsLogics.Receipt
                     sbTable.Append("<tr><td style='text-align:left;font-size:14px;'>2. Bring you respective vehicle in which the HRSP has to be installed.</td></tr>");
                     sbTable.Append("<tr><td style='text-align:left;font-size:14px;'>3. Re-Appointment (if any) will only available for future date </td></tr>");
 
-                if (StateId == "18")
-                {
-                    sbTable.Append("<tr><td style='text-align:left;font-size:14px;'>4. For Dealer Point Grievance – please contact at +91 9205262323(Calling time 9.30AM - 6PM (07 days)) and Email ID is cssupport@rosmertasafety.com </td></tr>");
-                }
-                else
-                {
-                    if (AppointmentType.ToString().Equals("Dealer"))
+                    if (StateId == "18")
                     {
-                        sbTable.Append("<tr><td style='text-align:left;font-size:14px;'>4. For Dealer Point Grievance – please contact at +91 8929722203(Calling time 9.30AM - 6PM (07 days)) and Email ID is grievance@bookmyhsrp.com </td></tr>");
+                        sbTable.Append("<tr><td style='text-align:left;font-size:14px;'>4. For Dealer Point Grievance – please contact at +91 9205262323(Calling time 9.30AM - 6PM (07 days)) and Email ID is cssupport@rosmertasafety.com </td></tr>");
                     }
-                    if (AppointmentType.ToString().Equals("Home"))
+                    else
                     {
-                        sbTable.Append("<tr><td style='text-align:left;font-size:14px;'>4. For Home Fixation Grievance – please contact at +91 8929722202(Calling time 9.30 AM to 6 PM (07 days)) and Email ID is homegrievance@bookmyhsrp.com </td></tr>");
+                        if (AppointmentType.ToString().Equals("Dealer"))
+                        {
+                            sbTable.Append("<tr><td style='text-align:left;font-size:14px;'>4. For Dealer Point Grievance – please contact at +91 8929722203(Calling time 9.30AM - 6PM (07 days)) and Email ID is grievance@bookmyhsrp.com </td></tr>");
+                        }
+                        if (AppointmentType.ToString().Equals("Home"))
+                        {
+                            sbTable.Append("<tr><td style='text-align:left;font-size:14px;'>4. For Home Fixation Grievance – please contact at +91 8929722202(Calling time 9.30 AM to 6 PM (07 days)) and Email ID is homegrievance@bookmyhsrp.com </td></tr>");
+                        }
                     }
-                }
-                sbTable.Append("<tr><td style='text-align:left;font-size:14px;'>5. Fitment charges paid, no extra payment required to be paid to fitment person/dealer team.</td></tr>");
-                if (VehicleRegNo.Trim().ToLower().StartsWith("od") == true || VehicleRegNo.Trim().ToLower().StartsWith("or") == true)
-                {
-                    sbTable.Append("<tr><td style='text-align:left;font-size:14px;'>6. Warranty for five years applicable in compliance to S.O.6052 dated 06.12.2018 and Rule 50 of CMVR 1989.</td></tr>");
-                    sbTable.Append("<tr><td style='text-align:left;font-size:14px;'>7. In case of fitment at the dealer's end, the responsibility of company would be to deliver the HSRP to the dealer's address as selected by the vehicle owner at the time of booking.</td></tr>");
-                    sbTable.Append("<tr><td style='text-align:left;font-size:14px;'>8. It is the responsibility of the vehicle owner to bring the vehicle to the selected dealer to get the HSRP affixed on vehicle.</td></tr>");
-                    sbTable.Append("<tr><td style='text-align:left;font-size:14px;'>9. If the HSRP is not affixed within six months from the original affixation date, it shall be destroyed and no refund shall be given in any circumstances.</td></tr>");
-                }
-                else
-                {
-                    sbTable.Append("<tr><td style='text-align:left;font-size:14px;'>6. In case of fitment at the dealer's end, the responsibility of company would be to deliver the HSRP to the dealer's address as selected by the vehicle owner at the time of booking.</td></tr>");
-                    sbTable.Append("<tr><td style='text-align:left;font-size:14px;'>7. It is the responsibility of the vehicle owner to bring the vehicle to the selected dealer to get the HSRP affixed on vehicle.</td></tr>");
-                    sbTable.Append("<tr><td style='text-align:left;font-size:14px;'>8. If the HSRP is not affixed within six months from the original affixation date, it shall be destroyed and no refund shall be given in any circumstances.</td></tr>");
+                    sbTable.Append("<tr><td style='text-align:left;font-size:14px;'>5. Fitment charges paid, no extra payment required to be paid to fitment person/dealer team.</td></tr>");
+                    if (VehicleRegNo.Trim().ToLower().StartsWith("od") == true || VehicleRegNo.Trim().ToLower().StartsWith("or") == true)
+                    {
+                        sbTable.Append("<tr><td style='text-align:left;font-size:14px;'>6. Warranty for five years applicable in compliance to S.O.6052 dated 06.12.2018 and Rule 50 of CMVR 1989.</td></tr>");
+                        sbTable.Append("<tr><td style='text-align:left;font-size:14px;'>7. In case of fitment at the dealer's end, the responsibility of company would be to deliver the HSRP to the dealer's address as selected by the vehicle owner at the time of booking.</td></tr>");
+                        sbTable.Append("<tr><td style='text-align:left;font-size:14px;'>8. It is the responsibility of the vehicle owner to bring the vehicle to the selected dealer to get the HSRP affixed on vehicle.</td></tr>");
+                        sbTable.Append("<tr><td style='text-align:left;font-size:14px;'>9. If the HSRP is not affixed within six months from the original affixation date, it shall be destroyed and no refund shall be given in any circumstances.</td></tr>");
+                    }
+                    else
+                    {
+                        sbTable.Append("<tr><td style='text-align:left;font-size:14px;'>6. In case of fitment at the dealer's end, the responsibility of company would be to deliver the HSRP to the dealer's address as selected by the vehicle owner at the time of booking.</td></tr>");
+                        sbTable.Append("<tr><td style='text-align:left;font-size:14px;'>7. It is the responsibility of the vehicle owner to bring the vehicle to the selected dealer to get the HSRP affixed on vehicle.</td></tr>");
+                        sbTable.Append("<tr><td style='text-align:left;font-size:14px;'>8. If the HSRP is not affixed within six months from the original affixation date, it shall be destroyed and no refund shall be given in any circumstances.</td></tr>");
 
+                    }
                 }
-            }
 
                 sbTable.Append("</table>");
 
@@ -511,51 +513,51 @@ namespace BookMyHsrp.ReportsLogics.Receipt
                 //-------------------------------------
 
 
-            sbTable.Append("</table>");
+                sbTable.Append("</table>");
 
 
 
 
-            if (isSuperTag == "Y")
-            {
-                //sbTable.Append("<br/>"); sbTable.Append("<br/>");
-                //sbTable.Append("<br/>"); sbTable.Append("<br/>");
-
-
-                if (VehicleRegNo.Trim().ToLower().StartsWith("dl") == true)
-                {
-                    sbTable.Append("<br/>"); sbTable.Append("<br/>");
-                    sbTable.Append("<br/>"); sbTable.Append("<br/>");
-                    sbTable.Append("<br/>"); sbTable.Append("<br/>");
-                    sbTable.Append("<br/>"); sbTable.Append("<br/>");
-                    sbTable.Append("<br/>"); sbTable.Append("<br/>");
-                    sbTable.Append("<br/>"); sbTable.Append("<br/>");
-                    sbTable.Append("<br/>"); sbTable.Append("<br/>");
-                    sbTable.Append("<br/>"); sbTable.Append("<br/>");
-                    sbTable.Append("<br/>"); sbTable.Append("<br/>");
-                    sbTable.Append("<br/>"); sbTable.Append("<br/>");
-                    sbTable.Append("<br/>"); sbTable.Append("<br/>");
-                    sbTable.Append("<br/>"); sbTable.Append("<br/>");
-                }
-                else if ((VehicleRegNo.Trim().ToLower().StartsWith("up") == true) || (VehicleRegNo.Trim().ToLower().StartsWith("mp") == true))
+                if (isSuperTag == "Y")
                 {
                     //sbTable.Append("<br/>"); sbTable.Append("<br/>");
                     //sbTable.Append("<br/>"); sbTable.Append("<br/>");
-                    //sbTable.Append("<br/>"); sbTable.Append("<br/>");
-                    //sbTable.Append("<br/>"); sbTable.Append("<br/>");
-                }
-                else
-                {
-                    sbTable.Append("<br/>"); sbTable.Append("<br/>");
-                    sbTable.Append("<br/>"); sbTable.Append("<br/>");
-                    sbTable.Append("<br/>"); sbTable.Append("<br/>");
-                    sbTable.Append("<br/>"); sbTable.Append("<br/>");
-                    //sbTable.Append("<br/>"); sbTable.Append("<br/>");
-                    //sbTable.Append("<br/>"); sbTable.Append("<br/>");
-                }
 
-                //sbTable.Append("<table style='margin-top: 162px;'>");
-                sbTable.Append("<table style='margin-top: 250px;'>");
+
+                    if (VehicleRegNo.Trim().ToLower().StartsWith("dl") == true)
+                    {
+                        sbTable.Append("<br/>"); sbTable.Append("<br/>");
+                        sbTable.Append("<br/>"); sbTable.Append("<br/>");
+                        sbTable.Append("<br/>"); sbTable.Append("<br/>");
+                        sbTable.Append("<br/>"); sbTable.Append("<br/>");
+                        sbTable.Append("<br/>"); sbTable.Append("<br/>");
+                        sbTable.Append("<br/>"); sbTable.Append("<br/>");
+                        sbTable.Append("<br/>"); sbTable.Append("<br/>");
+                        sbTable.Append("<br/>"); sbTable.Append("<br/>");
+                        sbTable.Append("<br/>"); sbTable.Append("<br/>");
+                        sbTable.Append("<br/>"); sbTable.Append("<br/>");
+                        sbTable.Append("<br/>"); sbTable.Append("<br/>");
+                        sbTable.Append("<br/>"); sbTable.Append("<br/>");
+                    }
+                    else if ((VehicleRegNo.Trim().ToLower().StartsWith("up") == true) || (VehicleRegNo.Trim().ToLower().StartsWith("mp") == true))
+                    {
+                        //sbTable.Append("<br/>"); sbTable.Append("<br/>");
+                        //sbTable.Append("<br/>"); sbTable.Append("<br/>");
+                        //sbTable.Append("<br/>"); sbTable.Append("<br/>");
+                        //sbTable.Append("<br/>"); sbTable.Append("<br/>");
+                    }
+                    else
+                    {
+                        sbTable.Append("<br/>"); sbTable.Append("<br/>");
+                        sbTable.Append("<br/>"); sbTable.Append("<br/>");
+                        sbTable.Append("<br/>"); sbTable.Append("<br/>");
+                        sbTable.Append("<br/>"); sbTable.Append("<br/>");
+                        //sbTable.Append("<br/>"); sbTable.Append("<br/>");
+                        //sbTable.Append("<br/>"); sbTable.Append("<br/>");
+                    }
+
+                    //sbTable.Append("<table style='margin-top: 162px;'>");
+                    sbTable.Append("<table style='margin-top: 250px;'>");
 
                     sbTable.Append("<tr>");
                     sbTable.Append("<td><b><h4>Receipt of Payment</h4></b></td>");
@@ -766,13 +768,15 @@ namespace BookMyHsrp.ReportsLogics.Receipt
 
 
 
-            var html =  sbTable.ToString();
-            return html;
+                var html = sbTable.ToString();
+                return html;
 
+            }
+            else
+            {
+
+                return "incorrect";
+            }
         }
-
-        //        return "incorrect" ;
     }
 }
-
-
