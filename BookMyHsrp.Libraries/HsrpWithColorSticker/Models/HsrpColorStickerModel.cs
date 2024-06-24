@@ -61,10 +61,8 @@ namespace BookMyHsrp.Libraries.HsrpWithColorSticker.Models
         {
             public string Message { get; set; }
             
-            public string RearPlatePhoto { get; set; }
             public string FrontPlatePhoto { get; set; }
             public string RearLaserPhoto { get; set; }
-            public string FrontLaserPhoto { get; set; }
 
         }
 
