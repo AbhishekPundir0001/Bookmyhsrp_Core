@@ -66,7 +66,7 @@ namespace BookMyHsrp.Libraries.VerifyPaymentDetail.Services
         {
             var parameters = new DynamicParameters();
             parameters.Add("@Engineno", vehicleDetails.EngineNo);
-            parameters.Add("@OrderType", realOrderType);
+            parameters.Add("@OrderType", realOrderType.ToString());
             parameters.Add("@ChassisNo", vehicleDetails.ChassisNo);
             parameters.Add("@RegistrationNo", vehicleDetails.VehicleRegNo);
             var result = await _databaseHelper.QueryAsync<dynamic>(VerifyPaymentDetailsQueries.GetBookingHistoryId, parameters);
@@ -123,7 +123,7 @@ namespace BookMyHsrp.Libraries.VerifyPaymentDetail.Services
             var parameters = new DynamicParameters();
             parameters.Add("@DealerAffixationId", DealerAffixationCenterId);
 
-            var result = await _databaseHelper.QueryAsync<dynamic>(VerifyPaymentDetailsQueries.AppointmentBlockDate, parameters);
+            var result = await _databaseHelper.QueryAsync<dynamic>(VerifyPaymentDetailsQueries.GetOemId, parameters);
             return result;
         }
         public async Task<dynamic> CheckdealerAffixation(string DealerAffixationCenterId)
@@ -259,10 +259,10 @@ namespace BookMyHsrp.Libraries.VerifyPaymentDetail.Services
         public async Task<dynamic> RazorPayOrderIdUpdate(string Order_No, string orderno)
         { 
             var parameters = new DynamicParameters();
-            parameters.Add("@orderNo", orderno);
+            parameters.Add("@OrderNo", orderno);
             parameters.Add("@Order_No", Order_No);
 
-            var result = await _databaseHelper.QueryAsync<dynamic>(VerifyPaymentDetailsQueries.InsertSuperTagOrder, parameters);
+            var result = await _databaseHelper.QueryAsync<dynamic>(VerifyPaymentDetailsQueries.RazorPayOrderIdUpdate, parameters);
             return result;
         }
     }

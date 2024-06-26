@@ -1,0 +1,352 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+    <title>Dreams Rent | Template</title>
+
+    <!-- Place favicon.ico in the root directory -->
+    <link rel="shortcut icon" type="image/x-icon" href="images/favicon.html">
+    <link rel="apple-touch-icon" href="apple-touch-icon.html">
+
+    <!-- All css files are included here. -->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/owl.carousel.min.css">
+    <!--     <link rel="stylesheet" href="assets/css/owl.theme.default.min.css"> -->
+    <!--    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.1.4/dist/css/datepicker.min.css">-->
+    <link rel="stylesheet" href="assets/css/calender.css">
+
+
+
+</head>
+
+<body>
+
+    <!-- Body main wrapper start -->
+
+    <div class="wrapper">
+      
+        <!-- End Header Style -->
+
+        <!-- Start Mobile Header -->
+        <!--
+        <div class="mobile-header d-block d-lg-none">
+            <div class="container">
+                <div class="row align-items-center justify-content-between">
+
+                </div>
+            </div>
+        </div>
+-->
+        <!-- End Mobile Header -->
+
+        <!--  Start Offcanvas Mobile Menu Section  -->
+        <div class="offcanvas offcanvas-start" tabindex="-1" id="toggleMenu">
+            <div class="offcanvas-header">
+
+                <!-- Start Header Logo -->
+                <a href="index-3.html" class="header-logo">
+                    <img src="assets/images/logo/logo.png" alt=""></a>
+                <!-- End Header Logo -->
+
+                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+                <!-- Start Offcanvas Mobile Menu Wrapper -->
+                <div class="offcanvas-mobile-menu-wrapper">
+                    <!-- Start Mobile Menu  -->
+                    <div class="mobile-menu-bottom">
+                        <!-- Start Mobile Menu Nav -->
+                        <div class="offcanvas-menu">
+                            <ul>
+                                <li><a href="TrackOrder.html">Track Your Order</a></li>
+                                <li><a href="ReAppointment.html">Reschedule Appointment</a></li>
+                                <li><a href="OrderCancel.html">Cancel Order</a></li>
+
+                                <li><a href="PinForHomeDelivery.html">Check For Home Installation</a></li>
+                                <li><a href="ReceiptValidity.html"><b>Receipt Validity</b></a></li>
+                                <li><a href="BookMyHSRP_ContactUs.html"><b>Contact Us</b></a></li>
+                            </ul>
+                        </div>
+                        <!-- End Mobile Menu Nav -->
+                    </div>
+                    <!-- End Mobile Menu -->
+
+                    <!-- End Mobile contact Info -->
+
+                </div>
+                <!-- Start Mobile contact Info -->
+                <!--
+                    <div class="mobile-contact-info text-center">
+                        <ul class="social-link">
+                            <li><a href="https://example.com/"><i class="fa fa-facebook"></i></a>
+                            </li>
+                            <li><a href="https://example.com/"><i class="fa fa-twitter"></i></a>
+                            </li>
+                            <li><a href="https://example.com/"><i class="fa fa-skype"></i></a></li>
+                        </ul>
+                    </div>-->
+
+                <!-- End Offcanvas Mobile Menu Wrapper -->
+            </div>
+        </div>
+        <!--  End Offcanvas Mobile Menu Section -->
+
+        <section class="page-header d-lg-none">
+            <div class="container">
+                <div class="page-header__inner text-center">
+                    <h5>Step 6</h5>
+                    <h2>Download Receipt</h2>
+                </div>
+            </div>
+        </section>
+
+        <!-- main start -->
+        <main class="main-body">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12 col-lg-4">
+                        <div class="receipt-left">
+                            <div class="title-area">
+                                <h4 class="title">Receipt of Payment & Appointment</h4>
+                                <h5 class="sub-title">Order Number: <span id="orderNo" class="order-id"></span></h5>
+                            </div>
+
+                            <div class="qr-box">
+                                <p>Scan to download the receipt.</p>
+                                <img src="assets/images/qr.svg" alt="">
+                            </div>
+
+                            <div class="or">
+                                - OR -
+                            </div>
+
+                            <div class="receipt-desc">
+                                <a href="#" id="printReceipt" class="submit-btn">
+                                    Print</a>
+                                <p>HSRP Online Appoinment Transaction Receipt</p>
+                                <h6>ROSMERTA SAFETY SYSTEMS LIMITED</h6>
+                                <p>(FORMERLY KNOWN AS ROSMERTA SAFETY SYSTEM PRIVATE LIMITED)</p>
+                                <p><a href="#">www.rosmertahsrp.com</a></p>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-8">
+                        <div class="receipt-right">
+                            <div class="row">
+                                <div class="col-lg-8">
+                                    <div class="receipt-right-one">
+                                        <div class="title-area">
+                                            <h4 class="title">HSRP Plate Appointment</h4>
+                                        </div>
+                                        <div class="desc">
+                                            <ul>
+                                                <li>Order Date :</li>
+                                                <li id="orderDate"></li>
+                                            </ul>
+                                            <ul>
+                                                <li>Vehicle Reg No :</li>
+                                                <li id="regNo"></li>
+                                            </ul>
+                                            <ul>
+                                                <li>Order Id :</li>
+                                                <li id="orderId"></li>
+                                            </ul>
+                                            <ul>
+                                                <li>Bank Tracking ID :</li>
+                                                <li id="bankTrackingId"></li>
+                                            </ul>
+                                            <ul>
+                                                <li>Payment/Order Status/Status Message :</li>
+                                                <li id="statusMessage"></li>
+                                            </ul>
+                                            <ul>
+                                                <li>HSRP Amount :</li>
+                                                <li id="hsrpAmount"></li>
+                                            </ul>
+                                            <ul>
+                                                <li>Billing Name :</li>
+                                                <li id="billingName" ></li>
+                                            </ul>
+                                            <ul>
+                                                <li>Billing Mobile :</li>
+                                                <li id="billingMobile"></li>
+                                            </ul>
+                                            <ul>
+                                                <li>Billing Email ID:</li>
+                                                <li id="billingEmailId"></li>
+                                            </ul>
+                                            <ul>
+                                                <li>Appointment Date Time :</li>
+                                                <li id="appointmentDateTime"></li>
+                                            </ul>
+                                            <ul>
+                                                <li>Fitment Center Name :</li>
+                                                <li id="fitmentCenterName"></li>
+                                            </ul>
+                                            <ul>
+                                                <li>Fitment Center Address :</li>
+                                                <li id="fitmentCenterAddress"></li>
+                                            </ul>
+
+                                            <ul>
+                                                <li>Fitment Person Name :</li>
+                                                <li id="fitmentPersonName"></li>
+                                            </ul>
+                                            <ul>
+                                                <li>Mobile No. :</li>
+                                                <li id="fitmentMobNo"></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="receipt-right-two">
+                                        <p>Please note:</p>
+                                        <ul>
+                                            <li>Carry this receipt and RC copy at the time of appointment.</li>
+
+                                            <li>For queries, Please contact Toll Free <a href="tel:8929722201">8929722201</a>, Email ID : <a href="mailto:online@bookmyhsrp.com">online@bookmyhsrp.com</a></li>
+                                            <li>Calling time (9:30 AM to 6:00 PM) and day (Monday to Saturday) or Email at <a href="mailto:online@bookmyhsrp.com">online@bookmyhsrp.com</a></li>
+                                            <li>Re-Appointment (if any) will only available for future dates.</li>
+                                            <li><span>Receipt Validity 31-05-2024</span></li>
+                                            <li>Fitment charges paid, no extra payment required to be paid to fitment person/dealer team.</li>
+                                        </ul>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <!-- main end -->
+
+        <!-- footer area start -->
+        <footer class="footer">
+            <div class="footer-bottom footer-bottom2">
+                <div class="container-fluid">
+                    <ul class="d-flex justify-content-between">
+                        <li><a href="BookMyHSRP_HSRPFAQ.html">FAQ</a></li>
+
+                        <li><a href="BookMyHSRP_privacypolicy.aspx">Privacy Policy</a></li>
+                        <li><a href="assets/pdf/Refund_cancellationNew.pdf" target="_blank">Refund &amp; Cancellation Policy</a></li>
+                        <li><a href="BookMyHSRP_safe-secure-transaction.aspx">Safe &amp; Secure Transaction</a></li>
+                        <li><a href="BookMyHSRP_termsofuse.aspx">Terms &amp; Conditions</a></li>
+
+                        <li><a href="GovNotification.aspx">Government Notifications</a></li>
+                        <li><a href="assets/pdf/HSRP_features.pdf" target="_blank">About HSRP</a></li>
+
+                        <li><a href="GrievanceSelectState.aspx">Grievance Redressal</a></li>
+                        <li><a href="DownloadReceipt.aspx">Reprint Receipt</a></li>
+
+                    </ul>
+                </div>
+            </div>
+        </footer>
+        <!-- footer area end -->
+
+    </div>
+    <!-- Body main wrapper end -->
+  @section Scripts
+  {
+        <script>
+        $(async function () {
+
+            await GetPaymentDetails();
+          
+        });
+                    async function GetPaymentDetails(){
+
+                        let url = '/paymentDetails';
+                        var result = await fetchData(url)
+                        if(result.Message=="Success")
+                        {
+                    var now = new Date();
+                    var utcString = now.toISOString();
+                    var year = now.getUTCFullYear();
+                    var month = pad(now.getUTCMonth() + 1); // getUTCMonth() returns 0-11, so we add 1 for 1-12
+                    var day = pad(now.getUTCDate());
+                    var currentTimeMillis = now.getTime();
+
+                    // Get the current time as a human-readable string
+                    var currentTimeString = now.toLocaleTimeString(); // This gives time in the format like "12:34:56 AM" or "23:45:01"
+
+                    // Alternatively, you can get individual components of the time
+                    var hours = now.getHours(); // Gets the hour (0-23)
+                    var minutes = now.getMinutes(); // Gets the minutes (0-59)
+                    var seconds = now.getSeconds(); // Gets the seconds (0-59)
+                    var milliseconds = now.getMilliseconds(); // Gets the milliseconds (0-999)
+
+                    // You can also construct a custom time string if needed
+                    var customTimeString = hours + ':' + minutes + ':' + seconds;
+                   
+                    var ampm = hours >= 12 ? 'PM' : 'AM';
+                    hours = hours % 12;
+                    hours = hours ? hours : 12;
+                    // Display UTC date components
+                    console.log("UTC Date:", year + '-' + month + '-' + day);
+                    console.log("UTC Time:", hours + ':' + minutes + ':' + seconds + ' ' + ampm);
+                    var date = sessionStorage.getItem('appointmentDate');
+                    var time = sessionStorage.getItem('timeSlot');
+                    $('#orderDate').text(year + '-' + month + '-' + day + '  ' + hours + ':' + (minutes < 10 ? '0' : '') + minutes + ':' + (seconds < 10 ? '0' : '') + seconds + ' ' + ampm);
+                    $('#regNo').text(result.VehicleRegNo);
+                    $('#orderNo').text(result.orderNo);
+                    $('#orderId').text(result.Order_No);
+                    $('#statusMessage').text(result.Message);
+                    $('#hsrpAmount').text(result.NetAmount);
+                    $('#billingName').text(result.CustomerName);
+                    $('#billingMobile').text(result.MobileNo);
+                    $('#billingEmailId').text(result.EmailID);
+                    $('#appointmentDateTime').text(date + ' ' + time);
+                    $('#fitmentCenterName').text(result.DealerAffixationCenterName);
+                    var bokingId =localStorage.getItem('TransactionId')
+                    $('#fitmentCenterAddress').text(result.DealerAffixationAddress);
+                    $('#bankTrackingId').text(bokingId);
+                    $('#fitmentPersonName').text(result.DealerAffixationCenterContactPerson);
+                    $('#fitmentMobNo').text(result.DealerAffixationCenterContactNo);
+                  }
+            }
+
+            function pad(number) {
+                if (number < 10) {
+                    return '0' + number;
+                }
+                return number;
+            }
+
+
+            $('#printReceipt').click(async function(){
+             var orderDate=   $('#orderNo').text();
+                var transactionId = $('#regNo').text();
+                let url1 = '/downloadReceipt';
+                var data = { OrderNo: orderDate, VehicleregNo: transactionId }
+                var response = await downloadReceipt(url1, data);
+                if (response.size > 15) {
+                    const orderNo = response.OrderNo;
+
+                    var blob = new Blob([response], { type: 'application/pdf' });
+                    var url = window.URL.createObjectURL(blob);
+
+                    var a = document.createElement('a');
+                    a.href = url;
+                    a.download = orderDate + '.pdf';
+                    document.body.appendChild(a);
+                    a.click();
+
+                    window.URL.revokeObjectURL(url);
+                }
+            })
+
+        </script>
+  }
+
+
+   
+    <!-- Body main Script end -->
+</body>
+
+</html>

@@ -404,20 +404,18 @@
 
                 return;
             }
-            if (!landmark) {
-                errorFunc("Please Input Landmark");
-                return;
-            }
             const data = { Pincode: pincode, DeliveryCity: city, StateName: state, AddressLine1: addressline1, AddressLine2: addressline2, Landmark: landmark }
             try {
                 const result = await postData(url, data);
+                    window.location.href = "/appointmentSlot";
+
             }
             catch (error) {
                 console.error('Failed to post data:', error);
             } finally {
                 $(this).prop('disabled', false);
                 $(this).html(originalButtonText);
-
+                 
             }
         }
 

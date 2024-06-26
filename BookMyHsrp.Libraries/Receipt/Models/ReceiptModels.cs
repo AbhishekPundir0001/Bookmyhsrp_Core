@@ -19,6 +19,13 @@ namespace BookMyHsrp.Libraries.Receipt.Models
             public string Message { get; set; }
 
         }
+        public class PaymentReceipt
+        {
+            public string OrderDate { get; set; }
+            public string AppointmentDateTime { get; set; }
+            public string TransactionId { get; set; }
+
+        }
 
     }
 }

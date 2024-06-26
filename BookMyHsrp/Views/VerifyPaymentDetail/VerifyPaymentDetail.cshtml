@@ -239,7 +239,7 @@
                                                 <label for="t&c">I agree to the Terms and Condition.</label>
                                             </p>
                                     </div>
-                                    <a id="payOnlineButton" href="" OnClick="payOnlineButton()" class="submit-btn" >Pay Online</a>
+                                    <a id="rzp-button" class="submit-btn">Pay Online</a>
                                 </div>
                             </div>
 
@@ -248,6 +248,8 @@
                 </div>
             </div>
         </main>
+        </div>
+        <div id="popup-payment"></div>
         <!-- main end -->
 
   @section Scripts
@@ -260,10 +262,10 @@
         });
           var result;
         async function GetVerifyPaymentDetail(){
-            debugger
+           
             let url = "/getVerifyPaymentDetail";
              result = await fetchData(url);
-            debugger;
+          
             // $('#').val(BMHConvenienceCharges)
             // $('#').val(GrossTotal)
             $('#address').text(result.Address)
@@ -278,11 +280,11 @@
                     $('#basicAmount').text('Rs.' + result.GstBasic_Amt)
                     
 
-            debugger
+           
 
         }
         function myFunction(){
-           debugger
+ 
             const checkbox = document.getElementById("same-d");
             if (checkbox.checked) {
                 // Code to execute when checkbox is checked
@@ -292,23 +294,141 @@
             }
 
        }
-                $('#payOnlineButton').click(async function(){
-               debugger
+          $(document).ready(function () {
+              $('#rzp-button').click(async function (e) {
+                  const errorFunc = (title) => {
+                      Toast.fire({
+                          icon: 'error',
+                          title: title
+                      })
+                  }
+                  var checkSuperTag = document.getElementById('chkSuperTag');
+                  if (checkSuperTag == null) {
+                      checkSuperTag = false;
+                  }
+                  if (checkSuperTag.checked == true) {
+
+                      var Address1 = $("#address").val().trim().replace("\n", "");
+                      var state = $("#txtShippingState").val().trim();
+                      var city = $("#txtShippingCity").val().trim();
+                      var pincode = $("#txtShippingPinCode").val().trim();
+
+                      var regex = /^[a-zA-Z0-9\\// !,\$%\^\*\)\(+=._-]+$/g
+                      //alert(BillingAddress);
+                      //Validate TextBox value against the Regex.
+                      var isValid = regex.test(Address1);
+
+                      if (pincode == "") {
+                          errorFunc("Please provide shipping pincode");
+                          return;
+                      } else if ((pincode.length) < 6 || (pincode.length) > 6) {
+
+                          alert("pincode should only be 6 digits");
+                          return false;
+                      }
+
+                      if (Address1 == "") {
+                          alert("Please provide shipping address");
+                          return false;
+                      }
+                      if (!isValid) {
+                          alert("Some Special Characters ( # ~ & ' <>  are not Allowed ) in shipping Address");
+                          return false;
+                      }
+
+                      if (city == "") {
+                          alert("Please provide shipping city");
+                          return false;
+                      }
+                      if (state == "") {
+                          alert("Please provide shipping state");
+                          return false;
+                      }
+
+
+                  }
+
+                  var checkAgree = document.getElementById('cbAgree');
+
+                  if (checkAgree.checked == false) {
+                      errorFunc("Please check terms and condition");
+                      return;
+                  }
+                  var txtMobileNo = $('#mobNo').text().trim();
+                  if (txtMobileNo == '') {
+                      errorFunc("Provide mobile number");
+                      return;
+                  }
+                  if (txtMobileNo.length != 10) {
+                      errorFunc("Incorrect mobile number");
+                      return;
+                  }
+                  var payment = "payonline";
+                  let data = { PaymentStatus: payment };
+                  let url = '/payment'
+                  const result = await postData(url, data);
+                  if (result.Message == "Slot booked. Choose another Slot.") {
+                      errorFunc("Slot booked.Choose another Slot.");
+                      setTimeout(function () {
+                          window.location.href = "/appointmentSlot"; // Redirect to the specified URL
+                      }, 2000);
+
+
+
+                  }
+                  // Fetch data or construct dynamically
+                  var order_id = result.Order_No; // Replace with server-generated order ID
+                  var ownerName = result.OwnerName; // Replace with owner's name
+                  var email = result.EmailID; // Replace with owner's email
+                  var mobileNo = result.MobileNo; // Replace with owner's mobile number
+                  var amount = parseFloat(result.NetAmount);
+                  var options = {
+                      "key": result.Key, // Replace with your Razorpay API key
+                      "amount": Math.round(amount * 100), // Example amount (in paisa)
+                      "currency": "INR",
+                      "name": "Razorpay",
+                      "description": "BookMyHSRP",
+                      "order_id": order_id,
+                      "handler": function (response) {
+                          alert('Payment successful!');
+                            console.log(response)
+                            localStorage.setItem('TransactionId', response.razorpay_payment_id)
+                          //localStorage.setItem('paymentId',response)
+                          window.location.href = "/paymentRecipt";
+
+
+                          // Handle payment success callback
+                      },
+                      "prefill": {
+                          "name": result.OwnerName,
+                          "email": result.EmailID,
+                          "contact": result.MobileNo,
+                      },
+                      "theme": {
+                          "color": "#F37254" // Example color
+                      }
+                  };
+
+                  var rzp = new Razorpay(options);
+                  rzp.open();
+                  e.preventDefault();
+              });
+          });
+      
+    $('#payOnlineButton1').click( async function(){
+          const errorFunc = (title) => {
+                        Toast.fire({
+                            icon: 'error',
+                            title: title
+                        })
+          }
                var checkSuperTag = document.getElementById('chkSuperTag');
                     if (checkSuperTag == null) {
                         checkSuperTag = false;
                     }
                 if (checkSuperTag.checked == true)
                  {
-                            const errorFunc = (title) => {
-                                Toast.fire({
-                                    icon: 'error',
-                                    title: title
-                                })
-                                $(this).prop('disabled', false);
-                                $(this).html(originalButtonText);
-
-                            }
+                           
                      var Address1 = $("#address").val().trim().replace("\n", "");
                     var state = $("#txtShippingState").val().trim();
                     var city = $("#txtShippingCity").val().trim();
@@ -352,33 +472,59 @@
             var checkAgree = document.getElementById('cbAgree');
 
             if (checkAgree.checked == false) {
-                    errorFunc("Please check terms and condition");
-                return;
+                errorFunc("Please check terms and condition");
+                        return ;
             }
-                var txtMobileNo = $('#mobNo').val().trim();
+                var txtMobileNo = $('#mobNo').text().trim();
             if (txtMobileNo == '') {
                     errorFunc("Provide mobile number");
-                return ;
+                        return ;
             }
             if (txtMobileNo.length != 10)
             {
                 errorFunc("Incorrect mobile number");
-                return;
+                        return ;
             }
-                    let data = Payment:'payonline';
+                    var payment = "payonline";
+                    let data = { PaymentStatus: payment };
                     let url = '/payment'
-                    const result = await postData(url, data)
-
-
-          });
-          // $('#payOnlineButton').click(async function payOnlineButton() {
-          //     debugger
-          //     let data = Payment:'payonline';
-          //     let url = '/payment'
-          //     const result = await postData(url, data)
-          // });
- 
+                    const result = await postData(url, data);
+                    
+                $('#popup-payment').html(result)
+                    if (result.Message== "Slot booked. Choose another Slot.") 
+                    {
+                        errorFunc("Slot booked.Choose another Slot.");
+                        setTimeout(function () {
+                            window.location.href = "/appointmentSlot"; // Redirect to the specified URL
+                        }, 2000);
+                      
+                       
+                    
+                    }
+                 
+                      });
+                
+                function ValidatePayForm() {
+                    // Wait for Razorpay button to appear
+                   
+                    var interval = setInterval(function () {
+                        var edit = document.querySelector(".razorpay-payment-button");
+                        if (edit) {
+                            edit.addEventListener("click", function () {
+                                console.log("clicked")
+                            });
+                            clearInterval(interval); // Stop checking once found
+                            setTimeout(function () {
+                                edit.click(); // Simulate click after a delay
+                            }, 1000);
+                        }
+                    }, 500); // Check every 500ms
+                }
             </script>
+            <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+            <script src="https://razorpay.com/favicon.png"></script>
+        <script src="https://example.com/path/to/razorpay/script.js"></script>
+
   }
 </body>
 </html>

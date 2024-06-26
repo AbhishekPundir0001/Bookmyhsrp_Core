@@ -132,6 +132,13 @@ namespace BookMyHsrp.Libraries.DealerDelivery.Services
             var result = await _databaseHelperPrimary.QueryAsync<dynamic>(DealerDeliveryQueries.GetAffixationId, parameters);
             return result;
         }
+        public async Task<dynamic> GetDealerData(string Id)
+        {
+            var parameters = new DynamicParameters();
+            parameters.Add("@Id", Id);
+            var result = await _databaseHelperPrimary.QueryAsync<dynamic>(DealerDeliveryQueries.GetDealerDetails, parameters);
+            return result;
+        }
 
 
     }
