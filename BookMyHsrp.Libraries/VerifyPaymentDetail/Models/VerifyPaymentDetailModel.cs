@@ -48,6 +48,7 @@ namespace BookMyHsrp.Libraries.VerifyPaymentDetail.Models
             public string OwnerName { get; set; }
             public string Mobile { get; set; }
             public string Address { get; set; }
+            public string Key { get; set; }
             public string EmailID { get; set; }
             public string PinCode { get; set; }
             public string HdnMRDCharges { get; set; }
@@ -55,6 +56,11 @@ namespace BookMyHsrp.Libraries.VerifyPaymentDetail.Models
         public class PaymentDetails()
         {
             public string  Message { get; set; }
+            public string DealerAffixationCenterContactPerson { get; set; }
+            public string DealerAffixationCenterContactNo { get; set; }
+            public string DealerAffixationCenterName { get; set; }
+            public string  Order_No { get; set; }
+            public string  Key { get; set; }
             public string isSuperTag { get; set; }
             public string isFrame { get; set; }
             public string orderNo { get; set; }
@@ -163,7 +169,10 @@ namespace BookMyHsrp.Libraries.VerifyPaymentDetail.Models
             public string Lateral { get; set; }
 
         }
-
+        public class Payment
+        {
+            public string PaymentStatus { get; set; }
+        }
 
     }
 }

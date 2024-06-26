@@ -13,6 +13,7 @@ using System.Net;
 using System.Text;
 using static BookMyHsrp.Libraries.VerifyPaymentDetail.Models.VerifyPaymentDetailModel;
 using static iTextSharp.text.pdf.AcroFields;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 namespace BookMyHsrp.ReportsLogics.VerifyPaymentDetails
 {
     public class VerifyPaymentDetailsConnector
@@ -21,6 +22,7 @@ namespace BookMyHsrp.ReportsLogics.VerifyPaymentDetails
         private readonly string _key;
         private readonly string _secret;
         private readonly string _Host;
+        string Order_No = string.Empty;
         public VerifyPaymentDetailsConnector(IVerifyPaymentDetailService verifyPaymentDetailService, IOptionsSnapshot<DynamicDataDto> dynamicData)
         {
             _verifyPaymentDetailService = verifyPaymentDetailService ?? throw new ArgumentNullException(nameof(verifyPaymentDetailService));
@@ -471,8 +473,9 @@ namespace BookMyHsrp.ReportsLogics.VerifyPaymentDetails
             }
             return model;
         }
-        public async Task<dynamic> Payment(dynamic vehicledetails, dynamic userdetails, dynamic DealerAppointment, dynamic bookingDetail,string ip)
+        public async Task<dynamic> Payment(dynamic vehicledetails, dynamic userdetails, dynamic DealerAppointment, dynamic bookingDetail,string ip,string Payment,dynamic timeSlotChecking)
         {
+            var data = "";
             var modelResult = new PaymentDetails();
             string realOrdertype = string.Empty;
             string orderType = userdetails.OrderType == null ? "" : userdetails.OrderType.ToString();
@@ -536,14 +539,14 @@ namespace BookMyHsrp.ReportsLogics.VerifyPaymentDetails
                     //need to add in logger
                 }
             }
-            var appointmentBlockDateQuery = await _verifyPaymentDetailService.AppointmentBlockDate(DealerAppointment.SelectedSlotDate, DealerAppointment.DealerAffixationCenterId, vehicledetails.DeliveryPoint);
+            var appointmentBlockDateQuery = await _verifyPaymentDetailService.AppointmentBlockDate(bookingDetail.SlotDate, DealerAppointment.DealerAffixationCenterId, DealerAppointment.DeliveryPoint);
             if (DealerAppointment.Affix != "Affixval")
             {
 
                 var status = "";
                 foreach (var item in appointmentBlockDateQuery)
                 {
-                    status = item.status;
+                    status = item.status.ToString();
                 }
                 if (appointmentBlockDateQuery.Count > 0 && status == "1")
                 {
@@ -556,7 +559,7 @@ namespace BookMyHsrp.ReportsLogics.VerifyPaymentDetails
                     return modelResult;
                 }
             }
-            if (vehicledetails.DeliveryPoint == "Dealer")
+            if (DealerAppointment.DeliveryPoint == "Dealer")
             {
                 var getOemId = await _verifyPaymentDetailService.GetOemId(DealerAppointment.DealerAffixationCenterId);
                 if (getOemId.Count > 0)
@@ -573,10 +576,18 @@ namespace BookMyHsrp.ReportsLogics.VerifyPaymentDetails
                 }
             }
             modelResult.ChkFastTag = false;
+            foreach (var slotInfo in timeSlotChecking)
+            {
+                if (slotInfo.SlotName == bookingDetail.SlotTime)
+                {
+                    modelResult.SlotTime= slotInfo.SlotName.ToString();
+                    modelResult.SlotId = slotInfo.SlotID.ToString();// Return SlotID if SlotName matches time
+                }
+            }
             modelResult.ChkFrame = false;
-            modelResult.SlotId = DealerAppointment.SlotId;
-            modelResult.SlotTime = DealerAppointment.SelectedSlotTime;
-            modelResult.SlotBookingDate = DealerAppointment.SelectedSlotDate;
+            modelResult.SlotId = modelResult.SlotId;
+            modelResult.SlotTime = modelResult.SlotTime;
+            modelResult.SlotBookingDate = bookingDetail.SlotDate;
             modelResult.HSRPStateID = vehicledetails.StateId;
             modelResult.RTOLocationID = string.Empty;
             modelResult.RTOName = string.Empty;
@@ -601,11 +612,11 @@ namespace BookMyHsrp.ReportsLogics.VerifyPaymentDetails
             modelResult.TotalAmount = "";
             modelResult.NetAmount = "";
             modelResult.BookingType = "";
-            modelResult.FuelType = vehicledetails.Fuel;
+            modelResult.FuelType = vehicledetails.FuelType;
             modelResult.DealerId = "";
             modelResult.OEMID = vehicledetails.OemId;
             modelResult.BookedFrom = "Website";
-            modelResult.AppointmentType = vehicledetails.DeliveryPoint;
+            modelResult.AppointmentType = DealerAppointment.DeliveryPoint;
             modelResult.BasicAmount = "";
             modelResult.FitmentCharge = "";
             modelResult.ConvenienceFee = "";
@@ -615,7 +626,7 @@ namespace BookMyHsrp.ReportsLogics.VerifyPaymentDetails
             modelResult.CGSTAmount = "0";
             modelResult.SGSTAmount = "0";
             modelResult.CustomerGSTNo = "0";
-            modelResult.BharatStage = vehicledetails.BhartStage;
+            modelResult.BharatStage = userdetails.BhartStage;
             modelResult.ShippingAddress1 = "";
             modelResult.ShippingAddress2 = "";
             modelResult.ShippingCity = "";
@@ -708,9 +719,9 @@ namespace BookMyHsrp.ReportsLogics.VerifyPaymentDetails
 
                     foreach (var item in checkdealerAffixation)
                     {
-                        modelResult.RTOLocationID = item.RTOLocationID;
-                        modelResult.RTOName = item.RTOLocationName;
-                        modelResult.DealerId = item.DealerID;
+                        modelResult.RTOLocationID = item.RTOLocationID.ToString();
+                        modelResult.RTOName = item.RTOLocationName.ToString();
+                        modelResult.DealerId = item.DealerID.ToString();
                     }
                 }
                 var checkoem = await _verifyPaymentDetailService.CheckOem(vehicledetails.OemId);
@@ -719,8 +730,8 @@ namespace BookMyHsrp.ReportsLogics.VerifyPaymentDetails
                     foreach (var item in checkdealerAffixation)
                     {
 
-                        modelResult.OEMID = item.OemID;
-                        modelResult.ManufacturerName = item.OemName;
+                        modelResult.OEMID = item.OemID.ToString();
+                        modelResult.ManufacturerName = item.OemName.ToString();
                     }
                 }
             }
@@ -730,7 +741,7 @@ namespace BookMyHsrp.ReportsLogics.VerifyPaymentDetails
             }
             try
             {
-                if (vehicledetails.StateIdBackup.toString() == "27")
+                if (vehicledetails.StateIdBackup.ToString() == "27")
                 {
                     var checkOemRate = await _verifyPaymentDetailService.CheckOemRateFromTax(orderType, userdetails.VehicleType, vehicledetails.StateIdBackup);
                     if (checkOemRate.Count > 0)
@@ -781,15 +792,15 @@ namespace BookMyHsrp.ReportsLogics.VerifyPaymentDetails
                 }
                 else
                 {
-                    var result = await _verifyPaymentDetailService.CheckOemRateFromOrderRate(vehicledetails.OemId, orderType, vehicledetails.VehicleClass, userdetails.VehicleType, userdetails.VehicleCategoryId, vehicledetails.Fuel, DealerAppointment.DeliveryPoint, vehicledetails.StateId, vehicledetails.StateName);
+                    var result = await _verifyPaymentDetailService.CheckOemRateFromOrderRate(vehicledetails.OemId, orderType, vehicledetails.VehicleClass, userdetails.VehicleType, userdetails.VehicleCategoryId, vehicledetails.FuelType, DealerAppointment.DeliveryPoint, vehicledetails.StateId, vehicledetails.StateName);
                     if (DealerAppointment.DeliveryPoint == "Dealer")
                     {
                         foreach (var item in result)
                         {
-                            modelResult.GSTAmount = item.GstBasic_Amt;
-                            modelResult.FittmentCharges = item.FittmentCharges;
-                            modelResult.BMHConvenienceCharges = item.BMHConvenienceCharges;
-                            modelResult.BMHHomeCharges = item.BMHHomeCharges;
+                            modelResult.GSTAmount = item.GstBasic_Amt.ToString();
+                            modelResult.FittmentCharges = item.FittmentCharges.ToString();
+                            modelResult.BMHConvenienceCharges = item.BMHConvenienceCharges.ToString();
+                            modelResult.BMHHomeCharges = item.BMHHomeCharges.ToString();
                         }
                         if (modelResult.GSTAmount.ToString() == "0.00" || modelResult.GSTAmount.ToString() == null || modelResult.FittmentCharges.ToString() == "0.00" || modelResult.FittmentCharges.ToString() == null || modelResult.BMHConvenienceCharges == "0.00" || modelResult.BMHConvenienceCharges == null)
                         {
@@ -850,25 +861,25 @@ namespace BookMyHsrp.ReportsLogics.VerifyPaymentDetails
                     {
                         foreach (var item in result)
                         {
-                            modelResult.Status = item.status;
-                            modelResult.Message = item.message;
+                            modelResult.Status = item.status.ToString();
+                            modelResult.Message = item.message.ToString();
                         }
                         if (modelResult.Status == "1")
                         {
                             foreach (var item in result)
                             {
-                                modelResult.FrontPlateSize = item.FrontPlateSize;
-                                modelResult.RearPlateSize = item.RearPlateSize;
-                                modelResult.BasicAmount = item.GstBasicAmount;
-                                modelResult.FitmentCharge = item.FittmentCharges;
-                                modelResult.ConvenienceFee = item.ConvenienceCharges;
+                                modelResult.FrontPlateSize = item.FrontPlateSize.ToString();
+                                modelResult.RearPlateSize = item.RearPlateSize.ToString();
+                                modelResult.BasicAmount = item.GstBasic_Amt.ToString();
+                                modelResult.FitmentCharge = item.FittmentCharges.ToString();
+                                modelResult.ConvenienceFee = item.BMHConvenienceCharges.ToString();
                                 modelResult.HomeDeliveryCharge = "0";
-                                modelResult.TotalAmount = item.GrossTotal;
-                                modelResult.GSTAmount = item.GSTAmount;
+                                modelResult.TotalAmount = item.GrossTotal.ToString();
+                                modelResult.GSTAmount = item.GSTAmount.ToString();
                                 modelResult.IGSTAmountST = item.IGSTAmount;
-                                modelResult.SGSTAmountST = item.SGSTAmountST;
+                                modelResult.SGSTAmountST = item.SGSTAmount;
                                 modelResult.CGSTAmountST = item.CGSTAmount;
-                                modelResult.NetAmount = item.TotalAmount;
+                                modelResult.NetAmount =item.TotalAmount.ToString();
                             }
                             if (modelResult.ChkFastTag)
                             {
@@ -926,8 +937,8 @@ namespace BookMyHsrp.ReportsLogics.VerifyPaymentDetails
                 {
                     foreach(var item in paymentInitiated)
                     {
-                        modelResult.Status = item.status;
-                        modelResult.orderNo = item.OrderNo;
+                        modelResult.Status = item.status.ToString();
+                        modelResult.orderNo = item.OrderNo.ToString();
                     }
                     //if (Session["QueryStringValue"] != null)
                     //{
@@ -958,21 +969,18 @@ namespace BookMyHsrp.ReportsLogics.VerifyPaymentDetails
                     {
 
                     }
-                    if(modelResult.State=="1")
+                    if(modelResult.Status=="1")
                     {
                         modelResult.NetAmount = (Convert.ToDecimal(modelResult.NetAmount) + modelResult.TotalAmountST + modelResult.TotalAmountFrm).ToString();
-                        RazorPay(modelResult.orderNo, modelResult.NetAmount,modelResult.OwnerName, modelResult.Address1,modelResult.City, modelResult.State, modelResult.Pin, modelResult.MobileNo, modelResult.EmailID, (modelResult.SlotBookingDate + " " + modelResult.SlotTime), DealerAppointment.DealerAffixationCenterId, modelResult.DealerAffixationAddress, modelResult.VehicleRegNo, modelResult.SlotId, DealerAppointment.DeliveryPoint ,  ip);
-                        StringBuilder RazorPayScript = new StringBuilder();
-                        RazorPayScript.Append("<script language='javascript'>");
-                        RazorPayScript.Append("ValidatePayForm();");
-                        RazorPayScript.Append("</script>");
+                       data =  await RazorPay(modelResult.orderNo, modelResult.NetAmount,modelResult.OwnerName, modelResult.Address1,modelResult.City, modelResult.State, modelResult.Pin, modelResult.MobileNo, modelResult.EmailID, (modelResult.SlotBookingDate + " " + modelResult.SlotTime), DealerAppointment.DealerAffixationCenterId, modelResult.DealerAffixationAddress, modelResult.VehicleRegNo, modelResult.SlotId, DealerAppointment.DeliveryPoint ,  ip);
+                        
                     }
                 }
                 else
                    {
                     foreach(var item in paymentInitiated)
                     {
-                        modelResult.Message = item.message;
+                        modelResult.Message = item.message.ToString();
                     }
                 }
             }
@@ -982,6 +990,8 @@ namespace BookMyHsrp.ReportsLogics.VerifyPaymentDetails
             }
 
 
+            modelResult.Key = _key.ToString();
+            modelResult.Order_No = Order_No;
             return modelResult;
             }
             
@@ -991,13 +1001,13 @@ namespace BookMyHsrp.ReportsLogics.VerifyPaymentDetails
         var x = r.Next(0, 9);
         return x.ToString("0");
     }
-        private async void RazorPay(string orderno, string GrandTotal, string OwnerName, string Address,
+        private async Task<dynamic> RazorPay(string orderno, string GrandTotal, string OwnerName, string Address,
             string CityName, string StateName, string PinCode,
             string MobileNo, string Emailid, string AppointmentDateTime, string DealerAffaxtionCenterID,
             string DealerAffaxtionAddress, string Regno, string TimeSlotID ,string DeliveryPoint , string _ip)
         {
             var modelResult = new PaymentDetails();
-            string Order_No = string.Empty;
+            
             ServicePointManager.SecurityProtocol = (SecurityProtocolType)768 | (SecurityProtocolType)3072;
 
             decimal payableAmount = Convert.ToDecimal(GrandTotal) * 100;
@@ -1013,6 +1023,7 @@ namespace BookMyHsrp.ReportsLogics.VerifyPaymentDetails
             //string key = "rzp_test_A8SlD8Ar6NexSY";  //rzp_test_Uy1r8Av2FjQdBP
             //string secret = "L657FHU7f3APTshth2yDhjgw";//iaRucYRkXy0nW2IvRrqPrMwj
             string key = _key.ToString();
+            
             string secret = _secret.ToString();
 
             RazorpayClient client = new RazorpayClient(key, secret);
@@ -1067,7 +1078,6 @@ namespace BookMyHsrp.ReportsLogics.VerifyPaymentDetails
                     #endregion
 
                     var RazorPayOrderIDUpdate = await _verifyPaymentDetailService.RazorPayOrderIdUpdate(Order_No, orderno);
-
                     modelResult.hdnMyOrderID = orderno;
                     modelResult.hdnGatewayOrderID = Order_No;
                 }
@@ -1095,7 +1105,7 @@ namespace BookMyHsrp.ReportsLogics.VerifyPaymentDetails
             StringBuilder sbTable = new StringBuilder();
             sbTable.Clear();
             sbTable.Append("<form id='customerData' name='customerData' action='" + ccavResponseHandler + "' method='post'>");
-            sbTable.Append("<script ");
+            sbTable.Append("<script");
             sbTable.Append("src='https://checkout.razorpay.com/v1/checkout.js' ");
             sbTable.Append("data-key='" + key + "' ");
             sbTable.Append("data-amount='0' ");
@@ -1103,7 +1113,7 @@ namespace BookMyHsrp.ReportsLogics.VerifyPaymentDetails
             sbTable.Append("data-name='Razorpay' ");
             sbTable.Append("data-description='BookMyHSRP' ");
             sbTable.Append("data-order_id='" + Order_No + "' ");
-            sbTable.Append("data-image='https://razorpay.com/favicon.png' ");
+            sbTable.Append("<img src='https://razorpay.com/favicon.png' />");
             sbTable.Append("data-prefill.name='" + OwnerName + "' ");
             sbTable.Append("data-prefill.email='" + Emailid + "' ");
             sbTable.Append("data-prefill.contact='" + MobileNo + "' ");
@@ -1116,7 +1126,14 @@ namespace BookMyHsrp.ReportsLogics.VerifyPaymentDetails
             sbTable.Append("<input type='hidden' value='Hidden Element' name='hidden'>");
             sbTable.Append("<input type='hidden' value='" + orderno + "' name='generated_order_id'>");
             sbTable.Append("</form>");
+            sbTable.Append("<script language='javascript'>");
+            sbTable.Append("ValidatePayForm();");
+            sbTable.Append("</script>");
             modelResult.Lateral = sbTable.ToString();
+            modelResult.Order_No = Order_No;
+            modelResult.orderNo= orderno;
+            return modelResult.Lateral;
+
         }
         private string RandomString(int size)
         {
@@ -1133,6 +1150,7 @@ namespace BookMyHsrp.ReportsLogics.VerifyPaymentDetails
         public async Task<dynamic> CheckVehicleForDFDRDB(string VehicleRegNo, string ChassisNo,dynamic EngineNo)
         {
             var modelResult = new PaymentDetails();
+            
             modelResult.Checker = false;
             var result =await _verifyPaymentDetailService.Check(VehicleRegNo, ChassisNo, EngineNo);
             if(result.Count>0)

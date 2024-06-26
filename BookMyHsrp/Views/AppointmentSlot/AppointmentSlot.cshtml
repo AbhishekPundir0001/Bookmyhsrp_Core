@@ -166,7 +166,7 @@
                                 </ul>
                             </div>
                             <div class="col-lg-6">
-                                <a href="@Url.Action("BookingSummary", "BookingSummary")" class="submit-btn">Confirm & Proceed</a>
+                                <a id="confirm-button" href="@Url.Action("BookingSummary", "BookingSummary")" class="submit-btn">Confirm & Proceed</a>
                             </div>
                         </div>
                     </div>
@@ -186,7 +186,7 @@
         var formattedDateWeakOff = [];
         let weakOff;
         $(async function () {
-           
+            $('#confirm-button').hide();
             await GetappointmentDate();
             await CheckECBlockedDate();
             await GetHolidays();
@@ -196,7 +196,6 @@
         });
 
         async function GetHolidays() {
-
             let url = "/holiday"
             const result = await fetchData(url);
             if (result.BlockDate != null) {
@@ -280,7 +279,7 @@
 
 
             }
-
+            
 
          }
 
@@ -344,7 +343,7 @@
         $(document).ready(function () {
             // Event handler for radio buttons
             $(document).on('click', '.for-checkbox-tools', function () {
-                debugger
+                
                 $(this).closest('.slot-box').find('.for-checkbox-tools i').removeClass('submit-btn');
                 if ($(this).is(':checked')) {
                     // Change color of parent container to blue
@@ -355,12 +354,13 @@
                 }
                 selectedValue = $(this).closest('.time-slot').find('.time-desc').text();
                 sessionStorage.setItem('timeSlot', selectedValue);
+                $('#confirm-button').show();
             });
         });
         $(document).ready(function () {
             // Event handler for radio buttons
             $(document).on('click', '.rd-day-body', function () {
-                debugger
+                
                 var ele = $(".rd-day-selected");
                 var day1 = ele[0].innerHTML;
                 var month1 = $(".rd-month-label");
@@ -379,9 +379,16 @@
                 var fulldate = date.toString();
                 sessionStorage.removeItem('appointmentDate');
                 sessionStorage.setItem('appointmentDate', fulldate);
+                $('#slot-time').empty();
+                 BindTimeSlot();
+                
             });
         });
-       
+
+
+
+
+        
         
         
     </script>

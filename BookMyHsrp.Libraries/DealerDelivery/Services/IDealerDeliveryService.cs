@@ -17,5 +17,6 @@ namespace BookMyHsrp.Libraries.DealerDelivery.Services
         Task<dynamic> CheckOemRate(string Ordertype, string VehicleType,string StateIdBackup);
         Task<dynamic> CheckOemRateQuery(string OemId,string Ordertype,string VehicleClass,string VehicleType,string VehicleCategoryId,string FuelType,string DeliveryPoint,string StateId,string StateName);
         Task<dynamic> GetAffixationId(string Id);
+        Task<dynamic> GetDealerData(string Id);
     }
 }

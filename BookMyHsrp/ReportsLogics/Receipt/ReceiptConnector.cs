@@ -288,7 +288,7 @@ namespace BookMyHsrp.ReportsLogics.Receipt
                 sbTable.Append("<table style='width:100%;' border='0'>");
                 sbTable.Append("<tr>");
 
-                if (OrderStatus.ToString().Equals("Success") || OrderStatus.ToString().Equals("Shipped"))
+                if (OrderStatus.ToString().ToLower().Equals("success") || OrderStatus.ToString().ToLower().Equals("Shipped"))
                 {
                     //sbTable.Append("<tr>");
                     if (OrderType.ToUpper().Trim() == "DR")

@@ -77,6 +77,7 @@ namespace BookMyHsrp.Libraries.HsrpWithColorSticker.Models
             public long DealerAffixationID { get; set; }
             public int Dealerid { get; set; }
             public string DealerName { get; set; }
+            public string DealerAffixationCenterContactPerson { get; set; }
             public string VehicleCat { get; set; }
             public string Vehiclecategory { get; set; }
             public string DealerAffixationCenterName { get; set; }
@@ -143,7 +144,9 @@ namespace BookMyHsrp.Libraries.HsrpWithColorSticker.Models
             public int RTOLocationID { get; set; }
             public string RTOLocationName { get; set; }
             public string DealerAffixationCenterAddress { get; set; }
-          
+            public string SlotDate { get; set; }
+            public string SlotTime { get; set; }
+
         }
         public class VehicleValidation
         {
@@ -175,6 +178,14 @@ namespace BookMyHsrp.Libraries.HsrpWithColorSticker.Models
 
             public bool show_damage_both { get; set; } = true;
             public List<OemVehicleTypeList> oemvehicletypelist { get; set; }
+
+        }
+        public class TimeSlotArray
+        {
+            public List<OemVehicleTypeList> oemvehicletypelist { get; set; }
+        }
+        public class TimeChecking
+        {
 
         }
       

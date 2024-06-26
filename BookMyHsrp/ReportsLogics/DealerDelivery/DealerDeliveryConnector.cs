@@ -29,7 +29,7 @@ namespace BookMyHsrp.ReportsLogics.DealerDelivery
             var OemId= sessiondetails.OemId;
             decimal netamount;
             var StateId= sessiondetails.StateId;
-            var VehicleCat= sessiondetails.VehicleCategory;
+            var VehicleCat= vehicledetails.VehicleCat;
             if(VehicleCat=="2WN")
             {
                 VehicleCat = "2W";
@@ -270,6 +270,7 @@ namespace BookMyHsrp.ReportsLogics.DealerDelivery
             setSession.DealerAffixationCenterId = Id;
             try
             {
+                var data = await _dealerDeliveryService.GetDealerData(Id);
                 var getAffixationId = await _dealerDeliveryService.GetAffixationId(Id);
                 if (getAffixationId.Count > 0)
                 {
@@ -281,6 +282,11 @@ namespace BookMyHsrp.ReportsLogics.DealerDelivery
                 }
                 else
                 {
+                    foreach(var item in data)
+                    {
+                        setSession.DealerAffixationCenterContactNo= item.DealerAffixationCenterContactNo;
+                        setSession.DealerAffixationCenterContactPerson= item.DealerAffixationCenterContactPerson;
+                    }
                     setSession.Message = "Success";
                     setSession.Affix = "";
                 }

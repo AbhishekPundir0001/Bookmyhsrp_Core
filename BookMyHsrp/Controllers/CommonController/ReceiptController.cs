@@ -54,7 +54,8 @@ namespace BookMyHsrp.Controllers.CommonController
             return View();
         }
 
-
+        [Route("downloadReceipt")]
+        [HttpPost]
         public IActionResult DownloadReceipt([FromBody] ReceiptModels.Receipt requestdto)
         {
             string contentPath = _environment.ContentRootPath;

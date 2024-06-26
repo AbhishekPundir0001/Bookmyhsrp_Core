@@ -191,8 +191,12 @@
                
             });
             async function BookingSummaryConfirmation(){
-                let url = '/bookingSummary-confirmation'
-                const result = await fetchData(url);
+
+                var date = sessionStorage.getItem('appointmentDate').toString();
+                var time = sessionStorage.getItem('timeSlot').toString();
+                var data = { Date: date, SlotTime: time };
+                let url = "/bookingSummary-confirmation";
+                const result = await postData(url, data);
                 if (result!=null){
                     var date = sessionStorage.getItem('appointmentDate');
                     var time = sessionStorage.getItem('timeSlot');

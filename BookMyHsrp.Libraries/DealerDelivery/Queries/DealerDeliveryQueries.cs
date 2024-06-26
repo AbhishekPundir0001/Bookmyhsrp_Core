@@ -17,6 +17,7 @@ namespace BookMyHsrp.Libraries.DealerDelivery.Queries
         public static string CheckOemRate => "exec usp_GetTaxRate  @OrderType,@VehicleType,@HSRP_StateId";
         public static string CheckOemRateQuery => "exec CheckOrdersRates  @OemID,@OrderType,@VehicleClass,@VehicleType,@VehicleCategoryID,@FulType,@AppointmentType,@HSRP_StateID,@CustomerStateName,@PlateSticker";
         public static string GetAffixationId => "select DealeraffixationId from ExpressAffixatonCenter where DealeraffixationId=@Id";
+        public static string GetDealerDetails=> "select * from DealerAffixationCenter  where DealerAffixationID=@Id";
 
     }
 }

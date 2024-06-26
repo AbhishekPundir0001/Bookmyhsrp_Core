@@ -108,5 +108,16 @@ namespace BookMyHsrp.Libraries.AppointmentSlot.Services
             var result = await _databaseHelperPrimary.QueryAsync<dynamic>(AppointmentSlotQueries.CheckAppointmentSlotTimeHome, parameters);
             return result;
         }
+        public async Task<dynamic> AppointmentBlockedDatesForHomes(string tempdate, string dealerId, dynamic dealiveryPoint)
+
+        {
+            var parameters = new DynamicParameters();
+            parameters.Add("@TempDate", tempdate);
+            parameters.Add("@DealerId", dealerId);
+            parameters.Add("@DealiveryPoint", dealiveryPoint);
+
+            var result = await _databaseHelperPrimary.QueryAsync<dynamic>(AppointmentSlotQueries.AppointmentBlockedDatesForHomes, parameters);
+            return result;
+        }
     }
 }
