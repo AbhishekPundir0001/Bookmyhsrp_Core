@@ -4,7 +4,7 @@ namespace BookMyHsrp.Controllers.CommonController
 {
 	public class FaqController : Controller
 	{
-		[Route("/faq/Faq")]
+		[Route("/faq")]
 		public IActionResult Faq()
 		{
 			return View();

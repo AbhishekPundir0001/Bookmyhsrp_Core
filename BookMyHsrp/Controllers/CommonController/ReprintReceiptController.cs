@@ -6,7 +6,7 @@ namespace BookMyHsrp.Controllers.CommonController
 {
     public class ReprintReceiptController : Controller
     {
-        [Route("/reprintreceipt/ReprintReceipt")]
+        [Route("/reprintreceipt")]
         public IActionResult ReprintReceipt()
         {
             return View();
