@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookMyHsrp.Libraries", "Boo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookMyHsrp.Utility", "BookMyHsrp.Utility\BookMyHsrp.Utility.csproj", "{F0F57282-DF58-4848-901C-C1295A4996D1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookMyHsrp.Redis", "BookMyHsrp.Redis\BookMyHsrp.Redis.csproj", "{F6601569-DB7D-4A13-8291-4091127C7D1D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookMyHsrp.Redis", "BookMyHsrp.Redis\BookMyHsrp.Redis.csproj", "{F6601569-DB7D-4A13-8291-4091127C7D1D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
