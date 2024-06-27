@@ -69,6 +69,7 @@ namespace BookMyHsrp
             ConfigureAuthentication(services);
             services.AddSession(options =>
             {
+               
                 // Set options here
                 options.IdleTimeout = TimeSpan.FromMinutes(30);
                 options.Cookie.HttpOnly = true;
@@ -144,11 +145,11 @@ namespace BookMyHsrp
            
             services.Configure<ConnectionString>(Configuration.GetSection("ConnectionStrings"));
             services.Configure<DynamicDataDto>(Configuration.GetSection("Api"));
-            services.AddStackExchangeRedisCache(options =>
-            {
-                options.Configuration = Configuration.GetValue<string>("Redis");
-            });
-            services.Add(ServiceDescriptor.Singleton<IDistributedCache, RedisCache>());
+            //services.AddStackExchangeRedisCache(options =>
+            //{
+            //    options.Configuration = Configuration.GetValue<string>("Redis");
+            //});
+            //services.Add(ServiceDescriptor.Singleton<IDistributedCache, RedisCache>());
             services.AddTransient<ILoggingService, LoggingService>();
             services.AddTransient<IStateService, StateService>();
             services.AddTransient<IHsrpWithColorStickerService, HsrpWithColorStickerService>();

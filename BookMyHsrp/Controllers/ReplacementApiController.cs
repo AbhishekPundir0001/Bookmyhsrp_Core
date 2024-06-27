@@ -355,7 +355,9 @@ namespace BookMyHsrp.Controllers
                     getSession.FuelType = info.FuelTypeVahan;
                     getSession.Fuel = info.FuelTypeVahan;
                     getSession.Message = resultGot.Message;
-                    getSession.OrderType = resultGot.data.OrderType;
+                    getSession.OrderType = info.OrderType;
+                    getSession.PlateOrderType= info.OrderType;
+                    getSession.ReplacementType= info.OrderType;
 
                     var GetRootObjectSession = HttpContext.Session.GetString("UserSession");
                     jsonSerializer = System.Text.Json.JsonSerializer.Serialize(getSession);

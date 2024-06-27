@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <Folder Include="Common\Services\" />
+    <Folder Include="DealerDeliverySticker\Services\" />
     <Folder Include="RequestResponseLoggingMiddleware\Service\" />
   </ItemGroup>
 

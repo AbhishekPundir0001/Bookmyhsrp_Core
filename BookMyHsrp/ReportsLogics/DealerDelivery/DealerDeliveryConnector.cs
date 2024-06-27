@@ -29,7 +29,7 @@ namespace BookMyHsrp.ReportsLogics.DealerDelivery
             var OemId= sessiondetails.OemId;
             decimal netamount;
             var StateId= sessiondetails.StateId;
-            var VehicleCat= sessiondetails.VehicleCategory;
+            var VehicleCat= vehicledetails.VehicleCat;
             if(VehicleCat=="2WN")
             {
                 VehicleCat = "2W";

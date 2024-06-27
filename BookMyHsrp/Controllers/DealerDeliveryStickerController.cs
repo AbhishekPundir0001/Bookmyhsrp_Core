@@ -4,8 +4,10 @@ namespace BookMyHsrp.Controllers
 {
     public class DealerDeliveryStickerController : Controller
     {
-        public IActionResult Index()
+        [Route("/dealerDeliverySticker")]
+        public IActionResult DealerDeliverySticker()
         {
+
             return View();
         }
     }

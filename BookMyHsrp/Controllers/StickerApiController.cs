@@ -117,7 +117,6 @@ namespace BookMyHsrp.Controllers
                 var GetRootObjectSession = HttpContext.Session.GetString("UserSession");
                 jsonSerializer = System.Text.Json.JsonSerializer.Serialize(rootDto);
                 HttpContext.Session.SetString("UserSession", jsonSerializer);
-
             }
 
             if (jsonSerializer != "")
