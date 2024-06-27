@@ -150,7 +150,9 @@ namespace BookMyHsrp.Controllers
                     SelectedSlotDate = result.SelectedSlotDate,
                     SelectedSlotTime = result.SelectedSlotTime,
                     Affix = result.Affix,
-                    DeliveryPoint = "Dealer"
+                    DeliveryPoint = "Dealer",
+                    DealerAffixationCenterContactPerson = result.DealerAffixationCenterContactPerson,
+                    DealerAffixationCenterContactNo=result.DealerAffixationCenterContactNo
                 };
                 jsonSerializer = System.Text.Json.JsonSerializer.Serialize(setSession);
                 HttpContext.Session.SetString("AppointmentSlotId", jsonSerializer);

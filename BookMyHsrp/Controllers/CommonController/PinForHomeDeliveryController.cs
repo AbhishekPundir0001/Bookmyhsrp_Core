@@ -4,7 +4,7 @@ namespace BookMyHsrp.Controllers.CommonController
 {
     public class PinForHomeDeliveryController : Controller
     {
-        [Route("/pinforhomedelivery/PinForHomeDelivery")]
+        [Route("/pinforhomedelivery")]
         public IActionResult PinForHomeDelivery()
         {
             return View();

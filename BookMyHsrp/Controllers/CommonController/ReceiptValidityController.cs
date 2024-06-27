@@ -20,7 +20,7 @@ namespace BookMyHsrp.Controllers.CommonController
         private readonly IReceiptValidityService _receiptValidityService = receiptValidityService ?? throw new ArgumentNullException(nameof(receiptValidityService));
 
 
-
+        [Route("/ReceiptValidity")]
         public IActionResult ReceiptValidity()
         {
             return View();

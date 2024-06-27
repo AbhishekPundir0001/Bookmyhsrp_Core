@@ -4,7 +4,7 @@ namespace BookMyHsrp.Controllers.CommonController
 {
     public class ReAppointmentController : Controller
     {
-        [Route("/reappointment/ReAppointment")]
+        [Route("/reappointment")]
         public IActionResult ReAppointment()
         {
             return View();

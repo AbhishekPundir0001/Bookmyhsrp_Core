@@ -382,7 +382,7 @@
                                             </div>
                                             <p class="note mb-5">If any details provided by me for HSRP is found (Partially/Fully). The HSRP will not be affixed to my vehicle and HSRP Fee will not be Refundable.</p>
                                             <div class="col-lg-6 col-md-12 col-sm-12">
-                                                <button type="reset" class="reset-btn">
+                                                <button id="reset" type="button" class="reset-btn">
                                                     Reset
                                                 </button>
                                                 <button id="btn-next" type="button" class="submit-btn">
@@ -421,10 +421,10 @@
                         <div class="img-icon">
                             <img src="~/Images/password.png" alt="">
                         </div>
-                        <h6>Please enter the OTP send to your<br>registerd mobile number</h6>
+                        <h6>Please enter the OTP sent to your<br>registered mobile number</h6>
                         <span>OTP is valid for 10 minutes. </span>
                         <div class="otp-box">
-                            <form action="#">
+                            <form id="otp-form">
                                 <div class="input-field">
                                     <input id="first" type="number" class="otp-text m-2" />
                                     <input id="second" type="number" class="otp-text m-2" disabled />
@@ -432,8 +432,7 @@
                                     <input id="fourth" type="number" class="otp-text m-2" disabled />
                                 </div>
                                 <div class="mt-3">
-                                    <button id="btn-validate" class="submit-btn otp-btn"
-                                            data-bs-dismiss="modal">
+                                    <button type="button" id="btn-validate" class="submit-btn otp-btn">
                                         Validate
                                     </button>
                                 </div>
@@ -612,6 +611,10 @@
         <script>
 
             $('#btn-validate').click(async function () {
+                var validateBtn = document.getElementById('btn-validate');
+                validateBtn.addEventListener('click', function (event) {
+                    // Perform your validation logic here
+                    event.preventDefault();
                 const validateBtn = document.querySelector('.otp-btn');
                 $(this).prop('disabled', true);
                 var originalButtonText = $(this).html();
@@ -1195,7 +1198,9 @@
                 $('#frontLaserCode').val('');
                 $('#rearLaserCode').val('');
             });
-
+                $('#reset').click(function(){
+                    location.reload();
+                })
         </script>
     }
 

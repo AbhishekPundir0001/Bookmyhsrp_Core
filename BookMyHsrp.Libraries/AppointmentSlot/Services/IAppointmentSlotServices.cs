@@ -17,5 +17,6 @@ namespace BookMyHsrp.Libraries.AppointmentSlot.Services
         Task<dynamic> AppointmentBlockedDatesForSelectedDate(string selectedDate,string  dealerId,dynamic dealiveryPoint);
         Task<dynamic> CheckAppointmentSlotTime(string selectedDate,string vehicleTypeId,string dealerId,string dealiveryPoint,string stateId);
         Task<dynamic> CheckAppointmentSlotTimeHome(string selectedDate,string vehicleTypeId,string dealerId,string dealiveryPoint,string stateId);
+        Task<dynamic> AppointmentBlockedDatesForHomes(string tempdate, string dealerId, dynamic dealiveryPoint);
     }
 }

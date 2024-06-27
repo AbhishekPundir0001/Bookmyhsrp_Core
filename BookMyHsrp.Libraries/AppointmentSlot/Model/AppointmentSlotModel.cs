@@ -17,6 +17,8 @@ namespace BookMyHsrp.Libraries.AppointmentSlot.Model
             public string SelectedSlotTime { get; set; }
             public string Affix { get; set; }
             public string DeliveryPoint { get; set; }
+            public string DealerAffixationCenterContactPerson  { get; set; }
+            public string DealerAffixationCenterContactNo { get; set; }
         }
         public class Dates
         {
@@ -45,5 +47,6 @@ namespace BookMyHsrp.Libraries.AppointmentSlot.Model
             public int BookedCount { get; set; }
             public string AvaiableStatus { get; set; }
         }
+       
     }
 }

@@ -14,90 +14,11 @@
     <link rel="stylesheet" href="~/css/bootstrap.min.css">
     <link rel="stylesheet" href="~/css/style.css">
     <link rel="stylesheet" href="~/css/owl.carousel.min.css">
-    <!--     <link rel="stylesheet" href="assets/css/owl.theme.default.min.css"> -->
-    <!--     <link rel="stylesheet" href="assets/css/owl.theme.default.min.css"> -->
 
 </head>
 
 <body>
 
-    <!-- Body main wrapper start -->
-
-    <div class="wrapper">
-        <!-- Start Header Style -->
-        <!-- End Header Style -->
-        <!-- Start Mobile Header -->
-        <!--
-                <div class="mobile-header d-block d-lg-none">
-                    <div class="container">
-                        <div class="row align-items-center justify-content-between">
-
-                        </div>
-                    </div>
-                </div>
-        -->
-        <!-- End Mobile Header -->
-        <!--  Start Offcanvas Mobile Menu Section  -->
-        <div class="offcanvas offcanvas-start" tabindex="-1" id="toggleMenu">
-            <div class="offcanvas-header">
-
-                <!-- Start Header Logo -->
-                <a href="index-3.html" class="header-logo">
-                    <img src="~/Images/logo/logo.png" alt="">
-                </a>
-                <!-- End Header Logo -->
-
-                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-            </div>
-            <div class="offcanvas-body">
-                <!-- Start Offcanvas Mobile Menu Wrapper -->
-                <div class="offcanvas-mobile-menu-wrapper">
-                    <!-- Start Mobile Menu  -->
-                    <div class="mobile-menu-bottom">
-                        <!-- Start Mobile Menu Nav -->
-                        <div class="offcanvas-menu">
-                            <ul>
-                                <li><a href="TrackOrder.html">Track Your Order</a></li>
-                                <li><a href="ReAppointment.html">Reschedule Appointment</a></li>
-                                <li><a href="OrderCancel.html">Cancel Order</a></li>
-
-                                <li><a href="PinForHomeDelivery.html">Check For Home Installation</a></li>
-                                <li><a href="ReceiptValidity.html"><b>Receipt Validity</b></a></li>
-                                <li><a href="BookMyHSRP_ContactUs.html"><b>Contact Us</b></a></li>
-                            </ul>
-                        </div>
-                        <!-- End Mobile Menu Nav -->
-                    </div>
-                    <!-- End Mobile Menu -->
-                    <!-- End Mobile contact Info -->
-
-                </div>
-                <!-- Start Mobile contact Info -->
-                <!--
-                    <div class="mobile-contact-info text-center">
-                        <ul class="social-link">
-                            <li><a href="https://example.com/"><i class="fa fa-facebook"></i></a>
-                            </li>
-                            <li><a href="https://example.com/"><i class="fa fa-twitter"></i></a>
-                            </li>
-                            <li><a href="https://example.com/"><i class="fa fa-skype"></i></a></li>
-                        </ul>
-                    </div>-->
-                <!-- End Offcanvas Mobile Menu Wrapper -->
-            </div>
-        </div>
-        <!--  End Offcanvas Mobile Menu Section -->
-
-        <section class="page-header d-lg-none">
-            <div class="container">
-                <div class="page-header__inner text-center">
-                    <h5>Step 1</h5>
-                    <h2>Booking Details</h2>
-                </div>
-            </div>
-        </section>
-
-     
         <!-- main start -->
         <main class="main-body bg-img pt--50 pb--80 main-bg">
             <div class="container">
@@ -197,11 +118,11 @@
                                     </div>
 
                                     <div class="col-lg-12 mt-5">
-                                        <button type="button" class="submit-btn" id="download_receipt">
-                                            Confirm
-                                        </button>
                                         <button type="button" class="submit-btn" id="btnclose">
-                                            Not Confirm
+                                            Close
+                                        </button>
+                                            <button type="button" class="submit-btn" id="btndownloadreceipt">
+                                            Download Receipt
                                         </button>
                                     </div>
                                 </div>
@@ -265,11 +186,11 @@
                                         </div>
                                     </div>
                                     <div class="col-lg-12 mt-5">
-                                        <button type="button" class="submit-btn" id="btnclose">
+                                        <button type="button" class="submit-btn" id="btnclose1">
                                             Close
                                         </button>
-                                        <button type="button" class="submit-btn" id="btnclose">
-                                            Download
+                                        <button type="button" class="submit-btn" id="btndownloadreceipt1">
+                                            Download Receipt
                                         </button>
                                     </div>
 
@@ -281,7 +202,7 @@
 
                 </div>
                 <div class="col-lg-6">
-                    <div class="status-card" id="hidden2">
+                    <div class="status-card" id="hidden2" style="height: 100%">
                         <div class="card-body">
                             <form action="">
                                 <div class="row" id="reschedulediv">
@@ -317,6 +238,113 @@
             };
 
 
+
+                $('#btndownloadreceipt').click(function () {
+                    handleButtonClickApproved.call(this, '/Receipt/DownloadReceipt', downloadReceipt, (result) => {
+                        // Success callback
+                        // You can handle the success result here, if needed
+                    });
+                });
+
+                async function handleButtonClickApproved(url, downloadReceipt, isSuccessFunc) {
+                    debugger;
+
+                    var orderNumber = $('#orderNo').val();
+
+                    $(this).prop('disabled', true);
+                    var originalButtonText = $(this).html();
+
+                    const errorFunc = (title) => {
+                        Toast.fire({
+                            icon: 'error',
+                            title: title
+                        });
+                        $(this).prop('disabled', false);
+                        $(this).html(originalButtonText);
+                    };
+
+                    const data = { OrderNo: orderNumber }
+                    // AJAX request to download receipt
+                    try {
+                        const response = await downloadReceipt(url, data); // Assuming you have defined postData function
+                        if (response.size > 15) {
+                            isSuccessFunc(response);
+                            debugger;
+                            console.log(response);
+                            const orderNo = response.OrderNo;
+
+                            var blob = new Blob([response], { type: 'application/pdf' });
+                            var url = window.URL.createObjectURL(blob);
+
+                            var a = document.createElement('a');
+                            a.href = url;
+                            a.download = orderNumber + '.pdf';
+                            document.body.appendChild(a);
+                            a.click();
+
+                            window.URL.revokeObjectURL(url);
+                        }
+                        else {
+                            errorFunc('Invalid Order No.');
+                        }
+                    } catch (error) {
+                        errorFunc('Error downloading receipt.');
+                    }
+                }
+
+
+                $('#btndownloadreceipt1').click(function () {
+                    handleButtonClickApproved.call(this, '/Receipt/DownloadReceipt', downloadReceipt, (result) => {
+                        // Success callback
+                        // You can handle the success result here, if needed
+                    });
+                });
+
+                async function handleButtonClickApproved(url, downloadReceipt, isSuccessFunc) {
+                    debugger;
+
+                    var orderNumber = $('#orderNo').val();
+
+                    $(this).prop('disabled', true);
+                    var originalButtonText = $(this).html();
+
+                    const errorFunc = (title) => {
+                        Toast.fire({
+                            icon: 'error',
+                            title: title
+                        });
+                        $(this).prop('disabled', false);
+                        $(this).html(originalButtonText);
+                    };
+
+                    const data = { OrderNo: orderNumber }
+                    // AJAX request to download receipt
+                    try {
+                        const response = await downloadReceipt(url, data); // Assuming you have defined postData function
+                        if (response.size > 15) {
+                            isSuccessFunc(response);
+                            debugger;
+                            console.log(response);
+                            const orderNo = response.OrderNo;
+
+                            var blob = new Blob([response], { type: 'application/pdf' });
+                            var url = window.URL.createObjectURL(blob);
+
+                            var a = document.createElement('a');
+                            a.href = url;
+                            a.download = orderNumber + '.pdf';
+                            document.body.appendChild(a);
+                            a.click();
+
+                            window.URL.revokeObjectURL(url);
+                        }
+                        else {
+                            errorFunc('Invalid Order No.');
+                        }
+                    } catch (error) {
+                        errorFunc('Error downloading receipt.');
+                    }
+                }
 
             function ValidCaptcha() {
                 $(this).prop('disabled', true);
@@ -362,7 +390,7 @@
             });
 
             async function handleButtonClick(url, postData, isSuccessFunc) {
-                
+
                 const errorFunc = (title) => {
                     Toast.fire({
                         icon: 'error',
@@ -390,8 +418,8 @@
                 var data = { VehicleRegNo: vehRegNo, OrderNo: orderNo }
                 var url = "/track-your-order-sp"
                 const spresult = await postData(url, data)
-                
 
+                debugger
                 if (result == "Not Found" || result.Count == 0) {
                     if (spresult == "Not Found" || spresult.Count == 0) {
                         $('.status-card').hide();
@@ -400,7 +428,7 @@
                 }
                 else {
                     debugger
-                    if (spresult.ReAppointmentStatus == "1") {
+                    if (spresult[0].ReAppointmentStatus == "1") {
                         $('.status-card').hide();
                         $('#hidden1').show();
                         $('#hidden2').show();
@@ -416,7 +444,7 @@
 
                             var dealerid = result[0].dealerid.toString();
 
-                            var data = { VehicleregNo: vehRegNo, OrderNo: orderNo,Dealerid: dealerid };
+                            var data = { VehicleregNo: vehRegNo, OrderNo: orderNo, Dealerid: dealerid };
                             const _dealer = await postData("/dealer-name", data);
 
                             if (_dealer.length > 0) {
@@ -449,52 +477,52 @@
 
                             divToUpdate.innerHTML = customHTML;
                         }
-                        }
-                 
+                    }
+                    else {
                         $('.status-card').hide();
-                    $('#hidden').show();
-                    $('#HiddenOrderNo').text(result[0].ORDER_NUMBER);
-                    $('#vehicleNo').text(result[0].REG_NUMBER)
-                    
-                    const fitmentdate = await postData("/fitment-date", data)
-                    
-                    if ( fitmentdate && fitmentdate.Count > 0) {
-                        $('#appointmentDate').text("Fitment Date will be informed later via SMS and on Call")
-                    }
-                    else {
-                        
-                        var datetimeString = result[0].SlotBookingDate;
-                        var date = new Date(datetimeString);
-                        var day = ('0' + date.getDate()).slice(-2);
-                        var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-                        var month = monthNames[date.getMonth()];
-                        var year = date.getFullYear();
-                        var formattedDate = day + '-' + month + '-' + year;
-                        $('#appointmentDate').text(formattedDate);
-                    }
-                    $('#orderstatus').text(result[0].OrderStatus)
-                    var _AppointmentType = result[0].AppointmentType;
-                    if (_AppointmentType == "Home") {
-                        $('#ownername').text(result[0].OwnerName)
-                        var FullAddress = result[0].ShippingAddress1 + " " + result[0].ShippingAddress2 + " " + result[0].ShippingCity + " " + result[0].ShippingState + " " + result[0].ShippingPinCode;
-                        return $('#address').text(FullAddress)
-                    } 
-                    else {
-                        
-                        var dealerid = result[0].dealerid.toString();
-                       
-                        var data = { Dealerid: dealerid };
-                        const _dealer = await postData("/dealer-name", data);
-                        
-                        if (_dealer.length > 0){
-                            $('#ownername').text(_dealer[0].DealerAffixationCenterName);
-                            return $('#address').text(_dealer[0].DealerAffixationCenterAddress);
-                        }
+                        $('#hidden').show();
+                        $('#HiddenOrderNo').text(result[0].ORDER_NUMBER);
+                        $('#vehicleNo').text(result[0].REG_NUMBER)
 
+                        const fitmentdate = await postData("/fitment-date", data)
+
+                        if (fitmentdate && fitmentdate.Count > 0) {
+                            $('#appointmentDate').text("Fitment Date will be informed later via SMS and on Call")
+                        }
+                        else {
+
+                            var datetimeString = result[0].SlotBookingDate;
+                            var date = new Date(datetimeString);
+                            var day = ('0' + date.getDate()).slice(-2);
+                            var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+                            var month = monthNames[date.getMonth()];
+                            var year = date.getFullYear();
+                            var formattedDate = day + '-' + month + '-' + year;
+                            $('#appointmentDate').text(formattedDate);
+                        }
+                        $('#orderstatus').text(result[0].OrderStatus)
+                        var _AppointmentType = result[0].AppointmentType;
+                        if (_AppointmentType == "Home") {
+                            $('#ownername').text(result[0].OwnerName)
+                            var FullAddress = result[0].ShippingAddress1 + " " + result[0].ShippingAddress2 + " " + result[0].ShippingCity + " " + result[0].ShippingState + " " + result[0].ShippingPinCode;
+                            return $('#address').text(FullAddress)
+                        }
+                        else {
+
+                            var dealerid = result[0].dealerid.toString();
+
+                            var data = { Dealerid: dealerid };
+                            const _dealer = await postData("/dealer-name", data);
+
+                            if (_dealer.length > 0) {
+                                $('#ownername').text(_dealer[0].DealerAffixationCenterName);
+                                return $('#address').text(_dealer[0].DealerAffixationCenterAddress);
+                            }
+
+                        }
                     }
                 }
             }
-
         </script>
 
         }

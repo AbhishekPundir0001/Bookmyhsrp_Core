@@ -101,7 +101,21 @@ namespace BookMyHsrp.ReportsLogics.AppointmentSlot
                     var tempdate = tempDate.ToString("yyyy-MM-dd");
 
                     string AppointmentBlockedDatesQuery = string.Empty;
-                    var result = await _appointmentSlotServices.AppointmentBlockedDates(tempdate, dealerId, dealiveryPoint);
+                     var result = await _appointmentSlotServices.AppointmentBlockedDates(tempdate, dealerId, dealiveryPoint);
+                    if(DealerAppointment.DeliveryPoint=="Home" || DealerAppointment.DeliveryPoint == "")
+                    {
+                         var result1 = await _appointmentSlotServices.AppointmentBlockedDatesForHomes(tempdate, dealerId, dealiveryPoint);
+                        if (result.Count > 0)
+                        {
+                            string Status = result[0].status.ToString();
+                            if (Status == "1")
+                            {
+                                blockedDates.Add(tempDate.ToString("yyyy-MM-dd"));
+                            }
+                        }
+
+                    }
+
                     if (result.Count > 0)
                     {
                         string Status = result[0].status.ToString();

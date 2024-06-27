@@ -24,10 +24,10 @@ namespace BookMyHsrp.Controllers
         }
 
 
-        [HttpGet]
+        [HttpPost]
         [Route("/bookingSummary-confirmation")]
         
-        public async Task<IActionResult> BookingSummaryConfirmation()
+        public async Task<IActionResult> BookingSummaryConfirmation([FromBody] BookingDate date)
         {
             var bookingDetails = new BookingDetails();
             var vehicleDetail = HttpContext.Session.GetString("UserSession");
@@ -60,6 +60,8 @@ namespace BookMyHsrp.Controllers
                 bookingDetails.DealerID = result[0].DealerID;
                 bookingDetails.OemName = result[0].OemName;
                 bookingDetails.OemID = result[0].OemID;
+                bookingDetails.SlotDate = date.Date;
+                bookingDetails.SlotTime = date.SlotTime;
                 var jsonSerializer = System.Text.Json.JsonSerializer.Serialize(bookingDetails);
                 HttpContext.Session.SetString("UserBookingDetails", jsonSerializer);
 

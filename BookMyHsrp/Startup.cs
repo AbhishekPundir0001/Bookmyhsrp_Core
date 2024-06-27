@@ -49,6 +49,7 @@ using BookMyHsrp.Libraries.OemMaster.Services;
 using BookMyHsrp.Libraries.BookingSummary.Services;
 using BookMyHsrp.Libraries.VerifyPaymentDetail.Services;
 using BookMyHsrp.ReportsLogics.VerifyPaymentDetails;
+using BookMyHsrp.Libraries.PaymentReceipt.Services;
 namespace BookMyHsrp
 {
     public class Startup
@@ -166,7 +167,8 @@ namespace BookMyHsrp
             services.AddTransient<IHomeDeliveryStickerService, HomeDeliveryStickerService>();
             services.AddTransient<IReplacementService, ReplacementService>();
             services.AddTransient<IReceiptService, ReceiptService>();
-            services.AddTransient<IGrievanceServices, GrievanceServices>();
+           services.AddTransient<IGrievanceServices, GrievanceServices>();
+            services.AddTransient<IPaymentReceiptService, PaymentReceiptService>();
             services.AddScoped<HsrpWithColorStickerConnector>();
             services.AddScoped<AppointmentSlotConnector>();
             services.AddScoped<TrackYourOrderConnector>();
@@ -285,6 +287,7 @@ namespace BookMyHsrp
             ConfigureEnvironment(app, env);
             ConfigureExceptionHandler(app);
             ConfigureCommonMiddleware(app);
+            app.UseSession();
         }
 
         private void ConfigureEnvironment(IApplicationBuilder app, IWebHostEnvironment env)
