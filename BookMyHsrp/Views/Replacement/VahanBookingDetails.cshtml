@@ -372,7 +372,7 @@
 
                                             <div class="col-lg-6 col-md-6 col-sm-12" id="DivDF">
                                                 <div class="form-group">
-                                                    <label class="form-label">Front Plate Photo*</label>
+                                                    <label class="form-label">Front Plate Photo* <a href="#" class="guide-a" data-bs-toggle="modal" data-bs-target="#guide-1"><i class="fas fa-question"></i></a></label>
                                                     <input type="file" class="file-control" id="fileid3">
                                                 </div>
                                             </div>
@@ -518,6 +518,23 @@
             </div>
         </div>
     </div>
+
+    <!-- Guide 1 start -->
+    <div class="modal guide fade" id="guide-1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><i class="fas fa-times"></i></button>
+
+                    <div class="image">
+                        <img src="assets/images/sticker-guide/img-1.png" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Guide 1 End -->
+
     @await Html.PartialAsync("~/Views/PartialView/_SuccessOTPModelPartial.cshtml")
 
 
