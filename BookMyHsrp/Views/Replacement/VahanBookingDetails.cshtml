@@ -372,7 +372,7 @@
 
                                             <div class="col-lg-6 col-md-6 col-sm-12" id="DivDF">
                                                 <div class="form-group">
-                                                    <label class="form-label">Front Plate Photo* <a href="#" class="guide-a" data-bs-toggle="modal" data-bs-target="#guide-1"><i class="fas fa-question"></i></a></label>
+                                                    <label class="form-label">Front Plate Photo* <a href="#" class="guide-a" data-bs-toggle="modal" data-bs-target="#front-1"><i class="fas fa-question"></i></a></label>
                                                     <input type="file" class="file-control" id="fileid3">
                                                 </div>
                                             </div>
@@ -385,7 +385,7 @@
 
                                             <div class="col-lg-6 col-md-6 col-sm-12" id="DivDR">
                                                 <div class="form-group">
-                                                    <label class="form-label">Rear Plate Photo*</label>
+                                                    <label class="form-label">Rear Plate Photo*<a href="#" class="guide-a" data-bs-toggle="modal" data-bs-target="#rear-1"><i class="fas fa-question"></i></a></label>
                                                     <input type="file" class="file-control" id="fileid4">
                                                 </div>
                                             </div>
@@ -519,21 +519,36 @@
         </div>
     </div>
 
-    <!-- Guide 1 start -->
-    <div class="modal guide fade" id="guide-1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <!-- Front 1 start -->
+    <div class="modal guide fade" id="front-1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-body">
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><i class="fas fa-times"></i></button>
 
                     <div class="image">
-                        <img src="assets/images/sticker-guide/img-1.png" alt="">
+                        <img src="~/assets/images/sticker-guide/frontlost.jpg" alt="">
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- Guide 1 End -->
+    <!-- Front 1 End -->
+    <!-- Rear 1 start -->
+    <div class="modal guide fade" id="rear-1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><i class="fas fa-times"></i></button>
+
+                    <div class="image">
+                        <img src="~/assets/images/sticker-guide/rearlost.jpg" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Rear 1 End -->
 
     @await Html.PartialAsync("~/Views/PartialView/_SuccessOTPModelPartial.cshtml")
 
@@ -1080,22 +1095,22 @@
                 }
 
                 if (VehicleOrdertype == '0') {
-                    alert('Please Select Order Type');
+                    errorFunc('Please Select Order Type');
                     return false;
                 }
 
                 if (VehicleOrdertype == '') {
-                    alert('Please Select Order Type');
+                    errorFunc('Please Select Order Type');
                     return false;
                 }
 
                 if (_Reason == '') {
-                    alert('Please Select Reason For Replacement');
+                    errorFunc('Please Select Reason For Replacement');
                     return false;
                 }
 
                 if (_Reason == '0') {
-                    alert('Please Select Reason For Replacement');
+                    errorFunc('Please Select Reason For Replacement');
                     return false;
                 }
 
@@ -1103,51 +1118,51 @@
                     if (_Reason == 'LT' || _Reason == 'BD') {
                         if (VehicleOrdertype == 'BDB') {
                             if (rc == '') {
-                                alert('Please Upload RC File..!');
+                                errorFunc('Please Upload RC File..!');
                                 return false;
                             }
                         }
 
                         if (VehicleOrdertype == 'BDR') {
                             if (rc == '') {
-                                alert('Please Upload RC File..!');
+                                errorFunc('Please Upload RC File..!');
                                 return false;
                             }
 
                             if (frontPlatePhoto == '') {
-                                alert('Please Upload Front HSRP Plate Photo..!');
+                                errorFunc('Please Upload Front HSRP Plate Photo..!');
                                 return false;
                             }
 
                             if (frontLaserCode == '') {
-                                alert('Please Enter Front Laser Code..!');
+                                errorFunc('Please Enter Front Laser Code..!');
                                 return false;
                             }
                         }
 
                         if (VehicleOrdertype == 'BDF') {
                             if (rc == '') {
-                                alert('Please Upload RC File..!');
+                                errorFunc('Please Upload RC File..!');
                                 return false;
                             }
 
                             if (rearPlatePhoto == '') {
-                                alert('Please Upload Rear HSRP Plate Photo..!');
+                                errorFunc('Please Upload Rear HSRP Plate Photo..!');
                                 return false;
                             }
 
                             if (rearLaserCode == '') {
-                                alert('Please Enter Rear Laser Code..!');
+                                errorFunc('Please Enter Rear Laser Code..!');
                                 return false;
                             }
                         }
 
                         if (firNo == '') {
-                            alert('Please Provide FIR No.');
+                            errorFunc('Please Provide FIR No.');
                             return false;
                         }
                         if (firDate == '') {
-                            alert('Please Provide FIR Date.');
+                            errorFunc('Please Provide FIR Date.');
                             return false;
                         }
                         // if (FirInfo == '') {
@@ -1155,7 +1170,7 @@
                         //     return false;
                         // }
                         if (policeStation == '') {
-                            alert('Please Provide Police Station Name.');
+                            errorFunc('Please Provide Police Station Name.');
                             return false;
                         }
                     }
@@ -1577,7 +1592,23 @@
                     $('#DivRearLaser').hide();
                     $('#DivFrontLaser').hide();
                 }
-            });            
+            });
+
+            $("#select-state").change(function () {
+                debugger;
+                var stateId = $("#select-state").val();
+                if (stateId == 25) {
+                    $("#ddlCA").show();
+                    $("#ddlRE").show();
+                }
+                else {
+                    $("#ddlCA").hide();
+                    $("#ddlRE").hide();
+                }
+
+
+            });
+
         </script>
     }
 </body>
