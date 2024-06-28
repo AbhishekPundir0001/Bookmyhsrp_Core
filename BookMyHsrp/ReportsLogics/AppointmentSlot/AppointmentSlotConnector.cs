@@ -1,4 +1,5 @@
 ﻿using BookMyHsrp.Dapper;
+using BookMyHsrp.Libraries.AppointmentSlot.Queries;
 using BookMyHsrp.Libraries.AppointmentSlot.Services;
 using BookMyHsrp.Libraries.DealerDelivery.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -159,21 +160,44 @@ namespace BookMyHsrp.ReportsLogics.AppointmentSlot
                     string Status = appointmentBlockDate[0].status.ToString();
                     if(Status=="0" && checkDateTime.DayOfWeek != DayOfWeek.Sunday && dealiveryPoint=="Dealer")
                     {
-                       var checkAppointmentSlotTime = await _appointmentSlotServices.CheckAppointmentSlotTime(selectedDate, vehicleTypeId, dealerId, dealiveryPoint, stateId);
-                        foreach(var res in checkAppointmentSlotTime)
+                       
+                        if (vehicledetails.PlateSticker == "Sticker")
                         {
-                            var data = new TimeSlotList();
-                            data.SlotName = res.SlotName;
-                            data.SlotID = res.SlotID;
-                            data.TimeSlotID=res.TimeSlotID;
-                            data.AvaiableStatus = res.AvaiableStatus;
-                            data.AvaiableCount= res.AvaiableCount;
-                            data.RTOCodeID= res.RTOCodeID;
-                            data.BookedCount= res.BookedCount;
-                            data.VehicleTypeID= res.VehicleTypeID;
-                            datalist.Add(data);
-                        
-                    }
+                           var checkAppointmentSlotTime = await _appointmentSlotServices.CheckAppointmentSlotTimeSticker(selectedDate, vehicleTypeId, dealerId, dealiveryPoint, stateId);
+                           foreach (var res in checkAppointmentSlotTime)
+                            {
+                                var data = new TimeSlotList();
+                                data.SlotName = res.SlotName;
+                                data.SlotID = res.SlotID;
+                                data.TimeSlotID = res.TimeSlotID;
+                                data.AvaiableStatus = res.AvaiableStatus;
+                                data.AvaiableCount = res.AvaiableCount;
+                                data.RTOCodeID = res.RTOCodeID;
+                                data.BookedCount = res.BookedCount;
+                                data.VehicleTypeID = res.VehicleTypeID;
+                                datalist.Add(data);
+
+                            }
+                        }
+                        else
+                        {
+                           var checkAppointmentSlotTime = await _appointmentSlotServices.CheckAppointmentSlotTime(selectedDate, vehicleTypeId, dealerId, dealiveryPoint, stateId);
+                            foreach (var res in checkAppointmentSlotTime)
+                            {
+                                var data = new TimeSlotList();
+                                data.SlotName = res.SlotName;
+                                data.SlotID = res.SlotID;
+                                data.TimeSlotID = res.TimeSlotID;
+                                data.AvaiableStatus = res.AvaiableStatus;
+                                data.AvaiableCount = res.AvaiableCount;
+                                data.RTOCodeID = res.RTOCodeID;
+                                data.BookedCount = res.BookedCount;
+                                data.VehicleTypeID = res.VehicleTypeID;
+                                datalist.Add(data);
+
+                            }
+                        }
+                      
                     }
                     //if(dealerAffexationCentreName.toUpperCase().includes("FITMENT") && Status == "0" && dealiveryPoint=="Dealer")
                     //{
@@ -192,24 +216,47 @@ namespace BookMyHsrp.ReportsLogics.AppointmentSlot
                     //}
                     if (Status == "0" && dealiveryPoint == "Home")
                     {
-                       var  checkAppointmentSlotTime = await _appointmentSlotServices.CheckAppointmentSlotTimeHome(selectedDate, vehicleTypeId, dealerId, dealiveryPoint, stateId);
-                        foreach (var res in checkAppointmentSlotTime)
+                        if (vehicledetails.PlateSticker == "Sticker")
                         {
-                            var data = new TimeSlotList();
-                            data.SlotName = res.SlotName;
-                            data.SlotID = res.SlotID;
-                            data.TimeSlotID = res.TimeSlotID;
-                            data.AvaiableStatus = res.AvaiableStatus;
-                            data.AvaiableCount = res.AvaiableCount;
-                            data.RTOCodeID = res.RTOCodeID;
-                            data.BookedCount = res.BookedCount;
-                            data.VehicleTypeID = res.VehicleTypeID;
-                            datalist.Add(data);
-                        }
-                    }
-                  
+                            var checkAppointmentSlotTime = await _appointmentSlotServices.CheckAppointmentSlotTimeHomeSticker(selectedDate, vehicleTypeId, dealerId, dealiveryPoint, stateId);
 
+                            foreach (var res in checkAppointmentSlotTime)
+                            {
+                                
+                                var data = new TimeSlotList();
+                                data.SlotName = res.SlotName;
+                                data.SlotID = res.SlotID;
+                                data.TimeSlotID = res.TimeSlotID;
+                                data.AvaiableStatus = res.AvaiableStatus;
+                                data.AvaiableCount = res.AvaiableCount;
+                                data.RTOCodeID = res.RTOCodeID;
+                                data.BookedCount = res.BookedCount;
+                                data.VehicleTypeID = res.VehicleTypeID;
+                                datalist.Add(data);
+                            }
+                        }
+                        else
+                        {
+                            var checkAppointmentSlotTime = await _appointmentSlotServices.CheckAppointmentSlotTimeHome(selectedDate, vehicleTypeId, dealerId, dealiveryPoint, stateId);
+                            foreach (var res in checkAppointmentSlotTime)
+                            {
+                                var data = new TimeSlotList();
+                                data.SlotName = res.SlotName;
+                                data.SlotID = res.SlotID;
+                                data.TimeSlotID = res.TimeSlotID;
+                                data.AvaiableStatus = res.AvaiableStatus;
+                                data.AvaiableCount = res.AvaiableCount;
+                                data.RTOCodeID = res.RTOCodeID;
+                                data.BookedCount = res.BookedCount;
+                                data.VehicleTypeID = res.VehicleTypeID;
+                                datalist.Add(data);
+                            }
+                        }
+
+
+                    }
                 }
+                        
                 
 
             }

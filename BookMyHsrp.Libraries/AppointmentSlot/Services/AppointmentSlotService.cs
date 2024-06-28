@@ -56,9 +56,16 @@ namespace BookMyHsrp.Libraries.AppointmentSlot.Services
             parameters.Add("@StateId", stateId);
             parameters.Add("@NonHomo", nonHomo);
             parameters.Add("@OrderType", OrderType);
-
-            var result = await _databaseHelperPrimary.QueryAsync<dynamic>(AppointmentSlotQueries.CheckAppointmentDate, parameters);
-            return result;
+            if (vehicledetails.PlateSticker == "Sticker")
+            {
+                var result1 = await _databaseHelperPrimary.QueryAsync<dynamic>(AppointmentSlotQueries.CheckAppointmentDateSticker, parameters);
+                return result1;
+            }
+            else
+            {
+                var result = await _databaseHelperPrimary.QueryAsync<dynamic>(AppointmentSlotQueries.CheckAppointmentDate, parameters);
+                return result;
+            }
 
         }
         public async  Task<dynamic> AppointmentBlockedDates(string tempdate, string dealerId, dynamic dealiveryPoint)
@@ -93,6 +100,31 @@ namespace BookMyHsrp.Libraries.AppointmentSlot.Services
             parameters.Add("@StateId", stateId);
 
             var result = await _databaseHelperPrimary.QueryAsync<dynamic>(AppointmentSlotQueries.CheckAppointmentSlotTime, parameters);
+            return result;
+        }
+        public async Task<dynamic> CheckAppointmentSlotTimeSticker(string selectedDate, string vehicleTypeId, string dealerId, string dealiveryPoint, string stateId)
+        {
+            var parameters = new DynamicParameters();
+            parameters.Add("@SelectedDate", selectedDate);
+            parameters.Add("@VehicleTypeId", vehicleTypeId);
+            parameters.Add("@DealerId", dealerId);
+            parameters.Add("@DealiveryPoint", dealiveryPoint);
+            parameters.Add("@StateId", stateId);
+
+            var result = await _databaseHelperPrimary.QueryAsync<dynamic>(AppointmentSlotQueries.CheckAppointmentSlotTimeSticker, parameters);
+            return result;
+        }
+
+        public async Task<dynamic> CheckAppointmentSlotTimeHomeSticker(string selectedDate, string vehicleTypeId, string dealerId, string dealiveryPoint, string stateId)
+        {
+            var parameters = new DynamicParameters();
+            parameters.Add("@SelectedDate", selectedDate);
+            parameters.Add("@VehicleTypeId", vehicleTypeId);
+            parameters.Add("@DealerId", dealerId);
+            parameters.Add("@DealiveryPoint", dealiveryPoint);
+            parameters.Add("@StateId", stateId);
+
+            var result = await _databaseHelperPrimary.QueryAsync<dynamic>(AppointmentSlotQueries.CheckAppointmentSlotTimeHomeSticker, parameters);
             return result;
         }
         public async Task<dynamic> CheckAppointmentSlotTimeHome(string selectedDate, string vehicleTypeId, string dealerId, string dealiveryPoint, string stateId)

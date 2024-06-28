@@ -13,6 +13,8 @@ namespace BookMyHsrp.Libraries.DealerDelivery.Queries
 
         public static string GetDealers => "exec BMHSRP_GET_DEALERS  @oemid,@StateId,'',@VehicleCat,'Scooter_Hero',@VehicleClass,@OrderType";
 
+        public static string GetDealersSticker => "exec BMHSRP_GET_DEALERS  @oemid,@StateId,'',@VehicleCat,'Scooter_Hero',@VehicleClass,'OB'";
+
         public static string GetDealersElse => "exec BMHSRP_GET_DEALERS  @oemid,@StateId,'',@VehicleCat,@VehicleType,@VehicleClass,@OrderType";
         public static string CheckOemRate => "exec usp_GetTaxRate  @OrderType,@VehicleType,@HSRP_StateId";
         public static string CheckOemRateQuery => "exec CheckOrdersRates  @OemID,@OrderType,@VehicleClass,@VehicleType,@VehicleCategoryID,@FulType,@AppointmentType,@HSRP_StateID,@CustomerStateName,@PlateSticker";

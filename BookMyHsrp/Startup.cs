@@ -182,6 +182,7 @@ namespace BookMyHsrp
             services.AddScoped<StickerConnector>();
             services.AddScoped<ReplacementConnector>();
             services.AddScoped<ReceiptConnector>();
+            services.AddScoped<DealerDeliveryStickerConnector>();
 
             // services.AddSingleton<HSRP.Redis.ConnectionHelper>();
 
