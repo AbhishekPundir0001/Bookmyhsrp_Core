@@ -69,6 +69,11 @@ namespace BookMyHsrp.Libraries.VerifyPaymentDetail.Services
             parameters.Add("@OrderType", realOrderType.ToString());
             parameters.Add("@ChassisNo", vehicleDetails.ChassisNo);
             parameters.Add("@RegistrationNo", vehicleDetails.VehicleRegNo);
+            if(vehicleDetails.PlateSticker == "Sticker")
+            {
+                var result1 = await _databaseHelper.QueryAsync<dynamic>(VerifyPaymentDetailsQueries.GetBookingHistoryIdSticker, parameters);
+                return result1;
+            }
             var result = await _databaseHelper.QueryAsync<dynamic>(VerifyPaymentDetailsQueries.GetBookingHistoryId, parameters);
             return result;
         }
