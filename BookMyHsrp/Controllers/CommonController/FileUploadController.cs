@@ -250,28 +250,39 @@ namespace BookMyHsrp.Controllers.CommonController
                 {
                     if (Convert.ToInt32(stateid) != 25)
                     {
-                        if (!IsImage(Path.GetExtension(fileUploadModel.FirCopy.FileName)) || !IsImage(Path.GetExtension(fileUploadModel.RcCopy.FileName)))
-                            fileName = "Error! Invalid image file format, file should be .jpg|.jpeg|.bmp|.png|.pdf!!";
-                        else if (sz3 > 1 || sz4 > 1)
-                            fileName = "Error! File size can not be max 1.5 MB!!";
+                        if (fileUploadModel.FirCopy == null)
+                        {
+                            fileName = "Error! Please Upload FIR Copy!!";
+                        }
+                        else if (fileUploadModel.RcCopy == null)
+                        {
+                            fileName = "Error! Please Upload Rc Copy!!";
+                        }
                         else
                         {
-                            fileName3 = "FIR_" + DateTime.Now.ToString("yyyyMMddHHmmssfff") + "_" + RandomString(4) + GetExtention3;
-                            var _firCopy = fileUploadModel.FirCopy;
-                            var firCopy = Path.Combine(path, fileName3);
-                            using (var stream = new FileStream(firCopy, FileMode.Create))
+                            if (!IsImage(Path.GetExtension(fileUploadModel.FirCopy.FileName)) || !IsImage(Path.GetExtension(fileUploadModel.RcCopy.FileName)))
+                                fileName = "Error! Invalid image file format, file should be .jpg|.jpeg|.bmp|.png|.pdf!!";
+                            else if (sz3 > 1 || sz4 > 1)
+                                fileName = "Error! File size can not be max 1.5 MB!!";
+                            else
                             {
-                                await _firCopy.CopyToAsync(stream);
-                            }
+                                fileName3 = "FIR_" + DateTime.Now.ToString("yyyyMMddHHmmssfff") + "_" + RandomString(4) + GetExtention3;
+                                var _firCopy = fileUploadModel.FirCopy;
+                                var firCopy = Path.Combine(path, fileName3);
+                                using (var stream = new FileStream(firCopy, FileMode.Create))
+                                {
+                                    await _firCopy.CopyToAsync(stream);
+                                }
 
-                            fileName4 = "RC_" + DateTime.Now.ToString("yyyyMMddHHmmssfff") + "_" + RandomString(4) + GetExtention4;
-                            var _rcCopy = fileUploadModel.RcCopy;
-                            var rcCopy = Path.Combine(path, fileName4);
-                            using (var stream = new FileStream(rcCopy, FileMode.Create))
-                            {
-                                await _rcCopy.CopyToAsync(stream);
+                                fileName4 = "RC_" + DateTime.Now.ToString("yyyyMMddHHmmssfff") + "_" + RandomString(4) + GetExtention4;
+                                var _rcCopy = fileUploadModel.RcCopy;
+                                var rcCopy = Path.Combine(path, fileName4);
+                                using (var stream = new FileStream(rcCopy, FileMode.Create))
+                                {
+                                    await _rcCopy.CopyToAsync(stream);
+                                }
+                                msg = "File Uploaded Successfully";
                             }
-                            msg = "File Uploaded Successfully";
                         }
                     }
 

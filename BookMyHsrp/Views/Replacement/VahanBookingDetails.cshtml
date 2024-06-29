@@ -994,6 +994,12 @@
                     const result = await postDataFormData(url, formData);
                     var response = $.parseJSON(result);
                     debugger;
+                    if (response.FrontPlatePhoto.includes('Error'))
+                    {
+                        // errorFunc("Please select FIR Copy/RC Copy");
+                        $('#lblMsg').html('Please select FIR Copy/RC Copy');
+                        return;
+                    }
                     $('#lblMsg').html(response.Message);
                     $('#hdnFrontPlatePhoto').val(response.FrontPlatePhoto);
                     $('#hdnRearPlatePhoto').val(response.RearPlatePhoto);
