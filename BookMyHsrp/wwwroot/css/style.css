@@ -2125,7 +2125,6 @@ ul.main__menu > li:hover > a {
     display: inline-block;
     padding: 14px 35px;
     color: #ffffff !important;
-    margin-top:23px;
 }
 
 .submit-btn:hover {
@@ -3292,6 +3291,148 @@ input[type=number] {
 }
 
 /*---------------- FAQ End --------------*/
+
+/*---------------- Policy Area Start --------------*/
+
+.policy-area {
+    margin-top: 30px;
+    padding-top: 30px;
+    border-top: 1px solid #39435b;
+}
+
+.policy-area .policy-desc {
+    margin-bottom: 20px;
+}
+
+.policy-area .policy-desc p {
+    margin-bottom: 10px;
+    color: #39435b;
+    text-align: justify;
+    font-size: 14px;
+}
+
+.policy-area .policy-desc h5 {
+    margin-bottom: 10px;
+    color: #39435b;
+}
+
+.policy-area .policy-desc ul {
+    margin-bottom: 20px;
+}
+
+.policy-area .policy-desc ul li {
+    color: #39435b;
+    font-size: 14px;
+}
+
+.policy-area .policy-desc p a {
+    color: #39435b;
+    font-weight: 500;
+}
+
+.policy-area .policy-ul {
+    padding-left: 15px;
+}
+
+.policy-area .policy-desc li {
+    list-style: circle;
+    font-size: 13px;
+}
+
+.notifi-list .list-ul li a {
+    display: inline-block;
+    padding: 10px;
+    background: red;
+    width: 100%;
+    border-radius: 3px;
+    background: #d9edf7;
+    color: #39435b;
+    font-size: 14px;
+
+}
+
+.notifi-list .list-ul li a:hover {
+    background: #c4e3f3;
+}
+
+.notifi-list .list-ul li:not(:last-child) {
+    margin-bottom: 10px;
+}
+
+
+/*---------------- Policy Area End --------------*/
+
+/*---------------- Contact Area Start --------------*/
+.cont-heading {
+    text-align: center;
+    margin-bottom: 20px;
+    background-color: #f1f1f1;
+    background-image: url(../images/bg-img.png);
+    background-repeat: repeat;
+}
+
+
+.cont-heading h5 {
+    padding: 20px;
+    font-size: 30px;
+    font-weight: 500;
+    color: #39435b;
+}
+
+.cont-card .cont-title{
+    margin-bottom: 20px;
+}
+
+.cont-card .cont-title .title{
+    padding: 10px;
+    border-radius: 10px;
+    background: #39435b;
+    color: #ffffff;
+    text-align: center;
+}
+
+.main-body .cont-card {
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 30px;
+    height: 100%;
+}
+
+.main-body .col-lg-4{
+    margin-bottom: 20px;
+}
+
+.main-body .cont-card .cont-ul li{
+    margin-bottom: 5px;
+}
+
+
+.main-body .cont-card .cont-ul li .icon{
+    width: 30px;
+    height: 30px;
+    display: inline-block;
+    text-align: center;
+    line-height: 30px;
+    background: #f1f1f1;
+    font-size: 16px;
+    color: #39435b;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+.main-body .cont-card .cont-ul li .desc{
+    line-height: 40px;
+    font-size: 18px;
+    font-weight: 500;
+    color: #001430;
+}
+
+.main-body .cont-card .cont-ul li .desc a{
+    color: #001430;
+}
+
+
+/*---------------- Contact Area End --------------*/
 
 
 

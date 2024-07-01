@@ -4,7 +4,7 @@ namespace BookMyHsrp.Controllers.CommonController
 {
     public class SafeSecureTransactionController : Controller
     {
-        [Route("/safesecuretransaction/SafeSecureTransaction")]
+        [Route("/safesecuretransaction")]
         public IActionResult SafeSecureTransaction()
         {
             return View();

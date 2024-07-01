@@ -6,7 +6,7 @@ namespace BookMyHsrp.Controllers.CommonController
 
     public class TermsOfUseController : Controller
     {
-        [Route("/termsOfUse/TermsOfUse")]
+        [Route("/termsOfUse")]
         public IActionResult TermsOfUse()
         {
             return View();

@@ -464,7 +464,6 @@ namespace BookMyHsrp.ReportsLogics.Replacement
             session.OTPno = null;
             session.VehicleType_imgPath = "www";
             session.OEMImgPath = "www";
-            session.OrderType = "OB";
             var jsonDeSerializer = System.Text.Json.JsonSerializer.Deserialize<RootDto>(sessionDetails);
             try
             {
@@ -617,6 +616,7 @@ namespace BookMyHsrp.ReportsLogics.Replacement
 
                 try
                 {
+                    var vehiclecategory = "";
                     if (customerInfo.VehicleCatVahan.Trim().ToString().ToUpper() == "3WT" && customerInfo.FuelTypeVahan != null && customerInfo.FuelTypeVahan != "")
                     {
                         customerInformationresponseData.data.VehicleType = "E-RICKSHAW";
@@ -628,7 +628,6 @@ namespace BookMyHsrp.ReportsLogics.Replacement
                     else
                     {
                         var vehicleType = "";
-                        var vehiclecategory = "";
                         int vehicletypeid;
                         var vehicletypeidIntoString = "";
                         var vehicleSession = await _replacementService.VehicleSession(customerInfo.VehicleCatVahan);
@@ -702,7 +701,7 @@ namespace BookMyHsrp.ReportsLogics.Replacement
                     customerInformationresponseData.data.OEMImgPath = session.OEMImgPath;
                     customerInformationresponseData.data.VehicleType_imgPath = session.VehicleType_imgPath;
                     customerInformationresponseData.data.RealOrderType = realOrdertype;
-
+                    customerInformationresponseData.data.VehicleCat = vehiclecategory;
                 }
 
                 catch (Exception ex)

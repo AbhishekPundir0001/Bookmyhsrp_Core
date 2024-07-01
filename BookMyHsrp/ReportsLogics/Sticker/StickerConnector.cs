@@ -366,6 +366,7 @@ namespace BookMyHsrp.ReportsLogics.Sticker
                 customerInformationresponseData.data.OwnerName = customerInfo.OwnerName;
                 customerInformationresponseData.data.EmailID = customerInfo.EmailId;
                 customerInformationresponseData.data.MobileNo = customerInfo.MobileNo;
+
                 customerInformationresponseData.data.BillingAddress = customerInfo.BillingAddress;
                 customerInformationresponseData.data.SessionCity = "";
                 customerInformationresponseData.data.SessionGST = "";

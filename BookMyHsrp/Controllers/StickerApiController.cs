@@ -117,7 +117,6 @@ namespace BookMyHsrp.Controllers
                 var GetRootObjectSession = HttpContext.Session.GetString("UserSession");
                 jsonSerializer = System.Text.Json.JsonSerializer.Serialize(rootDto);
                 HttpContext.Session.SetString("UserSession", jsonSerializer);
-
             }
 
             if (jsonSerializer != "")
@@ -162,13 +161,16 @@ namespace BookMyHsrp.Controllers
                     getSession.CustomerName = info.OwnerName;
                     getSession.CustomerEmail = info.EmailId;
                     getSession.CustomerMobile = info.MobileNo;
-                    getSession.VehicleType = resultGot.data.VehicleType;
-                    getSession.VehicleCat = resultGot.data.VehicleCat;
+                    getSession.VehicleType =info.VehicleCatVahan;
+                    getSession.VehicleCat = resultGot.data.Vehiclecategory;
                     getSession.VehicleTypeId = resultGot.data.VehicleTypeId;
                     getSession.VehicleCategoryId = resultGot.data.Vehiclecategoryid;
                     getSession.FuelType = info.FuelTypeVahan;
                     getSession.Fuel = info.FuelTypeVahan;
                     getSession.Message = resultGot.Message;
+                    getSession.OrderType = "OB";
+                    getSession.PlateOrderType = "OB";
+                    getSession.PlateSticker = "Sticker";
                     var GetRootObjectSession = HttpContext.Session.GetString("UserSession");
                     jsonSerializer = System.Text.Json.JsonSerializer.Serialize(getSession);
                     HttpContext.Session.SetString("UserDetail", jsonSerializer);

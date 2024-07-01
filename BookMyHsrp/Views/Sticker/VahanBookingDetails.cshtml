@@ -383,7 +383,7 @@
                                             </div>
                                             <p class="note mb-5">If any details provided by me for HSRP is found (Partially/Fully). The HSRP will not be affixed to my vehicle and HSRP Fee will not be Refundable.</p>
                                             <div class="col-lg-6 col-md-12 col-sm-12">
-                                                <button id="reset" type="button" class="reset-btn">
+                                                <button type="reset" class="reset-btn">
                                                     Reset
                                                 </button>
                                                 <button id="btn-next" type="button" class="submit-btn">
@@ -422,10 +422,10 @@
                         <div class="img-icon">
                             <img src="~/Images/password.png" alt="">
                         </div>
-                        <h6>Please enter the OTP sent to your<br>registered mobile number</h6>
+                        <h6>Please enter the OTP send to your<br>registerd mobile number</h6>
                         <span>OTP is valid for 10 minutes. </span>
                         <div class="otp-box">
-                            <form id="otp-form">
+                            <form action="#">
                                 <div class="input-field">
                                     <input id="first" type="number" class="otp-text m-2" />
                                     <input id="second" type="number" class="otp-text m-2" disabled />
@@ -433,7 +433,8 @@
                                     <input id="fourth" type="number" class="otp-text m-2" disabled />
                                 </div>
                                 <div class="mt-3">
-                                    <button type="button" id="btn-validate" class="submit-btn otp-btn">
+                                    <button id="btn-validate" class="submit-btn otp-btn"
+                                            data-bs-dismiss="modal">
                                         Validate
                                     </button>
                                 </div>
@@ -534,7 +535,7 @@
                     $('#motorNo').hide();
                     // $('#resend').attr('disabled', 'disabled');
                     $('#resend').addClass('disabled');
-                    var counter = 20;
+                    var counter = 120;
                     var interval = setInterval(function () {
                         counter--;
                         // Display 'counter' wherever you want to display it.
@@ -613,10 +614,6 @@
         <script>
 
             $('#btn-validate').click(async function () {
-                var validateBtn = document.getElementById('btn-validate');
-                validateBtn.addEventListener('click', function (event) {
-                    // Perform your validation logic here
-                    event.preventDefault();
                 const validateBtn = document.querySelector('.otp-btn');
                 $(this).prop('disabled', true);
                 var originalButtonText = $(this).html();
@@ -1007,7 +1004,7 @@
                     $('#hdnRearLaser').val(response.RearLaserPhoto);
                     $('#hdnFrontPlate').val(response.FrontPlatePhoto);
                     $('#hdnRearPlate').val(response.RearPlatePhoto);
-                    } catch (error) {
+                } catch (error) {
                     // console.error('Failed to post data:', error);
                     $('#lblMsg').html('No File Uploaded');
                 } finally {
@@ -1183,7 +1180,7 @@
                 try {
                     let url = "/api/v1/otp"
                     const result = await fetchData(url);
-                    debugger;                   
+                    debugger;
                     await otpTimer();
                 }
                 catch (error) {
@@ -1192,7 +1189,7 @@
                     $(this).prop('disabled', false);
                 }
             });
-         
+
             $("#select-state").change(function () {
                 debugger;
                 $('#registrationNumber').val('');
@@ -1201,9 +1198,7 @@
                 $('#frontLaserCode').val('');
                 $('#rearLaserCode').val('');
             });
-                $('#reset').click(function(){
-                    location.reload();
-                })
+
         </script>
     }
 
