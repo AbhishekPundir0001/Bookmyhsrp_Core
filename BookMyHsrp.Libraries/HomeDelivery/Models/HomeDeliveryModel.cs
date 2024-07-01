@@ -103,7 +103,7 @@ namespace BookMyHsrp.Libraries.HomeDelivery.Models
             public string AddressLine1 { set; get; }
             [Required(ErrorMessage = "Please Input AddressLine2")]
             public string AddressLine2 { set; get; }
-            [Required(ErrorMessage = "Please Input Landmark")]
+            
             public string Landmark { set; get; }
 
         }

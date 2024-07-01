@@ -668,6 +668,7 @@
             try {
             const result = await postData(url,data);
                 isSuccessFunc(result);
+                debugger
                 if (result.Data.Status === '1') {
                     if (Stateid === '25') {
                         if (result.Data.ResponseData.hsrpFrontLaserCode != '') {

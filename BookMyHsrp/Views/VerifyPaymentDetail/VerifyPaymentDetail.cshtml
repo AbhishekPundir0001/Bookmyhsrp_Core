@@ -211,11 +211,11 @@
                                                 <li id="grosstotal"></li>
                                             </ul>
                                             <ul class="payment-ul">
-                                                <li> CGST</li>
+                                                <li id="labelcgst"> </li>
                                                 <li id="cgst"></li>
                                             </ul>
                                             <ul class="payment-ul">
-                                                <li>SGST</li>
+                                                <li id="labelsgst"> </li>
                                                 <li id="sgst"></li>
                                             </ul>
                                         </div>
@@ -256,7 +256,7 @@
   {
       <script>
         $(async function () {
-           
+               
             await GetVerifyPaymentDetail();
               $('#display').hide();
         });
@@ -265,7 +265,6 @@
            
             let url = "/getVerifyPaymentDetail";
              result = await fetchData(url);
-          
             // $('#').val(BMHConvenienceCharges)
             // $('#').val(GrossTotal)
             $('#address').text(result.Address)
@@ -273,6 +272,9 @@
             $('#mobNo').text(result.Mobile)
             $('#email').text(result.EmailID)
                     $('#total-cost').text('Rs.' + result.TotalAmount)
+                    $('#labelsgst').text("SGST 9%")
+                     $('#labelcgst ').text("CGST  9%")
+                     $('#labelcgst ').text("CGST  9%")
                     $('#sgst').text('Rs.' + result.SGSTAmount)
                     $('#cgst').text('Rs.' + result.CGSTAmount)
                     $('#convenienceFee').text( 'Rs.' + result.BMHConvenienceCharges)
@@ -295,7 +297,9 @@
 
        }
           $(document).ready(function () {
+              debugger
               $('#rzp-button').click(async function (e) {
+                  debugger
                   const errorFunc = (title) => {
                       Toast.fire({
                           icon: 'error',
@@ -354,7 +358,7 @@
                       errorFunc("Please check terms and condition");
                       return;
                   }
-                  var txtMobileNo = $('#mobNo').text().trim();
+                    var txtMobileNo = $('#previousMobNo').val().trim();
                   if (txtMobileNo == '') {
                       errorFunc("Provide mobile number");
                       return;
@@ -367,6 +371,7 @@
                   let data = { PaymentStatus: payment };
                   let url = '/payment'
                   const result = await postData(url, data);
+                  debugger
                   if (result.Message == "Slot booked. Choose another Slot.") {
                       errorFunc("Slot booked.Choose another Slot.");
                       setTimeout(function () {
@@ -390,6 +395,7 @@
                       "description": "BookMyHSRP",
                       "order_id": order_id,
                       "handler": function (response) {
+                          debugger
                           alert('Payment successful!');
                             console.log(response)
                             localStorage.setItem('TransactionId', response.razorpay_payment_id)
@@ -415,111 +421,7 @@
               });
           });
       
-    $('#payOnlineButton1').click( async function(){
-          const errorFunc = (title) => {
-                        Toast.fire({
-                            icon: 'error',
-                            title: title
-                        })
-          }
-               var checkSuperTag = document.getElementById('chkSuperTag');
-                    if (checkSuperTag == null) {
-                        checkSuperTag = false;
-                    }
-                if (checkSuperTag.checked == true)
-                 {
-                           
-                     var Address1 = $("#address").val().trim().replace("\n", "");
-                    var state = $("#txtShippingState").val().trim();
-                    var city = $("#txtShippingCity").val().trim();
-                    var pincode = $("#txtShippingPinCode").val().trim();
-
-                    var regex = /^[a-zA-Z0-9\\// !,\$%\^\*\)\(+=._-]+$/g
-                    //alert(BillingAddress);
-                    //Validate TextBox value against the Regex.
-                    var isValid = regex.test(Address1);
-               
-                    if (pincode == "") {
-                        errorFunc("Please provide shipping pincode");
-                        return;
-                    } else if ((pincode.length) < 6 || (pincode.length) > 6) {
-                   
-                        alert("pincode should only be 6 digits");
-                        return false;
-                    }
-
-                    if (Address1 == "") {
-                        alert("Please provide shipping address");
-                        return false;
-                    }
-                    if (!isValid) {
-                        alert("Some Special Characters ( # ~ & ' <>  are not Allowed ) in shipping Address");
-                        return false;
-                    }
-
-                    if (city == "") {
-                        alert("Please provide shipping city");
-                        return false;
-                    }
-                    if (state == "") {
-                        alert("Please provide shipping state");
-                        return false;
-                    }
-
-
-                }
-           
-            var checkAgree = document.getElementById('cbAgree');
-
-            if (checkAgree.checked == false) {
-                errorFunc("Please check terms and condition");
-                        return ;
-            }
-                var txtMobileNo = $('#mobNo').text().trim();
-            if (txtMobileNo == '') {
-                    errorFunc("Provide mobile number");
-                        return ;
-            }
-            if (txtMobileNo.length != 10)
-            {
-                errorFunc("Incorrect mobile number");
-                        return ;
-            }
-                    var payment = "payonline";
-                    let data = { PaymentStatus: payment };
-                    let url = '/payment'
-                    const result = await postData(url, data);
-                    
-                $('#popup-payment').html(result)
-                    if (result.Message== "Slot booked. Choose another Slot.") 
-                    {
-                        errorFunc("Slot booked.Choose another Slot.");
-                        setTimeout(function () {
-                            window.location.href = "/appointmentSlot"; // Redirect to the specified URL
-                        }, 2000);
-                      
-                       
-                    
-                    }
-                 
-                      });
-                
-                function ValidatePayForm() {
-                    // Wait for Razorpay button to appear
-                   
-                    var interval = setInterval(function () {
-                        var edit = document.querySelector(".razorpay-payment-button");
-                        if (edit) {
-                            edit.addEventListener("click", function () {
-                                console.log("clicked")
-                            });
-                            clearInterval(interval); // Stop checking once found
-                            setTimeout(function () {
-                                edit.click(); // Simulate click after a delay
-                            }, 1000);
-                        }
-                    }, 500); // Check every 500ms
-                }
+    
             </script>
             <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
             <script src="https://razorpay.com/favicon.png"></script>

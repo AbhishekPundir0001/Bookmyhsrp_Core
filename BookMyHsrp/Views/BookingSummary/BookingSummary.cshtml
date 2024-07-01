@@ -84,7 +84,7 @@
                         <div class="main-data main-bg">
                             <div class="title-area d-flex justify-content-between">
                                 <h4 class="title">Booking Summary</h4>
-                                <a href="plate-AppointmentSlot.html" class="submit-btn">Back</a>
+                                <a id="back" class="submit-btn">Back</a>
                             </div>
                             <div class="row">
                                 <div class="col-lg-9">
@@ -93,7 +93,7 @@
                                             <div class="col-lg-9">
                                                 <div class="book-desc">
                                                     <label>Appointment Address</label>
-                                                    <partial id="appointmentAddress">
+                                                    <p id="appointmentAddress">
                                                        </p>
                                                    
                                                 </div>
@@ -203,9 +203,9 @@
                     $('#bharatStage').text(result.BharatStage);
                     $('#appointmentDate').text(date);
                     $('#slotTime').text(time);
-                    $('#registrationNumber').text(result.BharatStage);
-                    $('#chassisNo').text(result.BharatStage);
-                    $('#engineNo').text(result.BharatStage);
+                    $('#registrationNumber').text(result.VehicleRegNo);
+                    $('#chassisNo').text(result.ChassisNo);
+                    $('#engineNo').text(result.EngineNo);
                     $('#vehicleMake').text(result.OemName);
                     $('#vehicleType').text(result.VehicleCategory);
                     $('#appointmentAddress').text(result.DealerAffixationCenterName +' ' + result.DealerAffixationCenterAddress);
@@ -213,6 +213,9 @@
                 }
                 
             }
+            $('#back').click(async function(){
+                window.history.back();
+            })
         
         </script>
     }

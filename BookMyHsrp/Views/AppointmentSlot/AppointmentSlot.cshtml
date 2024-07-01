@@ -24,6 +24,10 @@
     .holiday {
         color: red;
     }
+
+    .for-checkbox-tools.submit-btn {
+        background: #39435b !important;
+    }
 </style>
 <div class="offcanvas offcanvas-start" tabindex="-1" id="toggleMenu">
     <div class="offcanvas-header">
@@ -117,7 +121,7 @@
                 <div class="main-data main-bg">
                     <div class="title-area d-flex justify-content-between">
                         <h4 class="title">Select Appointment Date & Time Slot</h4>
-                        <a href="Plate-Delivery-dealer.html" class="submit-btn">Back</a>
+                        <a id="backButton" class="submit-btn">Back</a>
                     </div>
                     <div class="booking-area">
                         <div class="row justify-content-between">
@@ -144,9 +148,9 @@
                                     <p>Please Select a Time Slot</p>
                                 </div>
 
-                                <div class="time-slot">
-                                    <div class="slot-box d-flex justify-content-between">
-                                        <div class="time-desc" id="slot-time">
+                                <div class="time-slot" style="width: 100%">
+                                    <div class="slot-box d-flex justify-content-between" >
+                                        <div class="time-desc" id="slot-time" style="width: 100%">
                                          
                                         </div>
                                      
@@ -282,7 +286,9 @@
             
 
          }
-
+        $('#backButton').click(async function(){
+            window.history.back();
+        })
         async function GetappointmentDate() {
             let url = "/chek-appointment-date"
             const result = await fetchData(url);
@@ -323,39 +329,48 @@
             {
                 for (var data1 of result) {
                     $('#slot-time').append('<div class="time-slot" >' +
-                        '<div class="slot-box d-flex justify-content-between" >' +
+                        '<div class="slot-box d-flex justify-content-between" style="width: 100%">' +
                         '<div class="time-desc" >' + data1.SlotName +
                         '</div>' +
                         '<div class="form-group">' +
                         '<input class="checkbox-tools" type="radio" name="tools">' +
                         '<label class="for-checkbox-tools">' +
-                        '<i class=""> </i>' +
+                        '<i class="uil uil-line-alt"> </i>' +
                         'Available' +
                         '</label>' +
                         '</div>' +
                         '</div>' +
                         '</div>');
+                   
                 }
+                
             }
             
         }
-
+       
         $(document).ready(function () {
             // Event handler for radio buttons
             $(document).on('click', '.for-checkbox-tools', function () {
-                
-                $(this).closest('.slot-box').find('.for-checkbox-tools i').removeClass('submit-btn');
-                if ($(this).is(':checked')) {
-                    // Change color of parent container to blue
-                    $(this).closest('.slot-box').addClass('submit-btn');
-                }
-                else{
-                    $(this).closest('.slot-box').find('.for-checkbox-tools i').addClass('submit-btn');
+                var $checkbox = $(this).prev('.checkbox-tools');
+
+                // Check if the radio button is already checked
+                if ($checkbox.prop('checked')) {
+                    // Uncheck the radio button
+                    $checkbox.prop('checked', false);
+                    $(this).closest('.slot-box').find('.for-checkbox-tools').removeClass('submit-btn');
+                } else {
+                    // Uncheck all other radio buttons in the same group
+                    $('input[name="tools"]').prop('checked', false);
+                    $('.slot-box').find('.for-checkbox-tools').removeClass('submit-btn');
+
+                    // Check the clicked radio button and add the 'submit-btn' class
+                    $checkbox.prop('checked', true);
+                    $(this).closest('.slot-box').find('.for-checkbox-tools').addClass('submit-btn');
                 }
                 selectedValue = $(this).closest('.time-slot').find('.time-desc').text();
                 sessionStorage.setItem('timeSlot', selectedValue);
                 $('#confirm-button').show();
-            });
+              });
         });
         $(document).ready(function () {
             // Event handler for radio buttons

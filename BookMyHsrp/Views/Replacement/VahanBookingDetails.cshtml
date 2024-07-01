@@ -164,10 +164,11 @@
                                         <div class="col-lg-4 col-md-6 col-sm-12">
                                             <div class="input-group">
                                                 <label class="form-label w-100">Captcha</label>
-                                                <input id="txtCaptcha" type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
+                                                <input id="txtCaptcha" type="text" class="form-control" aria-label="Amount (to the nearest dollar)" readonly>
                                                 <button onclick="DrawCaptcha()" class="input-group-text"><i class="fas fa-redo-alt"></i></button>
                                             </div>
                                         </div>
+                                        
                                         <div class="col-lg-4 col-md-6 col-sm-12">
                                             <div class="form-group">
                                                 <label class="form-label">Input Captcha</label>
@@ -175,6 +176,14 @@
                                             </div>
                                         </div>
                                         <div class="col-lg-4 col-md-6 col-sm-12">
+                                            </div>
+                                                <div class="col-lg-4 col-md-6 col-sm-12">
+                                                    </div>
+                                                <div class="col-lg-4 col-md-6 col-sm-12">
+                                                    <label style="font-size:12px;" class="w-100">DF-Damage Front, DR-Damage Rear, DB-Damage Both</label>
+
+                                                </div>
+                                                 <div class="col-lg-4 col-md-6 col-sm-12">
                                             <button id="btn-submit-approval-data" type="button" class="submit-btn">
                                                 Click Here
                                             </button>
@@ -223,7 +232,7 @@
                                                 <div class="form-group">
                                                     <label for="regDate">Vehicle Registration Date(DD/MM/YYYY)*</label>
                                                     <input name="regDate" type="text" id="regDate" class="form-control" onkeypress="return isNumberKey(event)" onkeyup="DateValidator();" autocomplete="off" maxlength="10" placeholder="DD/MM/YYYY" readonly="readonly">
-                                                    <span id="spanRegDate" class="helper">(Vehicle Reg. date before 25 Nov 2019 only)</span>
+                                                    
 
                                                 </div>
                                             </div>
@@ -374,6 +383,8 @@
                                                 <div class="form-group">
                                                     <label class="form-label">Front Plate Photo*</label>
                                                     <input type="file" class="file-control" id="fileid3">
+                                                    <label style="font-size:12px;" class="w-100">(File size max 1.5 MB,File type .jpg | .jpeg | .png | .pdf)</label>
+
                                                 </div>
                                             </div>
                                             <div class="col-lg-6 col-md-6 col-sm-12" id="DivFrontLaser" style="display: none">
@@ -387,6 +398,7 @@
                                                 <div class="form-group">
                                                     <label class="form-label">Rear Plate Photo*</label>
                                                     <input type="file" class="file-control" id="fileid4">
+                                                    <label style="font-size:12px;" class="w-100">(File size max 1.5 MB,File type .jpg | .jpeg | .png | .pdf)</label>
                                                 </div>
                                             </div>
                                             <div class="col-lg-6 col-md-6 col-sm-12" id="DivRearLaser" style="display: none">
@@ -400,12 +412,15 @@
                                                 <div class="form-group">
                                                     <label class="form-label">FIR Copy*</label>
                                                     <input type="file" class="file-control" id="fileid">
+                                                    <label style="font-size:12px;" class="w-100">(File size max 1.5 MB,File type .jpg | .jpeg | .png | .pdf)</label>
                                                 </div>
                                             </div>
                                             <div class="col-lg-4 col-md-6 col-sm-12" id="DivRC">
                                                 <div class="form-group">
-                                                    <label for="uploadRc">Upload RC*</label>
+                                                    <label for="uploadRc">Upload RC (for record purposes)*</label>
                                                     <input type="file" class="file-control" id="fileid2">
+                                                    <label style="font-size:12px;" class="w-100">(File size max 1.5 MB,File type .jpg | .jpeg | .png | .pdf)</label>
+
                                                 </div>
                                             </div>
                                             <div class="col-lg-4 col-md-6 col-sm-12">
@@ -538,19 +553,15 @@
         <!-- OTP Script -->
 
         <script>
-            $('#txtFirDate').on('input', function () {
-                var inputValue = $(this).val();
-                if (inputValue.length === 2 && inputValue.indexOf('/') === -1) {
-                    // If input length is 2 and there is no slash present, add a slash
-                    $(this).val(inputValue + '/');
-                }
-                $('#txtFirDate').on('input', function () {
-                    var inputValue = $(this).val();
-                    if (inputValue.length === 5 && inputValue.charAt(2) === '/') {
-                        // If input length is 5 and the third character is a slash, add another slash
-                        $(this).val(inputValue + '/');
-                    }
-                });
+            $('#txtFirDate').on('input', function (event) {
+                
+                    var input = $(this).val();
+                    // Remove any non-digit characters
+                    var cleaned = input.replace(/\D/g, '');
+                    // Format the date with slashes
+                    var formatted = cleaned.replace(/(\d{2})(\d{2})(\d{4})/, '$1/$2/$3');
+                    $(this).val(formatted);
+               
             });
         </script>
 

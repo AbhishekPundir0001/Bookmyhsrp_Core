@@ -89,6 +89,7 @@ namespace BookMyHsrp.Libraries.HsrpWithColorSticker.Services
             var parameters = new DynamicParameters();
             parameters.Add("@RegistrationNo", VehicleRegNo);
             parameters.Add("@OemId", OemId);
+            parameters.Add("@RtoCode", "");
             var result = await _databaseHelperPrimary.QueryAsync<dynamic>(
                  HsrpWithColorStickerQueries.OemRtoMapping, parameters);
             return result;

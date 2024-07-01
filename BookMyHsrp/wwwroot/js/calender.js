@@ -3369,7 +3369,7 @@
                     return this._weekdaysShort[m.day()];
                 }
 
-                var defaultLocaleWeekdaysMin = 'Su_Mo_Tu_We_Th_Fr_Sa'.split('_');
+                var defaultLocaleWeekdaysMin = 'Sun_Mon_Tue_Wed_Thu_Fri_Sat'.split('_');
                 function localeWeekdaysMin(m) {
                     return this._weekdaysMin[m.day()];
                 }

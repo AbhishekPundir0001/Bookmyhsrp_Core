@@ -94,7 +94,7 @@
                         <div class="main-data main-bg">
                             <div class="title-area d-flex justify-content-between">
                                 <h4 class="title">Dealer Appointment</h4>
-                                <a href="Plate-Delivery.html" class="submit-btn">Home Delivery</a>
+                                <a href="@(Url.Action("HomeDelivery", "HomeDelivery"))" class="submit-btn">Home Delivery</a>
                             </div>
                             <div class="form-area">
                                 <div class="form-area-inner">
@@ -129,207 +129,13 @@
                                 <div class="row">
                                     <div class="col-sm-12">
                                         <div class="accordion" id="accordionExample">
-                                           @*  <div class="accordion-item">
-                                                <h2 class="accordion-header">
-                                                    <!--
-                                                                                                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-                                                                                                            Abishek motors (ring road honda mt) - karampura
-                                                                                                        </button>
-                                                    -->
-                                                    <button id="dealername" class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                                        Abishek motors (ring road honda mt) - karampura
-                                                    </button>
-                                                </h2>
-                                                <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
-                                                    <div class="accordion-body">
-                                                        <div class="row">
-                                                            <div class="col-lg-6">
-                                                                <ul class="area-ul">
-                                                                    <li>
-                                                                        <span>City:</span><br>
-                                                                        <span id="city" class="cd"></span>
-                                                                    </li>
-                                                                    <li>
-                                                                        <span>Address:</span><br>
-                                                                        <span class="cd">C1 mangolpuri, area phase-1, delhi</span>
-                                                                    </li>
-
-                                                                </ul>
-                                                            </div>
-                                                            <div class="col-lg-6">
-                                                                <div class="price-card">
-
-                                                                    <div class="b-date">
-                                                                        <h6 class="d-title">Earliest Date Available</h6>
-                                                                        <div class="d-date">06-05-2024</div>
-                                                                    </div>
-                                                                    <div class="price-area justify-content-between">
-                                                                        <div class="t-price">
-                                                                            <span>HSRP Set</span>
-                                                                            RS.719.80
-                                                                        </div>
-                                                                        <a href="plate-AppointmentSlot.html" class="submit-btn2">Confirm Dealer</a>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="accordion-item">
-                                                <h2 class="accordion-header">
-                                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                                        Abishek motors (ring road honda mt) - karampura
-                                                    </button>
-                                                </h2>
-                                                <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
-                                                    <div class="accordion-body">
-                                                        <div class="row">
-                                                            <div class="col-lg-6">
-                                                                <ul class="area-ul">
-                                                                    <li>
-                                                                        <span>City:</span><br>
-                                                                        <span class="cd">Rohini</span>
-                                                                    </li>
-                                                                    <li>
-                                                                        <span>Address:</span><br>
-                                                                        <span class="cd">C1 mangolpuri, area phase-1, delhi</span>
-                                                                    </li>
-
-                                                                </ul>
-                                                            </div>
-                                                            <div class="col-lg-6">
-                                                                <div class="price-card">
-
-                                                                    <div class="b-date">
-                                                                        <h6 class="d-title">Earliest Date Available</h6>
-                                                                        <div class="d-date">06-05-2024</div>
-                                                                    </div>
-                                                                    <div class="price-area justify-content-between">
-                                                                        <div class="t-price">
-                                                                            <span>HSRP Set</span>
-                                                                            RS.719.80
-                                                                        </div>
-                                                                        <button type="button" class="submit-btn2">Confirm Dealer</button>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <!--
-                                                                                                                <ul class="area-ul">
-                                                                                                                    <li>
-                                                                                                                        <span>City:</span><br>
-                                                                                                                        <span class="cd">Rohini</span>
-                                                                                                                    </li>
-                                                                                                                    <li>
-                                                                                                                        <span>Address:</span><br>
-                                                                                                                        <span class="cd">C1 mangolpuri, area phase-1, delhi</span>
-                                                                                                                    </li>
-
-                                                                                                                </ul>
-                                                                                                                <div class="b-date">
-                                                                                                                    <h6 class="d-title">Earliest Date Available:</h6>
-                                                                                                                    <div class="d-date">06-05-2024</div>
-                                                                                                                </div>
-                                                                                                                <div class="price-area justify-content-between">
-                                                                                                                    <div class="t-price">
-                                                                                                                        <span>HSRP Set</span>
-                                                                                                                        RS.719.80
-                                                                                                                    </div>
-                                                                                                                    <button type="button" class="submit-btn2">Confirm Dealer</button>
-                                                                                                                </div>
-                                                        -->
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="accordion-item">
-                                                <h2 class="accordion-header">
-                                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                                        Abishek motors (ring road honda mt) - karampura
-                                                    </button>
-                                                </h2>
-                                                <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
-                                                    <div class="accordion-body">
-                                                        <div class="row">
-                                                            <div class="col-lg-6">
-                                                                <ul class="area-ul">
-                                                                    <li>
-                                                                        <span>City:</span><br>
-                                                                        <span class="cd">Rohini</span>
-                                                                    </li>
-                                                                    <li>
-                                                                        <span>Address:</span><br>
-                                                                        <span class="cd">C1 mangolpuri, area phase-1, delhi</span>
-                                                                    </li>
-
-                                                                </ul>
-                                                            </div>
-                                                            <div class="col-lg-6">
-                                                                <div class="price-card">
-
-                                                                    <div class="b-date">
-                                                                        <h6 class="d-title">Earliest Date Available</h6>
-                                                                        <div class="d-date">06-05-2024</div>
-                                                                    </div>
-                                                                    <div class="price-area justify-content-between">
-                                                                        <div class="t-price">
-                                                                            <span>HSRP Set</span>
-                                                                            RS.719.80
-                                                                        </div>
-                                                                        <button type="button" class="submit-btn2">Confirm Dealer</button>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div> *@
+                                          
                                         </div>
                                     </div>
                                 </div>
                             </div> 
 
-                            <!--
-                                                        <div class="accordion" id="accordionExample">
-                              <div class="accordion-item">
-                                <h2 class="accordion-header">
-                                  <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                    Accordion Item #1
-                                  </button>
-                                </h2>
-                                <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
-                                  <div class="accordion-body">
-                                    <strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="accordion-item">
-                                <h2 class="accordion-header">
-                                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                    Accordion Item #2
-                                  </button>
-                                </h2>
-                                <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
-                                  <div class="accordion-body">
-                                    <strong>This is the second item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="accordion-item">
-                                <h2 class="accordion-header">
-                                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                    Accordion Item #3
-                                  </button>
-                                </h2>
-                                <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
-                                  <div class="accordion-body">
-                                    <strong>This is the third item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                            -->
-
+                         
                         </div>
                     </div>
                 </div>
@@ -437,6 +243,7 @@
                             var roundOff_netamount = dealer.RoundOff_netamount;
                             var cnt = dealer.cnt;
                             var cnt = dealer.EarliestTimeSlotAvailable;
+                            var state = dealer.StateName
                             var accordionItem = $('<div class="accordion-item"></div>');
 
                             // Create accordion header
@@ -444,7 +251,7 @@
 
                             // Create accordion button
                             var accordionButton = $('<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_' + i + '" aria-expanded="true" aria-controls="collapse_' + i + '"></button>');
-                            accordionButton.text(dealerName);
+                            accordionButton.text(dealerName + '-' + dealerCity);
 
                             // Create accordion collapse
                             var accordionCollapse = $('<div id="collapse_' + i + '" class="accordion-collapse collapse" data-bs-parent="#accordionExample"></div>');
@@ -461,7 +268,8 @@
                             var ul = $('<ul class="area-ul"></ul>');
                             var liCity = $('<li><span>City:</span><br><span id="city_' + i + '" class="cd">' + dealerCity + '</span></li>');
                             var liAddress = $('<li><span>Address:</span><br><span class="cd">' + dealerAddress + '</span></li>');
-
+                            var stateandPincode = $('<span class="cd">' + state+ ' : ' + dealerPincode + '</span>');
+                           
                             // Populate price details
                             var priceCard = $('<div class="price-card"></div>');
                             var bDate = $('<div class="b-date"><h6 class="d-title">Earliest Date Available</h6><div class="d-date">' + earliestDateAvailable + '</div></div>');
@@ -470,7 +278,7 @@
                           //  var confirmDealerBtn = $('<a  href='/appointmentSlot/ " + result[i].Id + "'  class="submit-btn2 confirm-dealer">Confirm Dealer</a>');
                             var confirmDealerBtn = $('<a data-id="'+dealerId+'" class="submit-btn2 confirm-dealer">Confirm Dealer</a>');
                             // Append address details to left column
-                            colLeft.append(ul.append(liCity, liAddress));
+                            colLeft.append(ul.append(liCity, liAddress, stateandPincode));
 
                             // Append price details to right column
                             colRight.append(priceCard.append(bDate, priceArea.append(tPrice, confirmDealerBtn)));
@@ -501,22 +309,23 @@
 
             
         }
-            // $(document).on('click', '.confirm-dealer', function (event) {
-            //     event.preventDefault();
-            //     var $this = $(this);
-            //     var $gotDealerDiv = $(this).closest('.card-strip');
-            //     var gotDealerDivId = $gotDealerDiv.attr("data-dealertid");
-            //     $.getJSON("/home/GetLatestAvailableTimeSlot?dealerId=" + gotDealerDivId, function (response) {
+        
+            $('.form-control').on('input', function () {
+                var searchText = $(this).val().trim().toUpperCase(); // Get search text and normalize to uppercase
 
-            //         if (response.status === "true") {
-            //             var dataBind = response.data;
-            //             $this.parent().html(dataBind);
-            //         } else {
-            //             ShowToast(response.message, 'Red');
-            //         }
-            //     });
-            // });
+                // Loop through each item in dataBind
+                $('.accordion-item').each(function () {
+                    var accordionItem = $(this);
+                    var dealerPincode = $.trim(accordionItem.find('.cd.pincode').text().toUpperCase()); // Get pincode and normalize to uppercase
 
+                    // Check if pincode contains the search text
+                    if (dealerPincode.includes(searchText)) {
+                        accordionItem.show(); // Show the item if it matches
+                    } else {
+                        accordionItem.hide(); // Hide the item if it doesn't match
+                    }
+                });
+            });
 
             $(document).on('click', '.confirm-dealer',async function (event) {
                     var id = $(this).attr('data-id');;

@@ -19,6 +19,7 @@ namespace BookMyHsrp.Controllers.CommonController
         }
 
         [HttpGet]
+       
         public async Task<dynamic> GenerateOtp()
         {
            var vehicleDetail =  HttpContext.Session.GetString("UserSession");

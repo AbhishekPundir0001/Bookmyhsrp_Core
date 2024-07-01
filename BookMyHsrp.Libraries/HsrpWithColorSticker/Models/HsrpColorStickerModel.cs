@@ -77,6 +77,11 @@ namespace BookMyHsrp.Libraries.HsrpWithColorSticker.Models
             public long DealerAffixationID { get; set; }
             public int Dealerid { get; set; }
             public string DealerName { get; set; }
+            public string Message { get; set; }
+            public string Status { get; set; }
+            public string StateShortName { get; set; }
+            public string DeliveryCity { get; set; }
+            public string DeliveryState { get; set; }
             public string DealerAffixationCenterContactPerson { get; set; }
             public string VehicleCat { get; set; }
             public string Vehiclecategory { get; set; }
@@ -147,6 +152,21 @@ namespace BookMyHsrp.Libraries.HsrpWithColorSticker.Models
             public string SlotDate { get; set; }
             public string SlotTime { get; set; }
 
+        }
+        public class AppointmentSlotForHome
+        {
+            public int StateId { get; set; }
+            public long DealerAffixationID { get; set; }
+            public int Dealerid { get; set; }
+            public string DealerName { get; set; }
+            public string DealerAffixationCenterId { get; set; }
+            public string Pincode { get; set; }
+            public string Message { get; set; }
+            public string Status { get; set; }
+            public string DeliveryPoint { get; set; }
+            public string DeliveryCity { get; set; }
+            public string DeliveryState { get; set; }
+            public string DealerAffixationCenterContactPerson { get; set; }
         }
         public class VehicleValidation
         {

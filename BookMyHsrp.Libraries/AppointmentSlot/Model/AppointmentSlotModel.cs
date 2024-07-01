@@ -26,6 +26,13 @@ namespace BookMyHsrp.Libraries.AppointmentSlot.Model
             public string EndDate { get; set; }
             public string BlockDate { get; set; }
         }
+       public class HomeCheckDates
+        {
+            public string FromDate { get; set; }
+            public string EndDate { get; set; }
+            public string BlockDate { get; set; }
+            public string  DeliveryPoint { get; set; }
+        }
         public class AppointmentSlotCheckEc
         {
             public string StartDate { get; set; }

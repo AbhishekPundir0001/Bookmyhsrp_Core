@@ -44,8 +44,6 @@ namespace BookMyHsrp.Libraries.HsrpWithColorSticker.Models
         public string OwnerName { get; set; }
 
         [Required(ErrorMessage = "Customer Email Required.")]
-        [StringLength(30, MinimumLength = 6,
-            ErrorMessage = "Email should be less than 30 characters.")]
         [DataType(DataType.EmailAddress)]
         [EmailAddress]
         public string EmailId { get; set; }

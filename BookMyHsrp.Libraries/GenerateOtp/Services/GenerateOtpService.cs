@@ -98,10 +98,10 @@ namespace BookMyHsrp.Libraries.GenerateOtp.Services
             parameter.Add("@OTPno", OTPno);
             parameter.Add("@OTPVerifyStatus", OTPVerifyStatus);
            
-            var result = _databaseHelperPrimary.QueryAsync<dynamic>(GenerateOtpQueries.SMSLogSave, parameter);
+            var result =await _databaseHelperPrimary.QueryAsync<dynamic>(GenerateOtpQueries.SMSLogSave, parameter);
             var OtpNo = OTPno;
             await _fetchDataAndCache.SetStringInCache("OtpNo", OtpNo);
-            var result1 = _databaseHelperPrimary.QueryAsync<dynamic>(GenerateOtpQueries.InsertSMSLog2, parameter);
+            var result1 =await _databaseHelperPrimary.QueryAsync<dynamic>(GenerateOtpQueries.InsertSMSLog2, parameter);
 
            #region  WhatsApp Sending
             string[] Params = { OTPno };
@@ -212,12 +212,12 @@ namespace BookMyHsrp.Libraries.GenerateOtp.Services
                         var parameter = new DynamicParameters();
                         parameter.Add("@MobileNo", MobileNo);
                         parameter.Add("@OTP", otpno);
-                        var result = _databaseHelperPrimary.QueryAsync<dynamic>(GenerateOtpQueries.SaveOtp, parameter);
+                        var result = await _databaseHelperPrimary.QueryAsync<dynamic>(GenerateOtpQueries.SaveOtp, parameter);
 
                         if (result != null)
                         {
                             int status = 0;
-                            foreach (var data in result.Result)
+                            foreach (var data in result)
                             {
                                 status = data.status;
                             }
@@ -230,7 +230,7 @@ namespace BookMyHsrp.Libraries.GenerateOtp.Services
                         var parameter2 = new DynamicParameters();
                         parameter2.Add("@MobileNo", MobileNo);
                         parameter2.Add("@OTP", otp);
-                        var updatesmsLog = _databaseHelperPrimary.QueryAsync<dynamic>(GenerateOtpQueries.UpdateSMSLog, parameter2);
+                        var updatesmsLog =await _databaseHelperPrimary.QueryAsync<dynamic>(GenerateOtpQueries.UpdateSMSLog, parameter2);
 
 
 

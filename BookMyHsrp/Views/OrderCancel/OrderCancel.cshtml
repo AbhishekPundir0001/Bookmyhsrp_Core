@@ -274,7 +274,6 @@
                 $('#otp-validate3').modal('show');
                 const successdata = await postData("/CancelOrderDetails", data)
                 if (successdata.length > 0) {
-                    debugger
                     $('#orderno').text(successdata[0].OrderNo);
                     $('#vehicleregno').text(successdata[0].VehicleRegNo);
                     $('#orderstatus1').text(successdata[0].OrderStatus);

@@ -211,7 +211,7 @@
                                             <li>For queries, Please contact Toll Free <a href="tel:8929722201">8929722201</a>, Email ID : <a href="mailto:online@bookmyhsrp.com">online@bookmyhsrp.com</a></li>
                                             <li>Calling time (9:30 AM to 6:00 PM) and day (Monday to Saturday) or Email at <a href="mailto:online@bookmyhsrp.com">online@bookmyhsrp.com</a></li>
                                             <li>Re-Appointment (if any) will only available for future dates.</li>
-                                            <li><span>Receipt Validity 31-05-2024</span></li>
+                                            <li><span id="validDate"> </span></li>
                                             <li>Fitment charges paid, no extra payment required to be paid to fitment person/dealer team.</li>
                                         </ul>
 
@@ -288,8 +288,7 @@
                     hours = hours % 12;
                     hours = hours ? hours : 12;
                     // Display UTC date components
-                    console.log("UTC Date:", year + '-' + month + '-' + day);
-                    console.log("UTC Time:", hours + ':' + minutes + ':' + seconds + ' ' + ampm);
+                    
                     var date = sessionStorage.getItem('appointmentDate');
                     var time = sessionStorage.getItem('timeSlot');
                     $('#orderDate').text(year + '-' + month + '-' + day + '  ' + hours + ':' + (minutes < 10 ? '0' : '') + minutes + ':' + (seconds < 10 ? '0' : '') + seconds + ' ' + ampm);
@@ -307,7 +306,17 @@
                     $('#fitmentCenterAddress').text(result.DealerAffixationAddress);
                     $('#bankTrackingId').text(bokingId);
                     $('#fitmentPersonName').text(result.DealerAffixationCenterContactPerson);
+                    debugger
                     $('#fitmentMobNo').text(result.DealerAffixationCenterContactNo);
+                    var later = new Date(now);
+                    later.setDate(now.getDate() + 15);
+                    var laterYear = later.getUTCFullYear();
+                    var laterMonth = pad(later.getUTCMonth() + 1);
+                    var laterDay = pad(later.getUTCDate());
+                    $('#validDate').text("Receipt Validity:"+' '+ laterDay + '-' + laterMonth + '-' + laterYear)
+                    console.log("UTC Date later:", laterDay + '-' + laterMonth + '-' + laterYear)
+
+
                   }
             }
 

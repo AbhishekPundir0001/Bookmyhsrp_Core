@@ -139,7 +139,7 @@
                                         <div class="col-lg-4 col-md-6 col-sm-12">
                                             <div class="form-group">
                                                 <label class="form-label">Pin Code</label>
-                                                <input maxlength="6" id="pincode" type="text" class="form-control">
+                                                <input oninput="restrictInput()" maxlength="6" id="pincode" type="text" class="form-control">
                                             </div>
                                         </div>
                                         <div class="col-lg-4 col-md-6 col-sm-12">
@@ -149,7 +149,7 @@
                                         </div>
                                     </div>
                                     <div class="row" >
-                                        <div >
+                                        <div>
                                         <p id="avabilitierror" class="status-p">Currently service is not available in this area. Enter your mobile number,<br>So when service resume on this pincode we ping you back!</p>
                                             <p id="avabilitiThankyou" class="status-p" style="Color:Green">Thank you. You will be updated as soon as the appointment system is available. !</p>
                                         </div>
@@ -176,7 +176,7 @@
                                                                         </div>
                                     -->
                                     <div class="row" id="details">
-                                       <div class="col-lg-4 col-md-6 col-sm-12">
+                                       <div class="col-lg-4 col-md-6 col-sm-12" id="pincodeHide">
                                             <div class="form-group">
                                                 <label class="form-label">Pincode</label>
                                                 <input id="pincodeNew" type="number" class="form-control">
@@ -213,11 +213,11 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-lg-4">
+                                        <div class="col-lg-4" id="bothButton">
                                             <button id="btn-submit-home-delivery-data" type="button" class="submit-btn me-3">
                                                 Submit
                                             </button>
-                                            <button type="reset" class="reset-btn">
+                                            <button id="reset" type="reset" class="reset-btn">
                                                 Reset
                                             </button>
                                         </div>
@@ -349,7 +349,8 @@
                     if (result.Data == "Success") {
                         $('#avabilitiThankyou').show();
                         $('#avabilitierror').hide();
-                        $('#mobileNo').val('');
+                        $('#checking').hide();
+                        $('#mob').hide();
                 }
                 } catch (error) {
                     console.error('Failed to post data:', error);
@@ -359,6 +360,10 @@
 
                 }
         });
+            function restrictInput() {
+                var input = document.getElementById('pincode');
+                input.value = input.value.replace(/\D/g, ''); // Replace any non-digit character with an empty string
+            }
             $('#btn-submit-home-delivery-data').click(async function () {
                 // handleButtonClickApproved.call(this, '/plate/details/validateRequired', postData, (result) => {
                 handleButtonClickApproved.call(this, '/home-delivery', postData, (result) => {

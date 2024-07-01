@@ -59,14 +59,15 @@ namespace BookMyHsrp.Controllers.CommonController
                 }
                 //jsonSerializer = System.Text.Json.JsonSerializer.Serialize(response);
                 response.Message = "Success";
-                return Ok(response);
+               
 
             }
             else
             {
                 return BadRequest("No file uploaded");
             }
-
+            var jsonSerializer = System.Text.Json.JsonSerializer.Serialize(response);
+            return Json(jsonSerializer);
 
         }
 

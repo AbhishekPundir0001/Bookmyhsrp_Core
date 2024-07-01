@@ -71,6 +71,17 @@ namespace BookMyHsrp.ReportsLogics.HsrpWithColorSticker
                 statename = data.HSRPStateName;
                 StateIdBackup = requestDto.StateId;
             }
+            string responseJson = await _hsrpColorStickerService.RosmertaApi(getVehicleRegno, getChassisNo, getEngineNo, "5UwoklBqiW");
+            VehicleDetails _vd = JsonConvert.DeserializeObject<VehicleDetails>(responseJson);
+            if (_vd != null)
+            {
+                if (_vd != null && _vd.stateCd != null && _vd.stateCd.ToLower().StartsWith(stateshortname.ToString().ToLower()) == false)
+                {
+                    vehicleValidationResponse.status = "0";
+                    vehicleValidationResponse.message = "Please input Correct Registration Number of " + statename;
+                    return vehicleValidationResponse;
+                }
+            }
             var checkOrderExists = await _hsrpColorStickerService.CheckOrderExixts(getVehicleRegno, getChassisNo, getEngineNo);
             if (checkOrderExists.Count > 0 && requestDto.isReplacement == false)
             {
@@ -79,7 +90,6 @@ namespace BookMyHsrp.ReportsLogics.HsrpWithColorSticker
                     "Order for this registration number already exists. For any query kindly mail to support@bookyourhsrp.com";
                 return vehicleValidationResponse;
             }
-            string responseJson = await _hsrpColorStickerService.RosmertaApi(getVehicleRegno, getChassisNo, getEngineNo, "5UwoklBqiW");
             if (responseJson == "Error While Calling Vahan Service - The remote server returned an error: (500) Internal Server Error.")
             {
                 vehicleValidationResponse.message = "Error While Calling Vahan Service";
@@ -97,7 +107,7 @@ namespace BookMyHsrp.ReportsLogics.HsrpWithColorSticker
                 return vehicleValidationResponse;
             }
 
-            VehicleDetails _vd = JsonConvert.DeserializeObject<VehicleDetails>(responseJson);
+            
             if (_vd != null && _vd.stateCd != null && _vd.message != "Vehicle Not Found")
             {
                 var hasError = false;

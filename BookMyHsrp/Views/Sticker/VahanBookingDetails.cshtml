@@ -157,7 +157,8 @@
                                         </div>
                                         <div class="col-lg-4 col-md-6 col-sm-12">
                                             <div class="form-group">
-                                                <label class="form-label">Engine No.* (XXXXX12345)</label>
+                                                <label class="form-label" id="engineNoLabel">Engine No.* (XXXXX12345)</label>
+                                                <label class="form-label" id="motorNo">Motor No.* (XXXXX12345)</label>
                                                 <input id="engineNo" type="text" class="form-control" autocomplete="off">
                                                 <span class="helper">(Kindly enter last 5 digits)</span>
                                             </div>
@@ -530,6 +531,7 @@
         <script>
             async function otpTimer() {
                 $(document).ready(function () {
+                    $('#motorNo').hide();
                     // $('#resend').attr('disabled', 'disabled');
                     $('#resend').addClass('disabled');
                     var counter = 20;
@@ -817,7 +819,8 @@
                     // console.log(response);
                     if (response.Status !== null && response.Status === "true") {
                         userData = response;
-                        var vehRegDate = "" + response.VehRegDate;
+                        
+
                         $('#show-div').show();
                         // userData["VehicleType"] = response.VehicleRegNo;
                         //     userData["VehRegDate"] = convertDate("" + VehRegDate);
