@@ -680,7 +680,7 @@ namespace BookMyHsrp.ReportsLogics.Receipt
                     //sbTable.Append("<td rowspan=2><img height='70px' width='70px' src='" + ReceiptPathQRCode + "' id='img_qrcode'></td>");
                     sbTable.Append("</tr>");
 
-                    sbTable.Append("<tr><td><p><br/> Rosmerta Safety System Pvt.Ltd. <br/> https://bookmyhsrp.com </p></td></tr>");
+                    sbTable.Append("<tr><td><p><br/> Rosmerta Safety Systems Pvt.Ltd. <br/> https://bookmyhsrp.com </p></td></tr>");
                     //sbTable.Append("<td><b>" + CompanyName + "</b><br/><span style='font-size: 6px;'>" + CompanyNamePostFix + "</span><br> https://bookmyhsrp.com </p><br/>GST No.: " + dtGSTIN.Rows[0]["GSTIN"].ToString() + "</td></tr>");
                     sbTable.Append("</table>");
 

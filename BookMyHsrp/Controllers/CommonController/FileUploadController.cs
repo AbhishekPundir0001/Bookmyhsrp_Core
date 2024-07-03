@@ -77,9 +77,25 @@ namespace BookMyHsrp.Controllers.CommonController
             var response = new ResponseSticker();
             try
             {
-                if (fileUploadModel.FrontLaserPhoto == null || fileUploadModel.RearLaserPhoto == null || fileUploadModel.FrontPlatePhoto ==null || fileUploadModel.RearPlatePhoto == null)
+                if(fileUploadModel.FrontLaserPhoto == null)
                 {
-                    response.Message = "Please upload File";
+                    response.Message = "Please Upload Front Laser Photo!!";
+                    response.Status = "0";
+                }
+                else if(fileUploadModel.RearLaserPhoto == null)
+                {
+                    response.Message = "Please Upload Rear Laser Photo!!";
+                    response.Status = "0";
+                }
+                else if(fileUploadModel.FrontPlatePhoto == null)
+                {
+                    response.Message = "Please Upload Front plate Photo!!";
+                    response.Status = "0";
+                }
+                else if(fileUploadModel.RearPlatePhoto == null)
+                {
+                    response.Message = "Please Upload Rear Plate Photo!!";
+                    response.Status = "0";
                 }
                 else
                 {
@@ -116,11 +132,13 @@ namespace BookMyHsrp.Controllers.CommonController
                     {
                         //return BadRequest("Error! Invalid image file format, file should be .jpg|.jpeg|.bmp|.png|.pdf!!");
                         response.Message = "Error! Invalid image file format, file should be .jpg|.jpeg|.bmp|.png|.pdf!!";
+                        response.Status = "0";
                     }
                     else if (sz > 1 || sz2 > 1 || sz3 > 1 || sz4 > 1)
                     {
                         //return BadRequest("Error! File size can not be max 1.5 MB!!");
                         response.Message = "Error! File size can not be max 1.5 MB!!";
+                        response.Status = "0";
                     }
                     else
                     {
@@ -164,6 +182,7 @@ namespace BookMyHsrp.Controllers.CommonController
                             response.FrontPlatePhoto = _fronPlatePhoto.FileName;
                             response.RearPlatePhoto = _rearPlatePhoto.FileName;
                             response.Message = "File Uploaded Successfully";
+                            response.Status = "1";
                         }
                     }
                 }
@@ -180,19 +199,7 @@ namespace BookMyHsrp.Controllers.CommonController
 
         [Route("uploadFileReplacement")]
         public async Task<IActionResult> uploadFileRepla([FromForm] FileUploadModelReplacement fileUploadModel)
-        {
-            //var _fronPlatePhoto = fileUploadModel.FrontPlatePhoto;
-            //var frontPlatefilePath = Path.Combine(path, "File1"  + "_" + RandomString(4) + Path.GetExtension(_fronPlatePhoto.FileName));
-
-            //using (var stream = new FileStream(frontPlatefilePath, FileMode.Create))
-            //{
-            //    await _fronPlatePhoto.CopyToAsync(stream);
-            //}
-            //var data = new { Message = "File Uploaded Successfully" };
-
-            //var jsonSerializer = System.Text.Json.JsonSerializer.Serialize(data);
-            //return Json(jsonSerializer);
-
+        {          
             #region File Upload
             string msg = string.Empty;
             string fileName = string.Empty;
@@ -253,18 +260,26 @@ namespace BookMyHsrp.Controllers.CommonController
                     {
                         if (fileUploadModel.FirCopy == null)
                         {
-                            fileName = "Error! Please Upload FIR Copy!!";
+                            fileName = "Please Upload FIR Copy!!";
+                            msg = "Error";
                         }
                         else if (fileUploadModel.RcCopy == null)
                         {
                             fileName = "Error! Please Upload Rc Copy!!";
+                            msg = "Error";
                         }
                         else
                         {
                             if (!IsImage(Path.GetExtension(fileUploadModel.FirCopy.FileName)) || !IsImage(Path.GetExtension(fileUploadModel.RcCopy.FileName)))
+                            {
                                 fileName = "Error! Invalid image file format, file should be .jpg|.jpeg|.bmp|.png|.pdf!!";
+                                msg = "Error";
+                            }
                             else if (sz3 > 1 || sz4 > 1)
+                            {
                                 fileName = "Error! File size can not be max 1.5 MB!!";
+                                msg = "Error";
+                            }
                             else
                             {
                                 fileName3 = "FIR_" + DateTime.Now.ToString("yyyyMMddHHmmssfff") + "_" + RandomString(4) + GetExtention3;
@@ -291,9 +306,10 @@ namespace BookMyHsrp.Controllers.CommonController
                     {
                         if (ReplacementReason == "LT")
                         {
-                            if (fileName3 == "" || fileName3 == "")
+                            if (fileName3 == "" || fileName3 == null)
                             {
-                                fileName = "Error! Please Upload FIR File!!";
+                                fileName = "Please Upload FIR File!!";
+                                msg = "Error";
                             }
                             else
                             {
@@ -310,9 +326,10 @@ namespace BookMyHsrp.Controllers.CommonController
 
                         if (ReplacementReason == "CA" || ReplacementReason == "RE")
                         {
-                            if (fileName4 == "" || fileName4 == "")
+                            if (fileName4 == "" || fileName4 == null)
                             {
-                                fileName = "Error! Please Upload RC File Code!!";
+                                fileName = "Please Upload RC File Code!!";
+                                msg = "Error";
                             }
                             else
                             {
@@ -331,9 +348,10 @@ namespace BookMyHsrp.Controllers.CommonController
                         {
                             if (OrderType == "BDF")
                             {
-                                if (fileName == "" || fileName == "")
+                                if (fileName == "" || fileName == null)
                                 {
-                                    fileName = "Error! Please Upload Front Laser Code!!";
+                                    fileName = "Please Upload Front Laser Code!!";
+                                    msg = "Error";
                                 }
                                 else
                                 {
@@ -349,9 +367,10 @@ namespace BookMyHsrp.Controllers.CommonController
                             }
                             else if (OrderType == "BDR")
                             {
-                                if (fileName2 == "" || fileName2 == "")
+                                if (fileName2 == "" || fileName2 == null)
                                 {
-                                    fileName = "Error! Please Upload Rear Laser Code!!";
+                                    fileName = "Please Upload Rear Laser Code!!";
+                                    msg = "Error";
                                 }
                                 else
                                 {
@@ -367,13 +386,15 @@ namespace BookMyHsrp.Controllers.CommonController
                             }
                             else if (OrderType == "BDB")
                             {
-                                if (fileName == "" || fileName == "")
+                                if (fileName == "" || fileName == null)
                                 {
-                                    fileName = "Error! Please Upload Front Laser Code!!";
+                                    fileName = "Please Upload Front Laser Code!!";
+                                    msg = "Error";
                                 }
                                 else if (fileName2 == "" || fileName2 == "")
                                 {
-                                    fileName = "Error! Please Upload Rear Laser Code!!";
+                                    fileName = "Please Upload Rear Laser Code!!";
+                                    msg = "Error";
                                 }
                                 else
                                 {
@@ -404,10 +425,9 @@ namespace BookMyHsrp.Controllers.CommonController
                 }
                 else
                 {
-                    fileName = "Error! Please Select Reason For Replacement.!!";
+                    fileName = "Please Select Reason For Replacement.!!";
+                    msg = "Error";
                 }
-
-
             }
             else if (OrderType == "BDR")
             {
@@ -416,12 +436,31 @@ namespace BookMyHsrp.Controllers.CommonController
                 {
                     if (Convert.ToInt32(stateid) != 25)
                     {
-                        if (fileUploadModel.FrontPlatePhoto == null || fileUploadModel.FirCopy == null || fileUploadModel.RcCopy == null)
-                            fileName = "Error! Invalid image file format, file should be .jpg|.jpeg|.bmp|.png|.pdf!!";
+                        if (fileUploadModel.FrontPlatePhoto == null)
+                        {
+                            fileName = "Please Upload Front Plate Photo!!";
+                            msg = "Error";
+                        }
+                        else if (fileUploadModel.FirCopy == null)
+                        {
+                            fileName = "Please Upload Fir Copy!!";
+                            msg = "Error";
+                        }
+                        else if (fileUploadModel.RcCopy == null)
+                        {
+                            fileName = "Please Upload Rc Copy!!";
+                            msg = "Error";
+                        }
                         else if (!IsImage(Path.GetExtension(fileUploadModel.FrontPlatePhoto.FileName)) || !IsImage(Path.GetExtension(fileUploadModel.FirCopy.FileName)) || !IsImage(Path.GetExtension(fileUploadModel.RcCopy.FileName)))
+                        {
                             fileName = "Error! Invalid image file format, file should be .jpg|.jpeg|.bmp|.png|.pdf!!";
+                            msg = "Error";
+                        }
                         else if (sz > 1 || sz3 > 1 || sz4 > 1)
+                        {
                             fileName = "Error! File size can not be max 1.5 MB!!";
+                            msg = "Error";
+                        }
                         else
                         {
                             //Save the File in Folder.
@@ -457,9 +496,10 @@ namespace BookMyHsrp.Controllers.CommonController
                     {
                         if (ReplacementReason == "LT")
                         {
-                            if (fileName3 == "" || fileName3 == "")
+                            if (fileName3 == "" || fileName3 == null)
                             {
-                                fileName = "Error! Please Upload FIR!!";
+                                fileName = "Please Upload FIR!!";
+                                msg = "Error";
                             }
                             else
                             {
@@ -476,9 +516,10 @@ namespace BookMyHsrp.Controllers.CommonController
 
                         if (ReplacementReason == "CA" || ReplacementReason == "RE")
                         {
-                            if (fileName4 == "" || fileName4 == "")
+                            if (fileName4 == "" || fileName4 == null)
                             {
-                                fileName = "Error! Please Upload FIR!!";
+                                fileName = "Please Upload FIR!!";
+                                msg = "Error";
                             }
                             else
                             {
@@ -497,9 +538,10 @@ namespace BookMyHsrp.Controllers.CommonController
                         {
                             if (OrderType == "BDF")
                             {
-                                if (fileName == "" || fileName == "")
+                                if (fileName == "" || fileName == null)
                                 {
-                                    fileName = "Error! Please Upload FIR!!";
+                                    fileName = "Please Upload FIR!!";
+                                    msg = "Error";
                                 }
                                 else
                                 {
@@ -515,9 +557,10 @@ namespace BookMyHsrp.Controllers.CommonController
                             }
                             else if (OrderType == "BDR")
                             {
-                                if (fileName2 == "" || fileName2 == "")
+                                if (fileName2 == "" || fileName2 == null)
                                 {
-                                    fileName = "Error! Please Upload Rear File!!";
+                                    fileName = "Please Upload Rear File!!";
+                                    msg = "Error";
                                 }
                                 else
                                 {
@@ -532,13 +575,15 @@ namespace BookMyHsrp.Controllers.CommonController
                             }
                             else if (OrderType == "BDB")
                             {
-                                if (fileName == "" || fileName == "")
+                                if (fileName == "" || fileName == null)
                                 {
-                                    fileName = "Error! Please Upload Front Laser File!!";
+                                    fileName = "Please Upload Front Laser File!!";
+                                    msg = "Error";
                                 }
-                                else if (fileName2 == "" || fileName2 == "")
+                                else if (fileName2 == "" || fileName2 == null)
                                 {
-                                    fileName = "Error! Please Upload Rear Laser File!!";
+                                    fileName = "Please Upload Rear Laser File!!";
+                                    msg = "Error";
                                 }
                                 else
                                 {
@@ -581,12 +626,31 @@ namespace BookMyHsrp.Controllers.CommonController
                 {
                     if (Convert.ToInt32(stateid) != 25)
                     {
-                        if(fileUploadModel.RearPlatePhoto == null || fileUploadModel.FirCopy==null || fileUploadModel.RcCopy == null)
-                            fileName = "Error! Invalid image file format, file should be .jpg|.jpeg|.bmp|.png|.pdf!!";
+                        if (fileUploadModel.RearPlatePhoto == null)
+                        {
+                            fileName = "Please Upload Rear Plate Photo!!";
+                            msg = "Error";
+                        }
+                        else if (fileUploadModel.FirCopy == null)
+                        {
+                            fileName = "Please Upload Fir Copy!!";
+                            msg = "Error";
+                        }
+                        else if (fileUploadModel.RcCopy == null)
+                        {
+                            fileName = "Please Upload Rc Copy!!";
+                            msg = "Error";
+                        }
                         else if (!IsImage(Path.GetExtension(fileUploadModel.RearPlatePhoto.FileName)) || !IsImage(Path.GetExtension(fileUploadModel.FirCopy.FileName)) || !IsImage(Path.GetExtension(fileUploadModel.RcCopy.FileName)))
+                        {
                             fileName = "Error! Invalid image file format, file should be .jpg|.jpeg|.bmp|.png|.pdf!!";
+                            msg = "Error";
+                        }
                         else if (sz2 > 1 || sz3 > 1 || sz4 > 1)
+                        {
                             fileName = "Error! File size can not be max 1.5 MB!!";
+                            msg = "Error";
+                        }
                         else
                         {
                             //Save the File in Folder.
@@ -623,7 +687,8 @@ namespace BookMyHsrp.Controllers.CommonController
                         {
                             if (fileName3 == "" || fileName3 == null)
                             {
-                                fileName = "Error! Please Upload FIR File!!";
+                                fileName = "Please Upload FIR File!!";
+                                msg = "Error";
                             }
                             else
                             {
@@ -643,7 +708,8 @@ namespace BookMyHsrp.Controllers.CommonController
                         {
                             if (fileName4 == "" || fileName4 == null)
                             {
-                                fileName = "Error! Please Upload RC File!!";
+                                fileName = "Please Upload RC File!!";
+                                msg = "Error";
                             }
                             else
                             {
@@ -666,7 +732,8 @@ namespace BookMyHsrp.Controllers.CommonController
                             {
                                 if (fileName == "" || fileName == null)
                                 {
-                                    fileName = "Error! Please Upload Front Laser Code!!";
+                                    fileName = "Please Upload Front Laser Code!!";
+                                    msg = "Error";
                                 }
                                 else
                                 {
@@ -684,7 +751,8 @@ namespace BookMyHsrp.Controllers.CommonController
                             {
                                 if (fileName2 == "" || fileName2 == null)
                                 {
-                                    fileName = "Error! Please Upload Rear Laser Code!!";
+                                    fileName = "Please Upload Rear Laser Code!!";
+                                    msg = "Error";
                                 }
                                 else
                                 {
@@ -701,13 +769,15 @@ namespace BookMyHsrp.Controllers.CommonController
                             else if (OrderType == "BDB")
                             {
 
-                                if (fileName == "" || fileName == "")
+                                if (fileName == "" || fileName == null)
                                 {
-                                    fileName = "Error! Please Upload Front Laser Code!!";
+                                    fileName = "Please Upload Front Laser Code!!";
+                                    msg = "Error";
                                 }
-                                else if (fileName2 == "" || fileName2 == "")
+                                else if (fileName2 == "" || fileName2 == null)
                                 {
-                                    fileName = "Error! Please Upload Rear Laser Code!!";
+                                    fileName = "Please Upload Rear Laser Code!!";
+                                    msg = "Error";
                                 }
                                 else
                                 {

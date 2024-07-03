@@ -173,7 +173,7 @@ namespace BookMyHsrp.Libraries.VerifyPaymentDetail.Services
             var result = await _databaseHelper.QueryAsync<dynamic>(VerifyPaymentDetailsQueries.CheckOemRateFromOrderRate, parameters);
             return result;
         }
-        public async Task<dynamic> PaymentInitiated(string DealerAffixationCenterId, string orderNo, string orderType, string SlotId, string SlotTime, string SlotBookingDate, string HSRPStateID, string RTOLocationID, string RTOName, string OwnerName, string OwnerFatherName, string Address1, string State, string City, string Pin, string MobileNo, string LandlineNo, string EmailID, string VehicleClass, string VehicleType, string ManufacturerName, string ChassisNo, string EngineNo, string ManufacturingYear, string VehicleRegNo, string FrontPlateSize, string RearPlateSize, string TotalAmount, string NetAmount, string BookingType, string BookingClassType, string FuelType, string DealerId, string OEMID, string BookedFrom, string AppointmentType, string BasicAmount, string FitmentCharge, string ConvenienceFee, string HomeDeliveryCharge, string GSTAmount, string CustomerGSTNo, string VehicleRCImage, string BharatStage, string ShippingAddress1, string ShippingAddress2, string ShippingCity, string ShippingState, string ShippingPinCode, string ShippingLandMark, string IGSTAmount, string CGSTAmount, string SGSTAmount, string FrontLaserCode, string RearLaserCode, string NonHomologVehicle, string isSuperTag, string isFrame, string FrontHSRPFileName, string RearHSRPFileName, string FileFIR, string Firno, string FirDate, string Firinfo, string PoliceStation, string ReplacementReason)
+        public async Task<dynamic> PaymentInitiated(string DealerAffixationCenterId, string orderNo, string orderType, string SlotId, string SlotTime, string SlotBookingDate, string HSRPStateID, string RTOLocationID, string RTOName, string OwnerName, string OwnerFatherName, string Address1, string State, string City, string Pin, string MobileNo, string LandlineNo, string EmailID, string VehicleClass, string VehicleType, string ManufacturerName, string ChassisNo, string EngineNo, string ManufacturingYear, string VehicleRegNo, string FrontPlateSize, string RearPlateSize, string TotalAmount, string NetAmount, string BookingType, string BookingClassType, string FuelType, string DealerId, string OEMID, string BookedFrom, string AppointmentType, string BasicAmount, string FitmentCharge, string ConvenienceFee, string HomeDeliveryCharge, string GSTAmount, string CustomerGSTNo, string VehicleRCImage, string BharatStage, string ShippingAddress1, string ShippingAddress2, string ShippingCity, string ShippingState, string ShippingPinCode, string ShippingLandMark, string IGSTAmount, string CGSTAmount, string SGSTAmount, string PlateSticker, string FrontLaserCode, string RearLaserCode, string NonHomologVehicle, string isSuperTag, string isFrame, string FrontHSRPFileName, string RearHSRPFileName, string FileFIR, string Firno, string FirDate, string Firinfo, string PoliceStation, string ReplacementReason)
          {
             var parameters = new DynamicParameters();
             parameters.Add("@DealerAffixationCenterId", DealerAffixationCenterId);
@@ -229,6 +229,8 @@ namespace BookMyHsrp.Libraries.VerifyPaymentDetail.Services
             parameters.Add("@IGSTAmount", IGSTAmount);
             parameters.Add("@CGSTAmount", CGSTAmount);
             parameters.Add("@SGSTAmount", SGSTAmount);
+
+            parameters.Add("@PlateSticker", PlateSticker);
             parameters.Add("@FrontLaserCode", FrontLaserCode);
             parameters.Add("@RearLaserCode", RearLaserCode);
             parameters.Add("@NonHomologVehicle", NonHomologVehicle);
@@ -246,6 +248,84 @@ namespace BookMyHsrp.Libraries.VerifyPaymentDetail.Services
             var result = await _databaseHelper.QueryAsync<dynamic>(VerifyPaymentDetailsQueries.PaymentInitiated, parameters);
             return result;
         }
+
+        public async Task<dynamic> PaymentInitiatedSticker(string DealerAffixationCenterId, string orderNo, string orderType, string SlotId, string SlotTime, string SlotBookingDate, string HSRPStateID, string RTOLocationID, string RTOName, string OwnerName, string OwnerFatherName, string Address1, string State, string City, string Pin, string MobileNo, string LandlineNo, string EmailID, string VehicleClass, string VehicleType, string ManufacturerName, string ChassisNo, string EngineNo, string ManufacturingYear, string VehicleRegNo, string FrontPlateSize, string RearPlateSize, string TotalAmount, string NetAmount, string BookingType, string BookingClassType, string FuelType, string DealerId, string OEMID, string BookedFrom, string AppointmentType, string BasicAmount, string FitmentCharge, string ConvenienceFee, string HomeDeliveryCharge, string GSTAmount, string CustomerGSTNo, string VehicleRCImage, string BharatStage, string ShippingAddress1, string ShippingAddress2, string ShippingCity, string ShippingState, string ShippingPinCode, string ShippingLandMark, string IGSTAmount, string CGSTAmount, string SGSTAmount, string FrontLaserCode, string RearLaserCode, string NonHomologVehicle, string isSuperTag, string isFrame, string FrontHSRPFileName, string RearHSRPFileName, string FileFIR, string Firno, string FirDate, string Firinfo, string PoliceStation, string ReplacementReason, string PlateSticker)
+        {
+            var parameters = new DynamicParameters();
+            parameters.Add("@DealerAffixationCenterId", DealerAffixationCenterId);
+            parameters.Add("@orderNo", orderNo);
+            parameters.Add("@orderType", orderType);
+            parameters.Add("@SlotId", SlotId);
+            parameters.Add("@SlotTime", SlotTime);
+            parameters.Add("@SlotBookingDate", SlotBookingDate);
+            parameters.Add("@HSRPStateID", HSRPStateID);
+            parameters.Add("@RTOLocationID", RTOLocationID);
+            parameters.Add("@RTOName", RTOName);
+            parameters.Add("@OwnerName", OwnerName);
+            parameters.Add("@OwnerFatherName", OwnerFatherName);
+            parameters.Add("@Address1", Address1);
+            parameters.Add("@State", State);
+            parameters.Add("@City", City);
+            parameters.Add("@Pin", Pin);
+            parameters.Add("@MobileNo", MobileNo);
+            parameters.Add("@LandlineNo", LandlineNo);
+            parameters.Add("@EmailID", EmailID);
+            parameters.Add("@VehicleClass", VehicleClass);
+            parameters.Add("@VehicleType", VehicleType);
+            parameters.Add("@ManufacturerName", ManufacturerName);
+            parameters.Add("@ChassisNo", ChassisNo);
+            parameters.Add("@EngineNo", EngineNo);
+            parameters.Add("@ManufacturingYear", ManufacturingYear);
+            parameters.Add("@VehicleRegNo", VehicleRegNo);
+            parameters.Add("@FrontPlateSize", FrontPlateSize);
+            parameters.Add("@RearPlateSize", RearPlateSize);
+            parameters.Add("@TotalAmount", TotalAmount);
+            parameters.Add("@NetAmount", NetAmount);
+            parameters.Add("@BookingType", BookingType);
+            parameters.Add("@BookingClassType", BookingClassType);
+            parameters.Add("@FuelType", FuelType);
+            parameters.Add("@DealerId", DealerId);
+            parameters.Add("@OEMID", OEMID);
+            parameters.Add("@BookedFrom", BookedFrom);
+            parameters.Add("@AppointmentType", AppointmentType);
+            parameters.Add("@BasicAmount", BasicAmount);
+            parameters.Add("@FitmentCharge", FitmentCharge);
+            parameters.Add("@ConvenienceFee", ConvenienceFee);
+            parameters.Add("@HomeDeliveryCharge", HomeDeliveryCharge);
+            parameters.Add("@GSTAmount", GSTAmount);
+            parameters.Add("@CustomerGSTNo", CustomerGSTNo);
+            parameters.Add("@VehicleRCImage", VehicleRCImage);
+            parameters.Add("@BharatStage", BharatStage);
+            parameters.Add("@ShippingAddress1", ShippingAddress1);
+            parameters.Add("@ShippingAddress2", ShippingAddress2);
+            parameters.Add("@ShippingCity", ShippingCity);
+            parameters.Add("@ShippingState", ShippingState);
+            parameters.Add("@ShippingPinCode", ShippingPinCode);
+            parameters.Add("@ShippingLandMark", ShippingLandMark);
+            parameters.Add("@IGSTAmount", IGSTAmount);
+            parameters.Add("@CGSTAmount", CGSTAmount);
+            parameters.Add("@SGSTAmount", SGSTAmount);
+
+            parameters.Add("@PlateSticker", PlateSticker);
+            parameters.Add("@FrontLaserCode", FrontLaserCode);
+            parameters.Add("@RearLaserCode", RearLaserCode);
+            parameters.Add("@NonHomologVehicle", NonHomologVehicle);
+            parameters.Add("@isSuperTag", isSuperTag);
+            parameters.Add("@isFrame", isFrame);
+            parameters.Add("@FrontHSRPFileName", FrontHSRPFileName);
+            parameters.Add("@RearHSRPFileName", RearHSRPFileName);
+            parameters.Add("@FileFIR", FileFIR);
+            parameters.Add("@Firno", Firno);
+            parameters.Add("@FirDate", FirDate);
+            parameters.Add("@Firinfo", Firinfo);
+            parameters.Add("@PoliceStation", PoliceStation);
+            parameters.Add("@ReplacementReason", ReplacementReason);
+
+            var result = await _databaseHelper.QueryAsync<dynamic>(VerifyPaymentDetailsQueries.PaymentInitiatedSticker, parameters);
+            return result;
+        }
+
+
         public async Task<dynamic> InsertSuperTagOrder(string orderNo, string CustomerName, string CustomerMobile, string CustomerEmail, string CustomerBillingAddress, string StateName, string City, string Pin)
         {
             var parameters = new DynamicParameters();

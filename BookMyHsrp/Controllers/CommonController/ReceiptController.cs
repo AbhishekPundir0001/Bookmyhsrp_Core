@@ -60,21 +60,22 @@ namespace BookMyHsrp.Controllers.CommonController
         {
             string contentPath = _environment.ContentRootPath;
             string folderpath = receiptPath;
+
             string html = _receiptConnector.DownloadReceipt(contentPath, requestdto, QRPath);
 
             string filePath = string.Empty; // Define a variable to store the file path
-
             if (html == "incorrect")
             {
                 return Ok("Cannot find pdf");
             }
             else
             {
+                string PdfFolder = string.Empty;
                 if (requestdto.OrderNo.Substring(0, 2) == "BM")
                 {
                     string MonthYears = DateTime.Now.ToString("MMM-yyyy");
                     string filename = requestdto.OrderNo + DateTime.Now.ToString("ddMMyyyyHHmmssfff") + ".pdf";
-                    string PdfFolder = folderpath;
+                    PdfFolder = folderpath;
                     filePath = Path.Combine(PdfFolder, "Plate", MonthYears, filename); // Define the file path for saving
                     if (!Directory.Exists(PdfFolder + "\\" + "Plate"))
                     {
@@ -90,13 +91,15 @@ namespace BookMyHsrp.Controllers.CommonController
                 {
                     string MonthYears = DateTime.Now.ToString("MMM-yyyy");
                     string filename = requestdto.OrderNo + DateTime.Now.ToString("ddMMyyyyHHmmssfff") + ".pdf";
-                    string PdfFolder = folderpath;
+                    PdfFolder = folderpath;
                     filePath = Path.Combine(PdfFolder, "Sticker", MonthYears, filename); // Define the file path for saving
                     if (!Directory.Exists(PdfFolder + "\\" + "Sticker" + "\\" + MonthYears))
                     {
                         Directory.CreateDirectory(PdfFolder + "\\" + "Sticker" + "\\" + MonthYears);
                     }
                 }
+
+
 
 
                 MemoryStream ms = new MemoryStream();
@@ -128,6 +131,9 @@ namespace BookMyHsrp.Controllers.CommonController
 
                 //var jsonSerializer = System.Text.Json.JsonSerializer.Serialize(response);
                 //return Json(jsonSerializer);
+
+                //System.IO.File.WriteAllText(PdfFolder+"test.txt", html);
+                //System.IO.File.WriteAllText(PdfFolder + "test2.txt", filePath);
 
                 if (System.IO.File.Exists(filePath))
                 {

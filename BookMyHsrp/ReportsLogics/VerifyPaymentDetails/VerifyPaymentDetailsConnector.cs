@@ -932,57 +932,49 @@ namespace BookMyHsrp.ReportsLogics.VerifyPaymentDetails
                 {
                     modelResult.isFrame = "N";
                 }
-                var paymentInitiated = await _verifyPaymentDetailService.PaymentInitiated(DealerAppointment.DealerAffixationCenterId, modelResult.orderNo, orderType, modelResult.SlotId, modelResult.SlotTime, modelResult.SlotBookingDate, modelResult.HSRPStateID, modelResult.RTOLocationID, modelResult.RTOName, modelResult.OwnerName, modelResult.OwnerFatherName, modelResult.Address1, modelResult.State, modelResult.City, modelResult.Pin, modelResult.MobileNo, modelResult.LandlineNo, modelResult.EmailID, modelResult.VehicleClass, modelResult.VehicleType, modelResult.ManufacturerName, modelResult.ChassisNo, modelResult.EngineNo, modelResult.ManufacturingYear, modelResult.VehicleRegNo, modelResult.FrontPlateSize, modelResult.RearPlateSize, modelResult.TotalAmount, modelResult.NetAmount, modelResult.BookingType, modelResult.BookingClassType, modelResult.FuelType, modelResult.DealerId, modelResult.OEMID, modelResult.BookedFrom, modelResult.AppointmentType, modelResult.BasicAmount, modelResult.FitmentCharge, modelResult.ConvenienceFee, modelResult.HomeDeliveryCharge, modelResult.GSTAmount, modelResult.CustomerGSTNo, modelResult.VehicleRCImage, modelResult.BharatStage, modelResult.ShippingAddress1, modelResult.ShippingAddress2, modelResult.ShippingCity, modelResult.ShippingState, modelResult.ShippingPinCode, modelResult.ShippingLandMark, modelResult.IGSTAmount, modelResult.CGSTAmount, modelResult.SGSTAmount, modelResult.FrontLaserCode, modelResult.RearLaserCode, modelResult.NonHomologVehicle, modelResult.isSuperTag, modelResult.isFrame, modelResult.FrontHSRPFileName, modelResult.RearHSRPFileName, modelResult.FileFIR, modelResult.Firno, modelResult.FirDate, modelResult.Firinfo, modelResult.PoliceStation, modelResult.ReplacementReason);
-        if(paymentInitiated.Count>0)
+
+                if (userdetails.PlateSticker == "Plate")
                 {
-                    foreach(var item in paymentInitiated)
+                  var  paymentInitiated = await _verifyPaymentDetailService.PaymentInitiated(DealerAppointment.DealerAffixationCenterId, modelResult.orderNo, orderType, modelResult.SlotId, modelResult.SlotTime, modelResult.SlotBookingDate, modelResult.HSRPStateID, modelResult.RTOLocationID, modelResult.RTOName, modelResult.OwnerName, modelResult.OwnerFatherName, modelResult.Address1, modelResult.State, modelResult.City, modelResult.Pin, modelResult.MobileNo, modelResult.LandlineNo, modelResult.EmailID, modelResult.VehicleClass, modelResult.VehicleType, modelResult.ManufacturerName, modelResult.ChassisNo, modelResult.EngineNo, modelResult.ManufacturingYear, modelResult.VehicleRegNo, modelResult.FrontPlateSize, modelResult.RearPlateSize, modelResult.TotalAmount, modelResult.NetAmount, modelResult.BookingType, modelResult.BookingClassType, modelResult.FuelType, modelResult.DealerId, modelResult.OEMID, modelResult.BookedFrom, modelResult.AppointmentType, modelResult.BasicAmount, modelResult.FitmentCharge, modelResult.ConvenienceFee, modelResult.HomeDeliveryCharge, modelResult.GSTAmount, modelResult.CustomerGSTNo, modelResult.VehicleRCImage, modelResult.BharatStage, modelResult.ShippingAddress1, modelResult.ShippingAddress2, modelResult.ShippingCity, modelResult.ShippingState, modelResult.ShippingPinCode, modelResult.ShippingLandMark, modelResult.IGSTAmount, modelResult.CGSTAmount, modelResult.SGSTAmount, userdetails.PlateSticker, modelResult.FrontLaserCode, modelResult.RearLaserCode, modelResult.NonHomologVehicle, modelResult.isSuperTag, modelResult.isFrame, modelResult.FrontHSRPFileName, modelResult.RearHSRPFileName, modelResult.FileFIR, modelResult.Firno, modelResult.FirDate, modelResult.Firinfo, modelResult.PoliceStation, modelResult.ReplacementReason);
+                    if (paymentInitiated.Count>0)
                     {
-                        modelResult.Status = item.status.ToString();
-                        modelResult.orderNo = item.OrderNo.ToString();
-                    }
-                    //if (Session["QueryStringValue"] != null)
-                    //{
-                    //    Value = Session["QueryStringValue"] as string[];
-                    //    if (Value != null)
-                    //    {
-                    //        if (Value.Length == 6)
-                    //        {
-                    //            val1 = Value[0].ToString();
-                    //            val2 = Value[1].ToString();
-                    //            val3 = Value[2].ToString();
-                    //            val4 = Value[3].ToString();
-                    //            val5 = Value[4].ToString();
-                    //            val6 = Value[5].ToString();
+                        modelResult.Status = paymentInitiated.status.ToString();
+                        modelResult.orderNo = paymentInitiated.OrderNo.ToString();
 
-                    //            string url = Session["QueryStringURL"] == null ? "" : Session["QueryStringURL"].ToString();
-                    //            BMHSRPv2.Models.Utils.ExecNonQuery("sp_CaptureQueryStringData '" + val1.Replace("'", "") + "','" + url.Replace("'", "") + "','" + OrderNo + "','" + val2.Replace("'", "") + "','" + val3.Replace("'", "") + "','" + val4.Replace("'", "") + "','" + val5.Replace("'", "") + "','" + val6.Replace("'", "") + "'", CnnString);
-                    //        }
+                        if (modelResult.ChkFastTag)
+                        {
+                            var insertSuperTagOrder = await _verifyPaymentDetailService.InsertSuperTagOrder(modelResult.orderNo, userdetails.CustomerName, userdetails.CustomerMobile, userdetails.CustomerEmail, userdetails.CustomerBillingAddress, vehicledetails.StateName, modelResult.City, modelResult.Pin);
+                        }
+                        if (modelResult.ChkFrame && DealerAppointment.DeliveryPoint == "Home")
+                        {
 
-                    //    }
-                    //}
-                    if(modelResult.ChkFastTag)
-                    {
-                        var insertSuperTagOrder = await _verifyPaymentDetailService.InsertSuperTagOrder(modelResult.orderNo, userdetails.CustomerName, userdetails.CustomerMobile, userdetails.CustomerEmail, userdetails.CustomerBillingAddress, vehicledetails.StateName, modelResult.City, modelResult.Pin);
-                    
+                        }
+                        if (modelResult.Status == "1")
+                        {
+                            modelResult.NetAmount = (Convert.ToDecimal(modelResult.NetAmount) + modelResult.TotalAmountST + modelResult.TotalAmountFrm).ToString();
+                            data = await RazorPay(modelResult.orderNo, modelResult.NetAmount, modelResult.OwnerName, modelResult.Address1, modelResult.City, modelResult.State, modelResult.Pin, modelResult.MobileNo, modelResult.EmailID, (modelResult.SlotBookingDate + " " + modelResult.SlotTime), DealerAppointment.DealerAffixationCenterId, modelResult.DealerAffixationAddress, modelResult.VehicleRegNo, modelResult.SlotId, DealerAppointment.DeliveryPoint, ip);
+                        }
                     }
-                    if(modelResult.ChkFrame && DealerAppointment.DeliveryPoint=="Home")
+                    else
                     {
-
-                    }
-                    if(modelResult.Status=="1")
-                    {
-                        modelResult.NetAmount = (Convert.ToDecimal(modelResult.NetAmount) + modelResult.TotalAmountST + modelResult.TotalAmountFrm).ToString();
-                       data =  await RazorPay(modelResult.orderNo, modelResult.NetAmount,modelResult.OwnerName, modelResult.Address1,modelResult.City, modelResult.State, modelResult.Pin, modelResult.MobileNo, modelResult.EmailID, (modelResult.SlotBookingDate + " " + modelResult.SlotTime), DealerAppointment.DealerAffixationCenterId, modelResult.DealerAffixationAddress, modelResult.VehicleRegNo, modelResult.SlotId, DealerAppointment.DeliveryPoint ,  ip);
-                        
+                        modelResult.Message = paymentInitiated.message.ToString();
                     }
                 }
                 else
-                   {
-                    foreach(var item in paymentInitiated)
+                {
+                  var  paymentInitiatedsticker = await _verifyPaymentDetailService.PaymentInitiatedSticker(DealerAppointment.DealerAffixationCenterId, modelResult.orderNo, orderType, modelResult.SlotId, modelResult.SlotTime, modelResult.SlotBookingDate, modelResult.HSRPStateID, modelResult.RTOLocationID, modelResult.RTOName, modelResult.OwnerName, modelResult.OwnerFatherName, modelResult.Address1, modelResult.State, modelResult.City, modelResult.Pin, modelResult.MobileNo, modelResult.LandlineNo, modelResult.EmailID, modelResult.VehicleClass, modelResult.VehicleType, modelResult.ManufacturerName, modelResult.ChassisNo, modelResult.EngineNo, modelResult.ManufacturingYear, modelResult.VehicleRegNo, modelResult.FrontPlateSize, modelResult.RearPlateSize, modelResult.TotalAmount, modelResult.NetAmount, modelResult.BookingType, modelResult.BookingClassType, modelResult.FuelType, modelResult.DealerId, modelResult.OEMID, modelResult.BookedFrom, modelResult.AppointmentType, modelResult.BasicAmount, modelResult.FitmentCharge, modelResult.ConvenienceFee, modelResult.HomeDeliveryCharge, modelResult.GSTAmount, modelResult.CustomerGSTNo, modelResult.VehicleRCImage, modelResult.BharatStage, modelResult.ShippingAddress1, modelResult.ShippingAddress2, modelResult.ShippingCity, modelResult.ShippingState, modelResult.ShippingPinCode, modelResult.ShippingLandMark, modelResult.IGSTAmount, modelResult.CGSTAmount, modelResult.SGSTAmount, modelResult.FrontLaserCode, modelResult.RearLaserCode, modelResult.NonHomologVehicle, modelResult.isSuperTag, modelResult.isFrame, modelResult.FrontHSRPFileName, modelResult.RearHSRPFileName, modelResult.FileFIR, modelResult.Firno, modelResult.FirDate, modelResult.Firinfo, modelResult.PoliceStation, modelResult.ReplacementReason, userdetails.PlateSticker);
+                    if (paymentInitiatedsticker.Count > 0)
                     {
-                        modelResult.Message = item.message.ToString();
+                        modelResult.Status = paymentInitiatedsticker[0].status.ToString();
+                        modelResult.orderNo = paymentInitiatedsticker[0].OrderNo.ToString();
+                        
+                    }
+                    else
+                    {
+                        modelResult.Message = paymentInitiatedsticker.message.ToString();
                     }
                 }
+             
             }
             catch (Exception ev)
             {

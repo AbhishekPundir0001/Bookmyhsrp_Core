@@ -542,7 +542,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><i class="fas fa-times"></i></button>
 
                     <div class="image">
-                        <img src="~/assets/images/sticker-guide/frontlost.jpg" alt="">
+                        <img src="~/assets/images/sticker-guide/RearLost.jpg" alt="">
                     </div>
                 </div>
             </div>
@@ -557,7 +557,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><i class="fas fa-times"></i></button>
 
                     <div class="image">
-                        <img src="~/assets/images/sticker-guide/rearlost.jpg" alt="">
+                        <img src="~/assets/images/sticker-guide/FrontLost.jpg" alt="">
                     </div>
                 </div>
             </div>
@@ -1005,10 +1005,10 @@
                     const result = await postDataFormData(url, formData);
                     var response = $.parseJSON(result);
                     debugger;
-                    if (response.FrontPlatePhoto.includes('Error'))
+                    if (response.Message.includes('Error'))
                     {
                         // errorFunc("Please select FIR Copy/RC Copy");
-                        $('#lblMsg').html('Please select FIR Copy/RC Copy');
+                        $('#lblMsg').html(response.FrontPlatePhoto);
                         return;
                     }
                     $('#lblMsg').html(response.Message);

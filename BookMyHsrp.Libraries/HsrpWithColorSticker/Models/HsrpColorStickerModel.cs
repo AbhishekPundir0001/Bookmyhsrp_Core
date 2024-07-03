@@ -64,7 +64,7 @@ namespace BookMyHsrp.Libraries.HsrpWithColorSticker.Models
         public class ResponseSticker
         {
             public string Message { get; set; }
-            
+            public string Status { get; set; }
             public string FrontPlatePhoto { get; set; }
             public string RearLaserPhoto { get; set; }
             public string RearPlatePhoto { get; set; }
