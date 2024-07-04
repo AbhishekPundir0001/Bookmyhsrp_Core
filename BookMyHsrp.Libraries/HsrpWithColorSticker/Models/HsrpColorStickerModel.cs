@@ -64,7 +64,7 @@ namespace BookMyHsrp.Libraries.HsrpWithColorSticker.Models
         public class ResponseSticker
         {
             public string Message { get; set; }
-            
+            public string Status { get; set; }
             public string FrontPlatePhoto { get; set; }
             public string RearLaserPhoto { get; set; }
             public string RearPlatePhoto { get; set; }
@@ -152,6 +152,11 @@ namespace BookMyHsrp.Libraries.HsrpWithColorSticker.Models
             public string SlotDate { get; set; }
             public string SlotTime { get; set; }
 
+            public string FrontPlateFileName { get; set; }
+            public string RearPlateFileName { get; set; }
+            public string FrontLaserCode { get; set; }
+            public string RearLaserCode { get; set; }
+            public string UploadFlag { get; set; }
         }
         public class AppointmentSlotForHome
         {

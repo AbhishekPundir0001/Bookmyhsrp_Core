@@ -171,6 +171,11 @@ namespace BookMyHsrp.Controllers
                     getSession.OrderType = "OB";
                     getSession.PlateOrderType = "OB";
                     getSession.PlateSticker = "Sticker";
+                    getSession.FrontLaserCode = info.FrontLaserCode;
+                    getSession.RearLaserCode = info.RearLaserCode;
+                    getSession.FrontPlateFileName = info.FrontPlatePath;
+                    getSession.RearPlateFileName = info.RearPlatePath;
+                    getSession.UploadFlag = info.UploadFlag;
                     var GetRootObjectSession = HttpContext.Session.GetString("UserSession");
                     jsonSerializer = System.Text.Json.JsonSerializer.Serialize(getSession);
                     HttpContext.Session.SetString("UserDetail", jsonSerializer);

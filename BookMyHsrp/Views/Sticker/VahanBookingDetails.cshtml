@@ -157,8 +157,8 @@
                                         </div>
                                         <div class="col-lg-4 col-md-6 col-sm-12">
                                             <div class="form-group">
-                                                <label class="form-label" id="engineNoLabel">Engine No.* (XXXXX12345)</label>
-                                                <label class="form-label" id="motorNo">Motor No.* (XXXXX12345)</label>
+                                                <label class="form-label" id="engineNoLabel">Engine No./Motor No.* (XXXXX12345)</label>
+                                                @*<label class="form-label" id="motorNo">Motor No.* (XXXXX12345)</label> *@
                                                 <input id="engineNo" type="text" class="form-control" autocomplete="off">
                                                 <span class="helper">(Kindly enter last 5 digits)</span>
                                             </div>
@@ -516,7 +516,7 @@
         </div>
     </div>
     <!-- Guide 4 End -->
-    @await Html.PartialAsync("~/Views/PartialView/_SuccessOTPModelPartialSticker.cshtml")
+    @await Html.PartialAsync("~/Views/PartialView/_SuccessOTPModelPartial.cshtml")
 
     <style>
         .disabled {
@@ -565,7 +565,10 @@
             });
 
             async function otpSuccess() {
-                $('#otp-validate2Sticker').modal('show');
+                $('#otp-validate2').modal('show');
+                $('#divPlate').hide();
+                $('#divSticker').show();
+
             }
             function DrawCaptcha() {
                 var a = Math.ceil(Math.random() * 10) + '';
@@ -999,7 +1002,12 @@
                     const result = await postDataFormData(url, formData);
                     var response = $.parseJSON(result);
                     debugger;
-                    $('#lblMsg').html(response.Message);
+                    if (response.Status.includes("0")) {
+                        $('#lblMsg').html(response.Message);
+                    }
+                    else {
+                        $('#lblMsg').html(response.Message);
+                    }
                     $('#hdnFrontLaser').val(response.FrontLaserPhoto);
                     $('#hdnRearLaser').val(response.RearLaserPhoto);
                     $('#hdnFrontPlate').val(response.FrontPlatePhoto);

@@ -52,6 +52,10 @@ namespace BookMyHsrp.Libraries.Receipt.Services
 
         public string QRGenerate(string inputText, string OrderNo, string QRPath)
         {
+            if (!Directory.Exists(QRPath))
+            {
+                Directory.CreateDirectory(QRPath);
+            }
             using (MemoryStream ms = new MemoryStream())
             {
                 QRCodeGenerator oQRCodeGenerator = new QRCodeGenerator();
