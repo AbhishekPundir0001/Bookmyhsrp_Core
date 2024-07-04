@@ -147,10 +147,14 @@ namespace BookMyHsrp.Controllers.CommonController
                             //string _dt = DateTime.Now.ToString("dd-MM-yyyy");
                             //DateTime.Now.ToString("yyyyMMddHHmmssfff")
                             var _dateFormate = HttpContext.Session.GetString("DateFormate");
-                            var frontLaserfilePath = Path.Combine(path, "Front" + _dateFormate + "_" + RandomString(4) + Path.GetExtension(_frontLaserPhoto.FileName)); // Set the file path
-                            var rearLaserfilePath = Path.Combine(path, "Rear" + _dateFormate + "_" + RandomString(4) + Path.GetExtension(_rearLaserPhoto.FileName));
-                            var frontPlatefilePath = Path.Combine(path, "File1" + _dateFormate + "_" + RandomString(4) + Path.GetExtension(_fronPlatePhoto.FileName));
-                            var rearPlatefilePath = Path.Combine(path, "File2" + _dateFormate + "_" + RandomString(4) + Path.GetExtension(_rearPlatePhoto.FileName));
+                            var frontLaserfile = "Front" + _dateFormate + "_" + RandomString(4) + Path.GetExtension(_frontLaserPhoto.FileName);
+                            var rearLaserfile = "Rear" + _dateFormate + "_" + RandomString(4) + Path.GetExtension(_rearLaserPhoto.FileName);
+                            var frontPlatefile = "File1" + _dateFormate + "_" + RandomString(4) + Path.GetExtension(_fronPlatePhoto.FileName);
+                            var rearPlatefile = "File2" + _dateFormate + "_" + RandomString(4) + Path.GetExtension(_rearPlatePhoto.FileName);
+                            var frontLaserfilePath = Path.Combine(path, frontLaserfile); // Set the file path
+                            var rearLaserfilePath = Path.Combine(path, rearLaserfile);
+                            var frontPlatefilePath = Path.Combine(path, frontPlatefile);
+                            var rearPlatefilePath = Path.Combine(path, rearPlatefile);
 
                             using (var stream = new FileStream(frontLaserfilePath, FileMode.Create))
                             {
@@ -177,10 +181,10 @@ namespace BookMyHsrp.Controllers.CommonController
                             //HttpContext.Session.SetString("frontPlatefileName", frontPlatefilePath);
                             //HttpContext.Session.SetString("rearPlatefileName", rearPlatefilePath);
 
-                            response.FrontLaserPhoto = _frontLaserPhoto.FileName;
-                            response.RearLaserPhoto = _rearLaserPhoto.FileName;
-                            response.FrontPlatePhoto = _fronPlatePhoto.FileName;
-                            response.RearPlatePhoto = _rearPlatePhoto.FileName;
+                            response.FrontLaserPhoto = frontLaserfile;
+                            response.RearLaserPhoto = rearLaserfile;
+                            response.FrontPlatePhoto = frontPlatefile;
+                            response.RearPlatePhoto = rearPlatefile;
                             response.Message = "File Uploaded Successfully";
                             response.Status = "1";
                         }
