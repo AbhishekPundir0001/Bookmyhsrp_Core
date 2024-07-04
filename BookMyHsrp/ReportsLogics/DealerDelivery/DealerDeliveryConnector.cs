@@ -25,8 +25,18 @@ namespace BookMyHsrp.ReportsLogics.DealerDelivery
             var response = new SetSessionDealer();
             response.data =new DealerData();
             response.dealerAppointment = new List<DealerAppointmentData>();
-            var Ordertype = vehicledetails.OrderType==null?"": vehicledetails.OrderType;    
-            var OemId= sessiondetails.OemId;
+            var Ordertype = vehicledetails.OrderType==null?"": vehicledetails.OrderType;
+            var OemId = "";
+            if (vehicledetails.VehicleType== "MCV/HCV/Trailers" && vehicledetails.VehicleCat=="4W")
+            {
+                 OemId = vehicledetails.OemId;
+
+            }
+            else
+            {
+                 OemId = sessiondetails.OemId;
+            }
+            
             decimal netamount;
             var StateId= sessiondetails.StateId;
             var VehicleCat= vehicledetails.VehicleCat;
@@ -47,11 +57,18 @@ namespace BookMyHsrp.ReportsLogics.DealerDelivery
                         if (OemId == "272" && VehicleType == "Scooter_2W")
                         {
                            var getDealers = await _dealerDeliveryService.GetDealersForRajasthan(OemId, StateId, VehicleType, VehicleCat, VehicleClass, Ordertype);
+                            if (getDealers.Count > 0)
+                            {
+                                response = await CheckOrderType(getDealers, vehicledetails, sessiondetails);
+                            }
                         }
                         else
                         {
                          var getDealers = await _dealerDeliveryService.GetDealersForRajasthanElse(OemId, StateId, VehicleType, VehicleCat, VehicleClass, Ordertype);
-
+                            if (getDealers.Count > 0)
+                            {
+                                response = await CheckOrderType(getDealers, vehicledetails, sessiondetails);
+                            }
                         }
 
                     }
@@ -60,6 +77,10 @@ namespace BookMyHsrp.ReportsLogics.DealerDelivery
                         if (OemId == "272" && VehicleType == "Scooter_2W")
                         {
                            var getDealers = await _dealerDeliveryService.GetDealers(OemId, StateId, VehicleType, VehicleCat, VehicleClass, Ordertype);
+                            if (getDealers.Count > 0)
+                            {
+                                response = await CheckOrderType(getDealers, vehicledetails, sessiondetails);
+                            }
                         }
                         else
                         {

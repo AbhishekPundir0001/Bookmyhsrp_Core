@@ -69,6 +69,15 @@ namespace BookMyHsrp.ReportsLogics.Replacement
                 return vehicleValidationResponse;
             }
             ReplacementVehicleDetails _vd = JsonConvert.DeserializeObject<ReplacementVehicleDetails>(responseJson);
+            if (_vd != null)
+            {
+                if (_vd != null && _vd.stateCd != null && _vd.stateCd.ToLower().StartsWith(stateshortname.ToString().ToLower()) == false)
+                {
+                    vehicleValidationResponse.status = "0";
+                    vehicleValidationResponse.message = "Please input Correct Registration Number of " + statename;
+                    return vehicleValidationResponse;
+                }
+            }
             if (_vd != null && _vd.stateCd != null && _vd.message != "Vehicle Not Found")
             {
                 var hasError = false;
@@ -147,7 +156,7 @@ namespace BookMyHsrp.ReportsLogics.Replacement
                             {
                                 vehicleValidationResponse.status = "false";
                                 vehicleValidationResponse.message =
-                                    "You are not authorized to book re-order. For any query kindly mail to support@bookyourhsrp.com";
+                                    "You are not authorized to book re-order. For any query kindly mail to support@bookmyhsrp.com";
                                 vehicleValidationResponse.data = vehicleValidationData;
                                 return vehicleValidationResponse;
                             }

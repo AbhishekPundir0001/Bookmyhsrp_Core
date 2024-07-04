@@ -29,6 +29,9 @@ namespace BookMyHsrp.Libraries.HsrpWithColorSticker.Queries
         public static string VehicleSession => "select HSRPHRVehicleType,VehicleTypeid,VehicleCategory from [hsrpoem].[dbo].[VahanVehicleType] where VahanVehicleType=Trim(@VehicleCatType) ";
         public static string GetOemVehicleType => "exec GetOEMvehicleType @VahanVehicleType, @OrderType , @vehicleclass, @oemid , @FuelType";
         public static string InsertMissMatchDataLog => "INSERT INTO [dbo].[MisMatchDataLog] ([VahanMaker],[Vehicleregno],[Chassisno],[EngineNO],[MobileNo],[Emailid],[VahanVehicleType],[OrderType],[VehicleClass],[Oemid],[ErrorMsg]) values (@Maker,@RegistrationNo,@ChassisNo,Trim(@EngineNo),Trim(@MobileNo),@EmailId,Trim(@VehicleCatVahan),'OB',Trim(@VehicleType),@OemId,'Vehicle Type Mismatch')";
+        public static string InsertVahanLogQueryForTractor => "insert into [BookMyHSRP].dbo.VahanResponseLog ([VehicleRegNo] ,[ChassisNo],[EngineNo],[Fuel],[BharatState],[VehicleClass],[VehicleType],[Maker],[VahanRespose],[RegDate],[PlateSticker],[VahanFrontLaserCode],[VahanRearLaserCode] ) values ( @RegistrationNo,@ChassisNo,'N/A','','','','','','','','Plate','','')";
+        public static string GetOemIdTractor => " select Oemid,'https://bookmyhsrp.com/OEMLOGO'+REPLACE(replace(oem_logo,'.png','.jpg'),'images/brands','') as oem_logo from [hsrpoem].dbo.oemmaster  where oemid=1214 union select Oemid,'https://bookmyhsrp.com/OEMLOGO' + REPLACE(replace(oem_logo, '.png', '.jpg'), 'images/brands', '') as oem_logo from[hsrpoem].[dbo].[OEMMasterNameMapping]  where oemid=1214";
+        public static string GetBookingHistoryIdForTractor => "SELECT BookingHistoryID FROM [BookMyHSRP].dbo.Appointment_BookingHist WHERE VehicleRegNo = UPPER(LTRIM(RTRIM(@RegistrationNo))) AND RIGHT(LTRIM(RTRIM(@ChassisNo)), 5) = RIGHT(@ChassisNo, 5)    AND OrderStatus IN ('Success', 'Shipped', 'Success-Test')   AND PlateSticker = 'plate';";
 
 
 

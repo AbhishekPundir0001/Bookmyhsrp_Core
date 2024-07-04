@@ -15,17 +15,17 @@ namespace BookMyHsrp.Libraries.HsrpWithColorSticker.Models
         public class VahanDetailsDto
         {
             [Required(ErrorMessage = "Registration No is required.")]
-            [StringLength(30, MinimumLength = 5,
-            ErrorMessage = "Vehicle Registration must be greater than 5.")]
+            [StringLength(10, MinimumLength = 5,
+            ErrorMessage = "Vehicle Registration Should be 5 and Lessthan 10")]
             public string RegistrationNo { get; set; }
             [Required(ErrorMessage = "Chassis No is required.")]
-            [StringLength(30, MinimumLength = 5,
-            ErrorMessage = "Chassis Number must be greater than 5.")]
+            [StringLength(25, MinimumLength = 5,
+            ErrorMessage = "Chassis Number Should be 5 Character and Lessthan 25")]
           
             public string ChassisNo { get; set; }
             [Required(ErrorMessage = "EngineNo No is required.")]
-            [StringLength(30, MinimumLength = 5,
-            ErrorMessage = "Engine Number must be greater than 5.")]
+            [StringLength(25, MinimumLength = 5,
+            ErrorMessage = "Engine Number Should be 5 Character and Lessthan 25")]
             public string EngineNo { get; set; }
             [Required(ErrorMessage = "State is required.")]
             public string StateId { get; set; }
@@ -171,6 +171,7 @@ namespace BookMyHsrp.Libraries.HsrpWithColorSticker.Models
         public class VehicleValidation
         {
             public string fuel { get; set; }
+            public string SessionFilePath { get; set; } = "";
             public string StateIdBackup { get; set; }
             public string maker { get; set; }
             public string non_homo { get; set; } = "N";
@@ -208,7 +209,11 @@ namespace BookMyHsrp.Libraries.HsrpWithColorSticker.Models
         {
 
         }
-      
+        public class CheckPageType
+        {
+            public string pagetype { get; set; }
+        }
+
 
     }
 }
