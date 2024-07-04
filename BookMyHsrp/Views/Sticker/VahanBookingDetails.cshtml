@@ -516,7 +516,7 @@
         </div>
     </div>
     <!-- Guide 4 End -->
-    @await Html.PartialAsync("~/Views/PartialView/_SuccessOTPModelPartialSticker.cshtml")
+    @await Html.PartialAsync("~/Views/PartialView/_SuccessOTPModelPartial.cshtml")
 
     <style>
         .disabled {
@@ -565,7 +565,10 @@
             });
 
             async function otpSuccess() {
-                $('#otp-validate2Sticker').modal('show');
+                $('#otp-validate2').modal('show');
+                $('#divPlate').hide();
+                $('#divSticker').show();
+
             }
             function DrawCaptcha() {
                 var a = Math.ceil(Math.random() * 10) + '';
