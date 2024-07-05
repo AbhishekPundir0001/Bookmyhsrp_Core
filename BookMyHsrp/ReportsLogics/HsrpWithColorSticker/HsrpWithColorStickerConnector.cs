@@ -1068,7 +1068,14 @@ namespace BookMyHsrp.ReportsLogics.HsrpWithColorSticker
                             }
                             customerInformationresponseData.data.VehicleClass_imgPath = "www";
                             customerInformationresponseData.data.VehicleTypeId = vehicletypeidIntoString;
-                        customerInformationresponseData.data.VehicleType = customerInfo.VehicleTypeVahan;
+                        if(PageType=="Trailer")
+                        {
+                            customerInformationresponseData.data.VehicleType = "MCV/HCV/Trailers";
+                        }
+                        else
+                        {
+                            customerInformationresponseData.data.VehicleType = customerInfo.VehicleTypeVahan;
+                        }
                         customerInformationresponseData.data.Vehiclecategoryid = "3";
                             customerInformationresponseData.data.Vehiclecategory = vehiclecategory;
                         }

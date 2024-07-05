@@ -146,7 +146,17 @@ namespace BookMyHsrp.Controllers
                     getSession.CustomerName = info.OwnerName;
                     getSession.CustomerEmail = info.EmailId;
                     getSession.CustomerMobile = info.MobileNo;
-                    getSession.VehicleType = info.VehicleCatVahan;
+                    if(pagetype=="Trailer")
+                    {
+                        getSession.VehicleType = resultGot.data.VehicleType;
+                        getSession.VehicleClass = info.VehicleTypeVahan;
+
+                    }
+                    else
+                    {
+                        getSession.VehicleType = info.VehicleCatVahan;
+                    }
+                    
                     getSession.VehicleCat = resultGot.data.Vehiclecategory;
                     getSession.VehicleTypeId = resultGot.data.VehicleTypeId;
                     getSession.VehicleCategoryId = resultGot.data.Vehiclecategoryid;

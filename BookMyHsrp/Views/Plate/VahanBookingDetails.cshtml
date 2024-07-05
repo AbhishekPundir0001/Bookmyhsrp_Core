@@ -555,6 +555,8 @@
 
             async function otpSuccess() {
                 $('#otp-validate2').modal('show');
+                $('#divPlate').show();
+                $('#divSticker').hide();
            }
             function DrawCaptcha() {
                 var a = Math.ceil(Math.random() * 10) + '';
