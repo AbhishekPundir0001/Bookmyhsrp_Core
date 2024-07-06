@@ -176,6 +176,9 @@
                                             </div>
                                         </div>
                                         <div class="col-lg-4 col-md-6 col-sm-12">
+                                            <button id="btn-submit-approval-data" type="button" class="submit-btn">
+                                                Click Here
+                                            </button>
                                             </div>
                                                 <div class="col-lg-4 col-md-6 col-sm-12">
                                                     </div>
@@ -184,9 +187,7 @@
 
                                                 </div>
                                                  <div class="col-lg-4 col-md-6 col-sm-12">
-                                            <button id="btn-submit-approval-data" type="button" class="submit-btn">
-                                                Click Here
-                                            </button>
+                                            
                                         </div>
                                     </div>
                                 </div>
@@ -465,7 +466,7 @@
                                             </div>
                                             <p class="note mb-5">If any details provided by me for HSRP is found (Partially/Fully). The HSRP will not be affixed to my vehicle and HSRP Fee will not be Refundable.</p>
                                             <div class="col-lg-6 col-md-12 col-sm-12">
-                                                <button type="reset" class="reset-btn">
+                                                <button id="reset" type="reset" class="reset-btn">
                                                     Reset
                                                 </button>
                                                 <button id="btn-next" type="button" class="submit-btn">
@@ -491,48 +492,7 @@
     </div>
     <!-- Body main wrapper end -->
     <!-- OTP Modal -->
-    <div class="modal otp-modal fade" id="otp-modal" data-bs-backdrop="static" data-bs-keyboard="false"
-         tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Order booking verification</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><i class="fas fa-times"></i></button>
-                </div>
-                <div class="modal-body text-center">
-                    <div class="position-relative">
-                        <div class="img-icon">
-                            <img src="~/Images/password.png" alt="">
-                        </div>
-                        <h6>Please enter the OTP send to your<br>registerd mobile number</h6>
-                        <span>OTP is valid for 10 minutes. </span>
-                        <div class="otp-box">
-                            <form action="#">
-                                <div class="input-field">
-                                    <input id="first" type="number" class="otp-text m-2" />
-                                    <input id="second" type="number" class="otp-text m-2" disabled />
-                                    <input id="third" type="number" class="otp-text m-2" disabled />
-                                    <input id="fourth" type="number" class="otp-text m-2" disabled />
-                                </div>
-                                <div class="mt-3">
-                                    <button id="btn-validate" class="submit-btn otp-btn"
-                                            data-bs-dismiss="modal">
-                                        Validate
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="card-2">
-                            <p class="resend-para">
-                                Didn't receive OTP? <a href="#"
-                                                       class="text-decoration-none ms-1">Resend</a>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    @await Html.PartialAsync("~/Views/PartialView/_OtpModalPartial.cshtml")
 
     <!-- Front 1 start -->
     <div class="modal guide fade" id="front-1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -982,7 +942,7 @@
             };
 
             async function uploadFileReplacement() {
-                debugger;
+             
                 var frontPlatePhoto = $("#fileid3")[0].files[0];
                 var rearPlatePhoto = $("#fileid4")[0].files[0];
                 var firCopy = $("#fileid")[0].files[0];
@@ -1625,7 +1585,9 @@
 
 
             });
-
+            $('#reset').click(function () {
+                location.reload();
+            });
         </script>
     }
 </body>

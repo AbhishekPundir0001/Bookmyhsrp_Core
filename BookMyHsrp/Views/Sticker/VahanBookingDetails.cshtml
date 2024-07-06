@@ -178,7 +178,7 @@
                                         <div class="col-lg-4 col-md-6 col-sm-12">
                                             <div class="input-group">
                                                 <label class="form-label w-100">Captcha</label>
-                                                <input id="txtCaptcha" type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
+                                                <input id="txtCaptcha" type="text" class="form-control" aria-label="Amount (to the nearest dollar)" readonly>
                                                 <button onclick="DrawCaptcha()" class="input-group-text"><i class="fas fa-redo-alt"></i></button>
                                             </div>
                                         </div>
@@ -516,7 +516,7 @@
         </div>
     </div>
     <!-- Guide 4 End -->
-    @await Html.PartialAsync("~/Views/PartialView/_SuccessOTPModelPartialSticker.cshtml")
+    @await Html.PartialAsync("~/Views/PartialView/_SuccessOTPModelPartial.cshtml")
 
     <style>
         .disabled {
@@ -565,7 +565,10 @@
             });
 
             async function otpSuccess() {
-                $('#otp-validate2Sticker').modal('show');
+                $('#otp-validate2').modal('show');
+                $('#divPlate').hide();
+                $('#divSticker').show();
+
             }
             function DrawCaptcha() {
                 var a = Math.ceil(Math.random() * 10) + '';
