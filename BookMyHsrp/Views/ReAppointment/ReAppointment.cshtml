@@ -16,7 +16,7 @@
         <link rel="stylesheet" href="~/css/owl.carousel.min.css">
         <!--     <link rel="stylesheet" href="assets/css/owl.theme.default.min.css"> -->
 
-  
+  z
     <!--     <link rel="stylesheet" href="assets/css/owl.theme.default.min.css"> -->
 
 </head>
@@ -38,30 +38,30 @@
                                         <div class="col-lg-12">
                                             <div class="form-group">
                                                 <label class="form-label">Order number*</label>
-                                                <input type="text" class="form-control" placeholder="DLHSRP1221XXXXXX">
+                                            <input type="text" class="form-control" placeholder="DLHSRP1221XXXXXX" id="orderNo">
                                             </div>
                                         </div>
                                         <div class="col-lg-12">
                                             <div class="form-group">
                                                 <label class="form-label">Vehicle Reg No.*</label>
-                                                <input type="text" class="form-control" placeholder="DL01ABXXXX">
+                                                <input type="text" class="form-control" placeholder="DL01ABXXXX" id="vehregno">
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="input-group">
                                                 <label class="form-label w-100">Captcha</label>
                                             <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" id="txtCaptcha">
-                                                <button class="input-group-text"><i class="fas fa-redo-alt"></i></button>
+                                            <button class="input-group-text"><i class="fas fa-redo-alt" id="btnRefreshCaptcha"></i></button>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="input-group">
                                                 <label class="form-label w-100">Input Captcha</label>
-                                                <input type="text" class="form-control">
+                                            <input type="text" class="form-control" id="txtInput">
                                             </div>
                                         </div>
                                         <div class="col-lg-12">
-                                            <button type="button" class="submit-btn">
+                                            <button type="button" class="submit-btn" id="submit-btn">
                                                 Search
                                             </button>
                                             <button type="button" class="submit-btn">
@@ -119,50 +119,135 @@
             </div>
         </div>
     </div>
-    @section Scripts
-    {
-
-
-        <script src="~/js/owl.carousel.min.js"></script>
-
+    @section Scripts {
         <script>
-            window.onload = function () {
-                DrawCaptcha();
-            };
+
+
 
             function DrawCaptcha() {
-                var a = Math.ceil(Math.random() * 10) + '';
-                var b = Math.ceil(Math.random() * 10) + '';
-                var c = Math.ceil(Math.random() * 10) + '';
-                var d = Math.ceil(Math.random() * 10) + '';
-                //var e = Math.ceil(Math.random() * 10)+ '';
-                //var f = Math.ceil(Math.random() * 10)+ '';
-                //var g = Math.ceil(Math.random() * 10)+ '';
-                //var code = a + ' ' + b + ' ' + ' ' + c + ' ' + d + ' ' + e + ' '+ f + ' ' + g;
-                var code = a + ' ' + b + ' ' + ' ' + c + ' ' + d;
-                document.getElementById("txtCaptcha").value = code
+                var a = Math.ceil(Math.random() * 9) + '';
+                var b = Math.ceil(Math.random() * 9) + '';
+                var c = Math.ceil(Math.random() * 9) + '';
+                var d = Math.ceil(Math.random() * 9) + '';
+                var code = a + ' ' + b + ' ' + c + ' ' + d;
+                document.getElementById("txtCaptcha").value = code;
             }
 
-            $('#btn-submit-approval-data').click(async function () {
-                handleButtonClickApproved();
-            })
-            async function handleButtonClickApproved() {
-                
+            window.onload = function () {
+
+                DrawCaptcha();
+                document.getElementById("btnRefreshCaptcha").addEventListener("click", DrawCaptcha);
+         
+
+            };
+
+
+
+            $('#btn-validate').click(async function () {
+                const validateBtn = document.querySelector('.otp-btn');
                 $(this).prop('disabled', true);
                 var originalButtonText = $(this).html();
-                $(this).html('<span class="spinner-border spinner-border-sm"></span> Processing')
-                if (!ValidCaptcha()) {
-                    console.log("hello")
-                    return false;
-                }
+
                 const errorFunc = (title) => {
                     Toast.fire({
                         icon: 'error',
                         title: title
                     })
                     $(this).prop('disabled', false);
+                    $(this).html(originalButtonText);
+
                 }
-            }
+                // Add click event listener to the "Validate" button
+                // validateBtn.addEventListener('click', function (event) {
+                //     event.preventDefault(); // Prevent form submission
+
+                // Get the OTP input elements
+                const firstInput = document.getElementById('first');
+                const secondInput = document.getElementById('second');
+                const thirdInput = document.getElementById('third');
+                const fourthInput = document.getElementById('fourth');
+
+                // Get the values of the OTP inputs
+                const firstValue = firstInput.value;
+                const secondValue = secondInput.value;
+                const thirdValue = thirdInput.value;
+                const fourthValue = fourthInput.value;
+
+                // Concatenate the OTP values into a single string
+                const otp = firstValue + secondValue + thirdValue + fourthValue;
+                if (otp != "") {
+                    let url = "/api/v1/otp/otpConfirmation/" + otp;
+                    const result = await fetchData(url);
+                    if (result.Message == "Data Received.") {
+                        window.location.href = "/reappointmentslot";
+                    }
+                    else {
+                        errorFunc("Wrong Otp");
+                        return;
+                    }
+
+                }
+
+                // Now, the 'otp' variable contains the concatenated OTP value
+                //      console.log(otp);
+
+                // You can perform further actions with the OTP value here, such as validation or sending it to a server.
+                //});
+
+            });
+
+
+
+
+            const inputs = document.querySelectorAll(".otp-text");
+
+            // iterate over all inputs
+            inputs.forEach((input, index1) => {
+                input.addEventListener("keyup", (e) => {
+                    // This code gets the current input element and stores it in the currentInput variable
+                    // This code gets the next sibling element of the current input element and stores it in the nextInput variable
+                    // This code gets the previous sibling element of the current input element and stores it in the prevInput variable
+                    const currentInput = input,
+                        nextInput = input.nextElementSibling,
+                        prevInput = input.previousElementSibling;
+
+                    // if the value has more than one character then clear it
+                    if (currentInput.value.length > 1) {
+                        currentInput.value = "";
+                        return;
+                    }
+                    // if the next input is disabled and the current value is not empty
+                    //  enable the next input and focus on it
+                    if (nextInput && nextInput.hasAttribute("disabled") && currentInput.value !== "") {
+                        nextInput.removeAttribute("disabled");
+                        nextInput.focus();
+                    }
+
+                    // if the backspace key is pressed
+                    if (e.key === "Backspace") {
+                        // iterate over all inputs again
+                        inputs.forEach((input, index2) => {
+                            // if the index1 of the current input is less than or equal to the index2 of the input in the outer loop
+                            // and the previous element exists, set the disabled attribute on the input and focus on the previous element
+                            if (index1 <= index2 && prevInput) {
+                                input.setAttribute("disabled", true);
+                                input.value = "";
+                                prevInput.focus();
+                            }
+                        });
+                    }
+                    //if the fourth input( which index number is 3) is not empty and has not disable attribute then
+                    //add active class if not then remove the active class.
+                    if (!inputs[3].disabled && inputs[3].value !== "") {
+                        //  button.classList.add("active");
+                        return;
+                    }
+                    // button.classList.remove("active");
+                });
+            });
+
+            //focus the first input which index is 0 on window load
+            // window.addEventListener("load", () => inputs[0].focus());
 
 
 
@@ -194,7 +279,65 @@
                     return;
                 }
             }
+            function removeSpaces(string) {
+                return string.split(' ').join('');
+            }
+
+            function removeSpaces(string) {
+                return string.replace(/\s+/g, '');
+            }
+
+
+            $('#submit-btn').click(function () {
+                handleButtonClick.call(this, '/reappointment-details', postData, (result) => {
+                    // bindHtmlHsrpView(result.Data);
+                    // $('#div-bind-report').show();
+                    // console.log('Data posted successfully, where the server response data is', result);
+                })
+            });
+
+
+
+
+            async function handleButtonClick(url, postData, isSuccessFunc) {
+                debugger
+                const errorFunc = (title) => {
+                    Toast.fire({
+                        icon: 'error',
+                        title: title
+                    })
+                    $(this).prop('disabled', false);
+
+                }
+                var vehRegNo = $('#vehregno').val();
+                var orderNo = $('#orderNo').val();
+                if (!vehRegNo) {
+                    errorFunc('Please Insert Registration No.')
+                }
+                if (!ValidCaptcha()) {
+                    $(this).prop('disabled', false);
+                    $(this).html(originalButtonText)
+                    return false;
+                }
+
+                var data = { VehicleregNo: vehRegNo, OrderNo: orderNo }
+                const result = await postData(url, data);
+                debugger
+                if (result.Status === "1") {
+                    $('#otp-modal').modal('show');
+                    let url = "reappointmentOTP";
+                    const otpresult = await postData(url, data);
+                    return otpresult;
+
+                }
+              
+            }
+
+
         </script>
+
     }
+
 </body>
+
 </html>
