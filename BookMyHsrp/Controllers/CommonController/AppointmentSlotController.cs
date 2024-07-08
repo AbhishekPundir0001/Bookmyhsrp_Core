@@ -113,5 +113,45 @@ namespace BookMyHsrp.Controllers.CommonController
             }
             return Json(result);
         }
+
+        [HttpPost]
+        [Route("check-time-slot-re")]
+        public async Task<IActionResult> CheckTimeSlotReAppointment([FromBody] CheckTimeSlot response)
+        {
+            var vehicleDetail = HttpContext.Session.GetString("UserSession");
+            var UserDetail = HttpContext.Session.GetString("UserDetail");
+            var vehicledetails = System.Text.Json.JsonSerializer.Deserialize<GetSessionBookingDetails>(vehicleDetail);
+            var userdetails = System.Text.Json.JsonSerializer.Deserialize<GetSessionBookingDetails>(UserDetail);
+          
+
+            var dealerAppointment = HttpContext.Session.GetString("AppointmentSlotId");
+            var DealerAppointment = System.Text.Json.JsonSerializer.Deserialize<GetSessionBookingDetails>(dealerAppointment);
+
+            List<TimeSlotList> result = await _appointmentconnector.CheckTimeSlotReAppointment(response.Date, DealerAppointment, vehicledetails, userdetails);
+            if (result.Count > 0)
+            {
+                List<TimeSlotList> datalist = new List<TimeSlotList>();
+                var data = new TimeSlotList();
+                for (var i = 0; i < result.Count; i++)
+                {
+
+                    data.SlotName = result[i].SlotName;
+                    data.SlotID = result[i].SlotID;
+                    data.TimeSlotID = result[i].TimeSlotID;
+                    data.AvaiableStatus = result[i].AvaiableStatus;
+                    data.AvaiableCount = result[i].AvaiableCount;
+                    data.RTOCodeID = result[i].RTOCodeID;
+                    data.BookedCount = result[i].BookedCount;
+                    data.VehicleTypeID = result[i].VehicleTypeID;
+                    datalist.Add(data);
+
+                }
+                var jsonSerializer = System.Text.Json.JsonSerializer.Serialize(datalist);
+                var jsonSerializer1 = System.Text.Json.JsonSerializer.Serialize(result);
+                HttpContext.Session.SetString("TimeSlot", jsonSerializer);
+                HttpContext.Session.SetString("TimeSlotChecking", jsonSerializer1);
+            }
+            return Json(result);
+        }
     }
 }

@@ -169,6 +169,94 @@ namespace BookMyHsrp.Libraries.HsrpWithColorSticker.Models
             public string RcFile { get; set; }
 
         }
+
+
+        public class ReAppointmentDetails
+        {
+            public long DealerAffixationID { get; set; }
+            public int Dealerid { get; set; }
+            public string DealerName { get; set; }
+            public string Message { get; set; }
+            public string Status { get; set; }
+            public string StateShortName { get; set; }
+            public string DeliveryCity { get; set; }
+            public string DeliveryState { get; set; }
+            public string DealerAffixationCenterContactPerson { get; set; }
+            public string VehicleCat { get; set; }
+            public string Vehiclecategory { get; set; }
+            public string DealerAffixationCenterName { get; set; }
+            public string Address { get; set; }
+            public string City { get; set; }
+            public string CustomerName { get; set; }
+            public string DealerAffixationCenterContactNo { get; set; }
+            public string Pincode { get; set; }
+            public string Country { get; set; }
+            public string StateName { get; set; }
+            public int WebsiteId { get; set; }
+            public string DealerAffixationCenterLat { get; set; }
+            public string DealerAffixationCenterLon { get; set; }
+            public string EarliestDateAvailable { get; set; }
+            public decimal RoundOff_netamount { get; set; }
+            public bool ExpressCheckout { get; set; } = false;
+            public string Distance { get; set; }
+            public string EarliestTimeSlotAvailable { get; set; }
+            public int cnt { get; set; }
+            public string TotalAmountWithGST { get; set; }
+            public string BhartStage { get; set; }
+            public string RegistrationDate { get; set; }
+            public string VehicleRegNo { get; set; }
+            public string ChassisNo { get; set; }
+            public string EngineNo { get; set; }
+            public string OwnerName { get; set; }
+            public string EmailId { get; set; }
+            public string CustomerMobile { get; set; }
+            public string FilePath { get; set; } = "";
+            public string BillingAddress { get; set; } = "";
+            public string ReplacementType { get; set; } = "";
+            public string RcFileName { get; set; } = "";
+            public string MakerVahan { get; set; } = "";
+            public string VehicleTypeVahan { get; set; } = "";
+            public string FuelTypeVahan { get; set; } = "";
+            public string VehicleCatVahan { get; set; } = "";
+            public string StateId { get; set; } = "";
+            public string OemVehicleType { get; set; } = "";
+            public string OemId { get; set; } = "";
+            public string CustomerEmail { get; set; } = "";
+            public string CustomerBillingAddress { get; set; } = "";
+            public string CustomerCity { get; set; } = "";
+            public string OrderType { get; set; } = "";
+            public string VehicleCategory { get; set; } = "";
+            public string VehicleType { get; set; } = "";
+            public string VehicleClass { get; set; } = "";
+            public string StateIdBackup { get; set; } = "";
+            public string VehicleCategoryId { get; set; } = "";
+            public string FuelType { get; set; } = "";
+            public string DeliveryPoint { get; set; } = "";
+            public string PlateSticker { get; set; } = "";
+            public string NonHomo { get; set; } = "";
+            public string VehicleTypeId { get; set; } = "";
+            public string DealerAffixationCenterId { get; set; }
+            public string SelectedSlotID { get; set; }
+            public string SelectedSlotDate { get; set; }
+            public string SelectedSlotTime { get; set; }
+            public string Affix { get; set; }
+            public string BharatStage { get; set; }
+            public int OemID { get; set; }
+            public string OemName { get; set; }
+            public int DealerID { get; set; }
+            public int StateID { get; set; }
+            public int RTOLocationID { get; set; }
+            public string RTOLocationName { get; set; }
+            public string DealerAffixationCenterAddress { get; set; }
+            public string SlotDate { get; set; }
+            public string SlotTime { get; set; }
+
+            public string FrontPlateFileName { get; set; }
+            public string RearPlateFileName { get; set; }
+            public string FrontLaserCode { get; set; }
+            public string RearLaserCode { get; set; }
+            public string UploadFlag { get; set; }
+        }
         public class AppointmentSlotForHome
         {
             public int StateId { get; set; }

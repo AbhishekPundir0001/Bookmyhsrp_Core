@@ -50,6 +50,7 @@ using BookMyHsrp.Libraries.BookingSummary.Services;
 using BookMyHsrp.Libraries.VerifyPaymentDetail.Services;
 using BookMyHsrp.ReportsLogics.VerifyPaymentDetails;
 using BookMyHsrp.Libraries.PaymentReceipt.Services;
+using BookMyHsrp.Libraries.ReAppointment.Services;
 namespace BookMyHsrp
 {
     public class Startup
@@ -169,6 +170,7 @@ namespace BookMyHsrp
             services.AddTransient<IReceiptService, ReceiptService>();
            services.AddTransient<IGrievanceServices, GrievanceServices>();
             services.AddTransient<IPaymentReceiptService, PaymentReceiptService>();
+            services.AddTransient<IReAppointmentServices, ReAppointmentServices>();
             services.AddScoped<HsrpWithColorStickerConnector>();
             services.AddScoped<AppointmentSlotConnector>();
             services.AddScoped<TrackYourOrderConnector>();
