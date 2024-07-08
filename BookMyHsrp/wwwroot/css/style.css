@@ -1852,7 +1852,7 @@ ul.main__menu > li:hover > a {
 .footer-bottom2 {
     background: #ffffff;
     box-shadow: 0 15px 30px 0 rgb(0 0 0 / 6%);
-    //position: fixed;
+    position: fixed;
     bottom: 0;
     width: 100%;
     z-index: 99;

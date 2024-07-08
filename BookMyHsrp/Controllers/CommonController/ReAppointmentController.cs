@@ -9,6 +9,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 using static BookMyHsrp.Libraries.ReAppointment.Model.ReAppointmentModel;
 using static BookMyHsrp.Libraries.TrackYoutOrder.Models.TrackYourOrderModel;
 
+
 namespace BookMyHsrp.Controllers.CommonController
 {
     public class ReAppointmentController : Controller
@@ -95,6 +96,9 @@ namespace BookMyHsrp.Controllers.CommonController
                     vehiclettype = "";
                 }
 
+
+
+
                 res.Status = "1";
                 res.message = "";
                 var rootDto = new RootDto();
@@ -117,14 +121,35 @@ namespace BookMyHsrp.Controllers.CommonController
 
                 dealerappointment.DealerAffixationCenterId = firstItem.affix_id.ToString();
                 dealerappointment.SelectedSlotID = firstItem.SlotId.ToString();
-                dealerappointment.SelectedSlotDate = firstItem.SlotBookingDate.ToString(); ;
+                dealerappointment.SelectedSlotDate = firstItem.SlotBookingDate.ToString() ;
                 dealerappointment.SelectedSlotTime = firstItem.SlotTime.ToString(); 
                 dealerappointment.Affix = firstItem.affix_id.ToString();
                 dealerappointment.DeliveryPoint = firstItem.AppointmentType;
 
                 jsonSerializer = System.Text.Json.JsonSerializer.Serialize(dealerappointment);
                 HttpContext.Session.SetString("AppointmentSlotId", jsonSerializer);
+
+              
+                var reappointmentdetails = new RootDtoReAppointment();
+                reappointmentdetails.ReOrderNo = firstItem.orderno;
+                reappointmentdetails.PlateSticker = firstItem.plateSticker;
+                reappointmentdetails.VehicleRegNo = firstItem.VehicleRegNo;
+                reappointmentdetails.OldAppointmentDate = firstItem.oldDate;
+                reappointmentdetails.OldAppointmentSlot = firstItem.SlotTime;
+                reappointmentdetails.ReOEMId = firstItem.oemid;
+                reappointmentdetails.ReDealerAffixationCenterid = firstItem.affix_id;
+                reappointmentdetails.ReSessionOwnerName = firstItem.OwnerName;
+                reappointmentdetails.ReSessionMobileNo = firstItem.MobileNo;
+                reappointmentdetails.ReSessionBillingAddress = firstItem.Address1;
+                reappointmentdetails.ReSessionEmailID = firstItem.EmailID;
+                reappointmentdetails.ReStateName = firstItem.State;
+                reappointmentdetails.ReVehicleTypeid = vehiclettype;
+                reappointmentdetails.ReDeliveryPoint = firstItem.AppointmentType;
+                reappointmentdetails.ReStateId = firstItem.HSRP_StateID.ToString();
+                jsonSerializer = System.Text.Json.JsonSerializer.Serialize(reappointmentdetails);
+                HttpContext.Session.SetString("reappointmentdetails", jsonSerializer);
                 return Json(res);
+
             }
             return Json("OK");
         }

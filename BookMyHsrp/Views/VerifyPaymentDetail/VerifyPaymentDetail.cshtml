@@ -297,9 +297,9 @@
 
        }
           $(document).ready(function () {
-              
+              debugger
               $('#rzp-button').click(async function (e) {
-                 
+                  debugger
                   const errorFunc = (title) => {
                       Toast.fire({
                           icon: 'error',
@@ -371,7 +371,7 @@
                   let data = { PaymentStatus: payment };
                   let url = '/payment'
                   const result = await postData(url, data);
-                 
+                  debugger
                   if (result.Message == "Slot booked. Choose another Slot.") {
                       errorFunc("Slot booked.Choose another Slot.");
                       setTimeout(function () {
@@ -395,7 +395,7 @@
                       "description": "BookMyHSRP",
                       "order_id": order_id,
                       "handler": function (response) {
-                         
+                          debugger
                           alert('Payment successful!');
                             console.log(response)
                             localStorage.setItem('TransactionId', response.razorpay_payment_id)

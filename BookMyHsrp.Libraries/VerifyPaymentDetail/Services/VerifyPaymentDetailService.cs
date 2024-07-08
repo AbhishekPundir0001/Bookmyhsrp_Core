@@ -10,7 +10,6 @@ using System.Linq;
 using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
-using static BookMyHsrp.Libraries.BookingSummary.Model.BookingSummaryModel;
 
 namespace BookMyHsrp.Libraries.VerifyPaymentDetail.Services
 {
@@ -51,29 +50,16 @@ namespace BookMyHsrp.Libraries.VerifyPaymentDetail.Services
         public async Task<dynamic> CheckOemRateQuery(dynamic  vehicleDetails, dynamic userDetails,dynamic DealerAppointment, string orderType)
         {
             var parameters = new DynamicParameters();
-            if (userDetails.VehicleType == "MCV/HCV/Trailers" && userDetails.VehicleCat == "4W")
-            {
-                parameters.Add("@VehicleClass", userDetails.VehicleClass);
-                parameters.Add("@StateId", userDetails.StateId);
-                parameters.Add("@StateName", userDetails.StateName);
-                parameters.Add("@OemId", userDetails.OemId);
-            }
-            else
-            {
-                parameters.Add("@StateId", vehicleDetails.StateId);
-                parameters.Add("@StateName", vehicleDetails.StateName);
-                parameters.Add("@VehicleClass", vehicleDetails.VehicleClass);
-                parameters.Add("@OemId", vehicleDetails.OemId);
-            }
-
-            
+            parameters.Add("@OemId", vehicleDetails.OemId);
             parameters.Add("@OrderType", orderType);
+            parameters.Add("@VehicleClass", vehicleDetails.VehicleClass);
             parameters.Add("@VehicleType", userDetails.VehicleType);
             parameters.Add("@VehicleCategoryId", userDetails.VehicleCategoryId);
             parameters.Add("@FuelType", userDetails.FuelType);
             parameters.Add("@DeliveryPoint", DealerAppointment.DeliveryPoint);
-            
-            var result = await _databaseHelper.QueryAsync<dynamic>(VerifyPaymentDetailsQueries.CheckOemRateQuery, parameters);
+            parameters.Add("@StateId", vehicleDetails.StateId);
+            parameters.Add("@StateName", vehicleDetails.StateName);
+            var result =await _databaseHelper.QueryAsync<dynamic>(VerifyPaymentDetailsQueries.CheckOemRateQuery, parameters);
             return result;
         }
         public async Task<dynamic> GetBookingId(dynamic vehicleDetails, dynamic userDetails, dynamic DealerAppointment, string realOrderType)
@@ -187,7 +173,7 @@ namespace BookMyHsrp.Libraries.VerifyPaymentDetail.Services
             var result = await _databaseHelper.QueryAsync<dynamic>(VerifyPaymentDetailsQueries.CheckOemRateFromOrderRate, parameters);
             return result;
         }
-        public async Task<dynamic> PaymentInitiated(string DealerAffixationCenterId, string orderNo, string orderType, string SlotId, string SlotTime, string SlotBookingDate, string HSRPStateID, string RTOLocationID, string RTOName, string OwnerName, string OwnerFatherName, string Address1, string State, string City, string Pin, string MobileNo, string LandlineNo, string EmailID, string VehicleClass, string VehicleType, string ManufacturerName, string ChassisNo, string EngineNo, string ManufacturingYear, string VehicleRegNo, string FrontPlateSize, string RearPlateSize, string TotalAmount, string NetAmount, string BookingType, string BookingClassType, string FuelType, string DealerId, string OEMID, string BookedFrom, string AppointmentType, string BasicAmount, string FitmentCharge, string ConvenienceFee, string HomeDeliveryCharge, string GSTAmount, string CustomerGSTNo, string VehicleRCImage, string BharatStage, string ShippingAddress1, string ShippingAddress2, string ShippingCity, string ShippingState, string ShippingPinCode, string ShippingLandMark, string IGSTAmount, string CGSTAmount, string SGSTAmount, string PlateSticker, string FrontLaserCode, string RearLaserCode, string NonHomologVehicle, string isSuperTag, string isFrame, string FrontHSRPFileName, string RearHSRPFileName, string FileFIR, string Firno, string FirDate, string Firinfo, string PoliceStation, string ReplacementReason)
+        public async Task<dynamic> PaymentInitiated(string DealerAffixationCenterId, string orderNo, string orderType, string SlotId, string SlotTime, string SlotBookingDate, string HSRPStateID, string RTOLocationID, string RTOName, string OwnerName, string OwnerFatherName, string Address1, string State, string City, string Pin, string MobileNo, string LandlineNo, string EmailID, string VehicleClass, string VehicleType, string ManufacturerName, string ChassisNo, string EngineNo, string ManufacturingYear, string VehicleRegNo, string FrontPlateSize, string RearPlateSize, string TotalAmount, string NetAmount, string BookingType, string BookingClassType, string FuelType, string DealerId, string OEMID, string BookedFrom, string AppointmentType, string BasicAmount, string FitmentCharge, string ConvenienceFee, string HomeDeliveryCharge, string GSTAmount, string CustomerGSTNo, string VehicleRCImage, string BharatStage, string ShippingAddress1, string ShippingAddress2, string ShippingCity, string ShippingState, string ShippingPinCode, string ShippingLandMark, string IGSTAmount, string CGSTAmount, string SGSTAmount, string FrontLaserCode, string RearLaserCode, string NonHomologVehicle, string isSuperTag, string isFrame, string FrontHSRPFileName, string RearHSRPFileName, string FileFIR, string Firno, string FirDate, string Firinfo, string PoliceStation, string ReplacementReason)
          {
             var parameters = new DynamicParameters();
             parameters.Add("@DealerAffixationCenterId", DealerAffixationCenterId);
@@ -244,7 +230,6 @@ namespace BookMyHsrp.Libraries.VerifyPaymentDetail.Services
             parameters.Add("@CGSTAmount", CGSTAmount);
             parameters.Add("@SGSTAmount", SGSTAmount);
 
-            parameters.Add("@PlateSticker", PlateSticker);
             parameters.Add("@FrontLaserCode", FrontLaserCode);
             parameters.Add("@RearLaserCode", RearLaserCode);
             parameters.Add("@NonHomologVehicle", NonHomologVehicle);

@@ -109,13 +109,15 @@
                                             <div class="col-lg-6">
                                                 <div class="book-desc">
                                                     <label>New Appointment Date</label>
-                                                    <p id="newappointment Slot"></p>
+                                                    <p id="newappointmentSlot"></p>
                                                 </div>
                                             </div>
 
                                            
                                         </div>
-                                        <button type="button" class="submit-btn" id="downloadReceipt"> Confirm </button>
+                                        <button type="button" class="submit-btn" id="btn-submit"> Submit </button>
+                                        <button type="button" class="submit-btn" id="btn-payment"> Pay Online </button>
+                                        <button type="button" class="submit-btn" id="btn-print"> Print </button>
 
                                     </div>
                                 </div>
@@ -139,10 +141,6 @@
                 </div>
             </div>
         </main>
-        <!-- main end -->
-        <!-- footer area start -->
-        <!-- footer area end -->
-
     </div>
 
 
@@ -151,32 +149,26 @@
     @section Scripts
     {
         <script>
-
             $(async function () {
 
-                await BookingSummaryConfirmation();
+                await ReAppointmentBookingSummaryConfirmation();
 
             });
-            async function BookingSummaryConfirmation() {
+            async function ReAppointmentBookingSummaryConfirmation() {
 
+                debugger
                 var date = sessionStorage.getItem('appointmentDate').toString();
                 var time = sessionStorage.getItem('timeSlot').toString();
                 var data = { Date: date, SlotTime: time };
-                let url = "/bookingSummary-confirmation";
+                let url = "/reappointment-bookingSummary-confirmation";
                 const result = await postData(url, data);
                 if (result != null) {
                     var date = sessionStorage.getItem('appointmentDate');
                     var time = sessionStorage.getItem('timeSlot');
-                    $('#bharatStage').text(result.BharatStage);
-                    $('#appointmentDate').text(date);
-                    $('#slotTime').text(time);
-                    $('#registrationNumber').text(result.VehicleRegNo);
-                    $('#chassisNo').text(result.ChassisNo);
-                    $('#engineNo').text(result.EngineNo);
-                    $('#vehicleMake').text(result.OemName);
-                    $('#vehicleType').text(result.VehicleCategory);
-                    $('#appointmentAddress').text(result.DealerAffixationCenterName + ' ' + result.DealerAffixationCenterAddress);
-
+                    $('#appointmentDate').result[0].SlotDate;
+                    $('#newappointmentDate').text(date);
+                    $('#slotTime').result[0].SlotTime;
+                    $('#newappointmentSlot').text(time);
                 }
 
             }

@@ -7,7 +7,8 @@ namespace BookMyHsrp.Controllers
         [Route("/plate/details")]
         public IActionResult VahanBookingDetails(string BookingType)
         {
-            HttpContext.Session.SetString("PageType", BookingType);
+            HttpContext.Session.SetString("UserDetails", "null");
+
             ViewBag.BookingType = BookingType;
             return View();
         }

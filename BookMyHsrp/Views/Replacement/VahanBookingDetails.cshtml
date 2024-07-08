@@ -176,9 +176,6 @@
                                             </div>
                                         </div>
                                         <div class="col-lg-4 col-md-6 col-sm-12">
-                                            <button id="btn-submit-approval-data" type="button" class="submit-btn">
-                                                Click Here
-                                            </button>
                                             </div>
                                                 <div class="col-lg-4 col-md-6 col-sm-12">
                                                     </div>
@@ -187,7 +184,9 @@
 
                                                 </div>
                                                  <div class="col-lg-4 col-md-6 col-sm-12">
-                                            
+                                            <button id="btn-submit-approval-data" type="button" class="submit-btn">
+                                                Click Here
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
@@ -466,7 +465,7 @@
                                             </div>
                                             <p class="note mb-5">If any details provided by me for HSRP is found (Partially/Fully). The HSRP will not be affixed to my vehicle and HSRP Fee will not be Refundable.</p>
                                             <div class="col-lg-6 col-md-12 col-sm-12">
-                                                <button id="reset" type="reset" class="reset-btn">
+                                                <button type="reset" class="reset-btn">
                                                     Reset
                                                 </button>
                                                 <button id="btn-next" type="button" class="submit-btn">
@@ -492,7 +491,51 @@
     </div>
     <!-- Body main wrapper end -->
     <!-- OTP Modal -->
-    @await Html.PartialAsync("~/Views/PartialView/_OtpModalPartial.cshtml")
+    <div class="modal otp-modal fade" id="otp-modal" data-bs-backdrop="static" data-bs-keyboard="false"
+         tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Order booking verification</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><i class="fas fa-times"></i></button>
+                </div>
+                <div class="modal-body text-center">
+                    <div class="position-relative">
+                        <div class="img-icon">
+                            <img src="~/Images/password.png" alt="">
+                        </div>
+                        <h6>Please enter the OTP send to your<br>registerd mobile number</h6>
+                        <span>OTP is valid for 10 minutes. </span>
+                        <div class="otp-box">
+                            <form action="#">
+                                <div class="input-field">
+                                    <input id="first" type="number" class="otp-text m-2" />
+                                    <input id="second" type="number" class="otp-text m-2" disabled />
+                                    <input id="third" type="number" class="otp-text m-2" disabled />
+                                    <input id="fourth" type="number" class="otp-text m-2" disabled />
+                                </div>
+                                <div class="mt-3">
+                                    <button id="btn-validate" class="submit-btn otp-btn"
+                                            data-bs-dismiss="modal">
+                                        Validate
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="card-2">
+                            <p class="resend-para">
+                                <span id="timer">
+                                    If you do not receive the OTP on your registered mobile number, click on resend button after
+                                    <span id="time">120</span> Seconds
+                                </span>
+                                Didn't receive OTP? <a href="#" class="text-decoration-none ms-1" id="resend">Resend</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Front 1 start -->
     <div class="modal guide fade" id="front-1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -527,22 +570,41 @@
 
     @await Html.PartialAsync("~/Views/PartialView/_SuccessOTPModelPartial.cshtml")
 
-
-
-
-
-
-
-
-
-
-
-
+    <style>
+        .disabled {
+            pointer-events: none; /* Disable click events */
+            color: gray; /* Optionally change color to indicate disabled state */
+        }
+    </style>
 
     @section Scripts
     {
         <script src="~/js/owl.carousel.min.js"></script>
         <!-- OTP Script -->
+
+        <script>
+            async function otpTimer() {
+                $(document).ready(function () {
+                    // $('#resend').attr('disabled', 'disabled');
+                    $('#resend').addClass('disabled');
+                    var counter = 120;
+                    var interval = setInterval(function () {
+                        counter--;
+                        // Display 'counter' wherever you want to display it.
+                        if (counter <= 0) {
+                            clearInterval(interval);
+                            $('#timer').html("If you do not receive the OTP on your registered mobile number, click on resend button");
+                            $('#resend').removeClass('disabled');
+                            return;
+                        } else {
+                            $('#time').text(counter);
+                            console.log("Timer --> " + counter);
+                        }
+                    }, 1000);
+                });
+            }
+
+        </script>
 
         <script>
             $('#txtFirDate').on('input', function (event) {
@@ -552,8 +614,7 @@
                     var cleaned = input.replace(/\D/g, '');
                     // Format the date with slashes
                     var formatted = cleaned.replace(/(\d{2})(\d{2})(\d{4})/, '$1/$2/$3');
-                    $(this).val(formatted);
-               
+                    $(this).val(formatted);      
             });
         </script>
 
@@ -568,6 +629,8 @@
 
             async function otpSuccess() {
                 $('#otp-validate2').modal('show');
+                $('#divPlate').show();
+                $('#divSticker').hide();
             }
             function DrawCaptcha() {
                 var a = Math.ceil(Math.random() * 10) + '';
@@ -942,7 +1005,7 @@
             };
 
             async function uploadFileReplacement() {
-             
+                debugger;
                 var frontPlatePhoto = $("#fileid3")[0].files[0];
                 var rearPlatePhoto = $("#fileid4")[0].files[0];
                 var firCopy = $("#fileid")[0].files[0];
@@ -965,6 +1028,10 @@
                     const result = await postDataFormData(url, formData);
                     var response = $.parseJSON(result);
                     debugger;
+                    $('#hdnFrontPlatePhoto').val(response.FrontPlatePhoto);
+                    $('#hdnRearPlatePhoto').val(response.RearPlatePhoto);
+                    $('#hdnFirCopy').val(response.FirCopy);
+                    $('#hdnRc').val(response.RcCopy);
                     if (response.Message.includes('Error'))
                     {
                         // errorFunc("Please select FIR Copy/RC Copy");
@@ -972,10 +1039,7 @@
                         return;
                     }
                     $('#lblMsg').html(response.Message);
-                    $('#hdnFrontPlatePhoto').val(response.FrontPlatePhoto);
-                    $('#hdnRearPlatePhoto').val(response.RearPlatePhoto);
-                    $('#hdnFirCopy').val(response.FirCopy);
-                    $('#hdnRc').val(response.RcCopy);
+                    
                 } catch (error) {
                     // console.error('Failed to post data:', error);
                     $('#lblMsg').html('No File Uploaded');
@@ -1203,6 +1267,8 @@
                             $('#otp-modal').modal('show');
                             let url = "/api/v1/otp"
                             const result = await fetchData(url);
+
+                            await otpTimer();
                         }
                     }
                     catch (error) {
@@ -1571,6 +1637,21 @@
                 }
             });
 
+            $('#resend').click(async function () {
+                debugger;
+                try {
+                    let url = "/api/v1/otp"
+                    const result = await fetchData(url);
+                    debugger;
+                    await otpTimer();
+                }
+                catch (error) {
+                    console.error('Failed to post data:', error);
+                } finally {
+                    $(this).prop('disabled', false);
+                }
+            });
+
             $("#select-state").change(function () {
                 debugger;
                 var stateId = $("#select-state").val();
@@ -1585,10 +1666,9 @@
 
 
             });
-            $('#reset').click(function () {
-                location.reload();
-            });
+
         </script>
+
     }
 </body>
 </html>

@@ -52,7 +52,9 @@ namespace BookMyHsrp.Libraries.HsrpWithColorSticker.Models
             public string RcFile { get; set; }
             public string FuelType { get; set; }
             public string DeliveryPoint { get; set; }
-        public string Status { get; set; }
+            public string Status { get; set; }
+            public string Firno { get; set; }
+            public string Firinfo { get; set; }
 
 
         //Shipping information for Home delivery
@@ -97,7 +99,6 @@ namespace BookMyHsrp.Libraries.HsrpWithColorSticker.Models
 
             public string ReplacementReason { get; set; } = "";
             public string ReplacementType { get; set; } = "OB";
-
 
             public PaymentConfirmationResponse paymentConfirmationResponse { get; set; }
             public bool IsExpressCheckout { get; set; } = false;

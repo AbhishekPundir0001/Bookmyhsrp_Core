@@ -1,32 +1,29 @@
-﻿using BookMyHsrp.Controllers.CommonController;
-using BookMyHsrp.Libraries.BookingSummary.Model;
-using BookMyHsrp.Libraries.BookingSummary.Services;
-using BookMyHsrp.ReportsLogics.AppointmentSlot;
+﻿using BookMyHsrp.Libraries.BookingSummary.Services;
+using BookMyHsrp.Libraries.ReAppointmentBookingSummary.Services;
 using Microsoft.AspNetCore.Mvc;
 using static BookMyHsrp.Libraries.BookingSummary.Model.BookingSummaryModel;
 using static BookMyHsrp.Libraries.HsrpWithColorSticker.Models.HsrpColorStickerModel;
-
 namespace BookMyHsrp.Controllers
 {
-    public class BookingSummaryController : Controller
+    public class ReAppointmentBookingSummaryController : Controller
     {
-        private readonly ILogger<BookingSummaryController> _logger;
         private readonly IBookingSummaryService _bookingSummaryService;
-        public BookingSummaryController(ILogger<BookingSummaryController> logger, IBookingSummaryService bookingSummaryService)
+        private readonly IReAppointmentBookingSummaryServices _reappointmentBookingSummaryService;
+        public ReAppointmentBookingSummaryController(ILogger<ReAppointmentBookingSummaryController> logger, IReAppointmentBookingSummaryServices reappointmentBookingSummaryService, IBookingSummaryService bookingSummaryService)
         {
+            _reappointmentBookingSummaryService = reappointmentBookingSummaryService;
             _bookingSummaryService = bookingSummaryService;
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-        }
-        [Route("/bookingSummary")]
-        public IActionResult BookingSummary()
+
+        }   
+        [Route("/reappointmentbookingsummary")]
+        public IActionResult ReAppointmentBookingSummary()
         {
             return View();
         }
 
-
         [HttpPost]
-        [Route("/bookingSummary-confirmation")]
-        
+        [Route("/reappointment-bookingSummary-confirmation")]
+
         public async Task<IActionResult> BookingSummaryConfirmation([FromBody] BookingDate date)
         {
             var bookingDetails = new BookingDetails();
@@ -37,7 +34,7 @@ namespace BookMyHsrp.Controllers
             var userdetails = System.Text.Json.JsonSerializer.Deserialize<GetSessionBookingDetails>(UserDetail);
             var DealerAppointment = System.Text.Json.JsonSerializer.Deserialize<GetSessionBookingDetails>(dealerAppointment);
             var result = await _bookingSummaryService.BookingSummaryConfirmation(DealerAppointment);
-            if (result.Count>0)
+            if (result.Count > 0)
             {
 
                 bookingDetails.BharatStage = userdetails.BhartStage;
@@ -60,8 +57,8 @@ namespace BookMyHsrp.Controllers
                 bookingDetails.DealerID = result[0].DealerID;
                 bookingDetails.OemName = result[0].OemName;
                 bookingDetails.OemID = result[0].OemID;
-                bookingDetails.SlotDate = date.Date;
-                bookingDetails.SlotTime = date.SlotTime;
+                bookingDetails.SlotDate = userdetails.SlotDate;
+                bookingDetails.SlotTime = userdetails.SlotTime;
                 var jsonSerializer = System.Text.Json.JsonSerializer.Serialize(bookingDetails);
                 HttpContext.Session.SetString("UserBookingDetails", jsonSerializer);
 

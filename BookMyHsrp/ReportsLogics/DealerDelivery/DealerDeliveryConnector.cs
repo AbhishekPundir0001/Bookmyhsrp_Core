@@ -19,45 +19,23 @@ namespace BookMyHsrp.ReportsLogics.DealerDelivery
 
 
         } 
-        public async Task<dynamic> GetDealersData(dynamic vehicledetails,dynamic sessiondetails,string pagetype)
+        public async Task<dynamic> GetDealersData(dynamic vehicledetails,dynamic sessiondetails)
         {
 
             var response = new SetSessionDealer();
             response.data =new DealerData();
             response.dealerAppointment = new List<DealerAppointmentData>();
-            var Ordertype = vehicledetails.OrderType==null?"": vehicledetails.OrderType;
-            var OemId = "";
-            if (pagetype=="Trailer")
-            {
-                 OemId = vehicledetails.OemId;
-
-            }
-            else
-            {
-                 OemId = sessiondetails.OemId;
-            }
-            
+            var Ordertype = vehicledetails.OrderType==null?"": vehicledetails.OrderType;    
+            var OemId= sessiondetails.OemId;
             decimal netamount;
-            var StateId = "";
-            var VehicleClass = "";
-            if (pagetype == "Trailer")
-            {
-                 StateId = vehicledetails.StateId;
-                 VehicleClass = vehicledetails.VehicleClass;
-            }
-            else
-            {
-                 StateId = sessiondetails.StateId;
-                VehicleClass = sessiondetails.VehicleClass;
-            }
-            
+            var StateId= sessiondetails.StateId;
             var VehicleCat= vehicledetails.VehicleCat;
             if(VehicleCat=="2WN")
             {
                 VehicleCat = "2W";
             }
             var VehicleType= vehicledetails.VehicleType;
-            
+            var VehicleClass= sessiondetails.VehicleClass;
             
             if (OemId != null && StateId != null && VehicleCat != null && VehicleType != null && VehicleClass != null)
             {
@@ -69,22 +47,11 @@ namespace BookMyHsrp.ReportsLogics.DealerDelivery
                         if (OemId == "272" && VehicleType == "Scooter_2W")
                         {
                            var getDealers = await _dealerDeliveryService.GetDealersForRajasthan(OemId, StateId, VehicleType, VehicleCat, VehicleClass, Ordertype);
-                            if (getDealers.Count > 0)
-                            {
-                                response = await CheckOrderType(getDealers, vehicledetails, sessiondetails);
-                            }
                         }
                         else
                         {
                          var getDealers = await _dealerDeliveryService.GetDealersForRajasthanElse(OemId, StateId, VehicleType, VehicleCat, VehicleClass, Ordertype);
-                            if (getDealers.Count > 0)
-                            {
-                                response = await CheckOrderType(getDealers, vehicledetails, sessiondetails);
-                            }
-                            else
-                            {
 
-                            }
                         }
 
                     }
@@ -93,14 +60,6 @@ namespace BookMyHsrp.ReportsLogics.DealerDelivery
                         if (OemId == "272" && VehicleType == "Scooter_2W")
                         {
                            var getDealers = await _dealerDeliveryService.GetDealers(OemId, StateId, VehicleType, VehicleCat, VehicleClass, Ordertype);
-                            if (getDealers.Count > 0)
-                            {
-                                response = await CheckOrderType(getDealers, vehicledetails, sessiondetails);
-                            }
-                            else
-                            {
-
-                            }
                         }
                         else
                         {
@@ -111,7 +70,73 @@ namespace BookMyHsrp.ReportsLogics.DealerDelivery
                              }
                         }
                     }
-                   
+                    //if (int.TryParse(getDealers, out int dealersCount))
+                    //{
+                    //    if (dealersCount > 0)
+                    //    {
+                    //        if (vehicledetails.StateIdBackup == "27")
+                    //        {
+                    //            Ordertype = vehicledetails.Ordertype == null ? "" : vehicledetails.Ordertype;
+                    //            var checkOemRate = _dealerDeliveryService.CheckOemRate(Ordertype, VehicleType, vehicledetails.StateIdBackup);
+                    //            if (checkOemRate.Count > 0)
+                    //            {
+
+                    //                foreach (var data in checkOemRate)
+                    //                {
+                    //                    netamount = data.NetAmount;
+                    //                    response.data.TotalAmountWithGST = netamount.ToString();
+                    //                    response.data.FrontPlateSize = data.FrontPlateSize;
+                    //                    response.data.RearPlateSize = data.RearPlateSize;
+                    //                    response.data.GstBasicAmount = data.GstBasic_Amt;
+                    //                    response.data.FittmentCharges = data.FittmentCharges;
+                    //                    response.data.BMHConvenienceCharges = data.BMHConvenienceCharges;
+                    //                    response.data.BMHHomeCharges = data.BMHHomeCharges;
+                    //                    response.data.MRDCharges = data.MRDCharges;
+                    //                    response.data.GrossTotal = data.GrossTotal;
+                    //                    response.data.GST = data.GST;
+                    //                    response.data.IGSTAmount = data.IGSTAmount;
+                    //                    response.data.CGSTAmount = data.CGSTAmount;
+                    //                    response.data.SGSTAmount = data.SGSTAmount;
+                    //                    response.data.TotalAmount = data.TotalAmount;
+                    //                }
+                    //            }
+                    //            else
+                    //            {
+                    //                response.data.TotalAmountWithGST = "Rate Not Found";
+                    //                response.Status = "0";
+                    //             //   response.data = getDealers[].FrontSizePlate;
+                    //            }
+                    //        }
+                    //        else
+                    //        {
+                    //            var checkOemRate = _dealerDeliveryService.CheckOemRateQuery(OemId, Ordertype, VehicleClass, VehicleType, vehicledetails.VehicleCategoryId, vehicledetails.FuelType, vehicledetails.DeliveryPoint, StateId, sessiondetails.StateName);
+                    //            if (checkOemRate.Count > 2)
+                    //            {
+                    //                if (checkOemRate.Count > 0)
+                    //                {
+                    //                    foreach (var data in checkOemRate)
+                    //                    {
+                    //                        netamount = checkOemRate.TotalAmount;
+                    //                        TotalAmountWithGST = netamount.ToString();
+                    //                    }
+
+
+                    //                }
+                    //                else
+                    //                {
+                    //                    //response.TotalAmountWithGST = "Rate Not Found";
+                    //                    response.Status = "0";
+                    //                }
+                    //            }
+                    //            else
+                    //            {
+                    //               // response.TotalAmountWithGST = "Rate Not Found";
+                    //                response.Status = "0";
+                    //            }
+                    //        }
+                    //    }
+
+                    //}
                 }
                 catch (Exception ex)
                 {
@@ -131,34 +156,12 @@ namespace BookMyHsrp.ReportsLogics.DealerDelivery
             response.data = new DealerData();
             response.dealerAppointment= new List<DealerAppointmentData>();
             var Ordertype = vehicledetails.OrderType == null ? "" : vehicledetails.OrderType;
-            var OemId = "";
+            var OemId = sessiondetails.OemId;
             decimal netamount;
-            if (vehicledetails.VehicleType == "MCV/HCV/Trailers" && vehicledetails.VehicleCat == "4W")
-            {
-                OemId = vehicledetails.OemId;
-
-            }
-            else
-            {
-                OemId = sessiondetails.OemId;
-            }
-            var StateId = "";
-            var VehicleClass = "";
-            var StateName = "";
-            if (vehicledetails.VehicleType == "MCV/HCV/Trailers" && vehicledetails.VehicleCat == "4W")
-            {
-                StateId = vehicledetails.StateId;
-                VehicleClass = vehicledetails.VehicleClass;
-                StateName = vehicledetails.StateName;
-            }
-            else
-            {
-                StateId = sessiondetails.StateId;
-                VehicleClass = sessiondetails.VehicleClass;
-                StateName = vehicledetails.StateName;
-            }
+            var StateId = sessiondetails.StateId;
             var VehicleCat = sessiondetails.VehicleCategory;
             var VehicleType = vehicledetails.VehicleType;
+            var VehicleClass = sessiondetails.VehicleClass;
             string TotalAmountWithGST = "0.00";
             if (dealers.Count > 0)
             {
@@ -222,7 +225,7 @@ namespace BookMyHsrp.ReportsLogics.DealerDelivery
             }
             else
             {
-                var checkOemRate = await _dealerDeliveryService.CheckOemRateQuery(OemId, Ordertype, VehicleClass, VehicleType, vehicledetails.VehicleCategoryId, vehicledetails.FuelType, vehicledetails.DeliveryPoint, StateId, StateName);
+                var checkOemRate = await _dealerDeliveryService.CheckOemRateQuery(OemId, Ordertype, VehicleClass, VehicleType, vehicledetails.VehicleCategoryId, vehicledetails.FuelType, vehicledetails.DeliveryPoint, StateId, sessiondetails.StateName);
                 if (checkOemRate.Count > 0)
                 {
                     if (checkOemRate.Count > 0)
