@@ -16,12 +16,12 @@ namespace BookMyHsrp.Libraries.HsrpWithColorSticker.Models
         {
             [Required(ErrorMessage = "Registration No is required.")]
             [StringLength(10, MinimumLength = 5,
-            ErrorMessage = "Vehicle Registration Should be 5 and Lessthan 10")]
+           ErrorMessage = "Vehicle Registration Should be 5 and Lessthan 10")]
             public string RegistrationNo { get; set; }
             [Required(ErrorMessage = "Chassis No is required.")]
             [StringLength(25, MinimumLength = 5,
             ErrorMessage = "Chassis Number Should be 5 Character and Lessthan 25")]
-          
+
             public string ChassisNo { get; set; }
             [Required(ErrorMessage = "EngineNo No is required.")]
             [StringLength(25, MinimumLength = 5,
@@ -32,6 +32,7 @@ namespace BookMyHsrp.Libraries.HsrpWithColorSticker.Models
             public string StateName { get; set; }
             public bool isReplacement { get; set; } = false;
             public string BookingType { get; set; }
+
 
 
 
@@ -52,7 +53,7 @@ namespace BookMyHsrp.Libraries.HsrpWithColorSticker.Models
             public VehicleValidation data;
         }
 
-        
+
         public class ResponseDto
         {
             public string Message;
@@ -157,6 +158,16 @@ namespace BookMyHsrp.Libraries.HsrpWithColorSticker.Models
             public string FrontLaserCode { get; set; }
             public string RearLaserCode { get; set; }
             public string UploadFlag { get; set; }
+
+
+            public string FrontLaserFileName { get; set; }
+            public string RearLaserFileName { get; set; }
+            public string FirCopyName { get; set; }
+            public string FirDate { get; set; }
+            public string Firno { get; set; }
+            public string ReplacementReason { get; set; }
+            public string RcFile { get; set; }
+
         }
         public class AppointmentSlotForHome
         {

@@ -373,7 +373,7 @@
                 var captcha = removeSpaces(document.getElementById('txtCaptcha').value);
                 var inputCaptcha = removeSpaces(document.getElementById('txtInput').value);
                 if (inputCaptcha == '') {
-                    //alert("Captcha can't be blank!!");z
+                    //alert("Captcha can't be blank!!");
                     errorFunc("Captcha can't be blank!!");
                     return;
                 }
@@ -397,7 +397,9 @@
             
             $('#submit-button').click(function () {
                 handleButtonClick.call(this, '/DealerWalletdetail', postData, (result) => {
-                   
+                    // bindHtmlHsrpView(result.Data);
+                    // $('#div-bind-report').show();
+                    // console.log('Data posted successfully, where the server response data is', result);
                 })
             });
            
@@ -405,7 +407,7 @@
 
 
             async function handleButtonClick(url, postData, isSuccessFunc) {
-              
+                debugger
                 const errorFunc = (title) => {
                     Toast.fire({
                         icon: 'error',

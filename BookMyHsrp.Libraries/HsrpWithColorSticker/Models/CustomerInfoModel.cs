@@ -1,5 +1,4 @@
 ﻿using BookMyHsrp.Libraries;
-using Microsoft.AspNetCore.Http.Internal;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -61,13 +60,17 @@ namespace BookMyHsrp.Libraries.HsrpWithColorSticker.Models
 
         public string RcFileName { get; set; }
 
+        [Required(ErrorMessage = "Vehicle Maker Required.")]
         public string MakerVahan { get; set; }
 
+        [Required(ErrorMessage = "Vehicle Type Required.")]
         public string VehicleTypeVahan { get; set; }
 
+        [Required(ErrorMessage = "Vehicle Fuel Type Required.")]
         public string FuelTypeVahan { get; set; }
 
 
+        [Required(ErrorMessage = "Vehicle Category Required.")]
         public string VehicleCatVahan { get; set; }
 
         public bool isReplacement { get; set; } = false;
@@ -84,9 +87,6 @@ namespace BookMyHsrp.Libraries.HsrpWithColorSticker.Models
         public string File4 { get; set; }
         public string ReplacementReason { get; set; }
         public string ReplacementType { get; set; } = "";
-        public string RegNoTractor { get; set; } = "";
-        public string EngineNoTractor { get; set; } = "";
-        public string ChassisNoTractor { get; set; } = "";
 
     }
 
@@ -96,27 +96,10 @@ namespace BookMyHsrp.Libraries.HsrpWithColorSticker.Models
         public string Message { get; set; }
         public CustomerInformationData data;
     }
-    public class DataChecking
-    {
-        public string RegistrationNo { get; set; }
-        public string ChassisNo { get; set; }
-        public string EngineNo { get; set; }
-        public string StateId { get; set; }
-    }
 
     public class CustomerInformationData
     {
         public string NonHomoVehicleType { get; set; }
-        public string StateId { get; set; }
-        public string StateName { get; set; }
-        public string OemId { get; set; } = "";
-        public string EngineNoTractor { get; set; }
-        public string ChassisNoTractor { get; set; }
-        public string RegNoTractor { get; set; }
-        public string Maker { get; set; }
-        public string RegistrationNo { get; set; }
-        public string ChassisNo { get; set; }
-        public string EngineNo { get; set; }
         public string Message { get; set; }
         public string VehicleType { get; set; }
         public string VehicleClass_imgPath { get; set; }

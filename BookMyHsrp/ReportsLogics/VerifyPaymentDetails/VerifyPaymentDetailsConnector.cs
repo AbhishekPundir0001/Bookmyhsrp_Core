@@ -10,7 +10,6 @@ using Razorpay.Api;
 using StackExchange.Redis;
 using System.Data;
 using System.Net;
-using System.Security.Cryptography;
 using System.Text;
 using static BookMyHsrp.Libraries.VerifyPaymentDetail.Models.VerifyPaymentDetailModel;
 using static iTextSharp.text.pdf.AcroFields;
@@ -474,7 +473,7 @@ namespace BookMyHsrp.ReportsLogics.VerifyPaymentDetails
             }
             return model;
         }
-        public async Task<dynamic> Payment(dynamic vehicledetails, dynamic userdetails, dynamic DealerAppointment, dynamic bookingDetail,string ip,string Payment,dynamic timeSlotChecking,string pagetype)
+        public async Task<dynamic> Payment(dynamic vehicledetails, dynamic userdetails, dynamic DealerAppointment, dynamic bookingDetail,string ip,string Payment,dynamic timeSlotChecking)
         {
             var data = "";
             var modelResult = new PaymentDetails();
@@ -570,21 +569,10 @@ namespace BookMyHsrp.ReportsLogics.VerifyPaymentDetails
                     {
                         OemId = item.oemid;
                     }
-                    if (userdetails.VehicleType == "MCV/HCV/Trailers" && userdetails.VehicleCat == "4W")
+                    if (Convert.ToInt32(vehicledetails.OemId) != OemId)
                     {
-                        if (Convert.ToInt32(userdetails.OemId) != OemId)
-                        {
-                            modelResult.Message = "Selected dealer is not valid.";
-                        }
+                        modelResult.Message = "Selected dealer is not valid.";
                     }
-                    else
-                    {
-                        if (Convert.ToInt32(vehicledetails.OemId) != OemId)
-                        {
-                            modelResult.Message = "Selected dealer is not valid.";
-                        }
-                    }
-                    
                 }
             }
             modelResult.ChkFastTag = false;
@@ -658,16 +646,19 @@ namespace BookMyHsrp.ReportsLogics.VerifyPaymentDetails
             modelResult.CGSTAmountFrm = 0;
             modelResult.IGSTAmountFrm = 0;
             modelResult.SGSTAmountFrm = 0;
-            modelResult.FrontHSRPFileName = string.Empty;
-            modelResult.RearHSRPFileName = string.Empty;
-            modelResult.FileFIR = string.Empty;
-            modelResult.FirDate = string.Empty;
-            modelResult.Firinfo = string.Empty;
-            modelResult.PoliceStation = string.Empty;
-            modelResult.Firno = string.Empty;
-            modelResult.FrontLaserCode = string.Empty;
-            modelResult.RearLaserCode = string.Empty;
-            modelResult.ReplacementReason = string.Empty;
+
+            modelResult.FrontHSRPFileName = userdetails.FrontLaserFileName;
+            modelResult.RearHSRPFileName = userdetails.RearLaserFileName;
+
+            modelResult.FileFIR = userdetails.FirCopyName;
+            modelResult.FirDate = userdetails.FirDate; //userdetails.FirDate;
+            modelResult.Firinfo = "";// userdetails.Firinfo;
+            modelResult.PoliceStation = "";// userdetails.PoliceStation;
+            modelResult.Firno = userdetails.Firno; //userdetails.Firno;
+            modelResult.FrontLaserCode = userdetails.FrontLaserCode;
+            modelResult.RearLaserCode = userdetails.RearLaserCode;
+            modelResult.ReplacementReason = userdetails.ReplacementReason;
+            modelResult.VehicleRCImage = userdetails.RcFile;
             if (orderType == "")
             {
 
@@ -736,17 +727,7 @@ namespace BookMyHsrp.ReportsLogics.VerifyPaymentDetails
                         modelResult.DealerId = item.DealerID.ToString();
                     }
                 }
-                var OemId = "";
-                if (pagetype=="Trailer")
-                {
-                    OemId = userdetails.OemId;
-                }
-                else
-                {
-                    OemId = vehicledetails.OemId;
-                }
-                
-                var checkoem = await _verifyPaymentDetailService.CheckOem(OemId);
+                var checkoem = await _verifyPaymentDetailService.CheckOem(vehicledetails.OemId);
                 if (checkoem.Count > 0)
                 {
                     foreach (var item in checkdealerAffixation)
@@ -763,36 +744,7 @@ namespace BookMyHsrp.ReportsLogics.VerifyPaymentDetails
             }
             try
             {
-                var StateIdBackup = "";
-                var StateId = "";
-                var VehicleClass = "";
-                var StateName = "";
-                if (pagetype == "Trailer")
-                {
-                    StateId = userdetails.StateId;
-                    VehicleClass = userdetails.VehicleClass;
-                    StateName = userdetails.StateName;
-                }
-                else
-                {
-                    StateId = vehicledetails.StateId;
-                    VehicleClass = vehicledetails.VehicleClass;
-                    StateName = userdetails.StateName;
-                }
-                StateIdBackup = vehicledetails.StateIdBackup.ToString();
-                var OemId = "";
-                var FuelType = "";
-                if (pagetype == "Trailer")
-                {
-                    OemId = userdetails.OemId;
-                    FuelType = vehicledetails.FuelType;
-                }
-                else
-                {
-                    OemId = vehicledetails.OemId;
-                    FuelType = vehicledetails.FuelType;
-                }
-                if (StateIdBackup == "27")
+                if (vehicledetails.StateIdBackup.ToString() == "27")
                 {
                     var checkOemRate = await _verifyPaymentDetailService.CheckOemRateFromTax(orderType, userdetails.VehicleType, vehicledetails.StateIdBackup);
                     if (checkOemRate.Count > 0)
@@ -843,7 +795,7 @@ namespace BookMyHsrp.ReportsLogics.VerifyPaymentDetails
                 }
                 else
                 {
-                    var result = await _verifyPaymentDetailService.CheckOemRateFromOrderRate(OemId, orderType, VehicleClass, userdetails.VehicleType, userdetails.VehicleCategoryId, FuelType, DealerAppointment.DeliveryPoint,StateId, StateName);
+                    var result = await _verifyPaymentDetailService.CheckOemRateFromOrderRate(vehicledetails.OemId, orderType, vehicledetails.VehicleClass, userdetails.VehicleType, userdetails.VehicleCategoryId, vehicledetails.FuelType, DealerAppointment.DeliveryPoint, vehicledetails.StateId, vehicledetails.StateName);
                     if (DealerAppointment.DeliveryPoint == "Dealer")
                     {
                         foreach (var item in result)
@@ -890,7 +842,7 @@ namespace BookMyHsrp.ReportsLogics.VerifyPaymentDetails
                                 modelResult.CustomerMobileNo = userdetails.CustomerMobile;
                                 modelResult.CustomerEmailID = userdetails.CustomerEmail;
                                 modelResult.CustomerAddress1 = userdetails.CustomerBillingAddress;
-                                modelResult.CustomerState = StateName;
+                                modelResult.CustomerState = vehicledetails.StateName;
 
 
 
@@ -983,39 +935,14 @@ namespace BookMyHsrp.ReportsLogics.VerifyPaymentDetails
                 {
                     modelResult.isFrame = "N";
                 }
-                var StateId = "";
-                var VehicleClass = "";
-                var StateName = "";
-                var PlateSticker = "";
-                if (pagetype=="Trailer")
+
+                if (userdetails.PlateSticker == "Plate")
                 {
-                    StateId = userdetails.StateId;
-                    StateId = userdetails.StateId;
-                    VehicleClass = userdetails.VehicleClass;
-                    StateName = userdetails.StateName;
-                    PlateSticker = vehicledetails.PlateSticker;
-                    modelResult.HSRPStateID = StateId;
-                    modelResult.State = StateName;
-                    modelResult.VehicleClass = VehicleClass;
-                }
-                else
-                {
-                    StateId = userdetails.StateId;
-                    VehicleClass = userdetails.VehicleClass;
-                    StateName = vehicledetails.StateName;
-                    PlateSticker = userdetails.PlateSticker;
-                }
-                if (PlateSticker == "Plate")
-                {
-                  var  paymentInitiated = await _verifyPaymentDetailService.PaymentInitiated(DealerAppointment.DealerAffixationCenterId, modelResult.orderNo, orderType, modelResult.SlotId, modelResult.SlotTime, modelResult.SlotBookingDate, modelResult.HSRPStateID, modelResult.RTOLocationID, modelResult.RTOName, modelResult.OwnerName, modelResult.OwnerFatherName, modelResult.Address1, modelResult.State, modelResult.City, modelResult.Pin, modelResult.MobileNo, modelResult.LandlineNo, modelResult.EmailID, modelResult.VehicleClass, modelResult.VehicleType, modelResult.ManufacturerName, modelResult.ChassisNo, modelResult.EngineNo, modelResult.ManufacturingYear, modelResult.VehicleRegNo, modelResult.FrontPlateSize, modelResult.RearPlateSize, modelResult.TotalAmount, modelResult.NetAmount, modelResult.BookingType, modelResult.BookingClassType, modelResult.FuelType, modelResult.DealerId, modelResult.OEMID, modelResult.BookedFrom, modelResult.AppointmentType, modelResult.BasicAmount, modelResult.FitmentCharge, modelResult.ConvenienceFee, modelResult.HomeDeliveryCharge, modelResult.GSTAmount, modelResult.CustomerGSTNo, modelResult.VehicleRCImage, modelResult.BharatStage, modelResult.ShippingAddress1, modelResult.ShippingAddress2, modelResult.ShippingCity, modelResult.ShippingState, modelResult.ShippingPinCode, modelResult.ShippingLandMark, modelResult.IGSTAmount, modelResult.CGSTAmount, modelResult.SGSTAmount, userdetails.PlateSticker, modelResult.FrontLaserCode, modelResult.RearLaserCode, modelResult.NonHomologVehicle, modelResult.isSuperTag, modelResult.isFrame, modelResult.FrontHSRPFileName, modelResult.RearHSRPFileName, modelResult.FileFIR, modelResult.Firno, modelResult.FirDate, modelResult.Firinfo, modelResult.PoliceStation, modelResult.ReplacementReason);
+                  var  paymentInitiated = await _verifyPaymentDetailService.PaymentInitiated(DealerAppointment.DealerAffixationCenterId, modelResult.orderNo, orderType, modelResult.SlotId, modelResult.SlotTime, modelResult.SlotBookingDate, modelResult.HSRPStateID, modelResult.RTOLocationID, modelResult.RTOName, modelResult.OwnerName, modelResult.OwnerFatherName, modelResult.Address1, modelResult.State, modelResult.City, modelResult.Pin, modelResult.MobileNo, modelResult.LandlineNo, modelResult.EmailID, modelResult.VehicleClass, modelResult.VehicleType, modelResult.ManufacturerName, modelResult.ChassisNo, modelResult.EngineNo, modelResult.ManufacturingYear, modelResult.VehicleRegNo, modelResult.FrontPlateSize, modelResult.RearPlateSize, modelResult.TotalAmount, modelResult.NetAmount, modelResult.BookingType, modelResult.BookingClassType, modelResult.FuelType, modelResult.DealerId, modelResult.OEMID, modelResult.BookedFrom, modelResult.AppointmentType, modelResult.BasicAmount, modelResult.FitmentCharge, modelResult.ConvenienceFee, modelResult.HomeDeliveryCharge, modelResult.GSTAmount, modelResult.CustomerGSTNo, modelResult.VehicleRCImage, modelResult.BharatStage, modelResult.ShippingAddress1, modelResult.ShippingAddress2, modelResult.ShippingCity, modelResult.ShippingState, modelResult.ShippingPinCode, modelResult.ShippingLandMark, modelResult.IGSTAmount, modelResult.CGSTAmount, modelResult.SGSTAmount, modelResult.FrontLaserCode, modelResult.RearLaserCode, modelResult.NonHomologVehicle, modelResult.isSuperTag, modelResult.isFrame, modelResult.FrontHSRPFileName, modelResult.RearHSRPFileName, modelResult.FileFIR, modelResult.Firno, modelResult.FirDate, modelResult.Firinfo, modelResult.PoliceStation, modelResult.ReplacementReason);
                     if (paymentInitiated.Count>0)
                     {
-                        foreach(var item in paymentInitiated)
-                        {
-                            modelResult.Status = item.status.ToString();
-                            modelResult.orderNo = item.OrderNo.ToString();
-                        }
-                        
+                        modelResult.Status = paymentInitiated[0].status.ToString();
+                        modelResult.orderNo = paymentInitiated[0].OrderNo.ToString();
 
                         if (modelResult.ChkFastTag)
                         {

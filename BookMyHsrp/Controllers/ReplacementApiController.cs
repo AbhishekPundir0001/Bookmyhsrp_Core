@@ -358,6 +358,18 @@ namespace BookMyHsrp.Controllers
                     getSession.OrderType = info.OrderType;
                     getSession.PlateOrderType= info.OrderType;
                     getSession.ReplacementType= info.OrderType;
+                    getSession.PlateSticker = "Plate";
+                    getSession.FrontLaserFileName = info.FrontLaserPath;
+                    getSession.RearLaserFileName = info.RearLaserPath;
+                    getSession.FirCopyName = info.FirCopy;
+                    getSession.RcFile = info.RcCopy;
+                    getSession.Firno = info.FirNumber;
+                    getSession.FirDate = info.FirDate;
+                    getSession.Firinfo = info.FirInfo;
+                    getSession.FrontLaserCode = info.FrontLaserCode;
+                    getSession.RearLaserCode = info.RearLaserCode;
+                    getSession.ReplacementReason = info.ReplacementReason;
+                    getSession.PoliceStation = info.PoliceStation;
 
                     var GetRootObjectSession = HttpContext.Session.GetString("UserSession");
                     jsonSerializer = System.Text.Json.JsonSerializer.Serialize(getSession);

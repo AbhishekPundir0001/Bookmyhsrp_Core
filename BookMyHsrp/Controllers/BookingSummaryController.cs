@@ -3,7 +3,6 @@ using BookMyHsrp.Libraries.BookingSummary.Model;
 using BookMyHsrp.Libraries.BookingSummary.Services;
 using BookMyHsrp.ReportsLogics.AppointmentSlot;
 using Microsoft.AspNetCore.Mvc;
-using System.Web.Helpers;
 using static BookMyHsrp.Libraries.BookingSummary.Model.BookingSummaryModel;
 using static BookMyHsrp.Libraries.HsrpWithColorSticker.Models.HsrpColorStickerModel;
 
@@ -40,25 +39,15 @@ namespace BookMyHsrp.Controllers
             var result = await _bookingSummaryService.BookingSummaryConfirmation(DealerAppointment);
             if (result.Count>0)
             {
-                if (userdetails.VehicleType == "MCV/HCV/Trailers" && userdetails.VehicleCat == "4W")
-                {
-                    bookingDetails.BharatStage = "BHARAT STAGE VI";
-                    bookingDetails.VehicleCategory = userdetails.VehicleCat;
-                    bookingDetails.VehicleClass = userdetails.VehicleClass;
-                }
-                else
-                {
-                    bookingDetails.VehicleCategory = vehicledetails.VehicleCategory;
-                    bookingDetails.VehicleClass = vehicledetails.VehicleClass;
-                    bookingDetails.BharatStage = userdetails.BhartStage;
-                }
+
                 bookingDetails.BharatStage = userdetails.BhartStage;
                 bookingDetails.DealerAffixationCenterId = DealerAppointment.DealerAffixationCenterId;
                 bookingDetails.ChassisNo = vehicledetails.ChassisNo;
                 bookingDetails.EngineNo = vehicledetails.EngineNo;
                 bookingDetails.FuelType = vehicledetails.FuelType;
                 bookingDetails.PlateSticker = vehicledetails.PlateSticker;
-                
+                bookingDetails.VehicleCategory = vehicledetails.VehicleCategory;
+                bookingDetails.VehicleClass = vehicledetails.VehicleClass;
                 bookingDetails.VehicleRegNo = vehicledetails.VehicleRegNo;
                 bookingDetails.CustomerMobile = userdetails.CustomerMobile;
                 bookingDetails.VehicleType = userdetails.VehicleType;

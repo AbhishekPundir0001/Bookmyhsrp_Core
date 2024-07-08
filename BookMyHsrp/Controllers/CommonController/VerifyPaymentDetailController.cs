@@ -48,7 +48,6 @@ namespace BookMyHsrp.Controllers.CommonController
             var UserDetail = HttpContext.Session.GetString("UserDetail");
             var dealerAppointment = HttpContext.Session.GetString("AppointmentSlotId");
             var bookingDetails = HttpContext.Session.GetString("UserBookingDetails");
-            var pagetype = HttpContext.Session.GetString("PageType");
             var Vehicledetails = System.Text.Json.JsonSerializer.Deserialize<GetSessionBookingDetails>(vehicleDetail);
             var userdetails = System.Text.Json.JsonSerializer.Deserialize<GetSessionBookingDetails>(UserDetail);
             var DealerAppointment = System.Text.Json.JsonSerializer.Deserialize<GetSessionBookingDetails>(dealerAppointment);
@@ -60,7 +59,7 @@ namespace BookMyHsrp.Controllers.CommonController
             {
                 Console.WriteLine($"Slot ID: {slot.SlotID}, Slot Name: {slot.SlotName}");
             }
-            var result = await _verifyPaymentDetailsConnector.Payment(Vehicledetails, userdetails, DealerAppointment, bookingDetail, ip, payment.PaymentStatus, timeSlotChecking, pagetype);
+            var result = await _verifyPaymentDetailsConnector.Payment(Vehicledetails, userdetails, DealerAppointment, bookingDetail, ip, payment.PaymentStatus, timeSlotChecking);
            if(result!=null)
             {
                 var paymentSession = new PaymentDetails();
@@ -72,7 +71,7 @@ namespace BookMyHsrp.Controllers.CommonController
                 paymentSession.Basic_AmtFrm= result.Basic_AmtFrm;
                 paymentSession.BharatStage= result.BharatStage;
                 paymentSession.BookedFrom= result.BookedFrom;
-               paymentSession.BookingType= result.BookingType;
+                paymentSession.BookingType= result.BookingType;
                 paymentSession.CGSTAmount= result.CGSTAmount;
                 paymentSession.CGSTAmountFrm= result.CGSTAmountFrm;
                 paymentSession.CGSTAmountST= result.CGSTAmountST;
