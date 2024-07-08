@@ -136,29 +136,7 @@ namespace BookMyHsrp.Libraries.HsrpWithColorSticker.Services
             HsrpWithColorStickerQueries.InsertVaahanLogWithoutApi, parameters);
             return insertVahanLog;
         }
-
-        public async Task<dynamic> InsertVaahanlogQuery(string getVehicleRegno,string getChassisNo,string getEngineNo,dynamic _vd)
-        {
-
-            var response = JsonConvert.SerializeObject(_vd);
-            var parameters = new DynamicParameters();
-            parameters.Add("@RegistrationNo", getVehicleRegno.ToUpper());
-            parameters.Add("@ChassisNo", getChassisNo.ToUpper());
-            parameters.Add("@EngineNo", getEngineNo.ToUpper());
-            parameters.Add("@Fuel", _vd.fuel);
-            parameters.Add("@Norms", _vd.norms);
-            parameters.Add("@VehicleCategory", _vd.vchCatg);
-            parameters.Add("@VehicleType", _vd.vchType);
-            parameters.Add("@Maker", _vd.maker);
-            parameters.Add("@ResponseJson", response);
-            parameters.Add("@RegistrationDate", _vd.regnDate);
-            parameters.Add("@HsrpFrontLasserCode", _vd.hsrpFrontLaserCode);
-            parameters.Add("@HsrpRearLasserCode", _vd.hsrpRearLaserCode);
-            var insertVahanLog = await _databaseHelperPrimary.QueryAsync<dynamic>(
-            HsrpWithColorStickerQueries.InsertVaahanLogWithoutApi, parameters);
-            return insertVahanLog;
-        }
-
+        
         public async Task<dynamic> GetOrderNumber(VahanDetailsDto vahanDetailsDto)
         {
 
@@ -230,16 +208,6 @@ namespace BookMyHsrp.Libraries.HsrpWithColorSticker.Services
             var bookingHistoryId = await _databaseHelper.QueryAsync<dynamic>(HsrpWithColorStickerQueries.GetBookingHistoryId, parameter);
             return bookingHistoryId;
         }
-        public async Task<dynamic> BookingHistoryIdForTractor(string RegistrationNo, string ChassisNo)
-        {
-
-
-            var parameter = new DynamicParameters();
-            parameter.Add("@RegistrationNo", RegistrationNo);
-            parameter.Add("@ChassisNo", ChassisNo);
-            var bookingHistoryId = await _databaseHelper.QueryAsync<dynamic>(HsrpWithColorStickerQueries.GetBookingHistoryIdForTractor, parameter);
-            return bookingHistoryId;
-        }
         public async Task<dynamic> VehicleSession(string VehicleCatVahan)
         {
 
@@ -249,7 +217,7 @@ namespace BookMyHsrp.Libraries.HsrpWithColorSticker.Services
             var vehicleSesion = await _databaseHelper.QueryAsync<dynamic>(HsrpWithColorStickerQueries.VehicleSession, parameters);
             return vehicleSesion;
         }
-        public async Task<dynamic> OemVehicleType(string HSRPHRVehicleType,string VehicleTypeVahan,string  newId,string FuelTypeVahan)
+        public async Task<dynamic> OemVehicleType(string HSRPHRVehicleType,string VehicleTypeVahan,int  newId,string FuelTypeVahan)
         {
 
 
@@ -305,27 +273,6 @@ namespace BookMyHsrp.Libraries.HsrpWithColorSticker.Services
             var InsertVahanLogQuery = await _databaseHelper.QueryAsync<dynamic>(HsrpWithColorStickerQueries.InsertVahanLogQuery, parameter);
             return InsertVahanLogQuery;
         }
-
-        public async Task<dynamic> InsertVahanLogQueryForTractor(string VehicleRegNo, string chassisNo, string engineNo)
-        {
-
-            var parameters = new DynamicParameters();
-            parameters.Add("@RegistrationNo", VehicleRegNo.ToUpper());
-            parameters.Add("@ChassisNo", chassisNo.ToUpper());
-            parameters.Add("@EngineNo", engineNo.ToUpper());
-            var insertVahanLog = await _databaseHelperPrimary.QueryAsync<dynamic>(
-            HsrpWithColorStickerQueries.InsertVahanLogQueryForTractor, parameters);
-            return insertVahanLog;
-        }
-        public async Task<dynamic> GetOemIdForTractor()
-        {
-
-            var insertVahanLog = await _databaseHelperPrimary.QueryAsync<dynamic>(
-            HsrpWithColorStickerQueries.GetOemIdTractor);
-            return insertVahanLog;
-        }
-
-
         //(VahanDetailsDto requestDto)
         //{
 

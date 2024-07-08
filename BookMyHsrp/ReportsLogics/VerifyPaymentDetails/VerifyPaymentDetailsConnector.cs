@@ -646,16 +646,19 @@ namespace BookMyHsrp.ReportsLogics.VerifyPaymentDetails
             modelResult.CGSTAmountFrm = 0;
             modelResult.IGSTAmountFrm = 0;
             modelResult.SGSTAmountFrm = 0;
-            modelResult.FrontHSRPFileName = string.Empty;
-            modelResult.RearHSRPFileName = string.Empty;
-            modelResult.FileFIR = string.Empty;
-            modelResult.FirDate = string.Empty;
-            modelResult.Firinfo = string.Empty;
-            modelResult.PoliceStation = string.Empty;
-            modelResult.Firno = string.Empty;
-            modelResult.FrontLaserCode = string.Empty;
-            modelResult.RearLaserCode = string.Empty;
-            modelResult.ReplacementReason = string.Empty;
+
+            modelResult.FrontHSRPFileName = userdetails.FrontLaserFileName;
+            modelResult.RearHSRPFileName = userdetails.RearLaserFileName;
+
+            modelResult.FileFIR = userdetails.FirCopyName;
+            modelResult.FirDate = userdetails.FirDate; //userdetails.FirDate;
+            modelResult.Firinfo = "";// userdetails.Firinfo;
+            modelResult.PoliceStation = "";// userdetails.PoliceStation;
+            modelResult.Firno = userdetails.Firno; //userdetails.Firno;
+            modelResult.FrontLaserCode = userdetails.FrontLaserCode;
+            modelResult.RearLaserCode = userdetails.RearLaserCode;
+            modelResult.ReplacementReason = userdetails.ReplacementReason;
+            modelResult.VehicleRCImage = userdetails.RcFile;
             if (orderType == "")
             {
 
@@ -935,11 +938,11 @@ namespace BookMyHsrp.ReportsLogics.VerifyPaymentDetails
 
                 if (userdetails.PlateSticker == "Plate")
                 {
-                  var  paymentInitiated = await _verifyPaymentDetailService.PaymentInitiated(DealerAppointment.DealerAffixationCenterId, modelResult.orderNo, orderType, modelResult.SlotId, modelResult.SlotTime, modelResult.SlotBookingDate, modelResult.HSRPStateID, modelResult.RTOLocationID, modelResult.RTOName, modelResult.OwnerName, modelResult.OwnerFatherName, modelResult.Address1, modelResult.State, modelResult.City, modelResult.Pin, modelResult.MobileNo, modelResult.LandlineNo, modelResult.EmailID, modelResult.VehicleClass, modelResult.VehicleType, modelResult.ManufacturerName, modelResult.ChassisNo, modelResult.EngineNo, modelResult.ManufacturingYear, modelResult.VehicleRegNo, modelResult.FrontPlateSize, modelResult.RearPlateSize, modelResult.TotalAmount, modelResult.NetAmount, modelResult.BookingType, modelResult.BookingClassType, modelResult.FuelType, modelResult.DealerId, modelResult.OEMID, modelResult.BookedFrom, modelResult.AppointmentType, modelResult.BasicAmount, modelResult.FitmentCharge, modelResult.ConvenienceFee, modelResult.HomeDeliveryCharge, modelResult.GSTAmount, modelResult.CustomerGSTNo, modelResult.VehicleRCImage, modelResult.BharatStage, modelResult.ShippingAddress1, modelResult.ShippingAddress2, modelResult.ShippingCity, modelResult.ShippingState, modelResult.ShippingPinCode, modelResult.ShippingLandMark, modelResult.IGSTAmount, modelResult.CGSTAmount, modelResult.SGSTAmount, userdetails.PlateSticker, modelResult.FrontLaserCode, modelResult.RearLaserCode, modelResult.NonHomologVehicle, modelResult.isSuperTag, modelResult.isFrame, modelResult.FrontHSRPFileName, modelResult.RearHSRPFileName, modelResult.FileFIR, modelResult.Firno, modelResult.FirDate, modelResult.Firinfo, modelResult.PoliceStation, modelResult.ReplacementReason);
+                  var  paymentInitiated = await _verifyPaymentDetailService.PaymentInitiated(DealerAppointment.DealerAffixationCenterId, modelResult.orderNo, orderType, modelResult.SlotId, modelResult.SlotTime, modelResult.SlotBookingDate, modelResult.HSRPStateID, modelResult.RTOLocationID, modelResult.RTOName, modelResult.OwnerName, modelResult.OwnerFatherName, modelResult.Address1, modelResult.State, modelResult.City, modelResult.Pin, modelResult.MobileNo, modelResult.LandlineNo, modelResult.EmailID, modelResult.VehicleClass, modelResult.VehicleType, modelResult.ManufacturerName, modelResult.ChassisNo, modelResult.EngineNo, modelResult.ManufacturingYear, modelResult.VehicleRegNo, modelResult.FrontPlateSize, modelResult.RearPlateSize, modelResult.TotalAmount, modelResult.NetAmount, modelResult.BookingType, modelResult.BookingClassType, modelResult.FuelType, modelResult.DealerId, modelResult.OEMID, modelResult.BookedFrom, modelResult.AppointmentType, modelResult.BasicAmount, modelResult.FitmentCharge, modelResult.ConvenienceFee, modelResult.HomeDeliveryCharge, modelResult.GSTAmount, modelResult.CustomerGSTNo, modelResult.VehicleRCImage, modelResult.BharatStage, modelResult.ShippingAddress1, modelResult.ShippingAddress2, modelResult.ShippingCity, modelResult.ShippingState, modelResult.ShippingPinCode, modelResult.ShippingLandMark, modelResult.IGSTAmount, modelResult.CGSTAmount, modelResult.SGSTAmount, modelResult.FrontLaserCode, modelResult.RearLaserCode, modelResult.NonHomologVehicle, modelResult.isSuperTag, modelResult.isFrame, modelResult.FrontHSRPFileName, modelResult.RearHSRPFileName, modelResult.FileFIR, modelResult.Firno, modelResult.FirDate, modelResult.Firinfo, modelResult.PoliceStation, modelResult.ReplacementReason);
                     if (paymentInitiated.Count>0)
                     {
-                        modelResult.Status = paymentInitiated.status.ToString();
-                        modelResult.orderNo = paymentInitiated.OrderNo.ToString();
+                        modelResult.Status = paymentInitiated[0].status.ToString();
+                        modelResult.orderNo = paymentInitiated[0].OrderNo.ToString();
 
                         if (modelResult.ChkFastTag)
                         {

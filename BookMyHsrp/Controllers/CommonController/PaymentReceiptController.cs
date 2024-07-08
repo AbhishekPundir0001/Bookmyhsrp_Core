@@ -28,15 +28,15 @@ namespace BookMyHsrp.Controllers.CommonController
         public async Task<IActionResult> PaymentDetail()
         {
             var detailsPayment = new PaymentDetails();
-           var bookingDetails = HttpContext.Session.GetString("UserBookingDetails");
-           var dealerDetails =   HttpContext.Session.GetString("DealerDetails");
-           var userDetails = HttpContext.Session.GetString("UserSession");
-           var details =  HttpContext.Session.GetString("UserDetail");
+            var bookingDetails = HttpContext.Session.GetString("UserBookingDetails");
+            var dealerDetails = HttpContext.Session.GetString("DealerDetails");
+            var userDetails = HttpContext.Session.GetString("UserSession");
+            var details = HttpContext.Session.GetString("UserDetail");
             //var timeSlot = HttpContext.Session.GetString("TimeSlot");
-           //var timeslotchecking=  HttpContext.Session.GetString("TimeSlotChecking");
-          var paymentDetails    =  HttpContext.Session.GetString("PaymentDetails");
-          var appointmentSlot    =  HttpContext.Session.GetString("AppointmentSlotId");
-            
+            //var timeslotchecking=  HttpContext.Session.GetString("TimeSlotChecking");
+            var paymentDetails = HttpContext.Session.GetString("PaymentDetails");
+            var appointmentSlot = HttpContext.Session.GetString("AppointmentSlotId");
+
             var BookingDetails = System.Text.Json.JsonSerializer.Deserialize<GetSessionBookingDetails>(bookingDetails);
             var UserDetails = System.Text.Json.JsonSerializer.Deserialize<GetSessionBookingDetails>(userDetails);
             var Details = System.Text.Json.JsonSerializer.Deserialize<GetSessionBookingDetails>(details);
@@ -45,32 +45,36 @@ namespace BookMyHsrp.Controllers.CommonController
             var PaymentDetails1 = System.Text.Json.JsonSerializer.Deserialize<PaymentDetails>(paymentDetails);
             var DealerDetails = System.Text.Json.JsonSerializer.Deserialize<GetSessionBookingDetails>(dealerDetails);
             var AppointmentSlot = System.Text.Json.JsonSerializer.Deserialize<GetSessionBookingDetails>(appointmentSlot);
+            if (UserDetails.VehicleType == "MCV/HCV/Trailers" && UserDetails.VehicleCat == "4W")
+            {
+                detailsPayment.BharatStage = "BHARAT STAGE VI";
+                detailsPayment.VehicleClass = UserDetails.VehicleClass;
+            }
+            else
+            {
+                detailsPayment.BharatStage = PaymentDetails1.BharatStage;
+            }
             detailsPayment.CustomerAddress1 = PaymentDetails1.Address1;
             detailsPayment.BharatStage = PaymentDetails1.BharatStage;
-            detailsPayment.ChassisNo= UserDetails.ChassisNo;
+            detailsPayment.ChassisNo = UserDetails.ChassisNo;
             detailsPayment.VehicleRegNo = UserDetails.VehicleRegNo;
-            detailsPayment.EngineNo= UserDetails.EngineNo;
-            detailsPayment.NetAmount= PaymentDetails1.NetAmount;
-            detailsPayment.FuelType= PaymentDetails1.FuelType;
-            detailsPayment.Message  = PaymentDetails1.Message;
+            detailsPayment.EngineNo = UserDetails.EngineNo;
+            detailsPayment.NetAmount = PaymentDetails1.NetAmount;
+            detailsPayment.FuelType = PaymentDetails1.FuelType;
+            detailsPayment.Message = PaymentDetails1.Message;
             detailsPayment.MobileNo = PaymentDetails1.MobileNo;
             detailsPayment.DealerAffixationCenterName = BookingDetails.DealerAffixationCenterName;
-            detailsPayment.DealerAffixationAddress= BookingDetails.DealerAffixationCenterAddress;
-            detailsPayment.EmailID= Details.CustomerEmail;
+            detailsPayment.DealerAffixationAddress = BookingDetails.DealerAffixationCenterAddress;
+            detailsPayment.EmailID = Details.CustomerEmail;
             detailsPayment.Order_No = PaymentDetails1.Order_No;
             detailsPayment.CustomerName = Details.CustomerName;
             detailsPayment.DealerAffixationCenterContactPerson = AppointmentSlot.DealerAffixationCenterContactPerson;
             detailsPayment.DealerAffixationCenterContactNo = AppointmentSlot.DealerAffixationCenterContactNo;
             detailsPayment.orderNo = PaymentDetails1.orderNo;
-            var update =await _paymentReceiptService.UpdateStatusOfPayment(detailsPayment.orderNo);
+            var update = await _paymentReceiptService.UpdateStatusOfPayment(detailsPayment.orderNo);
             return Json(detailsPayment);
         }
-        //[Route("printReceipt")]
-        //[HttpPost]
-        //public  async Task<IActionResult> PaymentReceipt([FromBody] PaymentReceipt paymentReceipt)
-        //{
 
-        //}
 
     }
 }

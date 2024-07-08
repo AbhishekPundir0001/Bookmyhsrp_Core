@@ -25,39 +25,17 @@ namespace BookMyHsrp.ReportsLogics.DealerDelivery
             var response = new SetSessionDealer();
             response.data =new DealerData();
             response.dealerAppointment = new List<DealerAppointmentData>();
-            var Ordertype = vehicledetails.OrderType==null?"": vehicledetails.OrderType;
-            var OemId = "";
-            if (vehicledetails.VehicleType== "MCV/HCV/Trailers" && vehicledetails.VehicleCat=="4W")
-            {
-                 OemId = vehicledetails.OemId;
-
-            }
-            else
-            {
-                 OemId = sessiondetails.OemId;
-            }
-            
+            var Ordertype = vehicledetails.OrderType==null?"": vehicledetails.OrderType;    
+            var OemId= sessiondetails.OemId;
             decimal netamount;
-            var StateId = "";
-            var VehicleClass = "";
-            if (vehicledetails.VehicleType == "MCV/HCV/Trailers" && vehicledetails.VehicleCat == "4W")
-            {
-                 StateId = vehicledetails.StateId;
-                 VehicleClass = vehicledetails.VehicleClass;
-            }
-            else
-            {
-                 StateId = sessiondetails.StateId;
-                VehicleClass = vehicledetails.VehicleClass;
-            }
-            
+            var StateId= sessiondetails.StateId;
             var VehicleCat= vehicledetails.VehicleCat;
             if(VehicleCat=="2WN")
             {
                 VehicleCat = "2W";
             }
             var VehicleType= vehicledetails.VehicleType;
-            
+            var VehicleClass= sessiondetails.VehicleClass;
             
             if (OemId != null && StateId != null && VehicleCat != null && VehicleType != null && VehicleClass != null)
             {
@@ -69,18 +47,11 @@ namespace BookMyHsrp.ReportsLogics.DealerDelivery
                         if (OemId == "272" && VehicleType == "Scooter_2W")
                         {
                            var getDealers = await _dealerDeliveryService.GetDealersForRajasthan(OemId, StateId, VehicleType, VehicleCat, VehicleClass, Ordertype);
-                            if (getDealers.Count > 0)
-                            {
-                                response = await CheckOrderType(getDealers, vehicledetails, sessiondetails);
-                            }
                         }
                         else
                         {
                          var getDealers = await _dealerDeliveryService.GetDealersForRajasthanElse(OemId, StateId, VehicleType, VehicleCat, VehicleClass, Ordertype);
-                            if (getDealers.Count > 0)
-                            {
-                                response = await CheckOrderType(getDealers, vehicledetails, sessiondetails);
-                            }
+
                         }
 
                     }
@@ -89,10 +60,6 @@ namespace BookMyHsrp.ReportsLogics.DealerDelivery
                         if (OemId == "272" && VehicleType == "Scooter_2W")
                         {
                            var getDealers = await _dealerDeliveryService.GetDealers(OemId, StateId, VehicleType, VehicleCat, VehicleClass, Ordertype);
-                            if (getDealers.Count > 0)
-                            {
-                                response = await CheckOrderType(getDealers, vehicledetails, sessiondetails);
-                            }
                         }
                         else
                         {
@@ -189,34 +156,12 @@ namespace BookMyHsrp.ReportsLogics.DealerDelivery
             response.data = new DealerData();
             response.dealerAppointment= new List<DealerAppointmentData>();
             var Ordertype = vehicledetails.OrderType == null ? "" : vehicledetails.OrderType;
-            var OemId = "";
+            var OemId = sessiondetails.OemId;
             decimal netamount;
-            if (vehicledetails.VehicleType == "MCV/HCV/Trailers" && vehicledetails.VehicleCat == "4W")
-            {
-                OemId = vehicledetails.OemId;
-
-            }
-            else
-            {
-                OemId = sessiondetails.OemId;
-            }
-            var StateId = "";
-            var VehicleClass = "";
-            var StateName = "";
-            if (vehicledetails.VehicleType == "MCV/HCV/Trailers" && vehicledetails.VehicleCat == "4W")
-            {
-                StateId = vehicledetails.StateId;
-                VehicleClass = vehicledetails.VehicleClass;
-                StateName = vehicledetails.StateName;
-            }
-            else
-            {
-                StateId = sessiondetails.StateId;
-                VehicleClass = vehicledetails.VehicleClass;
-                StateName = vehicledetails.StateName;
-            }
+            var StateId = sessiondetails.StateId;
             var VehicleCat = sessiondetails.VehicleCategory;
             var VehicleType = vehicledetails.VehicleType;
+            var VehicleClass = sessiondetails.VehicleClass;
             string TotalAmountWithGST = "0.00";
             if (dealers.Count > 0)
             {
@@ -280,7 +225,7 @@ namespace BookMyHsrp.ReportsLogics.DealerDelivery
             }
             else
             {
-                var checkOemRate = await _dealerDeliveryService.CheckOemRateQuery(OemId, Ordertype, VehicleClass, VehicleType, vehicledetails.VehicleCategoryId, vehicledetails.FuelType, vehicledetails.DeliveryPoint, StateId, StateName);
+                var checkOemRate = await _dealerDeliveryService.CheckOemRateQuery(OemId, Ordertype, VehicleClass, VehicleType, vehicledetails.VehicleCategoryId, vehicledetails.FuelType, vehicledetails.DeliveryPoint, StateId, sessiondetails.StateName);
                 if (checkOemRate.Count > 0)
                 {
                     if (checkOemRate.Count > 0)

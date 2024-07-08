@@ -71,7 +71,7 @@ namespace BookMyHsrp.Controllers.CommonController
                 paymentSession.Basic_AmtFrm= result.Basic_AmtFrm;
                 paymentSession.BharatStage= result.BharatStage;
                 paymentSession.BookedFrom= result.BookedFrom;
-               paymentSession.BookingType= result.BookingType;
+                paymentSession.BookingType= result.BookingType;
                 paymentSession.CGSTAmount= result.CGSTAmount;
                 paymentSession.CGSTAmountFrm= result.CGSTAmountFrm;
                 paymentSession.CGSTAmountST= result.CGSTAmountST;
