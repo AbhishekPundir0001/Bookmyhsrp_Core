@@ -56,6 +56,7 @@ namespace BookMyHsrp.Controllers
                 }
                 else
                 {
+                    var jsonSerializer = "";
                     var checkpincode = await _homeDeliveryService.CheckPinCode(vehicledetails, pincode);
                     if (checkpincode.Count > 0)
                     {
@@ -73,6 +74,7 @@ namespace BookMyHsrp.Controllers
                             StateName = state.StateName;
                             DealerAffixationCenterCity = state.DealerAffixationCenterCity;
                             hsrpstate = state.hsrpstate;
+                            DealerAffixationID = state.DealerAffixationID;
                         }
                         if (stateId != checkpincode[0].StateId)
                         {
@@ -99,6 +101,18 @@ namespace BookMyHsrp.Controllers
                         check.DeliveryCity = DealerAffixationCenterCity;
                         check.DeliveryState = hsrpstate;
                         check.Pincode = pincode;
+                        check.Pincode = DealerAffixationID;
+                        jsonSerializer = System.Text.Json.JsonSerializer.Serialize(check);
+                        if (jsonSerializer != null)
+                        {
+                            HttpContext.Session.SetString("DealerDetails", jsonSerializer);
+                            return Json(check);
+                        }
+                        else
+                        {
+
+                            return BadRequest(new { Error = true, Message = result.message });
+                        }
                     }
                     else
                     {
@@ -121,6 +135,7 @@ namespace BookMyHsrp.Controllers
                 return Json(check);
 
             }
+            if()
 
             return Json(check);
 

@@ -45,7 +45,7 @@ namespace BookMyHsrp.Controllers.CommonController
             var PaymentDetails1 = System.Text.Json.JsonSerializer.Deserialize<PaymentDetails>(paymentDetails);
             var DealerDetails = System.Text.Json.JsonSerializer.Deserialize<GetSessionBookingDetails>(dealerDetails);
             var AppointmentSlot = System.Text.Json.JsonSerializer.Deserialize<GetSessionBookingDetails>(appointmentSlot);
-            if (UserDetails.VehicleType == "MCV/HCV/Trailers" && UserDetails.VehicleCat == "4W")
+             if (UserDetails.VehicleType == "MCV/HCV/Trailers" && UserDetails.VehicleCat == "4W")
             {
                 detailsPayment.BharatStage = "BHARAT STAGE VI";
                 detailsPayment.VehicleClass = UserDetails.VehicleClass;
@@ -74,12 +74,7 @@ namespace BookMyHsrp.Controllers.CommonController
             var update =await _paymentReceiptService.UpdateStatusOfPayment(detailsPayment.orderNo);
             return Json(detailsPayment);
         }
-        //[Route("printReceipt")]
-        //[HttpPost]
-        //public  async Task<IActionResult> PaymentReceipt([FromBody] PaymentReceipt paymentReceipt)
-        //{
-
-        //}
+       
 
     }
 }
