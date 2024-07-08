@@ -51,6 +51,7 @@ using BookMyHsrp.Libraries.VerifyPaymentDetail.Services;
 using BookMyHsrp.ReportsLogics.VerifyPaymentDetails;
 using BookMyHsrp.Libraries.PaymentReceipt.Services;
 using BookMyHsrp.Libraries.ReAppointment.Services;
+using BookMyHsrp.Libraries.ReAppointmentBookingSummary.Services;
 namespace BookMyHsrp
 {
     public class Startup
@@ -171,6 +172,7 @@ namespace BookMyHsrp
            services.AddTransient<IGrievanceServices, GrievanceServices>();
             services.AddTransient<IPaymentReceiptService, PaymentReceiptService>();
             services.AddTransient<IReAppointmentServices, ReAppointmentServices>();
+            services.AddTransient<IReAppointmentBookingSummaryServices, ReAppointmentBookingSummaryServices>();
             services.AddScoped<HsrpWithColorStickerConnector>();
             services.AddScoped<AppointmentSlotConnector>();
             services.AddScoped<TrackYourOrderConnector>();
@@ -316,7 +318,6 @@ namespace BookMyHsrp
                 app.UseHsts();
             }
         }
-
         private void ConfigureExceptionHandler(IApplicationBuilder app)
         {
             app.UseExceptionHandler(appBuilder =>

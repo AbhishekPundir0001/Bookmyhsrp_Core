@@ -11,6 +11,7 @@ using static BookMyHsrp.Libraries.HsrpWithColorSticker.Models.HsrpColorStickerMo
 
 namespace BookMyHsrp.Controllers.CommonController
 {
+
     public class AppointmentSlotController : Controller
     {
         private readonly ILogger<AppointmentSlotController> _logger;

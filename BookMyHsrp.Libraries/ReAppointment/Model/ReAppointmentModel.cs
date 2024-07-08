@@ -138,7 +138,7 @@ namespace BookMyHsrp.Libraries.ReAppointment.Model
             public string VehicleRegNo { get; set; } = "";
             public string OldAppointmentDate { get; set; } = "";
             public string OldAppointmentSlot { get; set; } = "";
-            public int ReOEMId { get; set; }
+            public string ReOEMId { get; set; } = "";
             public int ReDealerAffixationCenterid { get; set; } 
             public string ReSessionOwnerName { get; set; } = "";
             public string ReSessionMobileNo { get; set; } = "";
@@ -149,7 +149,7 @@ namespace BookMyHsrp.Libraries.ReAppointment.Model
             public string ReDeliveryPoint { get; set; } = "";
             public string ReStateId { get; set; } = "";
             public string BookingType { get; set; } = "";
-            public int ReDealerAffixationCenteridid { get; set; }
+            public string ReDealerAffixationCenteridid { get; set; } = "";
             public string ReDealerAffixationCenterName { get; set; } = "";
 
         }
