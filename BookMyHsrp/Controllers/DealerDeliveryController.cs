@@ -22,7 +22,7 @@ namespace BookMyHsrp.Controllers
         [Route("/dealerDelivery")]
         public IActionResult DealerDelivery()
         {
-          
+
             return View();
         }
         [Route("/get-stateId")]
@@ -32,9 +32,20 @@ namespace BookMyHsrp.Controllers
             var sessiondata = HttpContext.Session.GetString("UserSession");
             var sessiondata1 = HttpContext.Session.GetString("UserDetail");
             var vehicledetails = System.Text.Json.JsonSerializer.Deserialize<GetSessionBookingDetails>(sessiondata);
-            var stateId = vehicledetails.StateId;
+            var vehicledetail = System.Text.Json.JsonSerializer.Deserialize<GetSessionBookingDetails>(sessiondata1);
+            var stateId = "";
+            if (vehicledetail.VehicleType == "MCV/HCV/Trailers")
+            {
+                stateId = vehicledetail.StateId;
+            }
+            else
+            {
+                stateId = vehicledetail.StateId;
+            }
             return Json(stateId);
+
         }
+     
         [Route("/bind-dealers")]
         [HttpGet]
         public async Task<IActionResult> BindDealers()
@@ -49,7 +60,8 @@ namespace BookMyHsrp.Controllers
             var setdata = new SetSessionDealer();
             setdata.data = new DealerData();
             setdata.dealerAppointment = new List<DealerAppointmentData>();
-            var result =await _dealerDeliveryConnector.GetDealersData(vehicledetails, sessionDetail);
+            var pagetype = HttpContext.Session.GetString("PageType");
+            var result =await _dealerDeliveryConnector.GetDealersData(vehicledetails, sessionDetail, pagetype);
             if(result.Status!=0)
             {
                  

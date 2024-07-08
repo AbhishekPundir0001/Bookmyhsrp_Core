@@ -13,12 +13,16 @@
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/owl.carousel.min.css">
-    <!--     <link rel="stylesheet" href="assets/css/owl.theme.default.min.css"> -->
-    <!--    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.1.4/dist/css/datepicker.min.css">-->
+    <!--<link rel="stylesheet" href="assets/css/owl.theme.default.min.css">-->
+    <!--<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.1.4/dist/css/datepicker.min.css">-->
     <link rel="stylesheet" href="assets/css/calender.css">
+    <style>
+        .bottom2{
+            position:inherit;
+        }
+    </style>
 
-
-
+  
 </head>
 
 <body>
@@ -306,7 +310,7 @@
                     $('#fitmentCenterAddress').text(result.DealerAffixationAddress);
                     $('#bankTrackingId').text(bokingId);
                     $('#fitmentPersonName').text(result.DealerAffixationCenterContactPerson);
-                    debugger
+                  
                     $('#fitmentMobNo').text(result.DealerAffixationCenterContactNo);
                     var later = new Date(now);
                     later.setDate(now.getDate() + 15);

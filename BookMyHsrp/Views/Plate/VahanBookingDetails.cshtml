@@ -816,12 +816,36 @@
                    
                     userData = response;
                     var vehRegDate = "" + response.VehRegDate;
+                        
                         if (response.Fuel == "ELECTRIC(BOV)") {
-                            var newUrl = url;
-                            window.location.href = "http://localhost:4100/plate/details?BookingType=Electric";
+                           
+                            if (_BookingType != 'Electric') {
+                                var newUrl = url;
+                                errorFunc('Please Confirm For Non-Electric Vehicle')
+                                setTimeout(function () {
+                                    window.location.href = "http://localhost:4100/plate/details?BookingType=Electric";
+                                    //window.location.href = "http://103.197.122.135:1600/plate/details?BookingType=Electric";
+                                }, 3000);
+                               
 
-                            $('#motorNo').show();
-                            
+                                $('#motorNo').show();
+                                return;
+                            }
+
+                        }
+                        else if (_BookingType == 'Electric') {
+                            if (response.Fuel != "ELECTRIC(BOV)") {
+                                var newUrl = url;
+                                errorFunc('Please Confirm For Electric Vehicle')
+                                setTimeout(function () {
+                                    window.location.href = "http://localhost:4100/plate/details?BookingType=Hsrp";
+                                    // window.location.href = "http://103.197.122.135:1600/plate/details?BookingType=Hsrp";
+                                }, 3000);
+
+
+                                $('#motorNo').show();
+                                return;
+                            }
 
                         }
                         $('#show-Div').show();

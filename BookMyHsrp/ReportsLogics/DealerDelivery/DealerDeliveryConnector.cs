@@ -19,7 +19,7 @@ namespace BookMyHsrp.ReportsLogics.DealerDelivery
 
 
         } 
-        public async Task<dynamic> GetDealersData(dynamic vehicledetails,dynamic sessiondetails)
+        public async Task<dynamic> GetDealersData(dynamic vehicledetails,dynamic sessiondetails,string pagetype)
         {
 
             var response = new SetSessionDealer();
@@ -27,7 +27,7 @@ namespace BookMyHsrp.ReportsLogics.DealerDelivery
             response.dealerAppointment = new List<DealerAppointmentData>();
             var Ordertype = vehicledetails.OrderType==null?"": vehicledetails.OrderType;
             var OemId = "";
-            if (vehicledetails.VehicleType== "MCV/HCV/Trailers" && vehicledetails.VehicleCat=="4W")
+            if (pagetype=="Trailer")
             {
                  OemId = vehicledetails.OemId;
 
@@ -40,7 +40,7 @@ namespace BookMyHsrp.ReportsLogics.DealerDelivery
             decimal netamount;
             var StateId = "";
             var VehicleClass = "";
-            if (vehicledetails.VehicleType == "MCV/HCV/Trailers" && vehicledetails.VehicleCat == "4W")
+            if (pagetype == "Trailer")
             {
                  StateId = vehicledetails.StateId;
                  VehicleClass = vehicledetails.VehicleClass;
@@ -48,7 +48,7 @@ namespace BookMyHsrp.ReportsLogics.DealerDelivery
             else
             {
                  StateId = sessiondetails.StateId;
-                VehicleClass = vehicledetails.VehicleClass;
+                VehicleClass = sessiondetails.VehicleClass;
             }
             
             var VehicleCat= vehicledetails.VehicleCat;
@@ -81,6 +81,10 @@ namespace BookMyHsrp.ReportsLogics.DealerDelivery
                             {
                                 response = await CheckOrderType(getDealers, vehicledetails, sessiondetails);
                             }
+                            else
+                            {
+
+                            }
                         }
 
                     }
@@ -93,6 +97,10 @@ namespace BookMyHsrp.ReportsLogics.DealerDelivery
                             {
                                 response = await CheckOrderType(getDealers, vehicledetails, sessiondetails);
                             }
+                            else
+                            {
+
+                            }
                         }
                         else
                         {
@@ -103,73 +111,7 @@ namespace BookMyHsrp.ReportsLogics.DealerDelivery
                              }
                         }
                     }
-                    //if (int.TryParse(getDealers, out int dealersCount))
-                    //{
-                    //    if (dealersCount > 0)
-                    //    {
-                    //        if (vehicledetails.StateIdBackup == "27")
-                    //        {
-                    //            Ordertype = vehicledetails.Ordertype == null ? "" : vehicledetails.Ordertype;
-                    //            var checkOemRate = _dealerDeliveryService.CheckOemRate(Ordertype, VehicleType, vehicledetails.StateIdBackup);
-                    //            if (checkOemRate.Count > 0)
-                    //            {
-
-                    //                foreach (var data in checkOemRate)
-                    //                {
-                    //                    netamount = data.NetAmount;
-                    //                    response.data.TotalAmountWithGST = netamount.ToString();
-                    //                    response.data.FrontPlateSize = data.FrontPlateSize;
-                    //                    response.data.RearPlateSize = data.RearPlateSize;
-                    //                    response.data.GstBasicAmount = data.GstBasic_Amt;
-                    //                    response.data.FittmentCharges = data.FittmentCharges;
-                    //                    response.data.BMHConvenienceCharges = data.BMHConvenienceCharges;
-                    //                    response.data.BMHHomeCharges = data.BMHHomeCharges;
-                    //                    response.data.MRDCharges = data.MRDCharges;
-                    //                    response.data.GrossTotal = data.GrossTotal;
-                    //                    response.data.GST = data.GST;
-                    //                    response.data.IGSTAmount = data.IGSTAmount;
-                    //                    response.data.CGSTAmount = data.CGSTAmount;
-                    //                    response.data.SGSTAmount = data.SGSTAmount;
-                    //                    response.data.TotalAmount = data.TotalAmount;
-                    //                }
-                    //            }
-                    //            else
-                    //            {
-                    //                response.data.TotalAmountWithGST = "Rate Not Found";
-                    //                response.Status = "0";
-                    //             //   response.data = getDealers[].FrontSizePlate;
-                    //            }
-                    //        }
-                    //        else
-                    //        {
-                    //            var checkOemRate = _dealerDeliveryService.CheckOemRateQuery(OemId, Ordertype, VehicleClass, VehicleType, vehicledetails.VehicleCategoryId, vehicledetails.FuelType, vehicledetails.DeliveryPoint, StateId, sessiondetails.StateName);
-                    //            if (checkOemRate.Count > 2)
-                    //            {
-                    //                if (checkOemRate.Count > 0)
-                    //                {
-                    //                    foreach (var data in checkOemRate)
-                    //                    {
-                    //                        netamount = checkOemRate.TotalAmount;
-                    //                        TotalAmountWithGST = netamount.ToString();
-                    //                    }
-
-
-                    //                }
-                    //                else
-                    //                {
-                    //                    //response.TotalAmountWithGST = "Rate Not Found";
-                    //                    response.Status = "0";
-                    //                }
-                    //            }
-                    //            else
-                    //            {
-                    //               // response.TotalAmountWithGST = "Rate Not Found";
-                    //                response.Status = "0";
-                    //            }
-                    //        }
-                    //    }
-
-                    //}
+                   
                 }
                 catch (Exception ex)
                 {
@@ -212,7 +154,7 @@ namespace BookMyHsrp.ReportsLogics.DealerDelivery
             else
             {
                 StateId = sessiondetails.StateId;
-                VehicleClass = vehicledetails.VehicleClass;
+                VehicleClass = sessiondetails.VehicleClass;
                 StateName = vehicledetails.StateName;
             }
             var VehicleCat = sessiondetails.VehicleCategory;

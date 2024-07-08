@@ -95,9 +95,6 @@ namespace BookMyHsrp.ReportsLogics.HsrpWithColorSticker
 
             else
             {
-                if (requestDto.RegistrationNo.Trim().ToUpper() == "DL10CG7191")
-                {
-                }
                 var checkOrderExists = await _hsrpColorStickerService.CheckOrderExixts(getVehicleRegno, getChassisNo, getEngineNo);
                 if (checkOrderExists.Count > 0 && requestDto.isReplacement == false)
                 {
@@ -105,6 +102,10 @@ namespace BookMyHsrp.ReportsLogics.HsrpWithColorSticker
                     vehicleValidationResponse.message =
                         "Order for this registration number already exists. For any query kindly mail to support@bookmyhsrp.com";
                     return vehicleValidationResponse;
+                }
+                else
+                {
+                    vehicleValidationResponse.message = "Success";
                 }
             }
 
@@ -180,14 +181,7 @@ namespace BookMyHsrp.ReportsLogics.HsrpWithColorSticker
 
                         }
                     }
-                    //if (requestDto.isReplacement == false && !string.IsNullOrEmpty(_vd.hsrpRearLaserCode) &&
-                    //   !string.IsNullOrEmpty(_vd.hsrpFrontLaserCode))
-                    //{
-                    //    vehicleValidationResponse.status = "false";
-                    //    vehicleValidationResponse.message =
-                    //        "You have a valid HSRP laser code as per VAHAN data so the new' plate cannot be issued, however you can apply for a duplicate HSRP.";
-                    //    hasError = true;
-                    //}
+                   
                     if (hasError)
                     {
                         return vehicleValidationResponse;
@@ -195,7 +189,7 @@ namespace BookMyHsrp.ReportsLogics.HsrpWithColorSticker
                     if (_vd.message == "Vehicle details available in Vahan")
                     {
 
-                        var insertVahanLogQuery = _hsrpColorStickerService.InsertVaahanLog(getVehicleRegno, getChassisNo, getEngineNo, _vd);
+                        var insertVahanLogQuery =await _hsrpColorStickerService.InsertVaahanLog(getVehicleRegno, getChassisNo, getEngineNo, _vd);
                         var show_damage_both = true;
                         if (requestDto.isReplacement)
                         {
@@ -243,6 +237,10 @@ namespace BookMyHsrp.ReportsLogics.HsrpWithColorSticker
                             if (oemid == "20")
                             {
                                 oemid = "272";
+                            }
+                            else
+                            {
+                                oemid = oemid;
                             }
                             vehicleValidationData = new VehicleValidation();
                             vehicleValidationData.non_homo = "N";
@@ -443,12 +441,11 @@ namespace BookMyHsrp.ReportsLogics.HsrpWithColorSticker
                     }
                     string _NonHomoOemId = _nonHomoOemId;
                     string[] sp_NonHomoOemId = _NonHomoOemId.Split(',');
+
                     vehicleValidationData.vehicleregno = getVehicleRegno.ToUpper();
                     vehicleValidationData.engineno = getEngineNo.ToUpper();
                     vehicleValidationData.chassisno = getChassisNo.ToUpper();
                     vehicleValidationData.oemid = oemid;
-
-                    vehicleValidationData = new VehicleValidation();
                     vehicleValidationData.non_homo = "Y";
                     vehicleValidationData.stateid = getStateId.ToString();
                     vehicleValidationData.statename = statename;
@@ -511,6 +508,7 @@ namespace BookMyHsrp.ReportsLogics.HsrpWithColorSticker
                     stateshortname = data.HSRPStateShortName;
                     statename = data.HSRPStateName;
                     StateIdBackup = requestDto.StateId;
+                    vehicleValidationResponse.data.StateIdBackup = StateIdBackup;
                 }
                 if (PageType != "Trailer")
                 {
@@ -531,6 +529,7 @@ namespace BookMyHsrp.ReportsLogics.HsrpWithColorSticker
                         }
                     }
                 }
+                
                 string responseJson = await _hsrpColorStickerService.RosmertaApi(getVehicleRegno, getChassisNo, getEngineNo, "5UwoklBqiW");
                 vehicleValidationResponse.data.SessionFilePath = "";
                 VehicleDetails _vd = JsonConvert.DeserializeObject<VehicleDetails>(responseJson);
@@ -545,7 +544,7 @@ namespace BookMyHsrp.ReportsLogics.HsrpWithColorSticker
                             vehicleValidationResponse.message = "Please input Correct Registration Number of " + statename;
                             return vehicleValidationResponse;
                         }
-                        if (_vd.message == "Vehicle details available in Vahan" || _vd.message == "Vehicle status :- . Vehicle details available in Vahan")
+                        else if (_vd.message == "Vehicle details available in Vahan" || _vd.message == "Vehicle status :- . Vehicle details available in Vahan")
                         {
                             vehicleValidationResponse.data.vehicleregno = requestDto.RegistrationNo;
                             vehicleValidationResponse.data.chassisno = requestDto.ChassisNo;
@@ -554,7 +553,26 @@ namespace BookMyHsrp.ReportsLogics.HsrpWithColorSticker
                             var insertVahanLogQuery = await _hsrpColorStickerService.InsertVaahanLogWithoutApi(getVehicleRegno, getChassisNo, getEngineNo, _vd);
                             vehicleValidationResponse.status = "1";
                             vehicleValidationResponse.message = "Vehicle details available in Vahan but Maker of this vehicle Not Present in HOMOLOGATION";
+                            VehicleDetails details = new VehicleDetails();
+                            vehicleValidationResponse.data.vehicleregno = requestDto.RegistrationNo.ToUpper().Trim();
+                            vehicleValidationResponse.data.chassisno = requestDto.ChassisNo.ToUpper().Trim();
+                            vehicleValidationResponse.data.engineno = requestDto.EngineNo.ToUpper().Trim();
+                            vehicleValidationResponse.data.non_homo = "Y";
+                            vehicleValidationResponse.status = "1";
+                            details = _vd;
+                            vehicleValidationResponse.data.fuel = details.fuel;
+                            vehicleValidationResponse.data.fuel = oemid;
+                            vehicleValidationResponse.data.offCd = details.offCd;
+                            vehicleValidationResponse.data.maker = details.maker;
+                            vehicleValidationResponse.data.hsrpFrontLaserCode = details.hsrpFrontLaserCode;
+                            vehicleValidationResponse.data.vchType = details.vchType;
+                            vehicleValidationResponse.data.vchCatg = details.vchCatg;
+                            vehicleValidationResponse.data.stateCd = details.stateCd;
+                            vehicleValidationResponse.data.regnDate = details.regnDate;
+                            vehicleValidationResponse.data.norms = details.norms;
+                            vehicleValidationResponse.data.hsrpRearLaserCode = details.hsrpRearLaserCode;
                             return vehicleValidationResponse;
+
                         }
                     }
                     
@@ -608,6 +626,7 @@ namespace BookMyHsrp.ReportsLogics.HsrpWithColorSticker
                                         vehicleValidationResponse.message = _vd.message;
                                         details = _vd;
                                         vehicleValidationResponse.data.fuel = details.fuel;
+                                        vehicleValidationResponse.data.fuel = oemid;
                                         vehicleValidationResponse.data.message = details.message;
                                         vehicleValidationResponse.data.offCd = details.offCd;
                                         vehicleValidationResponse.data.maker = details.maker;

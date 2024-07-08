@@ -163,7 +163,7 @@
         <script>
             var stateId = "";
             $(async function () {
-                debugger
+              
                 $('#show-div').hide();
              //   await fetchAllStates();
                 await fetchstatesbyId();
@@ -190,7 +190,7 @@
     }
     })
             async function fetchstatesbyId() {
-                debugger
+                
                 var url = "/get-stateId"
                 const result = await fetchData(url);
                 if(result!=null && result!="")
@@ -210,7 +210,7 @@
                 }
     })
             async function fetchCityByStateId(stateId) {
-                debugger
+               
                 let url = '/get-city/' + stateId; 
                 let resultEmbossingCenter = await fetchData(url);
                 bindDynamicSelectHtml('#select-city', resultEmbossingCenter, 'District', 'District', 'Select City');

@@ -45,6 +45,15 @@ namespace BookMyHsrp.Controllers.CommonController
             var PaymentDetails1 = System.Text.Json.JsonSerializer.Deserialize<PaymentDetails>(paymentDetails);
             var DealerDetails = System.Text.Json.JsonSerializer.Deserialize<GetSessionBookingDetails>(dealerDetails);
             var AppointmentSlot = System.Text.Json.JsonSerializer.Deserialize<GetSessionBookingDetails>(appointmentSlot);
+            if (UserDetails.VehicleType == "MCV/HCV/Trailers" && UserDetails.VehicleCat == "4W")
+            {
+                detailsPayment.BharatStage = "BHARAT STAGE VI";
+                detailsPayment.VehicleClass = UserDetails.VehicleClass;
+            }
+            else
+            {
+                detailsPayment.BharatStage = PaymentDetails1.BharatStage;
+            }
             detailsPayment.CustomerAddress1 = PaymentDetails1.Address1;
             detailsPayment.BharatStage = PaymentDetails1.BharatStage;
             detailsPayment.ChassisNo= UserDetails.ChassisNo;

@@ -10,6 +10,7 @@ using System.Linq;
 using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
+using static BookMyHsrp.Libraries.BookingSummary.Model.BookingSummaryModel;
 
 namespace BookMyHsrp.Libraries.VerifyPaymentDetail.Services
 {
@@ -50,16 +51,29 @@ namespace BookMyHsrp.Libraries.VerifyPaymentDetail.Services
         public async Task<dynamic> CheckOemRateQuery(dynamic  vehicleDetails, dynamic userDetails,dynamic DealerAppointment, string orderType)
         {
             var parameters = new DynamicParameters();
-            parameters.Add("@OemId", vehicleDetails.OemId);
+            if (userDetails.VehicleType == "MCV/HCV/Trailers" && userDetails.VehicleCat == "4W")
+            {
+                parameters.Add("@VehicleClass", userDetails.VehicleClass);
+                parameters.Add("@StateId", userDetails.StateId);
+                parameters.Add("@StateName", userDetails.StateName);
+                parameters.Add("@OemId", userDetails.OemId);
+            }
+            else
+            {
+                parameters.Add("@StateId", vehicleDetails.StateId);
+                parameters.Add("@StateName", vehicleDetails.StateName);
+                parameters.Add("@VehicleClass", vehicleDetails.VehicleClass);
+                parameters.Add("@OemId", vehicleDetails.OemId);
+            }
+
+            
             parameters.Add("@OrderType", orderType);
-            parameters.Add("@VehicleClass", vehicleDetails.VehicleClass);
             parameters.Add("@VehicleType", userDetails.VehicleType);
             parameters.Add("@VehicleCategoryId", userDetails.VehicleCategoryId);
             parameters.Add("@FuelType", userDetails.FuelType);
             parameters.Add("@DeliveryPoint", DealerAppointment.DeliveryPoint);
-            parameters.Add("@StateId", vehicleDetails.StateId);
-            parameters.Add("@StateName", vehicleDetails.StateName);
-            var result =await _databaseHelper.QueryAsync<dynamic>(VerifyPaymentDetailsQueries.CheckOemRateQuery, parameters);
+            
+            var result = await _databaseHelper.QueryAsync<dynamic>(VerifyPaymentDetailsQueries.CheckOemRateQuery, parameters);
             return result;
         }
         public async Task<dynamic> GetBookingId(dynamic vehicleDetails, dynamic userDetails, dynamic DealerAppointment, string realOrderType)
