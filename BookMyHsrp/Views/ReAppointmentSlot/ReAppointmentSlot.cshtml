@@ -1,0 +1,409 @@
+﻿<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+    <!-- Place favicon.ico in the root directory -->
+    <link rel="shortcut icon" type="image/x-icon" href="images/favicon.html">
+    <link rel="apple-touch-icon" href="apple-touch-icon.html">
+
+    <!-- All css files are included here. -->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/owl.carousel.min.css">
+    <!--     <link rel="stylesheet" href="assets/css/owl.theme.default.min.css"> -->
+    <!--    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.1.4/dist/css/datepicker.min.css">-->
+
+
+
+</head>
+
+<style>
+    .rd-day-disabled {
+        color: darkgrey;
+    }
+
+    .holiday {
+        color: red;
+    }
+
+    .for-checkbox-tools.submit-btn {
+        background: #39435b !important;
+    }
+</style>
+<div class="offcanvas offcanvas-start" tabindex="-1" id="toggleMenu">
+    <div class="offcanvas-header">
+
+        <!-- Start Header Logo -->
+        <a href="index-3.html" class="header-logo">
+            <img src="~/Images/logo/logo.png" alt="">
+        </a>
+        <!-- End Header Logo -->
+
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    @*  <div class="offcanvas-body">
+    <!-- Start Offcanvas Mobile Menu Wrapper -->
+    <div class="offcanvas-mobile-menu-wrapper">
+    <!-- Start Mobile Menu  -->
+    <div class="mobile-menu-bottom">
+    <!-- Start Mobile Menu Nav -->
+    <div class="offcanvas-menu">
+    <ul>
+    <li><a href="TrackOrder.html">Track Your Order</a></li>
+    <li><a href="ReAppointment.html">Reschedule Appointment</a></li>
+    <li><a href="OrderCancel.html">Cancel Order</a></li>
+
+    <li><a href="PinForHomeDelivery.html">Check For Home Installation</a></li>
+    <li><a href="ReceiptValidity.html"><b>Receipt Validity</b></a></li>
+    <li><a href="BookMyHSRP_ContactUs.html"><b>Contact Us</b></a></li>
+    </ul>
+    </div>
+    <!-- End Mobile Menu Nav -->
+    </div>
+    <!-- End Mobile Menu -->
+    <!-- End Mobile contact Info -->
+
+    </div>
+    <!-- Start Mobile contact Info -->
+    <!--
+    <div class="mobile-contact-info text-center">
+    <ul class="social-link">
+    <li><a href="https://example.com/"><i class="fa fa-facebook"></i></a>
+    </li>
+    <li><a href="https://example.com/"><i class="fa fa-twitter"></i></a>
+    </li>
+    <li><a href="https://example.com/"><i class="fa fa-skype"></i></a></li>
+    </ul>
+    </div>-->
+    <!-- End Offcanvas Mobile Menu Wrapper -->
+    </div> *@
+</div>
+<!--  End Offcanvas Mobile Menu Section -->
+
+<section class="page-header d-lg-none">
+    <div class="container">
+        <div class="page-header__inner text-center">
+            <h5>Step 3</h5>
+            <h2>Appointment Slot</h2>
+        </div>
+    </div>
+</section>
+
+<!-- main start -->
+<main class="main-body">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 col-lg-3 p-0 order-2 order-lg-1">
+                <div class="sidebar">
+                    <div class="side-steper d-none d-lg-block">
+                        <ul class="side-ul">
+                            <li class="active">Step -1 Booking Details</li>
+                            <li class="active">Step -2 Fitment Location</li>
+                            <li class="active">Step -3 Appointment Slot</li>
+                            <li>Step -4 Booking Summary</li>
+                            <li>Step -5 Verify Details & Pay</li>
+                            <li>Step -6 Download Receipt</li>
+                        </ul>
+                    </div>
+                    <div class="side-slide">
+                        <div class="owl-carousel adds-carousel owl-theme">
+                            <div class="item"><img src="~/Images/adds/img-1.png" alt=""></div>
+                            <div class="item"><img src="~/Images/adds/img-2.png" alt=""></div>
+                            <div class="item"><img src="~/Images/adds/img-3.png" alt=""></div>
+                            <div class="item"><img src="~/Images/adds/img-4.png" alt=""></div>
+                            <div class="item"><img src="~/Images/adds/img-5.png" alt=""></div>
+                            <div class="item"><img src="~/Images/adds/QR.jpg" alt=""></div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-9 p-0 order-1 order-lg-2">
+                <div class="main-data main-bg">
+                    <div class="title-area d-flex justify-content-between">
+                        <h4 class="title">Select Appointment Date & Time Slot</h4>
+                        <a id="backButton" class="submit-btn">Back</a>
+                    </div>
+                    <div class="booking-area">
+                        <div class="row justify-content-between">
+                            <div class="col-lg-5">
+                                <h4 class="title"><i class="fas fa-calendar-alt"></i> <span>Confirm Date</span></h4>
+
+                                <div class="booking-calender">
+                                    <div id="inline_cal"></div>
+                                </div>
+
+                                <div class="calender-footer">
+                                    <ul class="nav cal-ul justify-content-between">
+                                        <li>Slot Available</li>
+                                        <li>Slot Not Available</li>
+                                        <li>Holidays</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <h4 class="title"><i class="far fa-clock"></i> <span>Confirm Time</span></h4>
+
+                                <div class="time-title">
+                                    <h5>Available Time Slot</h5>
+                                    <p>Please Select a Time Slot</p>
+                                </div>
+
+                                <div class="time-slot" style="width: 100%">
+                                    <div class="slot-box d-flex justify-content-between">
+                                        <div class="time-desc" id="slot-time" style="width: 100%">
+                                        </div>
+
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row justify-content-between">
+                            <div class="col-lg-5">
+                                <ul class="note-ul">
+                                    <p>Note:</p>
+                                    <li>1. Your appointment will be processed only upon Verification of Data.</li>
+                                    <li>2. Verify Contact number & Email ID to receive timely updates.</li>
+                                    <p class="mt-2">Technical issue or query please contact at <a href="tel:8929722201">8929722201</a> or Email at <a href="mailto:online@bookmyhsrp.com">online@bookmyhsrp.com</a></p>
+                                </ul>
+                            </div>
+                            <div class="col-lg-6">
+                                <a id="confirm-button" href="@Url.Action("ReAppointmentBookingSummary", "ReAppointmentBookingSummary")" class="submit-btn">Confirm & Proceed</a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+
+@section Scripts
+{
+    <script src="~/js/calender.js"></script>
+    <script>
+        var formattedDate = [];
+        var formattedDateWeakOff = [];
+        let weakOff;
+        $(async function () {
+            $('#confirm-button').hide();
+            await GetappointmentDate();
+            await CheckECBlockedDate();
+            await GetHolidays();
+            var startDate = '';
+            var endDate = '';
+            var selectedValue = '';
+        });
+
+        async function GetHolidays() {
+            let url = "/holiday"
+            const result = await fetchData(url);
+            if (result.BlockDate != null) {
+                var disabledDatesString = result.BlockDate;
+                var disabledDates = disabledDatesString.split(',');
+                $.each(disabledDates, function (index, dateElement) {
+                    var dateString = dateElement; // Example date string
+
+
+                    var date = moment(dateString, "YYYY-MM-DD hh:mm A");
+
+                    formattedDate = date.format("YYYY-MM-DD HH:mm");
+                });
+                //   var dateArray = weakOff.map(function (obj) {
+                //       return obj.date;
+                //   });
+                // for (var data of weakOff) {
+                //        var data1 = data;
+                //       formattedDateWeakOff.push(data1);
+                //       }
+
+
+
+                const calender = rome(inline_cal, {
+                    min: startDate,
+                    max: endDate,
+                    "time": false,
+                    dateValidator: rome.val.except(weakOff, formattedDate),
+
+                });
+
+                calender.on("back", AddHolidayClass)
+                calender.on("next", AddHolidayClass)
+                calender.on("ready", AddHolidayClass)
+                calender.on("ready", BindTimeSlot)
+
+
+
+                // Convert each DOM element to a jQuery object and then add the class
+                // $(formattedDate).appendTo(styl.dayDisabled = 'rd-day-disabled');
+
+
+
+                //  dateString = date.toString().split('T')[0]; // Convert date to string in 'YYYY-MM-DD' format
+
+            }
+
+
+        };
+        function AddHolidayClass(d) {
+            var ele = $(".rd-day-body");
+            var month = $(".rd-month-label");
+            var day = month[0].innerHTML;
+            var month = day.split(" ")[0];
+            // The month you have
+            var dateString = formattedDate; // The date string you want to compare with
+            var day = formattedDate.split("-")[2];
+            var singleDate = day.split(" ")[0];
+            // Extract the month part from the date string
+            var dateMonth = dateString.split("-")[1];
+
+            // Convert the month number to its corresponding name
+            var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+            var dateMonthName = monthNames[parseInt(dateMonth, 10) - 1];
+            if (month === dateMonthName) {
+                for (var i = 0; i < monthNames.length; i++) {  // Compare the month names
+                    if (monthNames[i] === dateMonthName) {
+                        // Months match
+                        for (var i = 0; i < ele.length; i++) {
+                            var eleVal = $(ele[i]).text();
+                            var eleDate = new Date(eleVal);
+                            var formattedDateObj = new Date(formattedDate);
+                            if (eleVal === singleDate) {
+                                $(ele[i]).addClass('holiday');
+                            }
+                        }
+                    }
+
+
+                }
+
+
+            }
+
+
+        }
+        $('#backButton').click(async function () {
+            window.history.back();
+        })
+        async function GetappointmentDate() {
+            let url = "/chek-appointment-date"
+            const result = await fetchData(url);
+            startDate = result.FromDate
+            endDate = result.EndDate
+        };
+        async function CheckECBlockedDate() {
+            let url = "/chek-ec-block-date";
+            let data = { StartDate: startDate, EndDate: endDate }
+            const result = await postData(url, data);
+            if (result.length > 0) {
+                weakOff = result;
+            }
+        };
+        async function BindTimeSlot() {
+            var ele = $(".rd-day-selected");
+            var day1 = ele[0].innerHTML;
+            var month1 = $(".rd-month-label");
+            var day = month1[0].innerHTML;
+
+            var month = day.split(" ")[0];
+            var year = day.split(" ")[1];
+            var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+            var monthNumber = (monthNames.indexOf(month) + 1).toString().padStart(2, '0')
+            var formattedMonth = monthNumber.padStart(2, '0');
+            var formattedDay = day1.padStart(2, '0');
+
+            // Concatenate year, month, and day with hyphens
+            var date = (year + "-" + formattedMonth + "-" + formattedDay);
+
+            var fulldate = date.toString();
+            sessionStorage.removeItem('appointmentDate');
+            sessionStorage.setItem('appointmentDate', fulldate);
+            let url = "/check-time-slot-re";
+            let data = { Date: date, StartDate: startDate }
+            const result = await postData(url, data);
+            if (result != 0) {
+                for (var data1 of result) {
+                    $('#slot-time').append('<div class="time-slot" >' +
+                        '<div class="slot-box d-flex justify-content-between" style="width: 100%">' +
+                        '<div class="time-desc" >' + data1.SlotName +
+                        '</div>' +
+                        '<div class="form-group">' +
+                        '<input class="checkbox-tools" type="radio" name="tools">' +
+                        '<label class="for-checkbox-tools">' +
+                        '<i class="uil uil-line-alt"> </i>' +
+                        'Available' +
+                        '</label>' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>');
+
+                }
+
+            }
+
+        }
+
+        $(document).ready(function () {
+            // Event handler for radio buttons
+            $(document).on('click', '.for-checkbox-tools', function () {
+                var $checkbox = $(this).prev('.checkbox-tools');
+
+                // Check if the radio button is already checked
+                if ($checkbox.prop('checked')) {
+                    // Uncheck the radio button
+                    $checkbox.prop('checked', false);
+                    $(this).closest('.slot-box').find('.for-checkbox-tools').removeClass('submit-btn');
+                } else {
+                    // Uncheck all other radio buttons in the same group
+                    $('input[name="tools"]').prop('checked', false);
+                    $('.slot-box').find('.for-checkbox-tools').removeClass('submit-btn');
+
+                    // Check the clicked radio button and add the 'submit-btn' class
+                    $checkbox.prop('checked', true);
+                    $(this).closest('.slot-box').find('.for-checkbox-tools').addClass('submit-btn');
+                }
+                selectedValue = $(this).closest('.time-slot').find('.time-desc').text();
+                sessionStorage.setItem('timeSlot', selectedValue);
+                $('#confirm-button').show();
+            });
+        });
+        $(document).ready(function () {
+            // Event handler for radio buttons
+            $(document).on('click', '.rd-day-body', function () {
+
+                var ele = $(".rd-day-selected");
+                var day1 = ele[0].innerHTML;
+                var month1 = $(".rd-month-label");
+                var day = month1[0].innerHTML;
+
+                var month = day.split(" ")[0];
+                var year = day.split(" ")[1];
+                var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+                var monthNumber = (monthNames.indexOf(month) + 1).toString().padStart(2, '0')
+                var formattedMonth = monthNumber.padStart(2, '0');
+                var formattedDay = day1.padStart(2, '0');
+
+                // Concatenate year, month, and day with hyphens
+                var date = (year + "-" + formattedMonth + "-" + formattedDay);
+
+                var fulldate = date.toString();
+                sessionStorage.removeItem('appointmentDate');
+                sessionStorage.setItem('appointmentDate', fulldate);
+                $('#slot-time').empty();
+                BindTimeSlot();
+
+            });
+        });
+
+
+
+
+
+
+
+    </script>
+
+}
